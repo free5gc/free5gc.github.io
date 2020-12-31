@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://free5gc.github.io/installations/stage-3-free5gc/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc."/>
+<meta name="generator" content="Hugo 0.79.1" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://free5gc.github.io/installations/stage-3-free5gc/",
+  "wordCount": "983",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Your Name"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://free5gc.github.io/installations/stage-3-free5gc/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://free5gc.github.io/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet" integrity="sha256-BWivVdNDrS/JwiGhehVpfcXvSa3UVRxes&#43;WddYI4Uig=" crossorigin="anonymous">
+    
+    <link href="https://free5gc.github.io/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet" integrity="sha256-c/Bza4W99ICQ7ThGlyAKlowCXRlPYHF&#43;N6UVxMh6iJM=" crossorigin="anonymous">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://free5gc.github.io/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" integrity="sha256-5Zk/dQnkgJJe/0EXOyF21the899wrQOI2SddCfDD2WY=" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://free5gc.github.io">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3-free5gc/">Stage 3: free5GC</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC - Current"
+                     href="/installations/stage-3/">Stage 3: free5GC - Current</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Youtube"
+                     href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos">Youtube</a></li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.github.io/installations/stage-3-free5gc/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <div class="text-center mb-4">
+  
+  <a href="https://free5gc.org/" target="_blank">
+  <img src="/img/free5GC.png"
+       alt="free5GC"
+       style="width: 40%;">
+  </a>
+  
+</div>
+
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<ul>
+<li><a href="#hardware-tested">Hardware Tested</a></li>
+<li><a href="#detail-information">Detail information</a></li>
+<li><a href="#questions">Questions</a></li>
+<li><a href="#recommended-environment">Recommended Environment</a></li>
+<li><a href="#installation">Installation</a>
+<ul>
+<li><a href="#a-prerequisites">A. Prerequisites</a></li>
+<li><a href="#b-install-user-plane-function-upf">B. Install User Plane Function (UPF)</a></li>
+<li><a href="#c-install-control-plane-elements">C. Install Control Plane Elements</a></li>
+</ul>
+</li>
+<li><a href="#run">Run</a>
+<ul>
+<li><a href="#a-run-the-core-network">A. Run the Core Network</a></li>
+<li><a href="#b-run-the-n3iwf-individually">B. Run the N3IWF (Individually)</a></li>
+<li><a href="#c-run-all-in-one-with-outside-ran">C. Run all-in-one with outside RAN</a></li>
+<li><a href="#d-deploy-within-containers">D. Deploy within containers</a></li>
+</ul>
+</li>
+<li><a href="#test">Test</a></li>
+<li><a href="#release-note">Release Note</a></li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="hardware-tested">Hardware Tested</h2>
+<p>In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.</p>
+<h2 id="detail-information">Detail information</h2>
+<p>For details, reference to the free5gc <a href="https://github.com/free5gc/free5gc/wiki">wiki</a>.</p>
+<h2 id="questions">Questions</h2>
+<p>For questions and support please use the <a href="https://forum.free5gc.org">official forum</a> or <a href="https://gitter.im/free5gc/community">gitter chat</a>. The issue list of this repo is exclusively for bug reports and feature requests.</p>
+<h2 id="recommended-environment">Recommended Environment</h2>
+<p>free5gc has been tested against the following environment:</p>
+<ul>
+<li>Software
+<ul>
+<li>OS: Ubuntu 18.04</li>
+<li>gcc 7.3.0</li>
+<li>Go 1.14.4 linux/amd64</li>
+<li>kernel version 5.0.0-23-generic</li>
+</ul>
+</li>
+</ul>
+<p>The listed kernel version is required for the UPF element.</p>
+<ul>
+<li>
+<p>Minimum Hardware</p>
+<ul>
+<li>CPU: Intel i5 processor</li>
+<li>RAM: 4GB</li>
+<li>Hard drive: 160GB</li>
+<li>NIC: Any 1Gbps Ethernet card supported in the Linux kernel</li>
+</ul>
+</li>
+<li>
+<p>Recommended Hardware</p>
+<ul>
+<li>CPU: Intel i7 processor</li>
+<li>RAM: 8GB</li>
+<li>Hard drive: 160GB</li>
+<li>NIC: Any 10Gbps Ethernet card supported in the Linux kernel</li>
+</ul>
+</li>
+</ul>
+<p>This guide assumes that you will run all 5GC elements on a single machine.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="a-prerequisites">A. Prerequisites</h3>
+<ol>
+<li>
+<p>Linux Kernel Version</p>
+<ul>
+<li>In order to use the UPF element, you must use the <code>5.0.0-23-generic</code> version of the Linux kernel.  free5gc uses the <a href="https://github.com/PrinzOwO/gtp5g">gtp5g kernel module</a>, which has been tested and compiled against that kernel version only.  To determine the version of the Linux kernel you are using:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    $ uname -r
+    5.0.0-23-generic
+</code></pre></div></li>
+</ol>
+<p>You will not be able to run most of the tests in <a href="#test">Test</a> section unless you deploy a UPF.</p>
+<ol start="2">
+<li>
+<p>Golang Version</p>
+<ul>
+<li>As noted above, free5gc is built and tested with Go 1.14.4</li>
+<li>To check the version of Go on your system, from a command prompt:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    go version
+</code></pre></div><ul>
+<li>If another version of Go is installed, remove the existing version and install Go 1.14.4:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#60a0b0;font-style:italic"># this assumes your current version of Go is in the default location</span>
+    sudo rm -rf /usr/local/go
+    wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
+    sudo tar -C /usr/local -zxvf go1.14.4.linux-amd64.tar.gz
+</code></pre></div><ul>
+<li>If Go is not installed on your system:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
+    sudo tar -C /usr/local -zxvf go1.14.4.linux-amd64.tar.gz
+    mkdir -p ~/go/<span style="color:#666">{</span>bin,pkg,src<span style="color:#666">}</span>
+    <span style="color:#60a0b0;font-style:italic"># The following assume that your shell is bash</span>
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOPATH=$HOME/go&#39;</span> &gt;&gt; ~/.bashrc
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOROOT=/usr/local/go&#39;</span> &gt;&gt; ~/.bashrc
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export PATH=$PATH:$GOPATH/bin:$GOROOT/bin&#39;</span> &gt;&gt; ~/.bashrc
+    <span style="color:#007020">source</span> ~/.bashrc
+</code></pre></div><ul>
+<li>Further information and installation instructions for <code>golang</code> are available at the <a href="https://golang.org/doc/install">official golang site</a>.</li>
+</ul>
+</li>
+<li>
+<p>Control-plane Supporting Pacakges</p>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt -y update
+sudo apt -y install mongodb wget git
+sudo systemctl start mongodb
+</code></pre></div><ol start="4">
+<li>User-plane Supporting Packages</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt -y update
+sudo apt -y install git gcc cmake autoconf libtool pkg-config libmnl-dev libyaml-dev linux-headers-<span style="color:#007020;font-weight:bold">$(</span>uname -r<span style="color:#007020;font-weight:bold">)</span>
+go get -u github.com/sirupsen/logrus
+</code></pre></div><ol start="5">
+<li>Linux Host Network Settings</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
+sudo iptables -t nat -A POSTROUTING -o &lt;dn_interface&gt; -j MASQUERADE
+sudo systemctl stop ufw
+</code></pre></div><h3 id="b-install-user-plane-function-upf">B. Install User Plane Function (UPF)</h3>
+<ol>
+<li>As noted above, the GTP kernel module used by the UPF requires that you use Linux kernel version <code>5.0.0-23-generic</code>.  To verify your version:</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">uname -r
+</code></pre></div><ol start="2">
+<li>Retrieve the 5G GTP-U kernel module using <code>git</code> and build it</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git clone -b v0.2.0 https://github.com/PrinzOwO/gtp5g.git
+<span style="color:#007020">cd</span> gtp5g
+make
+sudo make install
+</code></pre></div><ol start="3">
+<li>
+<p>Build the UPF (you may skip this step if you built all network functions above):</p>
+<p>a. to build using make:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+make upf
+</code></pre></div><p>b. alternatively, to build manually:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/src/upf
+mkdir build
+<span style="color:#007020">cd</span> build
+cmake ..
+make -j<span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+</code></pre></div></li>
+<li>
+<p>Customize the UPF as desired.  The UPF configuration file is <code>free5gc/src/upf/build/config/upfcfg.yaml</code>.</p>
+</li>
+</ol>
+<h3 id="c-install-control-plane-elements">C. Install Control Plane Elements</h3>
+<ol>
+<li>
+<p>Clone the free5GC repository</p>
+<ul>
+<li>To install the latest stable build (v3.0.4):</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~
+    git clone --recursive -b v3.0.4 -j <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span> https://github.com/free5gc/free5gc.git
+    <span style="color:#007020">cd</span> free5gc
+</code></pre></div><ul>
+<li>Alternatively, if you wish to install the latest nightly build:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~/free5gc
+    git checkout master
+    git submodule sync
+    git submodule update --init --jobs <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+    git submodule foreach git checkout master
+    git submodule foreach git pull --jobs <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+</code></pre></div></li>
+<li>
+<p>Install all Go module dependencies</p>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+go mod download
+</code></pre></div><p><strong>NOTE: the root folder name for this repository must be <code>free5gc</code>.  If it is changed, compilation will fail.</strong></p>
+<ol start="3">
+<li>
+<p>Compile network function services in <code>free5gc</code></p>
+<ul>
+<li>To do so individually (e.g., AMF only):</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~/free5gc
+    make amf
+</code></pre></div><ul>
+<li>To build all network functions:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~/free5gc
+    make all
+</code></pre></div></li>
+</ol>
+<h2 id="run">Run</h2>
+<h3 id="a-run-the-core-network">A. Run the Core Network</h3>
+<p>Option 1. Run network function services individually.  For example, to run the AMF:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+./bin/amf
+</code></pre></div><p><strong>Note: The N3IWF needs specific configuration, which is detailed in section B.</strong></p>
+<p>Option 2. Run whole core network</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+./run.sh
+</code></pre></div><h3 id="b-run-the-n3iwf-individually">B. Run the N3IWF (Individually)</h3>
+<p>To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.</p>
+<p>Configure each interface with a suitable IP address.</p>
+<p>Create an interface for IPSec traffic:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># replace &lt;...&gt; to suitable value</span>
+sudo ip link add ipsec0 <span style="color:#007020">type</span> vti <span style="color:#007020">local</span> &lt;IKEBindAddress&gt; remote 0.0.0.0 key &lt;IPSecInterfaceMark&gt;
+</code></pre></div><p>Assign an address to this interface, then bring it up:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># replace &lt;...&gt; to suitable value</span>
+sudo ip address add &lt;IPSecInterfaceAddress/CIDRPrefix&gt; dev ipsec0
+sudo ip link <span style="color:#007020">set</span> dev ipsec0 up
+</code></pre></div><p>Run the N3IWF (root privilege is required):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/
+sudo ./bin/n3iwf
+</code></pre></div><h3 id="c-run-all-in-one-with-external-ran">C. Run all-in-one with external RAN</h3>
+<p>Refer to this <a href="./sample/ran_attach_config">sample config</a> if you wish to connect an external RAN with a complete free5GC core network.</p>
+<h3 id="d-deploy-within-containers">D. Deploy within containers</h3>
+<p><a href="https://github.com/free5gc/free5gc-compose/">free5gc-compose</a> provides a sample for the deployment of elements within containers.</p>
+<h2 id="test">Test</h2>
+<p>Start a Wireshark capture on any core-connected interface, applying the filter <code>'pfcp||icmp||gtp'</code>.</p>
+<p>In order to run the tests, first do this:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+chmod +x ./test.sh
+</code></pre></div><p>The tests are all run from within <code>~/free5gc</code>.</p>
+<p>a. TestRegistration</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestRegistration
+</code></pre></div><p>b. TestGUTIRegistration</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestGUTIRegistration
+</code></pre></div><p>c. TestServiceRequest</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestServiceRequest
+</code></pre></div><p>d. TestXnHandover</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestXnHandover
+</code></pre></div><p>e. TestDeregistration</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestDeregistration
+</code></pre></div><p>f. TestPDUSessionReleaseRequest</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestPDUSessionReleaseRequest
+</code></pre></div><p>g. TestPaging</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestPaging
+</code></pre></div><p>h. TestN2Handover</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestN2Handover
+</code></pre></div><p>i. TestNon3GPP</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestNon3GPP
+</code></pre></div><p>j. TestReSynchronisation</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestReSynchronisation
+</code></pre></div><p>k. TestULCL</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test_ulcl.sh -om <span style="color:#40a070">3</span> TestRegistration
+</code></pre></div><h2 id="release-note">Release Note</h2>
+<p>Detailed changes for each release are documented in the <a href="https://github.com/free5gc/free5gc/releases">release notes</a>.</p>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2ffree5gc.github.io%2finstallations%2fstage-3-free5gc%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ffree5gc.github.io%2finstallations%2fstage-3-free5gc%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2ffree5gc.github.io%2finstallations%2fstage-3-free5gc%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="/free5GC.png" alt="" height="32">
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

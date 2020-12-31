@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
+You can use go version to check your current Go version.
+- Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://free5gc.github.io/installations/stage-3-environment/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
+You can use go version to check your current Go version.
+- Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet."/>
+<meta name="generator" content="Hugo 0.79.1" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://free5gc.github.io/installations/stage-3-environment/",
+  "wordCount": "100",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Your Name"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://free5gc.github.io/installations/stage-3-environment/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://free5gc.github.io/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet" integrity="sha256-BWivVdNDrS/JwiGhehVpfcXvSa3UVRxes&#43;WddYI4Uig=" crossorigin="anonymous">
+    
+    <link href="https://free5gc.github.io/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet" integrity="sha256-c/Bza4W99ICQ7ThGlyAKlowCXRlPYHF&#43;N6UVxMh6iJM=" crossorigin="anonymous">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://free5gc.github.io/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" integrity="sha256-5Zk/dQnkgJJe/0EXOyF21the899wrQOI2SddCfDD2WY=" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://free5gc.github.io">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3-free5gc/">Stage 3: free5GC</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC - Current"
+                     href="/installations/stage-3/">Stage 3: free5GC - Current</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Youtube"
+                     href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos">Youtube</a></li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.github.io/installations/stage-3-environment/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <h2 id="recommended-environment">Recommended Environment</h2>
+<ul>
+<li>Software
+<ul>
+<li>OS: Ubuntu 18.04 or later versions</li>
+<li>gcc 7.3.0</li>
+<li>Go 1.14.4 linux/amd64</li>
+<li>QEMU emulator 2.11.1</li>
+<li>kernel version 5.0.0-23-generic (MUST for UPF)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic</strong></p>
+<p>You can use <code>go version</code> to check your current Go version.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">- Hardware
+    - CPU: Intel i5 processor
+    - RAM: 4GB
+    - Hard drive: 160G
+    - NIC card: 1Gbps ethernet card
+
+- Hardware recommended
+    - CPU: Intel i7 processor
+    - RAM: 8GB
+    - Hard drive: 160G
+    - NIC card: 10Gbps ethernet card
+</code></pre></div><h2 id="hardware-tested">Hardware Tested</h2>
+<p>There are no gNB and UE for standalone 5GC available in the market yet.</p>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2ffree5gc.github.io%2finstallations%2fstage-3-environment%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ffree5gc.github.io%2finstallations%2fstage-3-environment%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2ffree5gc.github.io%2finstallations%2fstage-3-environment%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="/free5GC.png" alt="" height="32">
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+
