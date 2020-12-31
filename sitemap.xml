@@ -3,90 +3,90 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://free5gc.org/</loc>
+    <loc>/free5gc.org/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/contactus/</loc>
+    <loc>/free5gc.org/contactus/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/history/</loc>
+    <loc>/free5gc.org/history/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-1-all-in-one/</loc>
+    <loc>/free5gc.org/installations/stage-1-all-in-one/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-1-cluster/</loc>
+    <loc>/free5gc.org/installations/stage-1-cluster/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-2-standalone-5g/</loc>
+    <loc>/free5gc.org/installations/stage-2-standalone-5g/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-appendix/</loc>
+    <loc>/free5gc.org/installations/stage-3-appendix/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-configuration/</loc>
+    <loc>/free5gc.org/installations/stage-3-configuration/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-environment/</loc>
+    <loc>/free5gc.org/installations/stage-3-environment/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-free5gc/</loc>
+    <loc>/free5gc.org/installations/stage-3-free5gc/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-installation/</loc>
+    <loc>/free5gc.org/installations/stage-3-installation/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-run/</loc>
+    <loc>/free5gc.org/installations/stage-3-run/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-smf-config/</loc>
+    <loc>/free5gc.org/installations/stage-3-smf-config/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-test/</loc>
+    <loc>/free5gc.org/installations/stage-3-test/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3-trouble-shooting/</loc>
+    <loc>/free5gc.org/installations/stage-3-trouble-shooting/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/stage-3/</loc>
+    <loc>/free5gc.org/installations/stage-3/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/membership/</loc>
+    <loc>/free5gc.org/membership/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://free5gc.org/roadmap/</loc>
+    <loc>/free5gc.org/roadmap/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://free5gc.org/categories/</loc>
+    <loc>/free5gc.org/categories/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/installations/</loc>
+    <loc>/free5gc.org/installations/</loc>
   </url>
   
   <url>
-    <loc>http://free5gc.org/tags/</loc>
+    <loc>/free5gc.org/tags/</loc>
   </url>
   
 </urlset>

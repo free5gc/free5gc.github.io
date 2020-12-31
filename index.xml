@@ -2,34 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>free5GC</title>
-    <link>http://free5gc.org/</link>
+    <link>/free5gc.org/</link>
     <description>Recent content on free5GC</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://free5gc.org/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="/free5gc.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>http://free5gc.org/contactus/</link>
+      <link>/free5gc.org/contactus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/contactus/</guid>
+      <guid>/free5gc.org/contactus/</guid>
       <description>Contact UsFor services and sales information, please contact Ms. Hsiaotsui Chen:Email: tsuitsui96@gmail.comTel: 1-800-409-9811 ext. 54790free5GC email: free5GC.org@gmail.com</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/history/</link>
+      <link>/free5gc.org/history/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/history/</guid>
+      <guid>/free5gc.org/history/</guid>
       <description>History of free5GC project: Stage 3: free5GC v3.0.0  AMF  Support SMF selection at PDU session establishment Fix SUCI handling procedure   SMF  Feature . ULCL by config . Authorized QoS Bugfix . PDU Session Establishment PDUAddress Information . PDU Session Establishment N1 Message . SMContext Release Procedure   UPF:  ULCL feature support SDF Filter support N9 interface   OAM  Get Registered UE Context API OAM web UI to display Registered UE Context   N3IWF  Support Registration procedure for untrusted non-3GPP access Support UE Requested PDU Session Establishment via Untrusted non-3GPP Access   UDM  SUCI to SUPI de-concealment Notification  Callback notification to NF ( in SDM service) UDM initiated deregistration notification to NF ( in UECM service)      Contributors: National Chiao Tung University: Chi Chang, Yao-Wen Chang, Jyh-Cheng Chen, Liang-Yu Chen, Te-Chih Chiu, Chia-Tso Chu, Jairus Dah, Wei-Ting Hu, Chia-An Lee, Yan-Jie Lin, Yi-Bing Jason Lin, Jyun-Yu Syu, Sebastian Tan, Fu-Lian Weng, Chi-En Wei, Wei-Chun Yang</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-1-all-in-one/</link>
+      <link>/free5gc.org/installations/stage-1-all-in-one/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-1-all-in-one/</guid>
+      <guid>/free5gc.org/installations/stage-1-all-in-one/</guid>
       <description>free5GC Installation on KVM Minimum Requirement   Software
  OS: Ubuntu 18.04 Linux kernel: 4.15.0-43-generic gcc 7.3.0 Go 1.11.4 QEMU emulator 2.11.1    Hardware
  CPU: Intel i5 processor RAM: 4GB Hard drive: 160G NIC card: 1Gbps ethernet card    Hardware recommended
@@ -38,47 +38,47 @@
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-1-cluster/</link>
+      <link>/free5gc.org/installations/stage-1-cluster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-1-cluster/</guid>
+      <guid>/free5gc.org/installations/stage-1-cluster/</guid>
       <description>free5GC Distributed Installation Guide Network Topology Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc.</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-2-standalone-5g/</link>
+      <link>/free5gc.org/installations/stage-2-standalone-5g/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-2-standalone-5g/</guid>
+      <guid>/free5gc.org/installations/stage-2-standalone-5g/</guid>
       <description>free5GC Stage 2 Installation Guide Minimum Requirement  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.12.9 linux/amd64 QEMU emulator 2.11.1    Note: Please use Ubuntu 18.04 or later versions and go 1.12.9 linux/amd64
 You can use go version to check your current Go version.</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-appendix/</link>
+      <link>/free5gc.org/installations/stage-3-appendix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-appendix/</guid>
+      <guid>/free5gc.org/installations/stage-3-appendix/</guid>
       <description>Appendix A: OAM  Run the OAM server  cd webconsolego run server.goAccess the OAM by  URL: http://localhost:5000Username: adminPassword: free5gcNow you can see the information of currently registered UEs (e.g. Supi, connected state, etc.) in the core network at the tab &amp;ldquo;DASHBOARD&amp;rdquo; of free5GC webconsole  Note: You can add the subscribers here too</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-configuration/</link>
+      <link>/free5gc.org/installations/stage-3-configuration/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-configuration/</guid>
+      <guid>/free5gc.org/installations/stage-3-configuration/</guid>
       <description>Configuration A. Configure SMF with S-NSSAI  Configure NF Registration SMF S-NSSAI in smfcfg.conf  snssai_info:- sNssai:sst:1sd:010203dnnSmfInfoList:- dnn:internet- sNssai:sst:1sd:112233dnnSmfInfoList:- dnn:internetB. Configure Uplink Classifier (ULCL) information in SMF  Enable ULCL feature in smfcfg.conf  ulcl:trueConfigure UE routing path in uerouting.yaml  ueRoutingInfo:- SUPI:imsi-2089300007487AN:10.200.200.101PathList:- DestinationIP:60.60.0.101DestinationPort:8888UPF:!!seq- BranchingUPF- AnchorUPF1- DestinationIP:60.60.0.103DestinationPort:9999UPF:!!seq- BranchingUPF- AnchorUPF2 DestinationIP and DestinationPort will be the packet destination.</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-environment/</link>
+      <link>/free5gc.org/installations/stage-3-environment/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-environment/</guid>
+      <guid>/free5gc.org/installations/stage-3-environment/</guid>
       <description>Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
 You can use go version to check your current Go version.
 - Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet.</description>
@@ -86,19 +86,19 @@ You can use go version to check your current Go version.
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-free5gc/</link>
+      <link>/free5gc.org/installations/stage-3-free5gc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-free5gc/</guid>
+      <guid>/free5gc.org/installations/stage-3-free5gc/</guid>
       <description>Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-installation/</link>
+      <link>/free5gc.org/installations/stage-3-installation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-installation/</guid>
+      <guid>/free5gc.org/installations/stage-3-installation/</guid>
       <description>Installation A. Pre-requisite  Required kernel version 5.0.0-23-generic. This request is from the module gtp5g that we has used. Any more details please check here
 # Check kernel version $ uname -r 5.0.0-23-generic   Require go language
  If another version of Go is installed  Please remove the previous Go version  sudo rm -rf /usr/local/go   Install Go 1.</description>
@@ -106,10 +106,10 @@ You can use go version to check your current Go version.
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-run/</link>
+      <link>/free5gc.org/installations/stage-3-run/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-run/</guid>
+      <guid>/free5gc.org/installations/stage-3-run/</guid>
       <description>Run A. Run Core Network Option 1. Run network function service individually, e.g. AMF (redo this for each NF), or
 cd ~/free5gc ./bin/amf Note: For N3IWF needs specific configuration in section B
 Option 2. Run whole core network with command
@@ -118,20 +118,20 @@ Option 2. Run whole core network with command
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-smf-config/</link>
+      <link>/free5gc.org/installations/stage-3-smf-config/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-smf-config/</guid>
+      <guid>/free5gc.org/installations/stage-3-smf-config/</guid>
       <description>SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
 ULCL limitation: The branching UPF now can&amp;rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-test/</link>
+      <link>/free5gc.org/installations/stage-3-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-test/</guid>
+      <guid>/free5gc.org/installations/stage-3-test/</guid>
       <description>Test Start Wireshark to capture any interface with pfcp||icmp||gtp filter and run the tests below to simulate the procedures:
 cd ~/free5gc chmod +x ./test.sh a. TestRegistration
 (In directory: ~/free5gc) ./test.sh TestRegistration b. TestServiceRequest
@@ -144,20 +144,20 @@ cd ~/free5gc chmod +x ./test.sh a. TestRegistration
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3-trouble-shooting/</link>
+      <link>/free5gc.org/installations/stage-3-trouble-shooting/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3-trouble-shooting/</guid>
+      <guid>/free5gc.org/installations/stage-3-trouble-shooting/</guid>
       <description>Trouble Shooting 1. ERROR: [SCTP] Failed to connect given AMF N3IWF=NGAP This error occured when N3IWF was started before AMF finishing initialization. This error usually appears when you run the TestNon3GPP in the first time.
 Rerun the test should be fine. If it still not be solved, larger the sleeping time in line 110 of test.</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://free5gc.org/installations/stage-3/</link>
+      <link>/free5gc.org/installations/stage-3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/installations/stage-3/</guid>
+      <guid>/free5gc.org/installations/stage-3/</guid>
       <description>Welcome to the free5gc wiki!
 For installation, please check:
  Environment Installation  For how to configure, check on:
@@ -168,10 +168,10 @@ For installation, please check:
     
     <item>
       <title></title>
-      <link>http://free5gc.org/membership/</link>
+      <link>/free5gc.org/membership/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/membership/</guid>
+      <guid>/free5gc.org/membership/</guid>
       <description>Membership Info You can also download the PDF file here.
 Membership services Early access: We provide the service that members can access the source code of free5GC before it is official released.
 Discount for workshop and seminar: We will regularly hold 5G telecommunication-related workshop and seminar. The discount for attending those</description>
@@ -179,10 +179,10 @@ Discount for workshop and seminar: We will regularly hold 5G telecommunication-r
     
     <item>
       <title></title>
-      <link>http://free5gc.org/roadmap/</link>
+      <link>/free5gc.org/roadmap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://free5gc.org/roadmap/</guid>
+      <guid>/free5gc.org/roadmap/</guid>
       <description>Roadmap of free5GC project: Stage 1 (released in January 2019): migrated 4G Evolved Packet Core (EPC) into 5GC Service-Based Architecture (SBA) Note: Stage 1 will be upgraded to support Non-standalone 5G feature
  Migrated the entities of 4G EPC, including Mobile Mobility Entity (MME), Serving Gateway (SGW) and Packet Data Network Gateway (PGW) into 5GC functions of Access and Mobility Management Function (AMF), Session Management Function (SMF) and User Plane Function (UPF).</description>
     </item>
