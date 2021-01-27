@@ -12,7 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/contactus/</guid>
-      <description>Contact UsFor services and sales information, please contact Ms. Hsiaotsui Chen:Email: tsuitsui96@gmail.comTel: 1-800-409-9811 ext. 54790free5GC email: free5GC.org@gmail.com</description>
+      <description>Contact Us For services and sales information, please contact Ms. Hsiaotsui Chen:  Email: 5GC.hr2021@gmail.com Tel: 1-800-409-9811 ext. 54790  free5GC email: free5GC.org@gmail.com</description>
     </item>
     
     <item>
@@ -21,7 +21,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/history/</guid>
-      <description>History of free5GC project: Stage 3: free5GC v3.0.0  AMF  Support SMF selection at PDU session establishment Fix SUCI handling procedure   SMF  Feature . ULCL by config . Authorized QoS Bugfix . PDU Session Establishment PDUAddress Information . PDU Session Establishment N1 Message . SMContext Release Procedure   UPF:  ULCL feature support SDF Filter support N9 interface   OAM  Get Registered UE Context API OAM web UI to display Registered UE Context   N3IWF  Support Registration procedure for untrusted non-3GPP access Support UE Requested PDU Session Establishment via Untrusted non-3GPP Access   UDM  SUCI to SUPI de-concealment Notification  Callback notification to NF ( in SDM service) UDM initiated deregistration notification to NF ( in UECM service)      Contributors: National Chiao Tung University: Chi Chang, Yao-Wen Chang, Jyh-Cheng Chen, Liang-Yu Chen, Te-Chih Chiu, Chia-Tso Chu, Jairus Dah, Wei-Ting Hu, Chia-An Lee, Yan-Jie Lin, Yi-Bing Jason Lin, Jyun-Yu Syu, Sebastian Tan, Fu-Lian Weng, Chi-En Wei, Wei-Chun Yang</description>
+      <description>History of free5GC project: Stage 3: free5GC v3.0.0  AMF  Support SMF selection at PDU session establishment Fix SUCI handling procedure   SMF  Feature . ULCL by config . Authorized QoS Bugfix . PDU Session Establishment PDUAddress Information . PDU Session Establishment N1 Message . SMContext Release Procedure   UPF:  ULCL feature support SDF Filter support N9 interface   OAM  Get Registered UE Context API OAM web UI to display Registered UE Context   N3IWF  Support Registration procedure for untrusted non-3GPP access Support UE Requested PDU Session Establishment via Untrusted non-3GPP Access   UDM  SUCI to SUPI de-concealment Notification  Callback notification to NF ( in SDM service) UDM initiated deregistration notification to NF ( in UECM service)       Contributors: National Chiao Tung University: Chi Chang, Yao-Wen Chang, Jyh-Cheng Chen, Liang-Yu Chen, Te-Chih Chiu, Chia-Tso Chu, Jairus Dah, Wei-Ting Hu, Chia-An Lee, Yan-Jie Lin, Yi-Bing Jason Lin, Jyun-Yu Syu, Sebastian Tan, Fu-Lian Weng, Chi-En Wei, Wei-Chun Yang</description>
     </item>
     
     <item>
@@ -42,7 +42,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-1-cluster/</guid>
-      <description>free5GC Distributed Installation Guide Network Topology Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc.</description>
+      <description>free5GC Distributed Installation Guide Network Topology  Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc.</description>
     </item>
     
     <item>
@@ -61,7 +61,7 @@ You can use go version to check your current Go version.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-appendix/</guid>
-      <description>Appendix A: OAM  Run the OAM server  cd webconsolego run server.goAccess the OAM by  URL: http://localhost:5000Username: adminPassword: free5gcNow you can see the information of currently registered UEs (e.g. Supi, connected state, etc.) in the core network at the tab &amp;ldquo;DASHBOARD&amp;rdquo; of free5GC webconsole  Note: You can add the subscribers here too</description>
+      <description>Appendix A: OAM  Run the OAM server  cd webconsole go run server.go Access the OAM by  URL: http://localhost:5000 Username: admin Password: free5gc Now you can see the information of currently registered UEs (e.g. Supi, connected state, etc.) in the core network at the tab &amp;ldquo;DASHBOARD&amp;rdquo; of free5GC webconsole  Note: You can add the subscribers here too</description>
     </item>
     
     <item>
@@ -70,7 +70,31 @@ You can use go version to check your current Go version.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-configuration/</guid>
-      <description>Configuration A. Configure SMF with S-NSSAI  Configure NF Registration SMF S-NSSAI in smfcfg.conf  snssai_info:- sNssai:sst:1sd:010203dnnSmfInfoList:- dnn:internet- sNssai:sst:1sd:112233dnnSmfInfoList:- dnn:internetB. Configure Uplink Classifier (ULCL) information in SMF  Enable ULCL feature in smfcfg.conf  ulcl:trueConfigure UE routing path in uerouting.yaml  ueRoutingInfo:- SUPI:imsi-2089300007487AN:10.200.200.101PathList:- DestinationIP:60.60.0.101DestinationPort:8888UPF:!!seq- BranchingUPF- AnchorUPF1- DestinationIP:60.60.0.103DestinationPort:9999UPF:!!seq- BranchingUPF- AnchorUPF2 DestinationIP and DestinationPort will be the packet destination.</description>
+      <description>SBI Configuration There are registerIP and bindingIP design on every NF&amp;rsquo;s sbi interface.
+This is due to some orchestration, such as Kubernets or OpenStack, has the design of service IP mapping.
+Use Kubernets as an example. K8S has the service type that enable users to define the service IP outside the pod.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-demo-tw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-demo-tw/</guid>
+      <description>free5GC Stage 3 安裝示範 此示範分兩階段。第一部分我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3 執行 free5GC 的測試腳本  第二部分我們將：
+ 建立第二個 Ubuntu Server VM 藉由 SSH, install a third-party UE and RAN emulator on the VM 藉由 SSH 連線到此 VM， 安裝一開源 UE 及 RAN 的模擬器 (UERANSIM) 啟動 free5GC 5G 核網，並使用此模擬器經由核網連線至網際網路  1.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-demo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-demo/</guid>
+      <description>free5GC Stage 3 Installation Demo In the first part of the demo, we will
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 run free5GC test scripts  In the second part, we will
+ create another Ubuntu Server VM via SSH, install a third-party UE and RAN emulator on the VM use the emulator to access Internet through the free5GC core network  1.</description>
     </item>
     
     <item>
@@ -79,9 +103,10 @@ You can use go version to check your current Go version.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-environment/</guid>
-      <description>Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
-You can use go version to check your current Go version.
-- Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet.</description>
+      <description>Recommended Environment free5gc has been tested against the following environment:
+ Software  OS: Ubuntu 18.04 gcc 7.3.0 Go 1.14.4 linux/amd64 kernel version 5.0.0-23-generic    The listed kernel version is required for the UPF element.
+  Minimum Hardware
+ CPU: Intel i5 processor RAM: 4GB Hard drive: 160GB NIC: Any 1Gbps Ethernet card supported in the Linux kernel    Recommended Hardware</description>
     </item>
     
     <item>
@@ -99,9 +124,21 @@ You can use go version to check your current Go version.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-installation/</guid>
-      <description>Installation A. Pre-requisite  Required kernel version 5.0.0-23-generic. This request is from the module gtp5g that we has used. Any more details please check here
-# Check kernel version $ uname -r 5.0.0-23-generic   Require go language
- If another version of Go is installed  Please remove the previous Go version  sudo rm -rf /usr/local/go   Install Go 1.</description>
+      <description>Installation A. Prerequisites   Linux Kernel Version
+ In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-old/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-old/</guid>
+      <description>  free5GC Stage 3 Installation Guide For installation, please check:
+ Environment Installation A Step-by-step Installation Example (中文版)  For how to configure, check on:
+ Configuration SMF  For Running free5GC, check:
+ Testing free5GC Running free5GC free5GC Compose  Others
+ Trouble Shooting Appendix  </description>
     </item>
     
     <item>
@@ -110,10 +147,10 @@ You can use go version to check your current Go version.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-run/</guid>
-      <description>Run A. Run Core Network Option 1. Run network function service individually, e.g. AMF (redo this for each NF), or
-cd ~/free5gc ./bin/amf Note: For N3IWF needs specific configuration in section B
-Option 2. Run whole core network with command
-./run.shB. Run N3IWF (Individually) To run N3IWF, make sure the machine is equipped with three network interfaces.</description>
+      <description>Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
+cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
+Option 2. Run whole core network
+cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.</description>
     </item>
     
     <item>
@@ -132,14 +169,14 @@ ULCL limitation: The branching UPF now can&amp;rsquo;t connect to the Internet. 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-test/</guid>
-      <description>Test Start Wireshark to capture any interface with pfcp||icmp||gtp filter and run the tests below to simulate the procedures:
-cd ~/free5gc chmod +x ./test.sh a. TestRegistration
-(In directory: ~/free5gc) ./test.sh TestRegistration b. TestServiceRequest
-./test.sh TestServiceRequest c. TestXnHandover
-./test.sh TestXnHandover d. TestDeregistration
-./test.sh TestDeregistration e. TestPDUSessionReleaseRequest
-./test.sh TestPDUSessionReleaseRequest f. TestPaging
-./test.sh TestPagingg.</description>
+      <description>Test Start a Wireshark capture on any core-connected interface, applying the filter &#39;pfcp||icmp||gtp&#39;.
+In order to run the tests, first do this:
+cd ~/free5gc chmod +x ./test.sh The tests are all run from within ~/free5gc.
+a. TestRegistration
+./test.sh TestRegistration b. TestGUTIRegistration
+./test.sh TestGUTIRegistration c. TestServiceRequest
+./test.sh TestServiceRequest d. TestXnHandover
+./test.sh TestXnHandover e.</description>
     </item>
     
     <item>
@@ -154,15 +191,35 @@ Rerun the test should be fine. If it still not be solved, larger the sleeping ti
     
     <item>
       <title></title>
+      <link>https://free5gc.org/installations/stage-3-vm-basics-tw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-vm-basics-tw/</guid>
+      <description>Ubuntu 虛擬機器安裝示範 此示範我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &amp;ldquo;virtualbox download&amp;quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
+VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
+ 2. 下載最新 Ubuntu Server LTS 搜尋 &amp;ldquo;ubuntu server download&amp;quot;，到 Ubuntu 官網 下載最新 Ubuntu Server LTS 的 .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-vm-basics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-vm-basics/</guid>
+      <description>Ubuntu Virtual Machine Installation Demo In this demo, we will
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3  1. Install VirtualBox   search &amp;ldquo;virtualbox download&amp;rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://free5gc.org/installations/stage-3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3/</guid>
-      <description>free5GC Stage 3 Installation Guide For installation, please check:
- Environment Installation  For how to configure, check on:
- Configuration SMF  For Running free5GC, check:
- Testing free5GC Running free5GC free5GC Compose  Others
- Trouble Shooting Appendix  </description>
+      <description>  free5GC Stage 3 Installation Guide For information about installation and configuration of the latest free5GC, please visit
+ free5GC Documentation  For people who are not familiar with virtual machine and Linux installation, here are some example instructions:
+ Creating a Ubuntu VM using VirtualBox (Chinese Version)  </description>
     </item>
     
     <item>
@@ -171,7 +228,7 @@ Rerun the test should be fine. If it still not be solved, larger the sleeping ti
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/membership/</guid>
-      <description>Membership Info You can also download the PDF file here.
+      <description>Membership Info  You can also download the PDF file here.
 Membership services Early access: We provide the service that members can access the source code of free5GC before it is official released.
 Discount for workshop and seminar: We will regularly hold 5G telecommunication-related workshop and seminar. The discount for attending those</description>
     </item>

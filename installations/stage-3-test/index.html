@@ -7,14 +7,14 @@
 
 
 <meta property="og:title" content="" />
-<meta property="og:description" content="Test Start Wireshark to capture any interface with pfcp||icmp||gtp filter and run the tests below to simulate the procedures:
-cd ~/free5gc chmod &#43;x ./test.sh a. TestRegistration
-(In directory: ~/free5gc) ./test.sh TestRegistration b. TestServiceRequest
-./test.sh TestServiceRequest c. TestXnHandover
-./test.sh TestXnHandover d. TestDeregistration
-./test.sh TestDeregistration e. TestPDUSessionReleaseRequest
-./test.sh TestPDUSessionReleaseRequest f. TestPaging
-./test.sh TestPagingg." />
+<meta property="og:description" content="Test Start a Wireshark capture on any core-connected interface, applying the filter &#39;pfcp||icmp||gtp&#39;.
+In order to run the tests, first do this:
+cd ~/free5gc chmod &#43;x ./test.sh The tests are all run from within ~/free5gc.
+a. TestRegistration
+./test.sh TestRegistration b. TestGUTIRegistration
+./test.sh TestGUTIRegistration c. TestServiceRequest
+./test.sh TestServiceRequest d. TestXnHandover
+./test.sh TestXnHandover e." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://free5gc.org/installations/stage-3-test/" />
 
@@ -23,15 +23,15 @@ cd ~/free5gc chmod &#43;x ./test.sh a. TestRegistration
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Test Start Wireshark to capture any interface with pfcp||icmp||gtp filter and run the tests below to simulate the procedures:
-cd ~/free5gc chmod &#43;x ./test.sh a. TestRegistration
-(In directory: ~/free5gc) ./test.sh TestRegistration b. TestServiceRequest
-./test.sh TestServiceRequest c. TestXnHandover
-./test.sh TestXnHandover d. TestDeregistration
-./test.sh TestDeregistration e. TestPDUSessionReleaseRequest
-./test.sh TestPDUSessionReleaseRequest f. TestPaging
-./test.sh TestPagingg."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="twitter:description" content="Test Start a Wireshark capture on any core-connected interface, applying the filter &#39;pfcp||icmp||gtp&#39;.
+In order to run the tests, first do this:
+cd ~/free5gc chmod &#43;x ./test.sh The tests are all run from within ~/free5gc.
+a. TestRegistration
+./test.sh TestRegistration b. TestGUTIRegistration
+./test.sh TestGUTIRegistration c. TestServiceRequest
+./test.sh TestServiceRequest d. TestXnHandover
+./test.sh TestXnHandover e."/>
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -40,7 +40,7 @@ cd ~/free5gc chmod &#43;x ./test.sh a. TestRegistration
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://free5gc.org/installations/stage-3-test/",
-  "wordCount": "65",
+  "wordCount": "81",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -60,13 +60,13 @@ cd ~/free5gc chmod &#43;x ./test.sh a. TestRegistration
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -185,27 +185,32 @@ cd ~/free5gc chmod &#43;x ./test.sh a. TestRegistration
 </p>
   </header>
   <h2 id="test">Test</h2>
-<p>Start Wireshark to capture any interface with <code>pfcp||icmp||gtp</code> filter and run the tests below to simulate the procedures:</p>
+<p>Start a Wireshark capture on any core-connected interface, applying the filter <code>'pfcp||icmp||gtp'</code>.</p>
+<p>In order to run the tests, first do this:</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
 chmod +x ./test.sh
-</code></pre></div><p>a. TestRegistration</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#666">(</span>In directory: ~/free5gc<span style="color:#666">)</span>
-./test.sh TestRegistration
-</code></pre></div><p>b. TestServiceRequest</p>
+</code></pre></div><p>The tests are all run from within <code>~/free5gc</code>.</p>
+<p>a. TestRegistration</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestRegistration
+</code></pre></div><p>b. TestGUTIRegistration</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestGUTIRegistration
+</code></pre></div><p>c. TestServiceRequest</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestServiceRequest
-</code></pre></div><p>c. TestXnHandover</p>
+</code></pre></div><p>d. TestXnHandover</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestXnHandover
-</code></pre></div><p>d. TestDeregistration</p>
+</code></pre></div><p>e. TestDeregistration</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestDeregistration
-</code></pre></div><p>e. TestPDUSessionReleaseRequest</p>
+</code></pre></div><p>f. TestPDUSessionReleaseRequest</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestPDUSessionReleaseRequest
-</code></pre></div><p>f. TestPaging</p>
-<pre><code class="language-!" data-lang="!">./test.sh TestPaging
-</code></pre><p>g. TestN2Handover</p>
-<pre><code class="language-!" data-lang="!">./test.sh TestN2Handover
-</code></pre><p>h. TestNon3GPP</p>
+</code></pre></div><p>g. TestPaging</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestPaging
+</code></pre></div><p>h. TestN2Handover</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestN2Handover
+</code></pre></div><p>i. TestNon3GPP</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestNon3GPP
-</code></pre></div><p>i. TestULCL</p>
+</code></pre></div><p>j. TestReSynchronisation</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestReSynchronisation
+</code></pre></div><p>k. TestULCL</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test_ulcl.sh -om <span style="color:#40a070">3</span> TestRegistration
 </code></pre></div>
 

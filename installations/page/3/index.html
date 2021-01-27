@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Installations"/>
 <meta name="twitter:description" content="A simple Hugo theme based on the Bootstrap v4 blog example."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -45,13 +45,13 @@
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -169,17 +169,70 @@
 
 <article class="blog-post">
   <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-old/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+  </header>
+    free5GC Stage 3 Installation Guide For installation, please check:
+ Environment Installation A Step-by-step Installation Example (中文版)  For how to configure, check on:
+ Configuration SMF  For Running free5GC, check:
+ Testing free5GC Running free5GC free5GC Compose  Others
+ Trouble Shooting Appendix  
+  <a href='https://free5gc.org/installations/stage-3-old/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-run/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+  </header>
+  Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
+cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
+Option 2. Run whole core network
+cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.
+  <a href='https://free5gc.org/installations/stage-3-run/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-smf-config/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+  </header>
+  SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
+ULCL limitation: The branching UPF now can&rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)
+  <a href='https://free5gc.org/installations/stage-3-smf-config/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-test/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
   </header>
-  Test Start Wireshark to capture any interface with pfcp||icmp||gtp filter and run the tests below to simulate the procedures:
-cd ~/free5gc chmod +x ./test.sh a. TestRegistration
-(In directory: ~/free5gc) ./test.sh TestRegistration b. TestServiceRequest
-./test.sh TestServiceRequest c. TestXnHandover
-./test.sh TestXnHandover d. TestDeregistration
-./test.sh TestDeregistration e. TestPDUSessionReleaseRequest
-./test.sh TestPDUSessionReleaseRequest f. TestPaging
-./test.sh TestPagingg.
+  Test Start a Wireshark capture on any core-connected interface, applying the filter 'pfcp||icmp||gtp'.
+In order to run the tests, first do this:
+cd ~/free5gc chmod +x ./test.sh The tests are all run from within ~/free5gc.
+a. TestRegistration
+./test.sh TestRegistration b. TestGUTIRegistration
+./test.sh TestGUTIRegistration c. TestServiceRequest
+./test.sh TestServiceRequest d. TestXnHandover
+./test.sh TestXnHandover e.
   <a href='https://free5gc.org/installations/stage-3-test/'></a>
 </article> 
 
@@ -204,30 +257,11 @@ Rerun the test should be fine. If it still not be solved, larger the sleeping ti
 
 
 
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
-  </header>
-  free5GC Stage 3 Installation Guide For installation, please check:
- Environment Installation  For how to configure, check on:
- Configuration SMF  For Running free5GC, check:
- Testing free5GC Running free5GC free5GC Compose  Others
- Trouble Shooting Appendix  
-  <a href='https://free5gc.org/installations/stage-3/'></a>
-</article> 
-
-
-
-
-
-
 <nav class="blog-pagination">
   
-  
   <a class="btn btn-outline-primary" href="/installations/page/2/" rel="prev" role="button"></a>
-  <a class="btn btn-outline-primary disabled" href="#" role="button" aria-disabled="true"></a>
+  <a class="btn btn-outline-primary" href="/installations/page/4/" rel="next" role="button"></a>
+  
   
   
 </nav>

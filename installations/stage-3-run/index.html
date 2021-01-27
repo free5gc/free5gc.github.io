@@ -7,10 +7,10 @@
 
 
 <meta property="og:title" content="" />
-<meta property="og:description" content="Run A. Run Core Network Option 1. Run network function service individually, e.g. AMF (redo this for each NF), or
-cd ~/free5gc ./bin/amf Note: For N3IWF needs specific configuration in section B
-Option 2. Run whole core network with command
-./run.shB. Run N3IWF (Individually) To run N3IWF, make sure the machine is equipped with three network interfaces." />
+<meta property="og:description" content="Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
+cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
+Option 2. Run whole core network
+cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://free5gc.org/installations/stage-3-run/" />
 
@@ -19,11 +19,11 @@ Option 2. Run whole core network with command
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Run A. Run Core Network Option 1. Run network function service individually, e.g. AMF (redo this for each NF), or
-cd ~/free5gc ./bin/amf Note: For N3IWF needs specific configuration in section B
-Option 2. Run whole core network with command
-./run.shB. Run N3IWF (Individually) To run N3IWF, make sure the machine is equipped with three network interfaces."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="twitter:description" content="Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
+cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
+Option 2. Run whole core network
+cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon."/>
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -32,7 +32,7 @@ Option 2. Run whole core network with command
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://free5gc.org/installations/stage-3-run/",
-  "wordCount": "164",
+  "wordCount": "198",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -52,13 +52,13 @@ Option 2. Run whole core network with command
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -177,27 +177,31 @@ Option 2. Run whole core network with command
 </p>
   </header>
   <h2 id="run">Run</h2>
-<h3 id="a-run-core-network">A. Run Core Network</h3>
-<p>Option 1. Run network function service individually, e.g. AMF (redo this for each NF), or</p>
+<h3 id="a-run-the-core-network">A. Run the Core Network</h3>
+<p>Option 1. Run network function services individually.  For example, to run the AMF:</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
 ./bin/amf
-</code></pre></div><p><strong>Note: For N3IWF needs specific configuration in section B</strong></p>
-<p>Option 2. Run whole core network with command</p>
-<pre><code>./run.sh
-</code></pre><h3 id="b-run-n3iwf-individually">B. Run N3IWF (Individually)</h3>
-<p>To run N3IWF, make sure the machine is equipped with three network interfaces. (one is for connecting AMF, another is for connecting UPF, the other is for IKE daemon)</p>
-<p>We need to configure each interface with a suitable IP address.</p>
-<p>We have to create an interface for IPSec traffic:</p>
+</code></pre></div><p><strong>Note: The N3IWF needs specific configuration, which is detailed in section B.</strong></p>
+<p>Option 2. Run whole core network</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+./run.sh
+</code></pre></div><h3 id="b-run-the-n3iwf-individually">B. Run the N3IWF (Individually)</h3>
+<p>To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.</p>
+<p>Configure each interface with a suitable IP address.</p>
+<p>Create an interface for IPSec traffic:</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># replace &lt;...&gt; to suitable value</span>
 sudo ip link add ipsec0 <span style="color:#007020">type</span> vti <span style="color:#007020">local</span> &lt;IKEBindAddress&gt; remote 0.0.0.0 key &lt;IPSecInterfaceMark&gt;
 </code></pre></div><p>Assign an address to this interface, then bring it up:</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># replace &lt;...&gt; to suitable value</span>
 sudo ip address add &lt;IPSecInterfaceAddress/CIDRPrefix&gt; dev ipsec0
 sudo ip link <span style="color:#007020">set</span> dev ipsec0 up
-</code></pre></div><p>Run N3IWF (root privilege is required):</p>
+</code></pre></div><p>Run the N3IWF (root privilege is required):</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/
 sudo ./bin/n3iwf
-</code></pre></div><p>Or, you can use <a href="https://github.com/free5gc/free5GC-compose">free5GC-compose</a> to run free5GC inside the container.</p>
+</code></pre></div><h3 id="c-run-all-in-one-with-external-ran">C. Run all-in-one with external RAN</h3>
+<p>Refer to this <a href="./sample/ran_attach_config">sample config</a> if you wish to connect an external RAN with a complete free5GC core network.</p>
+<h3 id="d-deploy-within-containers">D. Deploy within containers</h3>
+<p><a href="https://github.com/free5gc/free5gc-compose/">free5gc-compose</a> provides a sample for the deployment of elements within containers.</p>
 
 
   

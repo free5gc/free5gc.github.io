@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Installations"/>
 <meta name="twitter:description" content="A simple Hugo theme based on the Bootstrap v4 blog example."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -45,13 +45,13 @@
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -190,7 +190,7 @@
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-1-cluster/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
   </header>
-  free5GC Distributed Installation Guide Network Topology Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc.
+  free5GC Distributed Installation Guide Network Topology  Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc.
   <a href='https://free5gc.org/installations/stage-1-cluster/'></a>
 </article> 
 
@@ -221,7 +221,7 @@ You can use go version to check your current Go version.
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-appendix/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
   </header>
-  Appendix A: OAM  Run the OAM server  cd webconsolego run server.goAccess the OAM by  URL: http://localhost:5000Username: adminPassword: free5gcNow you can see the information of currently registered UEs (e.g. Supi, connected state, etc.) in the core network at the tab &ldquo;DASHBOARD&rdquo; of free5GC webconsole  Note: You can add the subscribers here too
+  Appendix A: OAM  Run the OAM server  cd webconsole go run server.go Access the OAM by  URL: http://localhost:5000 Username: admin Password: free5gc Now you can see the information of currently registered UEs (e.g. Supi, connected state, etc.) in the core network at the tab &ldquo;DASHBOARD&rdquo; of free5GC webconsole  Note: You can add the subscribers here too
   <a href='https://free5gc.org/installations/stage-3-appendix/'></a>
 </article> 
 
@@ -236,7 +236,9 @@ You can use go version to check your current Go version.
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-configuration/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
   </header>
-  Configuration A. Configure SMF with S-NSSAI  Configure NF Registration SMF S-NSSAI in smfcfg.conf  snssai_info:- sNssai:sst:1sd:010203dnnSmfInfoList:- dnn:internet- sNssai:sst:1sd:112233dnnSmfInfoList:- dnn:internetB. Configure Uplink Classifier (ULCL) information in SMF  Enable ULCL feature in smfcfg.conf  ulcl:trueConfigure UE routing path in uerouting.yaml  ueRoutingInfo:- SUPI:imsi-2089300007487AN:10.200.200.101PathList:- DestinationIP:60.60.0.101DestinationPort:8888UPF:!!seq- BranchingUPF- AnchorUPF1- DestinationIP:60.60.0.103DestinationPort:9999UPF:!!seq- BranchingUPF- AnchorUPF2 DestinationIP and DestinationPort will be the packet destination.
+  SBI Configuration There are registerIP and bindingIP design on every NF&rsquo;s sbi interface.
+This is due to some orchestration, such as Kubernets or OpenStack, has the design of service IP mapping.
+Use Kubernets as an example. K8S has the service type that enable users to define the service IP outside the pod.
   <a href='https://free5gc.org/installations/stage-3-configuration/'></a>
 </article> 
 

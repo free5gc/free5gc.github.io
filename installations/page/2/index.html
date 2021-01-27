@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Installations"/>
 <meta name="twitter:description" content="A simple Hugo theme based on the Bootstrap v4 blog example."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -45,13 +45,13 @@
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -169,12 +169,47 @@
 
 <article class="blog-post">
   <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-demo-tw/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+  </header>
+  free5GC Stage 3 安裝示範 此示範分兩階段。第一部分我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3 執行 free5GC 的測試腳本  第二部分我們將：
+ 建立第二個 Ubuntu Server VM 藉由 SSH, install a third-party UE and RAN emulator on the VM 藉由 SSH 連線到此 VM， 安裝一開源 UE 及 RAN 的模擬器 (UERANSIM) 啟動 free5GC 5G 核網，並使用此模擬器經由核網連線至網際網路  1.
+  <a href='https://free5gc.org/installations/stage-3-demo-tw/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-demo/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+  </header>
+  free5GC Stage 3 Installation Demo In the first part of the demo, we will
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 run free5GC test scripts  In the second part, we will
+ create another Ubuntu Server VM via SSH, install a third-party UE and RAN emulator on the VM use the emulator to access Internet through the free5GC core network  1.
+  <a href='https://free5gc.org/installations/stage-3-demo/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-environment/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
   </header>
-  Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
-You can use go version to check your current Go version.
-- Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet.
+  Recommended Environment free5gc has been tested against the following environment:
+ Software  OS: Ubuntu 18.04 gcc 7.3.0 Go 1.14.4 linux/amd64 kernel version 5.0.0-23-generic    The listed kernel version is required for the UPF element.
+  Minimum Hardware
+ CPU: Intel i5 processor RAM: 4GB Hard drive: 160GB NIC: Any 1Gbps Ethernet card supported in the Linux kernel    Recommended Hardware
   <a href='https://free5gc.org/installations/stage-3-environment/'></a>
 </article> 
 
@@ -204,44 +239,9 @@ You can use go version to check your current Go version.
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-installation/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
   </header>
-  Installation A. Pre-requisite  Required kernel version 5.0.0-23-generic. This request is from the module gtp5g that we has used. Any more details please check here
-# Check kernel version $ uname -r 5.0.0-23-generic   Require go language
- If another version of Go is installed  Please remove the previous Go version  sudo rm -rf /usr/local/go   Install Go 1.
+  Installation A. Prerequisites   Linux Kernel Version
+ In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.
   <a href='https://free5gc.org/installations/stage-3-installation/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-run/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
-  </header>
-  Run A. Run Core Network Option 1. Run network function service individually, e.g. AMF (redo this for each NF), or
-cd ~/free5gc ./bin/amf Note: For N3IWF needs specific configuration in section B
-Option 2. Run whole core network with command
-./run.shB. Run N3IWF (Individually) To run N3IWF, make sure the machine is equipped with three network interfaces.
-  <a href='https://free5gc.org/installations/stage-3-run/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-smf-config/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
-  </header>
-  SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
-ULCL limitation: The branching UPF now can&rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)
-  <a href='https://free5gc.org/installations/stage-3-smf-config/'></a>
 </article> 
 
 

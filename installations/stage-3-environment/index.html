@@ -7,9 +7,10 @@
 
 
 <meta property="og:title" content="" />
-<meta property="og:description" content="Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
-You can use go version to check your current Go version.
-- Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet." />
+<meta property="og:description" content="Recommended Environment free5gc has been tested against the following environment:
+ Software  OS: Ubuntu 18.04 gcc 7.3.0 Go 1.14.4 linux/amd64 kernel version 5.0.0-23-generic    The listed kernel version is required for the UPF element.
+  Minimum Hardware
+ CPU: Intel i5 processor RAM: 4GB Hard drive: 160GB NIC: Any 1Gbps Ethernet card supported in the Linux kernel    Recommended Hardware" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://free5gc.org/installations/stage-3-environment/" />
 
@@ -18,10 +19,11 @@ You can use go version to check your current Go version.
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Recommended Environment  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.14.4 linux/amd64 QEMU emulator 2.11.1 kernel version 5.0.0-23-generic (MUST for UPF)    Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic
-You can use go version to check your current Go version.
-- Hardware - CPU: Intel i5 processor - RAM: 4GB - Hard drive: 160G - NIC card: 1Gbps ethernet card - Hardware recommended - CPU: Intel i7 processor - RAM: 8GB - Hard drive: 160G - NIC card: 10Gbps ethernet card Hardware Tested There are no gNB and UE for standalone 5GC available in the market yet."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="twitter:description" content="Recommended Environment free5gc has been tested against the following environment:
+ Software  OS: Ubuntu 18.04 gcc 7.3.0 Go 1.14.4 linux/amd64 kernel version 5.0.0-23-generic    The listed kernel version is required for the UPF element.
+  Minimum Hardware
+ CPU: Intel i5 processor RAM: 4GB Hard drive: 160GB NIC: Any 1Gbps Ethernet card supported in the Linux kernel    Recommended Hardware"/>
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -30,7 +32,7 @@ You can use go version to check your current Go version.
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://free5gc.org/installations/stage-3-environment/",
-  "wordCount": "100",
+  "wordCount": "119",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -50,13 +52,13 @@ You can use go version to check your current Go version.
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -175,32 +177,41 @@ You can use go version to check your current Go version.
 </p>
   </header>
   <h2 id="recommended-environment">Recommended Environment</h2>
+<p>free5gc has been tested against the following environment:</p>
 <ul>
 <li>Software
 <ul>
-<li>OS: Ubuntu 18.04 or later versions</li>
+<li>OS: Ubuntu 18.04</li>
 <li>gcc 7.3.0</li>
 <li>Go 1.14.4 linux/amd64</li>
-<li>QEMU emulator 2.11.1</li>
-<li>kernel version 5.0.0-23-generic (MUST for UPF)</li>
+<li>kernel version 5.0.0-23-generic</li>
 </ul>
 </li>
 </ul>
-<p><strong>Note: Please use Ubuntu 18.04 and kernel version 5.0.0-23-generic</strong></p>
-<p>You can use <code>go version</code> to check your current Go version.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">- Hardware
-    - CPU: Intel i5 processor
-    - RAM: 4GB
-    - Hard drive: 160G
-    - NIC card: 1Gbps ethernet card
-
-- Hardware recommended
-    - CPU: Intel i7 processor
-    - RAM: 8GB
-    - Hard drive: 160G
-    - NIC card: 10Gbps ethernet card
-</code></pre></div><h2 id="hardware-tested">Hardware Tested</h2>
-<p>There are no gNB and UE for standalone 5GC available in the market yet.</p>
+<p>The listed kernel version is required for the UPF element.</p>
+<ul>
+<li>
+<p>Minimum Hardware</p>
+<ul>
+<li>CPU: Intel i5 processor</li>
+<li>RAM: 4GB</li>
+<li>Hard drive: 160GB</li>
+<li>NIC: Any 1Gbps Ethernet card supported in the Linux kernel</li>
+</ul>
+</li>
+<li>
+<p>Recommended Hardware</p>
+<ul>
+<li>CPU: Intel i7 processor</li>
+<li>RAM: 8GB</li>
+<li>Hard drive: 160GB</li>
+<li>NIC: Any 10Gbps Ethernet card supported in the Linux kernel</li>
+</ul>
+</li>
+</ul>
+<p>This guide assumes that you will run all 5GC elements on a single machine.</p>
+<h2 id="hardware-tested">Hardware Tested</h2>
+<p>In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.</p>
 
 
   

@@ -7,9 +7,8 @@
 
 
 <meta property="og:title" content="" />
-<meta property="og:description" content="Installation A. Pre-requisite  Required kernel version 5.0.0-23-generic. This request is from the module gtp5g that we has used. Any more details please check here
-# Check kernel version $ uname -r 5.0.0-23-generic   Require go language
- If another version of Go is installed  Please remove the previous Go version  sudo rm -rf /usr/local/go   Install Go 1." />
+<meta property="og:description" content="Installation A. Prerequisites   Linux Kernel Version
+ In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://free5gc.org/installations/stage-3-installation/" />
 
@@ -18,10 +17,9 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Installation A. Pre-requisite  Required kernel version 5.0.0-23-generic. This request is from the module gtp5g that we has used. Any more details please check here
-# Check kernel version $ uname -r 5.0.0-23-generic   Require go language
- If another version of Go is installed  Please remove the previous Go version  sudo rm -rf /usr/local/go   Install Go 1."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="twitter:description" content="Installation A. Prerequisites   Linux Kernel Version
+ In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5."/>
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -30,7 +28,7 @@
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://free5gc.org/installations/stage-3-installation/",
-  "wordCount": "336",
+  "wordCount": "484",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -50,13 +48,13 @@
 
     <!-- combined, minified CSS -->
     
-    <link href="https://free5gc.org/css/bootstrap-icons.0568af55d343ad2fc9c221a17a15697dc5ef49add4551c5eb3e59d7582385228.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
     
-    <link href="https://free5gc.org/css/style.73f0736b85bdf48090ed384697200a968c025d194f60717e37a515c4c87a8893.css" rel="stylesheet">
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
 
     <!-- minified base javascript -->
     
-    <script defer src="https://free5gc.org/js/base.e5993f7509e480925eff41173b2176d6d85ef3df70ad0388d9275d09f0c3d966.js" crossorigin="anonymous"></script>
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
 
     
 
@@ -175,116 +173,138 @@
 </p>
   </header>
   <h2 id="installation">Installation</h2>
-<h3 id="a-pre-requisite">A. Pre-requisite</h3>
-<ol start="0">
+<h3 id="a-prerequisites">A. Prerequisites</h3>
+<ol>
 <li>
-<p>Required kernel version <code>5.0.0-23-generic</code>. This request is from the module
-<a href="https://github.com/PrinzOwO/gtp5g">gtp5g</a> that we has used. Any more details
-please check <a href="https://github.com/PrinzOwO/gtp5g">here</a></p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># Check kernel version</span>
-$ uname -r
-5.0.0-23-generic
+<p>Linux Kernel Version</p>
+<ul>
+<li>In order to use the UPF element, you must use the <code>5.0.0-23-generic</code> version of the Linux kernel.  free5gc uses the <a href="https://github.com/PrinzOwO/gtp5g">gtp5g kernel module</a>, which has been tested and compiled against that kernel version only.  To determine the version of the Linux kernel you are using:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    $ uname -r
+    5.0.0-23-generic
 </code></pre></div></li>
+</ol>
+<p>You will not be able to run most of the tests in <a href="#test">Test</a> section unless you deploy a UPF.</p>
+<ol start="2">
 <li>
-<p>Require go language</p>
+<p>Golang Version</p>
 <ul>
-<li>If another version of Go is installed
-<ul>
-<li>Please remove the previous Go version
-<ul>
-<li><code>sudo rm -rf /usr/local/go</code></li>
+<li>As noted above, free5gc is built and tested with Go 1.14.4</li>
+<li>To check the version of Go on your system, from a command prompt:</li>
 </ul>
-</li>
-<li>Install Go 1.14.4
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
-sudo tar -C /usr/local -zxvf go1.14.4.linux-amd64.tar.gz
-</code></pre></div></li>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    go version
+</code></pre></div><ul>
+<li>If another version of Go is installed, remove the existing version and install Go 1.14.4:</li>
 </ul>
-</li>
-<li>Clean installation
-<ul>
-<li>Install Go 1.14.4
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
-sudo tar -C /usr/local -zxvf go1.14.4.linux-amd64.tar.gz
-mkdir -p ~/go/<span style="color:#666">{</span>bin,pkg,src<span style="color:#666">}</span>
-<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOPATH=$HOME/go&#39;</span> &gt;&gt; ~/.bashrc
-<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOROOT=/usr/local/go&#39;</span> &gt;&gt; ~/.bashrc
-<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export PATH=$PATH:$GOPATH/bin:$GOROOT/bin&#39;</span> &gt;&gt; ~/.bashrc
-<span style="color:#007020">source</span> ~/.bashrc
-</code></pre></div></li>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#60a0b0;font-style:italic"># this assumes your current version of Go is in the default location</span>
+    sudo rm -rf /usr/local/go
+    wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
+    sudo tar -C /usr/local -zxvf go1.14.4.linux-amd64.tar.gz
+</code></pre></div><ul>
+<li>If Go is not installed on your system:</li>
 </ul>
-</li>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
+    sudo tar -C /usr/local -zxvf go1.14.4.linux-amd64.tar.gz
+    mkdir -p ~/go/<span style="color:#666">{</span>bin,pkg,src<span style="color:#666">}</span>
+    <span style="color:#60a0b0;font-style:italic"># The following assume that your shell is bash</span>
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOPATH=$HOME/go&#39;</span> &gt;&gt; ~/.bashrc
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOROOT=/usr/local/go&#39;</span> &gt;&gt; ~/.bashrc
+    <span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export PATH=$PATH:$GOPATH/bin:$GOROOT/bin&#39;</span> &gt;&gt; ~/.bashrc
+    <span style="color:#007020">source</span> ~/.bashrc
+</code></pre></div><ul>
+<li>Further information and installation instructions for <code>golang</code> are available at the <a href="https://golang.org/doc/install">official golang site</a>.</li>
 </ul>
 </li>
 <li>
-<p>Required packages for control plane</p>
+<p>Control-plane Supporting Pacakges</p>
+</li>
+</ol>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt -y update
 sudo apt -y install mongodb wget git
 sudo systemctl start mongodb
-</code></pre></div></li>
-<li>
-<p>Required packages for user plane</p>
+</code></pre></div><ol start="4">
+<li>User-plane Supporting Packages</li>
+</ol>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt -y update
 sudo apt -y install git gcc cmake autoconf libtool pkg-config libmnl-dev libyaml-dev
 go get -u github.com/sirupsen/logrus
-</code></pre></div></li>
-<li>
-<p>Network Setting</p>
+</code></pre></div><ol start="5">
+<li>Linux Host Network Settings</li>
+</ol>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
 sudo iptables -t nat -A POSTROUTING -o &lt;dn_interface&gt; -j MASQUERADE
 sudo systemctl stop ufw
-</code></pre></div></li>
-</ol>
-<h3 id="b-install-control-plane-entities">B. Install Control Plane Entities</h3>
+</code></pre></div><h3 id="b-install-control-plane-elements">B. Install Control Plane Elements</h3>
 <ol>
 <li>
-<p>Clone free5GC project</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~
-git clone --recursive -b v3.0.3 -j <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span> https://github.com/free5gc/free5gc.git
-<span style="color:#007020">cd</span> free5gc
-</code></pre></div><p>(Optional) If you want to use the nightly version, runs:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
-git checkout master
-git submodule sync
-git submodule update --init --jobs <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
-git submodule foreach git checkout master
-git submodule foreach git pull --jobs <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+<p>Clone the free5GC repository</p>
+<ul>
+<li>To install the latest stable build (v3.0.4):</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~
+    git clone --recursive -b v3.0.4 -j <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span> https://github.com/free5gc/free5gc.git
+    <span style="color:#007020">cd</span> free5gc
+</code></pre></div><ul>
+<li>Alternatively, if you wish to install the latest nightly build:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~/free5gc
+    git checkout master
+    git submodule sync
+    git submodule update --init --jobs <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+    git submodule foreach git checkout master
+    git submodule foreach git pull --jobs <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
 </code></pre></div></li>
 <li>
-<p>Run the script to install dependent packages</p>
+<p>Install all Go module dependencies</p>
+</li>
+</ol>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
 go mod download
-</code></pre></div><p><strong>In step 2, the folder name should remain free5gc. Please do not modify it or the compilation would fail.</strong></p>
-</li>
+</code></pre></div><p><strong>NOTE: the root folder name for this repository must be <code>free5gc</code>.  If it is changed, compilation will fail.</strong></p>
+<ol start="3">
 <li>
-<p>Compile network function services in <code>free5gc</code> individually, e.g. AMF (redo this step for each NF), or</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
-go build -o bin/amf -x src/amf/amf.go
-</code></pre></div><p><strong>To build all network functions in one command</strong></p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./build.sh
+<p>Compile network function services in <code>free5gc</code></p>
+<ul>
+<li>To do so individually (e.g., AMF only):</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~/free5gc
+    make amf
+</code></pre></div><ul>
+<li>To build all network functions:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">    <span style="color:#007020">cd</span> ~/free5gc
+    make all
 </code></pre></div></li>
 </ol>
 <h3 id="c-install-user-plane-function-upf">C. Install User Plane Function (UPF)</h3>
 <ol>
-<li>
-<p>Please check Linux kernel version if it is <code>5.0.0-23-generic</code></p>
+<li>As noted above, the GTP kernel module used by the UPF requires that you use Linux kernel version <code>5.0.0-23-generic</code>.  To verify your version:</li>
+</ol>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">uname -r
-</code></pre></div><p>Get Linux kernel module 5G GTP-U</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git clone -b v0.1.0 https://github.com/PrinzOwO/gtp5g.git
+</code></pre></div><ol start="2">
+<li>Retrieve the 5G GTP-U kernel module using <code>git</code> and build it</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git clone https://github.com/PrinzOwO/gtp5g.git
 <span style="color:#007020">cd</span> gtp5g
 make
 sudo make install
-</code></pre></div></li>
+</code></pre></div><ol start="3">
 <li>
-<p>Build from sources</p>
+<p>Build the UPF (you may skip this step if you built all network functions above):</p>
+<p>a. to build using make:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+make upf
+</code></pre></div><p>b. alternatively, to build manually:</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/src/upf
 mkdir build
 <span style="color:#007020">cd</span> build
 cmake ..
 make -j<span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
 </code></pre></div></li>
+<li>
+<p>Customize the UPF as desired.  The UPF configuration file is <code>free5gc/src/upf/build/config/upfcfg.yaml</code>.</p>
+</li>
 </ol>
-<p><strong>Note: UPF&rsquo;s config is located at</strong> <code>free5gc/src/upf/build/config/upfcfg.yaml</code></p>
 
 
   
