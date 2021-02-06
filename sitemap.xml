@@ -48,6 +48,18 @@
   </url>
   
   <url>
+    <loc>https://free5gc.org/installations/stage-3-free5gc-app-tw/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/installations/stage-3-free5gc-install-tw/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/installations/stage-3-free5gc-vm-tw/</loc>
+  </url>
+  
+  <url>
     <loc>https://free5gc.org/installations/stage-3-free5gc/</loc>
   </url>
   
@@ -61,6 +73,10 @@
   
   <url>
     <loc>https://free5gc.org/installations/stage-3-run/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/installations/stage-3-sim-install-tw/</loc>
   </url>
   
   <url>
@@ -98,11 +114,103 @@
   </url>
   
   <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/clone-change-ip/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-install/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-ptt/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-test/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-webconsole/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/install-ubuntu-1/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/install-ubuntu-2/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/poweron-ssh/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/routing-setup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/setting-first-vm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/tools-install/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/ueransim-install/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/ueransim-vm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/update-upgrade-off/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/video-index/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/webconsole-addue/</loc>
+  </url>
+  
+  <url>
     <loc>https://free5gc.org/categories/</loc>
   </url>
   
   <url>
     <loc>https://free5gc.org/installations/</loc>
+  </url>
+  
+  <url>
+    <loc>https://free5gc.org/stage-3-videos-tw/</loc>
   </url>
   
   <url>

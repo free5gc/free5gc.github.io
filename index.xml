@@ -111,6 +111,47 @@ Use Kubernets as an example. K8S has the service type that enable users to defin
     
     <item>
       <title></title>
+      <link>https://free5gc.org/installations/stage-3-free5gc-app-tw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-free5gc-app-tw/</guid>
+      <description>free5GC 小試身手 此示範我們將利用 free5GC 核網 及 UE/RAN 模擬器操作一些簡單的網路應用：
+ ping + tcpdump wget ptt (ssh bbsu@ptt.cc)  ping + tcpdump 首先將 free5GC 核網及 UERANSIM 啟動 (free5gc 需要一個終端機， ueransim 需要兩個終端機）。
+再開啟新的終端機登入 ueransim:
+ssh 192.168.56.102 -l ubuntu 用 ifconfig 確認 uesimtun0 通道已建立，並用 ping 試試藉由 uesimtun0 能否連通：
+$ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-free5gc-install-tw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-free5gc-install-tw/</guid>
+      <description>安裝與測試 free5GC 核心網路 此示範我們將練習：
+ 安裝必需工具 安裝 free5GC 測試 free5GC  請注意下面的安裝流程是參考 free5GC 官網文件。
+未來 free5GC 若有版本更新而導致部分指令無法運作，請以官網資訊為準。
+1. 確定系統版本 先用 uname -r 確定 kernel 版本。若安裝 Ubuntu 20.04, 版本應為 5.4.x。
+$ uname -r 5.4.0-65-generic 請確認你的版本為5.0.0-23-generic 或 5.4.0 以後版本。
+2. 安裝基本工具 確定沒有安裝 go
+go version 若有安裝舊版本，請先刪除 (假設你的 go 是安裝在 /usr/local/go)：
+sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan install，會得到網址： Download and install</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-free5gc-vm-tw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-free5gc-vm-tw/</guid>
+      <description>建立 free5GC VM 及設定網路 此示範我們將練習：
+ 複製現有 VM，建立一個新的 free5GC VM 設定 free5GC VM 網路環境  參考影片 複製 VM 與設定 IP
+1. 檢查現有 VM 開啟 VirtualBox, 確認現有 Ubuntu VM (ubuntu) 可開機執行
+ 用 SSH 登入, 進入後確認可以連網 確定做過 sudo apt update 及 sudo apt upgrade 關機 sudo shutdown -P now  2. 建立 free5GC VM 先複製新的 VM:</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://free5gc.org/installations/stage-3-free5gc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -155,6 +196,17 @@ cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the 
     
     <item>
       <title></title>
+      <link>https://free5gc.org/installations/stage-3-sim-install-tw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-sim-install-tw/</guid>
+      <description>安裝 UE/RAN 模擬器 此示範我們將練習：
+ 安裝 UERANSIM 簡單測試 free5GC + UERANSIM  1. 建立 ueramsim VM 重複 free5gc VM 的建立步驟，產生一個新的 VM
+ VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的 成功後確定可以連網及使用 SSH 登入 更改 hostname 為 ueransim 設定 Host-only 網路介面卡靜態 IP 位址為 192.168.56.102 重新開機，並啟動 free5gc 在 ueransim ping 192.168.56.101 測試與 free5gc 的連線， 同樣在 free5gc ping 192.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://free5gc.org/installations/stage-3-smf-config/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -195,10 +247,10 @@ Rerun the test should be fine. If it still not be solved, larger the sleeping ti
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3-vm-basics-tw/</guid>
-      <description>Ubuntu 虛擬機器安裝示範 此示範我們將：
- 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &amp;ldquo;virtualbox download&amp;quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
+      <description>用 VirtualBox 建立 Ubuntu VM 此示範我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 為 Ubuntu 安裝更新  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &amp;ldquo;virtualbox download&amp;quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
 VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
- 2. 下載最新 Ubuntu Server LTS 搜尋 &amp;ldquo;ubuntu server download&amp;quot;，到 Ubuntu 官網 下載最新 Ubuntu Server LTS 的 .</description>
+ 2.</description>
     </item>
     
     <item>
@@ -217,9 +269,9 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://free5gc.org/installations/stage-3/</guid>
-      <description>  free5GC Stage 3 Installation Guide For information about installation and configuration of the latest free5GC, please visit
+      <description>free5GC Stage 3 Installation Guide For information about installation and configuration of the latest free5GC, please visit
  free5GC Documentation  For people who are not familiar with virtual machine and Linux installation, here are some example instructions:
- Creating a Ubuntu VM using VirtualBox (Chinese Version)  </description>
+ Creating a Ubuntu VM using VirtualBox  Chinese version:</description>
     </item>
     
     <item>
@@ -241,6 +293,204 @@ Discount for workshop and seminar: We will regularly hold 5G telecommunication-r
       <guid>https://free5gc.org/roadmap/</guid>
       <description>Roadmap of free5GC project: Stage 1 (released in January 2019): migrated 4G Evolved Packet Core (EPC) into 5GC Service-Based Architecture (SBA) Note: Stage 1 will be upgraded to support Non-standalone 5G feature
  Migrated the entities of 4G EPC, including Mobile Mobility Entity (MME), Serving Gateway (SGW) and Packet Data Network Gateway (PGW) into 5GC functions of Access and Mobility Management Function (AMF), Session Management Function (SMF) and User Plane Function (UPF).</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/clone-change-ip/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/clone-change-ip/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-install/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ptt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ptt/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-test/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-test/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-webconsole/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-webconsole/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/install-ubuntu-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/install-ubuntu-1/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/install-ubuntu-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/install-ubuntu-2/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/poweron-ssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/poweron-ssh/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/routing-setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/routing-setup/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/setting-first-vm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/setting-first-vm/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/tools-install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/tools-install/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/ueransim-install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/ueransim-install/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/ueransim-vm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/ueransim-vm/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/update-upgrade-off/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/update-upgrade-off/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/video-index/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/video-index/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/stage-3-videos-tw/webconsole-addue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/stage-3-videos-tw/webconsole-addue/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11.</description>
     </item>
     
   </channel>

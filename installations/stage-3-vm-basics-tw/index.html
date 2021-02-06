@@ -7,10 +7,10 @@
 
 
 <meta property="og:title" content="" />
-<meta property="og:description" content="Ubuntu 虛擬機器安裝示範 此示範我們將：
- 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &ldquo;virtualbox download&quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
+<meta property="og:description" content="用 VirtualBox 建立 Ubuntu VM 此示範我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 為 Ubuntu 安裝更新  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &ldquo;virtualbox download&quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
 VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
- 2. 下載最新 Ubuntu Server LTS 搜尋 &ldquo;ubuntu server download&quot;，到 Ubuntu 官網 下載最新 Ubuntu Server LTS 的 ." />
+ 2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://free5gc.org/installations/stage-3-vm-basics-tw/" />
 
@@ -19,11 +19,11 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Ubuntu 虛擬機器安裝示範 此示範我們將：
- 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &ldquo;virtualbox download&quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
+<meta name="twitter:description" content="用 VirtualBox 建立 Ubuntu VM 此示範我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 為 Ubuntu 安裝更新  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &ldquo;virtualbox download&quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
 VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
- 2. 下載最新 Ubuntu Server LTS 搜尋 &ldquo;ubuntu server download&quot;，到 Ubuntu 官網 下載最新 Ubuntu Server LTS 的 ."/>
-<meta name="generator" content="Hugo 0.80.0" />
+ 2."/>
+<meta name="generator" content="Hugo 0.79.1" />
 
     
 <script type="application/ld+json">
@@ -32,11 +32,11 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://free5gc.org/installations/stage-3-vm-basics-tw/",
-  "wordCount": "237",
+  "wordCount": "295",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
-    "name": "Your Name"
+    "name": "free5GC.ofg"
   }
 }
 </script>
@@ -176,12 +176,13 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
 
 </p>
   </header>
-  <h1 id="ubuntu-虛擬機器安裝示範">Ubuntu 虛擬機器安裝示範</h1>
+  <h1 id="用-virtualbox-建立-ubuntu-vm">用 VirtualBox 建立 Ubuntu VM</h1>
 <p>此示範我們將：</p>
 <ul>
 <li>安裝 VirtualBox</li>
 <li>在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器)</li>
-<li>在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3</li>
+<li>在本機藉由 SSH 連線到 Ubuntu</li>
+<li>為 Ubuntu 安裝更新</li>
 </ul>
 <h2 id="1-安裝-virtualbox">1. 安裝 VirtualBox</h2>
 <p>開啟瀏覽器搜尋 &ldquo;<code>virtualbox download</code>&quot;， 到 VirtualBox 官網
@@ -218,7 +219,7 @@ Mac 版本)：</p>
 <a href="https://ubuntu.com" target="_blank">官網</a>
 下載最新 Ubuntu Server LTS 的 .iso 光碟檔。(例如在本文撰寫當下的
 <a href="https://ubuntu.com/download/server" target="_blank">下載頁面</a>，
-選擇 Option 3 方式下載)。</p>
+選擇 Option 2 Manual server installation 方式下載)。</p>
 
 
 
@@ -250,13 +251,23 @@ Mac 版本)：</p>
 使用 Ubuntu Server，而不是 Ubuntu Desktop，是因為我們只需要基本的伺服器
 功能，Server 版本不會安裝許多不必要的功能機應用程式，空間需求較小且
 開機較快。</p>
-<p>安裝時有幾件注意事項：</p>
+<h4 id="產生新的-vm-時有幾件注意事項">產生新的 VM 時有幾件注意事項：</h4>
 <ul>
 <li>建議先將 VM 名稱設為 <code>ubuntu</code>, <code>ubuntu-server</code>, 或<code>ubuntu-20.04</code></li>
+<li>CPU 可選 1 或 2 個，記憶體可以到 2048 M，但這些都可以在開機前重設</li>
+<li>網路介面卡除了預設的 NAT 網卡之外，另外再加一個僅限主機 Host-only 介面卡</li>
+</ul>
+<p>參考影片 <a href="/stage-3-videos-tw/create-ubuntu-machine/" target="_blank">新增 VM</a>，
+<a href="/stage-3-videos-tw/setting-first-vm/" target="_blank">設定 VM</a></p>
+<h4 id="開始安裝-ubuntu">開始安裝 Ubuntu</h4>
+<ul>
 <li>使用者名稱及密碼建議簡短好打 (之後會常使用)</li>
 <li>建議硬碟格式化時不使用 LVM (日後延展硬碟空間時稍微簡單一點)</li>
-<li>建議選擇安裝 SSH Server，並讓安全更新下載跑完。(這些都可以之後再安裝)</li>
+<li>選擇安裝 SSH Server，並讓安全更新下載跑完。</li>
 </ul>
+<p>參考影片 <a href="/stage-3-videos-tw/install-ubuntu-1/" target="_blank">安裝 Ubuntu 1</a>
+，<a href="/stage-3-videos-tw/install-ubuntu-2/" target="_blank">安裝 Ubuntu 2</a></p>
+<h4 id="登入-ubuntu">登入 Ubuntu</h4>
 <p>Ubuntu 安裝完後重新開機，進入終端機視窗。第一次會有一些初始動作，等一會後
 輸入帳號密碼登入：</p>
 
@@ -272,16 +283,16 @@ Mac 版本)：</p>
 
 
 <p>先試 <code>ifconfig</code> 指令：</p>
-<pre><code>ubuntu@ubuntu:~$ ifconfig
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ubuntu@ubuntu:~$ ifconfig
 
-Command 'ifconfig' not found, but can be installed with:
+Command <span style="color:#4070a0">&#39;ifconfig&#39;</span> not found, but can be installed with:
 
 sudo apt install net-tools
 
 ubuntu@ubuntu:~$
-</code></pre><p>若有上列結果表示 <code>ifconfig</code> 尚未安裝，照其指示下安裝指令並輸入密碼：</p>
-<pre><code>ubuntu@ubuntu:~$ sudo apt install net-tools
-</code></pre><p>下圖為安裝結果：</p>
+</code></pre></div><p>若有上列結果表示 <code>ifconfig</code> 尚未安裝，照其指示下安裝指令並輸入密碼：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ubuntu@ubuntu:~$ sudo apt install net-tools
+</code></pre></div><p>下圖為安裝結果：</p>
 
 
 
@@ -307,13 +318,13 @@ ubuntu@ubuntu:~$
 	
 
 
-<p>上圖的執行結果如下：</p>
-<pre><code></code></pre><p>你的執行結果根據你的設定可能有些不同，但要注意 Host-only 網路卡所
+<p>你的執行結果根據你的設定可能有些不同，但要注意僅限主機 (Host-only) 介面卡所
 使用的 IP 網站。上面的例子為 192.168.56.101。
-你的本機程式可藉由 這網址與 Ubuntu 連縣。(另 10.0.2.15 為 NAT 網卡)</p>
+你的本機程式可藉由這網址與 Ubuntu 連線。(另一 IP 網址 10.0.2.15 為 NAT 網卡,
+本機程式無法與之建立連線)。</p>
 <p>最後試試有無連至網際網路:</p>
-<pre><code>ubuntu@ubuntu:~$ ping google.com
-</code></pre>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ubuntu@ubuntu:~$ ping google.com
+</code></pre></div>
 
 
 	
@@ -325,6 +336,8 @@ ubuntu@ubuntu:~$
 	
 
 
+<p>參考影片 <a href="/stage-3-videos-tw/ping-ifconfig-poweroff/" target="_blank">
+初步操作</a></p>
 <h2 id="4-使用-ssh-連到-ubuntu-vm">4. 使用 SSH 連到 Ubuntu VM</h2>
 <p>在本機開啟 SSH 客戶端程式。Windows，Mac，及部分 Windows 均有預先安裝
 的 SSH 程式。Windows 環境也可另外下載，例如搜尋 &ldquo;<code>windows ssh download</code>&rdquo;
@@ -333,8 +346,8 @@ ubuntu@ubuntu:~$
 反之亦然，而且可以同時建立多個 SSH 連線與 Ubuntu 溝通進行操作。</p>
 <p>下圖為 Mac 的圖示，先開啟終端機後，輸入如下指令(
 假設 Ubuntu 的 Host-only 網卡網址為 192.168.56.101，而使用者為 ubuntu)：</p>
-<pre><code>ssh 192.168.56.101 -l ubuntu
-</code></pre><p>第一次連至此 VM 時 SSH 會詢問是否要建立連線，輸入 <code>yes</code>：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ssh 192.168.56.101 -l ubuntu
+</code></pre></div><p>第一次連至此 VM 時 SSH 會詢問是否要建立連線，輸入 <code>yes</code>：</p>
 
 
 
@@ -388,6 +401,12 @@ ubuntu@ubuntu:~$
 	
 
 
+<p>參考影片 <a href="/stage-3-videos-tw/poweron-ssh/" target="_blank">使用 SSH</a></p>
+<h2 id="5-在-ssh-裡更新-ubuntu">5. 在 SSH 裡更新 Ubuntu</h2>
+<p>我們利用這機會將 Ubunte 更新，強化系統安全性。</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt upgrade
+</code></pre></div><p>參考影片 <a href="/stage-3-videos-tw/update-upgrade-off/" target="_blank">更新系統</a></p>
 
 
   

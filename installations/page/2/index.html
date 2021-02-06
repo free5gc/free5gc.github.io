@@ -7,7 +7,7 @@
 
 
 <meta property="og:title" content="Installations" />
-<meta property="og:description" content="A simple Hugo theme based on the Bootstrap v4 blog example." />
+<meta property="og:description" content="The free5GC Official Site" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://free5gc.org/installations/" />
 
@@ -16,8 +16,8 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Installations"/>
-<meta name="twitter:description" content="A simple Hugo theme based on the Bootstrap v4 blog example."/>
-<meta name="generator" content="Hugo 0.80.0" />
+<meta name="twitter:description" content="The free5GC Official Site"/>
+<meta name="generator" content="Hugo 0.79.1" />
 
     
 <script type="application/ld+json">
@@ -28,10 +28,10 @@
   "url" : "https://free5gc.org/installations/",
   "author": {
     "@type": "Person",
-    "name": "Your Name"
+    "name": "free5GC.ofg"
   },
   "keywords": "",
-  "description":"A simple Hugo theme based on the Bootstrap v4 blog example."
+  "description":"The free5GC Official Site"
 }
 </script>
 
@@ -170,7 +170,7 @@
 <article class="blog-post">
   <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-demo-tw/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
   free5GC Stage 3 安裝示範 此示範分兩階段。第一部分我們將：
  安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3 執行 free5GC 的測試腳本  第二部分我們將：
@@ -187,7 +187,7 @@
 <article class="blog-post">
   <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-demo/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
   free5GC Stage 3 Installation Demo In the first part of the demo, we will
  install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 run free5GC test scripts  In the second part, we will
@@ -204,7 +204,7 @@
 <article class="blog-post">
   <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-environment/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
   Recommended Environment free5gc has been tested against the following environment:
  Software  OS: Ubuntu 18.04 gcc 7.3.0 Go 1.14.4 linux/amd64 kernel version 5.0.0-23-generic    The listed kernel version is required for the UPF element.
@@ -221,11 +221,15 @@
 
 <article class="blog-post">
   <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-app-tw/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
-  Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.
-  <a href='https://free5gc.org/installations/stage-3-free5gc/'></a>
+  free5GC 小試身手 此示範我們將利用 free5GC 核網 及 UE/RAN 模擬器操作一些簡單的網路應用：
+ ping + tcpdump wget ptt (ssh bbsu@ptt.cc)  ping + tcpdump 首先將 free5GC 核網及 UERANSIM 啟動 (free5gc 需要一個終端機， ueransim 需要兩個終端機）。
+再開啟新的終端機登入 ueransim:
+ssh 192.168.56.102 -l ubuntu 用 ifconfig 確認 uesimtun0 通道已建立，並用 ping 試試藉由 uesimtun0 能否連通：
+$ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data.
+  <a href='https://free5gc.org/installations/stage-3-free5gc-app-tw/'></a>
 </article> 
 
 
@@ -236,12 +240,18 @@
 
 <article class="blog-post">
   <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-installation/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-install-tw/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
-  Installation A. Prerequisites   Linux Kernel Version
- In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.
-  <a href='https://free5gc.org/installations/stage-3-installation/'></a>
+  安裝與測試 free5GC 核心網路 此示範我們將練習：
+ 安裝必需工具 安裝 free5GC 測試 free5GC  請注意下面的安裝流程是參考 free5GC 官網文件。
+未來 free5GC 若有版本更新而導致部分指令無法運作，請以官網資訊為準。
+1. 確定系統版本 先用 uname -r 確定 kernel 版本。若安裝 Ubuntu 20.04, 版本應為 5.4.x。
+$ uname -r 5.4.0-65-generic 請確認你的版本為5.0.0-23-generic 或 5.4.0 以後版本。
+2. 安裝基本工具 確定沒有安裝 go
+go version 若有安裝舊版本，請先刪除 (假設你的 go 是安裝在 /usr/local/go)：
+sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan install，會得到網址： Download and install
+  <a href='https://free5gc.org/installations/stage-3-free5gc-install-tw/'></a>
 </article> 
 
 

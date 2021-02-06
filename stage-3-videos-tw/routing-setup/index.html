@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://free5gc.org/stage-3-videos-tw/routing-setup/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping and ifconfig  6. Using SSH  7. Update and Upgrade  8. Clone VM and Change IP  9. Install Tools  10. Setup Routing  11."/>
+<meta name="generator" content="Hugo 0.79.1" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://free5gc.org/stage-3-videos-tw/routing-setup/",
+  "wordCount": "90",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://free5gc.org/stage-3-videos-tw/routing-setup/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Youtube"
+                     href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos">Youtube</a></li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/stage-3-videos-tw/routing-setup/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <div class="row">
+  <div class="col-sm-3">
+    <ul class="nav flex-column">
+
+
+	
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/create-ubuntu-machine/">1. Create Ubuntu Machine</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/setting-first-vm/">2. Setting Up First VM</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/install-ubuntu-1/">3. Install Ubuntu (1)</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/install-ubuntu-2/">4. Install Ubuntu (2)</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/ping-ifconfig-poweroff/">5. Ping and ifconfig</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/poweron-ssh/">6. Using SSH</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/update-upgrade-off/">7. Update and Upgrade</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/clone-change-ip/">8. Clone VM and Change IP</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/tools-install/">9. Install Tools</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/routing-setup/">10. Setup Routing</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-install/">11. Install free5GC</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-test/">12. Testing free5GC</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/ueransim-vm/">13. Create UERANSIM VM</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/ueransim-install/">14. Install UERANSIM</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/webconsole-addue/">15. Add a UE using WebConsole</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-webconsole/">15. Build WebConsole</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-ueransim-config/">17. Config free5GC and UERANSIM</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-ueransim-run/">18. Running free5GC and UERANSIM</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-ping-tcpdump/">19. App - Ping (with tcpdump)</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-wget-curl/">20. App - wget and curl</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="/stage-3-videos-tw/free5gc-ptt/">21. App - ptt using SSH</a>
+  </li>
+  
+
+</ul>
+
+  </div>
+  <div class="col-sm-9">
+      
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/ns7_DPHUEhw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+  </div>
+</div>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2ffree5gc.org%2fstage-3-videos-tw%2frouting-setup%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ffree5gc.org%2fstage-3-videos-tw%2frouting-setup%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2ffree5gc.org%2fstage-3-videos-tw%2frouting-setup%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

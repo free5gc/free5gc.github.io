@@ -7,7 +7,7 @@
 
 
 <meta property="og:title" content="Installations" />
-<meta property="og:description" content="A simple Hugo theme based on the Bootstrap v4 blog example." />
+<meta property="og:description" content="The free5GC Official Site" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://free5gc.org/installations/" />
 
@@ -16,8 +16,8 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Installations"/>
-<meta name="twitter:description" content="A simple Hugo theme based on the Bootstrap v4 blog example."/>
-<meta name="generator" content="Hugo 0.80.0" />
+<meta name="twitter:description" content="The free5GC Official Site"/>
+<meta name="generator" content="Hugo 0.79.1" />
 
     
 <script type="application/ld+json">
@@ -28,10 +28,10 @@
   "url" : "https://free5gc.org/installations/",
   "author": {
     "@type": "Person",
-    "name": "Your Name"
+    "name": "free5GC.ofg"
   },
   "keywords": "",
-  "description":"A simple Hugo theme based on the Bootstrap v4 blog example."
+  "description":"The free5GC Official Site"
 }
 </script>
 
@@ -169,8 +169,57 @@
 
 <article class="blog-post">
   <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-vm-tw/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  建立 free5GC VM 及設定網路 此示範我們將練習：
+ 複製現有 VM，建立一個新的 free5GC VM 設定 free5GC VM 網路環境  參考影片 複製 VM 與設定 IP
+1. 檢查現有 VM 開啟 VirtualBox, 確認現有 Ubuntu VM (ubuntu) 可開機執行
+ 用 SSH 登入, 進入後確認可以連網 確定做過 sudo apt update 及 sudo apt upgrade 關機 sudo shutdown -P now  2. 建立 free5GC VM 先複製新的 VM:
+  <a href='https://free5gc.org/installations/stage-3-free5gc-vm-tw/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.
+  <a href='https://free5gc.org/installations/stage-3-free5gc/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-installation/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Installation A. Prerequisites   Linux Kernel Version
+ In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.
+  <a href='https://free5gc.org/installations/stage-3-installation/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-old/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
     free5GC Stage 3 Installation Guide For installation, please check:
  Environment Installation A Step-by-step Installation Example (中文版)  For how to configure, check on:
@@ -189,67 +238,13 @@
 <article class="blog-post">
   <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-run/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
   Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
 cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
 Option 2. Run whole core network
 cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.
   <a href='https://free5gc.org/installations/stage-3-run/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-smf-config/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
-  </header>
-  SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
-ULCL limitation: The branching UPF now can&rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)
-  <a href='https://free5gc.org/installations/stage-3-smf-config/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-test/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
-  </header>
-  Test Start a Wireshark capture on any core-connected interface, applying the filter 'pfcp||icmp||gtp'.
-In order to run the tests, first do this:
-cd ~/free5gc chmod +x ./test.sh The tests are all run from within ~/free5gc.
-a. TestRegistration
-./test.sh TestRegistration b. TestGUTIRegistration
-./test.sh TestGUTIRegistration c. TestServiceRequest
-./test.sh TestServiceRequest d. TestXnHandover
-./test.sh TestXnHandover e.
-  <a href='https://free5gc.org/installations/stage-3-test/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-trouble-shooting/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  Your Name</p>
-  </header>
-  Trouble Shooting 1. ERROR: [SCTP] Failed to connect given AMF N3IWF=NGAP This error occured when N3IWF was started before AMF finishing initialization. This error usually appears when you run the TestNon3GPP in the first time.
-Rerun the test should be fine. If it still not be solved, larger the sleeping time in line 110 of test.
-  <a href='https://free5gc.org/installations/stage-3-trouble-shooting/'></a>
 </article> 
 
 
