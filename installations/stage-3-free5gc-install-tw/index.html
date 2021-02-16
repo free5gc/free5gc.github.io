@@ -40,7 +40,7 @@ sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan inst
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://www.free5gc.org/installations/stage-3-free5gc-install-tw/",
-  "wordCount": "271",
+  "wordCount": "492",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -256,7 +256,78 @@ make
 sudo make install
 </code></pre></div><p>並檢查 gtp5g 是否安裝成功：</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">lsmod | grep gtp
-</code></pre></div><p>參考影片 <a href="/stage-3-videos-tw/free5gc-install/" target="_blank">安裝 free5GC</a></p>
+</code></pre></div><div class="alert alert-warning">
+<p>由於我們測試儘量會使用最新版本，若遇到問題而無法容易解決，我們可以
+試試將下載工具的版本退回至之前已知成功的版本。 例如本範例使用的版本
+為 <code>eb37b5eabef4f0c4d80eea80fd58d51aef9b3363</code>，而比最新的 gtp5g 版本還舊。</p>
+<p>我們可以藉由 <code>git log</code> 來檢視最近的版本，例如：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ git log
+commit d1ed954696906dcfe1345282707af853df2e8336 <span style="color:#666">(</span>HEAD -&gt; master, tag: v0.3.0, origin/master, origin/HEAD<span style="color:#666">)</span>
+Merge: eb37b5e c5eeb78
+Author: Muthuraman Elangovan &lt;76576790+muthuramanecs03g@users.noreply.github.com&gt;
+Date:   Fri Feb <span style="color:#40a070">5</span> 18:52:35 <span style="color:#40a070">2021</span> +0800
+
+    Merge pull request <span style="color:#60a0b0;font-style:italic">#17 from PrinzOwO/feature-qer-support</span>
+
+    QER support in gtp5g
+
+commit c5eeb78222011c8264e87cb23131b919dd9f648c <span style="color:#666">(</span>origin/feature-qer-support<span style="color:#666">)</span>
+Author: Muthuraman Elangovan &lt;muthuramane.cs03g@g2.nctu.edu.tw&gt;
+Date:   Fri Jan <span style="color:#40a070">22</span> 07:03:13 <span style="color:#40a070">2021</span> +0000
+
+    QER support in gtp5g
+
+commit eb37b5eabef4f0c4d80eea80fd58d51aef9b3363 <span style="color:#666">(</span>tag: v0.2.1<span style="color:#666">)</span>
+Merge: 09577db 1cc5c30
+Author: Yao Wen Chang &lt;hadeschang0322.cs04@g2.nctu.edu.tw&gt;
+Date:   Wed Oct <span style="color:#40a070">21</span> 05:11:43 <span style="color:#40a070">2020</span> +0800
+
+    Merge pull request <span style="color:#60a0b0;font-style:italic">#15 from tim-ywliu/master</span>
+
+    Fix bug <span style="color:#007020;font-weight:bold">for</span> finding PDR
+
+commit 1cc5c30140cd2622e134e4344459fd2d69c3e88a
+Author: Tim Liu &lt;timliu@nctu.edu.tw&gt;
+Date:   Tue Oct <span style="color:#40a070">20</span> 15:20:06 <span style="color:#40a070">2020</span> +0000
+
+    fix bug <span style="color:#007020;font-weight:bold">for</span> finding PDR
+
+</code></pre></div><p>而版本 <code>eb37b5eabef4f0c4d80eea80fd58d51aef9b3363</code> 為 tag 0.2.
+要將版本退回到此，可下指令：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git checkout eb37b5eabef4f0c4d80eea80fd58d51aef9b3363
+</code></pre></div><p>得到一些列印訊息。你可以在 <code>git log</code> 看看：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ git log
+commit eb37b5eabef4f0c4d80eea80fd58d51aef9b3363 <span style="color:#666">(</span>HEAD, tag: v0.2.1<span style="color:#666">)</span>
+Merge: 09577db 1cc5c30
+Author: Yao Wen Chang &lt;hadeschang0322.cs04@g2.nctu.edu.tw&gt;
+Date:   Wed Oct <span style="color:#40a070">21</span> 05:11:43 <span style="color:#40a070">2020</span> +0800
+
+    Merge pull request <span style="color:#60a0b0;font-style:italic">#15 from tim-ywliu/master</span>
+
+    Fix bug <span style="color:#007020;font-weight:bold">for</span> finding PDR
+
+commit 1cc5c30140cd2622e134e4344459fd2d69c3e88a
+Author: Tim Liu &lt;timliu@nctu.edu.tw&gt;
+Date:   Tue Oct <span style="color:#40a070">20</span> 15:20:06 <span style="color:#40a070">2020</span> +0000
+
+    fix bug <span style="color:#007020;font-weight:bold">for</span> finding PDR
+
+commit 09577dbc1aa0388f5008e7f193959685b3b76587
+Author: yaowenchang &lt;hadeschang0322.cs04@g2.nctu.edu.tw&gt;
+Date:   Mon Oct <span style="color:#40a070">12</span> 17:02:24 <span style="color:#40a070">2020</span> +0800
+
+    Support to Ubuntu 20.04 with kernel version upper than 5.4
+
+</code></pre></div><p>知道現在目錄已回到指定的舊版本。你現在可以 <code>make</code> 來編譯舊的 gtp5g，
+並用 <code>sudo make install</code> 來·安裝，但記得先 <code>sudo make uninstall</code>
+解除舊的版本。</p>
+<p>若要回到最新版，下指令：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git checkout master
+</code></pre></div><p>並可</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git pull
+</code></pre></div><p>看看是否有更新的版本。</p>
+</div>
+<p>參考影片 <a href="/stage-3-videos-tw/free5gc-install/" target="_blank">安裝 free5GC</a></p>
 <h2 id="5-測試-free5gc">5. 測試 free5GC</h2>
 <p>free5GC 提供了一些測試程式，測試一些 5G 核網標準的功能。 先測試基本的
 註冊程序：</p>
