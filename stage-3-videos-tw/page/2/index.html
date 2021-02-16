@@ -240,18 +240,13 @@ $ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data.
 
 <article class="blog-post">
   <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-install-tw/"></a></h2>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-app/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
-  安裝與測試 free5GC 核心網路 此示範我們將練習：
- 安裝必需工具 安裝 free5GC 測試 free5GC  請注意下面的安裝流程是參考 free5GC 官網文件。
-未來 free5GC 若有版本更新而導致部分指令無法運作，請以官網資訊為準。
-1. 確定系統版本 先用 uname -r 確定 kernel 版本。若安裝 Ubuntu 20.04, 版本應為 5.4.x。
-$ uname -r 5.4.0-65-generic 請確認你的版本為5.0.0-23-generic 或 5.4.0 以後版本。
-2. 安裝基本工具 確定沒有安裝 go
-go version 若有安裝舊版本，請先刪除 (假設你的 go 是安裝在 /usr/local/go)：
-sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan install，會得到網址： Download and install
-  <a href='https://free5gc.org/installations/stage-3-free5gc-install-tw/'></a>
+  free5GC Simple Apps In this demo we will use free5GC together with UERANSIM to exercise on some simple network applications:
+ ping + tcpdump wget and curl  ping + tcpdump First start up free5GC and ueransim VMs. This requires one SSH terminal for free5gc, and two for ueransim.
+Open another SSH terminal and log in into ueransim:
+  <a href='https://free5gc.org/installations/stage-3-free5gc-app/'></a>
 </article> 
 
 

@@ -169,6 +169,45 @@
 
 <article class="blog-post">
   <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-install-tw/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  安裝與測試 free5GC 核心網路 此示範我們將練習：
+ 安裝必需工具 安裝 free5GC 測試 free5GC  請注意下面的安裝流程是參考 free5GC 官網文件。
+未來 free5GC 若有版本更新而導致部分指令無法運作，請以官網資訊為準。
+1. 確定系統版本 先用 uname -r 確定 kernel 版本。若安裝 Ubuntu 20.04, 版本應為 5.4.x。
+$ uname -r 5.4.0-65-generic 請確認你的版本為5.0.0-23-generic 或 5.4.0 以後版本。
+2. 安裝基本工具 確定沒有安裝 go
+go version 若有安裝舊版本，請先刪除 (假設你的 go 是安裝在 /usr/local/go)：
+sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan install，會得到網址： Download and install
+  <a href='https://free5gc.org/installations/stage-3-free5gc-install-tw/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-install/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Installing and Tesgint free5GC In this demo we will practice
+ Installing basic tools Installing the free5GC core network Testing the free5GC core network  Please notice that the installation procedure is based on free5GC Official Site。
+You should refer to the information above for future installation and configuration in the future.
+  <a href='https://free5gc.org/installations/stage-3-free5gc-install/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-vm-tw/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
@@ -187,64 +226,28 @@
 
 <article class="blog-post">
   <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc-vm/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Creating a free5GC VM and Setting up Network In this demo we will exercise:
+ Cloning an existing VM, and install free5GC on it Setting up the networking for the free5GC VM  Refer to video Clone VM and Change IP
+1. Check up an existing VM for Cloning Launch VirtualBox, and make sure the Ubuntu VM (ubuntu) we created before can boot up, then:
+  <a href='https://free5gc.org/installations/stage-3-free5gc-vm/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-free5gc/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
   Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.
   <a href='https://free5gc.org/installations/stage-3-free5gc/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-installation/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
-  </header>
-  Installation A. Prerequisites   Linux Kernel Version
- In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.
-  <a href='https://free5gc.org/installations/stage-3-installation/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-old/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
-  </header>
-    free5GC Stage 3 Installation Guide For installation, please check:
- Environment Installation A Step-by-step Installation Example (中文版)  For how to configure, check on:
- Configuration SMF  For Running free5GC, check:
- Testing free5GC Running free5GC free5GC Compose  Others
- Trouble Shooting Appendix  
-  <a href='https://free5gc.org/installations/stage-3-old/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-run/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
-  </header>
-  Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
-cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
-Option 2. Run whole core network
-cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.
-  <a href='https://free5gc.org/installations/stage-3-run/'></a>
 </article> 
 
 

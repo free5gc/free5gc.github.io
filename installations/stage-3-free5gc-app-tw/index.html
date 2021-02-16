@@ -263,7 +263,7 @@ ping: google.com: Temporary failure in name resolution
 </code></pre></div><p>則得到無法辨認網域網址。要解決此問題，我們可以更改檔案
 <code>/etc/resolv.conf</code> (但注意要記得回復):</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo nano /etc/resolv.conf
-</code></pre></div><p>暫時將 nameserver IP 改成 60.60.0.1</p>
+</code></pre></div><p>暫時將 nameserver IP 改成 8.8.8.8</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">nameserver 8.8.8.8
 </code></pre></div><p>這時已可以看到反應：</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping google.com

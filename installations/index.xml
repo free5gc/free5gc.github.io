@@ -106,6 +106,17 @@ $ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data.</descri
     
     <item>
       <title></title>
+      <link>https://free5gc.org/installations/stage-3-free5gc-app/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-free5gc-app/</guid>
+      <description>free5GC Simple Apps In this demo we will use free5GC together with UERANSIM to exercise on some simple network applications:
+ ping + tcpdump wget and curl  ping + tcpdump First start up free5GC and ueransim VMs. This requires one SSH terminal for free5gc, and two for ueransim.
+Open another SSH terminal and log in into ueransim:</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://free5gc.org/installations/stage-3-free5gc-install-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -122,6 +133,17 @@ sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan inst
     
     <item>
       <title></title>
+      <link>https://free5gc.org/installations/stage-3-free5gc-install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-free5gc-install/</guid>
+      <description>Installing and Tesgint free5GC In this demo we will practice
+ Installing basic tools Installing the free5GC core network Testing the free5GC core network  Please notice that the installation procedure is based on free5GC Official Site。
+You should refer to the information above for future installation and configuration in the future.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://free5gc.org/installations/stage-3-free5gc-vm-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -130,6 +152,17 @@ sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan inst
  複製現有 VM，建立一個新的 free5GC VM 設定 free5GC VM 網路環境  參考影片 複製 VM 與設定 IP
 1. 檢查現有 VM 開啟 VirtualBox, 確認現有 Ubuntu VM (ubuntu) 可開機執行
  用 SSH 登入, 進入後確認可以連網 確定做過 sudo apt update 及 sudo apt upgrade 關機 sudo shutdown -P now  2. 建立 free5GC VM 先複製新的 VM:</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://free5gc.org/installations/stage-3-free5gc-vm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-free5gc-vm/</guid>
+      <description>Creating a free5GC VM and Setting up Network In this demo we will exercise:
+ Cloning an existing VM, and install free5GC on it Setting up the networking for the free5GC VM  Refer to video Clone VM and Change IP
+1. Check up an existing VM for Cloning Launch VirtualBox, and make sure the Ubuntu VM (ubuntu) we created before can boot up, then:</description>
     </item>
     
     <item>
@@ -189,6 +222,17 @@ cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the 
     
     <item>
       <title></title>
+      <link>https://free5gc.org/installations/stage-3-sim-install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://free5gc.org/installations/stage-3-sim-install/</guid>
+      <description>Installing UERANSIM - a UE/RAN Simulator In this demo we will practice:
+ Installing UERANSIM Configuring free5GC and UERANSIM Running UERANSIM against free5GC  1. Install ueramsim VM Repeat the steps of cloning free5gc VM from the base VM, create a new VM for the UERANSIM simulator:
+ Name the VM ueransim, and create new MAC addresses for all network cards Make sure the VM has internet access and can log in using SSH Change the hostname to ueransim Make the Host-only network interface have static IP address 192.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://free5gc.org/installations/stage-3-smf-config/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -242,7 +286,7 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
       
       <guid>https://free5gc.org/installations/stage-3-vm-basics/</guid>
       <description>Ubuntu Virtual Machine Installation Demo In this demo, we will
- install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3  1. Install VirtualBox   search &amp;ldquo;virtualbox download&amp;rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6.</description>
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 Update and upgrade Ubuntu  1. Install VirtualBox   search &amp;ldquo;virtualbox download&amp;rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6.</description>
     </item>
     
     <item>
@@ -252,8 +296,8 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
       
       <guid>https://free5gc.org/installations/stage-3/</guid>
       <description>free5GC Stage 3 Installation Guide For information about installation and configuration of the latest free5GC, please visit
- free5GC Documentation  For people who are not familiar with virtual machine and Linux installation, here are some example instructions:
- Creating a Ubuntu VM using VirtualBox  Chinese version:</description>
+ free5GC Documentation  For people who are not familiar with virtual machine and Linux installation, here are some example demonstration:
+ Creating a Ubuntu VM using VirtualBox Creating and Configuring a free5GC VM  Installing and Testing free5GC Core Network Installing a UE/RAN Simulator free5GC Simple Apps free5GC Demo Videos  The Chinese version are included too:</description>
     </item>
     
   </channel>

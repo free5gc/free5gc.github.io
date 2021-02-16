@@ -169,6 +169,59 @@
 
 <article class="blog-post">
   <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-installation/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Installation A. Prerequisites   Linux Kernel Version
+ In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.
+  <a href='https://free5gc.org/installations/stage-3-installation/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-old/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+    free5GC Stage 3 Installation Guide For installation, please check:
+ Environment Installation A Step-by-step Installation Example (中文版)  For how to configure, check on:
+ Configuration SMF  For Running free5GC, check:
+ Testing free5GC Running free5GC free5GC Compose  Others
+ Trouble Shooting Appendix  
+  <a href='https://free5gc.org/installations/stage-3-old/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-run/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
+cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
+Option 2. Run whole core network
+cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the N3IWF, make sure your system is equipped with three network interfaces: the first connects to the AMF, the second connects to the UPF, and the third is for IKE daemon.
+  <a href='https://free5gc.org/installations/stage-3-run/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
     <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-sim-install-tw/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
@@ -186,68 +239,13 @@
 
 <article class="blog-post">
   <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-smf-config/"></a></h2>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-sim-install/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
-  SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
-ULCL limitation: The branching UPF now can&rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)
-  <a href='https://free5gc.org/installations/stage-3-smf-config/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-test/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
-  </header>
-  Test Start a Wireshark capture on any core-connected interface, applying the filter 'pfcp||icmp||gtp'.
-In order to run the tests, first do this:
-cd ~/free5gc chmod +x ./test.sh The tests are all run from within ~/free5gc.
-a. TestRegistration
-./test.sh TestRegistration b. TestGUTIRegistration
-./test.sh TestGUTIRegistration c. TestServiceRequest
-./test.sh TestServiceRequest d. TestXnHandover
-./test.sh TestXnHandover e.
-  <a href='https://free5gc.org/installations/stage-3-test/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-trouble-shooting/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
-  </header>
-  Trouble Shooting 1. ERROR: [SCTP] Failed to connect given AMF N3IWF=NGAP This error occured when N3IWF was started before AMF finishing initialization. This error usually appears when you run the TestNon3GPP in the first time.
-Rerun the test should be fine. If it still not be solved, larger the sleeping time in line 110 of test.
-  <a href='https://free5gc.org/installations/stage-3-trouble-shooting/'></a>
-</article> 
-
-
-
-
-
-
-
-<article class="blog-post">
-  <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-vm-basics-tw/"></a></h2>
-    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
-  </header>
-  用 VirtualBox 建立 Ubuntu VM 此示範我們將：
- 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 為 Ubuntu 安裝更新  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &ldquo;virtualbox download&quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
-VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
- 2.
-  <a href='https://free5gc.org/installations/stage-3-vm-basics-tw/'></a>
+  Installing UERANSIM - a UE/RAN Simulator In this demo we will practice:
+ Installing UERANSIM Configuring free5GC and UERANSIM Running UERANSIM against free5GC  1. Install ueramsim VM Repeat the steps of cloning free5gc VM from the base VM, create a new VM for the UERANSIM simulator:
+ Name the VM ueransim, and create new MAC addresses for all network cards Make sure the VM has internet access and can log in using SSH Change the hostname to ueransim Make the Host-only network interface have static IP address 192.
+  <a href='https://free5gc.org/installations/stage-3-sim-install/'></a>
 </article> 
 
 

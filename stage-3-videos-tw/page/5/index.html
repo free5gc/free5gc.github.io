@@ -169,12 +169,12 @@
 
 <article class="blog-post">
   <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-vm-basics/"></a></h2>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-smf-config/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
-  Ubuntu Virtual Machine Installation Demo In this demo, we will
- install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3  1. Install VirtualBox   search &ldquo;virtualbox download&rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6.
-  <a href='https://free5gc.org/installations/stage-3-vm-basics/'></a>
+  SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
+ULCL limitation: The branching UPF now can&rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)
+  <a href='https://free5gc.org/installations/stage-3-smf-config/'></a>
 </article> 
 
 
@@ -185,13 +185,68 @@
 
 <article class="blog-post">
   <header>
-    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3/"></a></h2>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-test/"></a></h2>
     <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
   </header>
-  free5GC Stage 3 Installation Guide For information about installation and configuration of the latest free5GC, please visit
- free5GC Documentation  For people who are not familiar with virtual machine and Linux installation, here are some example instructions:
- Creating a Ubuntu VM using VirtualBox  Chinese version:
-  <a href='https://free5gc.org/installations/stage-3/'></a>
+  Test Start a Wireshark capture on any core-connected interface, applying the filter 'pfcp||icmp||gtp'.
+In order to run the tests, first do this:
+cd ~/free5gc chmod +x ./test.sh The tests are all run from within ~/free5gc.
+a. TestRegistration
+./test.sh TestRegistration b. TestGUTIRegistration
+./test.sh TestGUTIRegistration c. TestServiceRequest
+./test.sh TestServiceRequest d. TestXnHandover
+./test.sh TestXnHandover e.
+  <a href='https://free5gc.org/installations/stage-3-test/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-trouble-shooting/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Trouble Shooting 1. ERROR: [SCTP] Failed to connect given AMF N3IWF=NGAP This error occured when N3IWF was started before AMF finishing initialization. This error usually appears when you run the TestNon3GPP in the first time.
+Rerun the test should be fine. If it still not be solved, larger the sleeping time in line 110 of test.
+  <a href='https://free5gc.org/installations/stage-3-trouble-shooting/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-vm-basics-tw/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  用 VirtualBox 建立 Ubuntu VM 此示範我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 為 Ubuntu 安裝更新  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &ldquo;virtualbox download&quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
+VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
+ 2.
+  <a href='https://free5gc.org/installations/stage-3-vm-basics-tw/'></a>
+</article> 
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://free5gc.org/installations/stage-3-vm-basics/"></a></h2>
+    <p class="blog-post-meta"><time datetime="0001-01-01T00:00:00Z">Mon Jan 01, 0001</time>  free5GC.ofg</p>
+  </header>
+  Ubuntu Virtual Machine Installation Demo In this demo, we will
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 Update and upgrade Ubuntu  1. Install VirtualBox   search &ldquo;virtualbox download&rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6.
+  <a href='https://free5gc.org/installations/stage-3-vm-basics/'></a>
 </article> 
 
 
@@ -201,9 +256,9 @@
 
 <nav class="blog-pagination">
   
-  
   <a class="btn btn-outline-primary" href="/stage-3-videos-tw/page/4/" rel="prev" role="button"></a>
-  <a class="btn btn-outline-primary disabled" href="#" role="button" aria-disabled="true"></a>
+  <a class="btn btn-outline-primary" href="/stage-3-videos-tw/page/6/" rel="next" role="button"></a>
+  
   
   
 </nav>
