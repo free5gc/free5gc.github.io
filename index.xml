@@ -2,34 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>free5GC</title>
-    <link>https://free5gc.org/</link>
+    <link>https://www.free5gc.org/</link>
     <description>Recent content on free5GC</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://free5gc.org/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://www.free5gc.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>https://free5gc.org/contactus/</link>
+      <link>https://www.free5gc.org/contactus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/contactus/</guid>
+      <guid>https://www.free5gc.org/contactus/</guid>
       <description>Contact Us For services and sales information, please contact Ms. Hsiaotsui Chen:  Email: 5GC.hr2021@gmail.com Tel: 1-800-409-9811 ext. 54790  free5GC email: free5GC.org@gmail.com</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/history/</link>
+      <link>https://www.free5gc.org/history/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/history/</guid>
+      <guid>https://www.free5gc.org/history/</guid>
       <description>History of free5GC project: Stage 3: free5GC v3.0.0  AMF  Support SMF selection at PDU session establishment Fix SUCI handling procedure   SMF  Feature . ULCL by config . Authorized QoS Bugfix . PDU Session Establishment PDUAddress Information . PDU Session Establishment N1 Message . SMContext Release Procedure   UPF:  ULCL feature support SDF Filter support N9 interface   OAM  Get Registered UE Context API OAM web UI to display Registered UE Context   N3IWF  Support Registration procedure for untrusted non-3GPP access Support UE Requested PDU Session Establishment via Untrusted non-3GPP Access   UDM  SUCI to SUPI de-concealment Notification  Callback notification to NF ( in SDM service) UDM initiated deregistration notification to NF ( in UECM service)       Contributors: National Chiao Tung University: Chi Chang, Yao-Wen Chang, Jyh-Cheng Chen, Liang-Yu Chen, Te-Chih Chiu, Chia-Tso Chu, Jairus Dah, Wei-Ting Hu, Chia-An Lee, Yan-Jie Lin, Yi-Bing Jason Lin, Jyun-Yu Syu, Sebastian Tan, Fu-Lian Weng, Chi-En Wei, Wei-Chun Yang</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-1-all-in-one/</link>
+      <link>https://www.free5gc.org/installations/stage-1-all-in-one/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-1-all-in-one/</guid>
+      <guid>https://www.free5gc.org/installations/stage-1-all-in-one/</guid>
       <description>free5GC Installation on KVM Minimum Requirement   Software
  OS: Ubuntu 18.04 Linux kernel: 4.15.0-43-generic gcc 7.3.0 Go 1.11.4 QEMU emulator 2.11.1    Hardware
  CPU: Intel i5 processor RAM: 4GB Hard drive: 160G NIC card: 1Gbps ethernet card    Hardware recommended
@@ -38,38 +38,38 @@
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-1-cluster/</link>
+      <link>https://www.free5gc.org/installations/stage-1-cluster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-1-cluster/</guid>
+      <guid>https://www.free5gc.org/installations/stage-1-cluster/</guid>
       <description>free5GC Distributed Installation Guide Network Topology  Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-2-standalone-5g/</link>
+      <link>https://www.free5gc.org/installations/stage-2-standalone-5g/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-2-standalone-5g/</guid>
+      <guid>https://www.free5gc.org/installations/stage-2-standalone-5g/</guid>
       <description>free5GC Stage 2 Installation Guide Minimum Requirement  Software  OS: Ubuntu 18.04 or later versions gcc 7.3.0 Go 1.12.9 linux/amd64 QEMU emulator 2.11.1    Note: Please use Ubuntu 18.04 or later versions and go 1.12.9 linux/amd64
 You can use go version to check your current Go version.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-appendix/</link>
+      <link>https://www.free5gc.org/installations/stage-3-appendix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-appendix/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-appendix/</guid>
       <description>Appendix A: OAM  Run the OAM server  cd webconsole go run server.go Access the OAM by  URL: http://localhost:5000 Username: admin Password: free5gc Now you can see the information of currently registered UEs (e.g. Supi, connected state, etc.) in the core network at the tab &amp;ldquo;DASHBOARD&amp;rdquo; of free5GC webconsole  Note: You can add the subscribers here too</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-configuration/</link>
+      <link>https://www.free5gc.org/installations/stage-3-configuration/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-configuration/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-configuration/</guid>
       <description>SBI Configuration There are registerIP and bindingIP design on every NF&amp;rsquo;s sbi interface.
 This is due to some orchestration, such as Kubernets or OpenStack, has the design of service IP mapping.
 Use Kubernets as an example. K8S has the service type that enable users to define the service IP outside the pod.</description>
@@ -77,10 +77,10 @@ Use Kubernets as an example. K8S has the service type that enable users to defin
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-demo-tw/</link>
+      <link>https://www.free5gc.org/installations/stage-3-demo-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-demo-tw/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-demo-tw/</guid>
       <description>free5GC Stage 3 安裝示範 此示範分兩階段。第一部分我們將：
  安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3 執行 free5GC 的測試腳本  第二部分我們將：
  建立第二個 Ubuntu Server VM 藉由 SSH, install a third-party UE and RAN emulator on the VM 藉由 SSH 連線到此 VM， 安裝一開源 UE 及 RAN 的模擬器 (UERANSIM) 啟動 free5GC 5G 核網，並使用此模擬器經由核網連線至網際網路  1.</description>
@@ -88,10 +88,10 @@ Use Kubernets as an example. K8S has the service type that enable users to defin
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-demo/</link>
+      <link>https://www.free5gc.org/installations/stage-3-demo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-demo/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-demo/</guid>
       <description>free5GC Stage 3 Installation Demo In the first part of the demo, we will
  install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 run free5GC test scripts  In the second part, we will
  create another Ubuntu Server VM via SSH, install a third-party UE and RAN emulator on the VM use the emulator to access Internet through the free5GC core network  1.</description>
@@ -99,10 +99,10 @@ Use Kubernets as an example. K8S has the service type that enable users to defin
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-environment/</link>
+      <link>https://www.free5gc.org/installations/stage-3-environment/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-environment/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-environment/</guid>
       <description>Recommended Environment free5gc has been tested against the following environment:
  Software  OS: Ubuntu 18.04 gcc 7.3.0 Go 1.14.4 linux/amd64 kernel version 5.0.0-23-generic    The listed kernel version is required for the UPF element.
   Minimum Hardware
@@ -111,10 +111,10 @@ Use Kubernets as an example. K8S has the service type that enable users to defin
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc-app-tw/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc-app-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc-app-tw/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc-app-tw/</guid>
       <description>free5GC 小試身手 此示範我們將利用 free5GC 核網 及 UE/RAN 模擬器操作一些簡單的網路應用：
  ping + tcpdump wget ptt (ssh bbsu@ptt.cc)  ping + tcpdump 首先將 free5GC 核網及 UERANSIM 啟動 (free5gc 需要一個終端機， ueransim 需要兩個終端機）。
 再開啟新的終端機登入 ueransim:
@@ -124,10 +124,10 @@ $ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data.</descri
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc-app/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc-app/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc-app/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc-app/</guid>
       <description>free5GC Simple Apps In this demo we will use free5GC together with UERANSIM to exercise on some simple network applications:
  ping + tcpdump wget and curl  ping + tcpdump First start up free5GC and ueransim VMs. This requires one SSH terminal for free5gc, and two for ueransim.
 Open another SSH terminal and log in into ueransim:</description>
@@ -135,10 +135,10 @@ Open another SSH terminal and log in into ueransim:</description>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc-install-tw/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc-install-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc-install-tw/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc-install-tw/</guid>
       <description>安裝與測試 free5GC 核心網路 此示範我們將練習：
  安裝必需工具 安裝 free5GC 測試 free5GC  請注意下面的安裝流程是參考 free5GC 官網文件。
 未來 free5GC 若有版本更新而導致部分指令無法運作，請以官網資訊為準。
@@ -151,10 +151,10 @@ sudo rm -rf /usr/local/go 要安裝最新 Golang, 網路搜尋 ubunto golan inst
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc-install/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc-install/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc-install/</guid>
       <description>Installing and Tesgint free5GC In this demo we will practice
  Installing basic tools Installing the free5GC core network Testing the free5GC core network  Please notice that the installation procedure is based on free5GC Official Site。
 You should refer to the information above for future installation and configuration in the future.</description>
@@ -162,10 +162,10 @@ You should refer to the information above for future installation and configurat
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc-vm-tw/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc-vm-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc-vm-tw/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc-vm-tw/</guid>
       <description>建立 free5GC VM 及設定網路 此示範我們將練習：
  複製現有 VM，建立一個新的 free5GC VM 設定 free5GC VM 網路環境  參考影片 複製 VM 與設定 IP
 1. 檢查現有 VM 開啟 VirtualBox, 確認現有 Ubuntu VM (ubuntu) 可開機執行
@@ -174,10 +174,10 @@ You should refer to the information above for future installation and configurat
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc-vm/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc-vm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc-vm/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc-vm/</guid>
       <description>Creating a free5GC VM and Setting up Network In this demo we will exercise:
  Cloning an existing VM, and install free5GC on it Setting up the networking for the free5GC VM  Refer to video Clone VM and Change IP
 1. Check up an existing VM for Cloning Launch VirtualBox, and make sure the Ubuntu VM (ubuntu) we created before can boot up, then:</description>
@@ -185,29 +185,29 @@ You should refer to the information above for future installation and configurat
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-free5gc/</link>
+      <link>https://www.free5gc.org/installations/stage-3-free5gc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-free5gc/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-free5gc/</guid>
       <description>Table of Contents  Hardware Tested Detail information Questions Recommended Environment Installation  A. Prerequisites B. Install User Plane Function (UPF) C. Install Control Plane Elements   Run  A. Run the Core Network B. Run the N3IWF (Individually) C. Run all-in-one with outside RAN D. Deploy within containers   Test Release Note  Hardware Tested In the market today, there are neither hardware gNB nor hardware UEs that interface directly with a standalone 5GC, so no hardware testing has yet been performed against free5gc.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-installation/</link>
+      <link>https://www.free5gc.org/installations/stage-3-installation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-installation/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-installation/</guid>
       <description>Installation A. Prerequisites   Linux Kernel Version
  In order to use the UPF element, you must use the 5.0.0-23-generic version of the Linux kernel. free5gc uses the gtp5g kernel module, which has been tested and compiled against that kernel version only. To determine the version of the Linux kernel you are using:  $ uname -r 5.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-old/</link>
+      <link>https://www.free5gc.org/installations/stage-3-old/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-old/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-old/</guid>
       <description>  free5GC Stage 3 Installation Guide For installation, please check:
  Environment Installation A Step-by-step Installation Example (中文版)  For how to configure, check on:
  Configuration SMF  For Running free5GC, check:
@@ -217,10 +217,10 @@ You should refer to the information above for future installation and configurat
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-run/</link>
+      <link>https://www.free5gc.org/installations/stage-3-run/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-run/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-run/</guid>
       <description>Run A. Run the Core Network Option 1. Run network function services individually. For example, to run the AMF:
 cd ~/free5gc ./bin/amf Note: The N3IWF needs specific configuration, which is detailed in section B.
 Option 2. Run whole core network
@@ -229,10 +229,10 @@ cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the 
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-sim-install-tw/</link>
+      <link>https://www.free5gc.org/installations/stage-3-sim-install-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-sim-install-tw/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-sim-install-tw/</guid>
       <description>安裝 UE/RAN 模擬器 此示範我們將練習：
  安裝 UERANSIM 簡單測試 free5GC + UERANSIM  1. 建立 ueramsim VM 重複 free5gc VM 的建立步驟，產生一個新的 VM
  VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的 成功後確定可以連網及使用 SSH 登入 更改 hostname 為 ueransim 設定 Host-only 網路介面卡靜態 IP 位址為 192.168.56.102 重新開機，並啟動 free5gc 在 ueransim ping 192.168.56.101 測試與 free5gc 的連線， 同樣在 free5gc ping 192.</description>
@@ -240,10 +240,10 @@ cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the 
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-sim-install/</link>
+      <link>https://www.free5gc.org/installations/stage-3-sim-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-sim-install/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-sim-install/</guid>
       <description>Installing UERANSIM - a UE/RAN Simulator In this demo we will practice:
  Installing UERANSIM Configuring free5GC and UERANSIM Running UERANSIM against free5GC  1. Install ueramsim VM Repeat the steps of cloning free5gc VM from the base VM, create a new VM for the UERANSIM simulator:
  Name the VM ueransim, and create new MAC addresses for all network cards Make sure the VM has internet access and can log in using SSH Change the hostname to ueransim Make the Host-only network interface have static IP address 192.</description>
@@ -251,20 +251,20 @@ cd ~/free5gc ./run.sh B. Run the N3IWF (Individually) To run an instance of the 
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-smf-config/</link>
+      <link>https://www.free5gc.org/installations/stage-3-smf-config/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-smf-config/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-smf-config/</guid>
       <description>SMF Config / ULCL Config This document explains the detail of SMF config. Also provide some examples about conversion between config file and real userplane topology
 ULCL limitation: The branching UPF now can&amp;rsquo;t connect to the Internet. It only serves as a Intranet in the UPF topology. (Please refers to the topology of example 2)</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-test/</link>
+      <link>https://www.free5gc.org/installations/stage-3-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-test/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-test/</guid>
       <description>Test Start a Wireshark capture on any core-connected interface, applying the filter &#39;pfcp||icmp||gtp&#39;.
 In order to run the tests, first do this:
 cd ~/free5gc chmod +x ./test.sh The tests are all run from within ~/free5gc.
@@ -277,20 +277,20 @@ a. TestRegistration
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-trouble-shooting/</link>
+      <link>https://www.free5gc.org/installations/stage-3-trouble-shooting/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-trouble-shooting/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-trouble-shooting/</guid>
       <description>Trouble Shooting 1. ERROR: [SCTP] Failed to connect given AMF N3IWF=NGAP This error occured when N3IWF was started before AMF finishing initialization. This error usually appears when you run the TestNon3GPP in the first time.
 Rerun the test should be fine. If it still not be solved, larger the sleeping time in line 110 of test.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-vm-basics-tw/</link>
+      <link>https://www.free5gc.org/installations/stage-3-vm-basics-tw/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-vm-basics-tw/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-vm-basics-tw/</guid>
       <description>用 VirtualBox 建立 Ubuntu VM 此示範我們將：
  安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 為 Ubuntu 安裝更新  1. 安裝 VirtualBox 開啟瀏覽器搜尋 &amp;ldquo;virtualbox download&amp;quot;， 到 VirtualBox 官網 virtualbox.org 下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)
 VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為 Mac 版本)：
@@ -299,20 +299,20 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3-vm-basics/</link>
+      <link>https://www.free5gc.org/installations/stage-3-vm-basics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3-vm-basics/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3-vm-basics/</guid>
       <description>Ubuntu Virtual Machine Installation Demo In this demo, we will
  install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 Update and upgrade Ubuntu  1. Install VirtualBox   search &amp;ldquo;virtualbox download&amp;rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/installations/stage-3/</link>
+      <link>https://www.free5gc.org/installations/stage-3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/installations/stage-3/</guid>
+      <guid>https://www.free5gc.org/installations/stage-3/</guid>
       <description>free5GC Stage 3 Installation Guide For information about installation and configuration of the latest free5GC, please visit
  free5GC Documentation  For people who are not familiar with virtual machine and Linux installation, here are some example demonstration:
  Creating a Ubuntu VM using VirtualBox Creating and Configuring a free5GC VM  Installing and Testing free5GC Core Network Installing a UE/RAN Simulator free5GC Simple Apps free5GC Demo Videos  The Chinese version are included too:</description>
@@ -320,10 +320,10 @@ VirtualBox 官網 https://virtualbox.org  安裝成功後，試著打開 Virtual
     
     <item>
       <title></title>
-      <link>https://free5gc.org/membership/</link>
+      <link>https://www.free5gc.org/membership/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/membership/</guid>
+      <guid>https://www.free5gc.org/membership/</guid>
       <description>Membership Info  You can also download the PDF file here.
 Membership services Early access: We provide the service that members can access the source code of free5GC before it is official released.
 Discount for workshop and seminar: We will regularly hold 5G telecommunication-related workshop and seminar. The discount for attending those</description>
@@ -331,380 +331,380 @@ Discount for workshop and seminar: We will regularly hold 5G telecommunication-r
     
     <item>
       <title></title>
-      <link>https://free5gc.org/roadmap/</link>
+      <link>https://www.free5gc.org/roadmap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/roadmap/</guid>
+      <guid>https://www.free5gc.org/roadmap/</guid>
       <description>Roadmap of free5GC project: Stage 1 (released in January 2019): migrated 4G Evolved Packet Core (EPC) into 5GC Service-Based Architecture (SBA) Note: Stage 1 will be upgraded to support Non-standalone 5G feature
  Migrated the entities of 4G EPC, including Mobile Mobility Entity (MME), Serving Gateway (SGW) and Packet Data Network Gateway (PGW) into 5GC functions of Access and Mobility Management Function (AMF), Session Management Function (SMF) and User Plane Function (UPF).</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/clone-change-ip/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/clone-change-ip/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/clone-change-ip/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/clone-change-ip/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/create-ubuntu-machine/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-install/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-install/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-install/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-ping-tcpdump/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ptt/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-ptt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ptt/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-ptt/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-test/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-test/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-test/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-ueransim-config/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-ueransim-run/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-webconsole/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-webconsole/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-webconsole/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-webconsole/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-wget-curl/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/install-ubuntu-1/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/install-ubuntu-1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/install-ubuntu-1/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/install-ubuntu-1/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/install-ubuntu-2/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/install-ubuntu-2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/install-ubuntu-2/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/install-ubuntu-2/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/ping-ifconfig-poweroff/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/poweron-ssh/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/poweron-ssh/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/poweron-ssh/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/poweron-ssh/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/routing-setup/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/routing-setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/routing-setup/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/routing-setup/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/setting-first-vm/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/setting-first-vm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/setting-first-vm/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/setting-first-vm/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/tools-install/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/tools-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/tools-install/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/tools-install/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/ueransim-install/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/ueransim-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/ueransim-install/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/ueransim-install/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/ueransim-vm/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/ueransim-vm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/ueransim-vm/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/ueransim-vm/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/update-upgrade-off/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/update-upgrade-off/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/update-upgrade-off/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/update-upgrade-off/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/video-index/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/video-index/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/video-index/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/video-index/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos-tw/webconsole-addue/</link>
+      <link>https://www.free5gc.org/stage-3-videos-tw/webconsole-addue/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos-tw/webconsole-addue/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos-tw/webconsole-addue/</guid>
       <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/clone-change-ip/</link>
+      <link>https://www.free5gc.org/stage-3-videos/clone-change-ip/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/clone-change-ip/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/clone-change-ip/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/create-ubuntu-machine/</link>
+      <link>https://www.free5gc.org/stage-3-videos/create-ubuntu-machine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/create-ubuntu-machine/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/create-ubuntu-machine/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-install/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-install/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-install/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-ping-tcpdump/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-ping-tcpdump/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-ping-tcpdump/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-ping-tcpdump/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-test/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-test/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-test/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-ueransim-config/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-ueransim-config/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-ueransim-config/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-ueransim-config/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-ueransim-run/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-ueransim-run/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-ueransim-run/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-ueransim-run/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-webconsole/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-webconsole/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-webconsole/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-webconsole/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/free5gc-wget-curl/</link>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-wget-curl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/free5gc-wget-curl/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-wget-curl/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/install-ubuntu-1/</link>
+      <link>https://www.free5gc.org/stage-3-videos/install-ubuntu-1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/install-ubuntu-1/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/install-ubuntu-1/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/install-ubuntu-2/</link>
+      <link>https://www.free5gc.org/stage-3-videos/install-ubuntu-2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/install-ubuntu-2/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/install-ubuntu-2/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/ping-ssh-upgrade/</link>
+      <link>https://www.free5gc.org/stage-3-videos/ping-ssh-upgrade/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/ping-ssh-upgrade/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/ping-ssh-upgrade/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/routing-setup/</link>
+      <link>https://www.free5gc.org/stage-3-videos/routing-setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/routing-setup/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/routing-setup/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/setting-first-vm/</link>
+      <link>https://www.free5gc.org/stage-3-videos/setting-first-vm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/setting-first-vm/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/setting-first-vm/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/tools-install/</link>
+      <link>https://www.free5gc.org/stage-3-videos/tools-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/tools-install/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/tools-install/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/ueransim-install/</link>
+      <link>https://www.free5gc.org/stage-3-videos/ueransim-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/ueransim-install/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/ueransim-install/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/ueransim-vm/</link>
+      <link>https://www.free5gc.org/stage-3-videos/ueransim-vm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/ueransim-vm/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/ueransim-vm/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/video-index/</link>
+      <link>https://www.free5gc.org/stage-3-videos/video-index/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/video-index/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/video-index/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://free5gc.org/stage-3-videos/webconsole-addue/</link>
+      <link>https://www.free5gc.org/stage-3-videos/webconsole-addue/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://free5gc.org/stage-3-videos/webconsole-addue/</guid>
+      <guid>https://www.free5gc.org/stage-3-videos/webconsole-addue/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     
