@@ -30,7 +30,7 @@
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://www.free5gc.org/installations/stage-3-sim-install-tw/",
-  "wordCount": "933",
+  "wordCount": "934",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -232,7 +232,7 @@ make webconsole
 </code></pre></div><h2 id="4-使用-webconsole-新增註冊資料">4. 使用 WebConsole 新增註冊資料</h2>
 <p>先啟動 WebConsole 伺服器：</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/webconsole
-go run server
+-o run server.go
 </code></pre></div><p>終端機印出使用網址 :5000。請在本機打開瀏覽器，輸入網址 <code>http://192.168.56.101:5000</code></p>
 <ul>
 <li>打開網頁後，輸入 帳號 <code>admin</code>，密碼 <code>free5gc</code></li>
@@ -362,7 +362,7 @@ sudo systemctl stop ufw
 build/nr-gnb -c config/free5gc-gnb.yaml
 </code></pre></div><p>視窗 2，登入 ueransim，用管理員身分執行 <code>nr-gnb</code></p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/UERANSIM
-build/nr-ue -c config/free5gc-ue.yaml
+sudo build/nr-ue -c config/free5gc-ue.yaml
 </code></pre></div><p>視窗 3，登入 ueransim，用 <code>ping</code> 測試模擬器，free5GC 核網，及網際網路是否連通。
 首先，用 <code>ifconfig</code> 檢視是否有建立通道 uesimtun0：</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ifconfig
