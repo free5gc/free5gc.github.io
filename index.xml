@@ -431,6 +431,15 @@ Discount for workshop and seminar: We will regularly hold 5G telecommunication-r
     
     <item>
       <title></title>
+      <link>https://www.free5gc.org/stage-3-videos-tw/free5gc-youtube/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.free5gc.org/stage-3-videos-tw/free5gc-youtube/</guid>
+      <description>1. 建立 Ubuntu 機器  2. 設定你的第一個 VM  3. 安裝 Ubuntu (一)  4. 安裝 Ubuntu (二)  5. 測試 Ping 及 ifconfig  6. 使用 SSH  7. 更新系統  8. 複製 VM 及設定網路 IP  9. 安裝基本工具  10. 設定網路規則  11. 安裝 free5GC  12. 測試 free5GC  13.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://www.free5gc.org/stage-3-videos-tw/install-ubuntu-1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -615,6 +624,15 @@ Discount for workshop and seminar: We will regularly hold 5G telecommunication-r
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://www.free5gc.org/stage-3-videos/free5gc-wget-curl/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-youtube/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-youtube/</guid>
       <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
     </item>
     

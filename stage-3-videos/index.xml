@@ -89,6 +89,15 @@
     
     <item>
       <title></title>
+      <link>https://www.free5gc.org/stage-3-videos/free5gc-youtube/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.free5gc.org/stage-3-videos/free5gc-youtube/</guid>
+      <description>1. Create Ubuntu Machine  2. Setting Up First VM  3. Install Ubuntu (1)  4. Install Ubuntu (2)  5. Ping, SSH and Upgrade  6. Clone VM and Change IP  7. Install Tools  8. Setup Routing  9. Install free5GC  10. Testing free5GC  11.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://www.free5gc.org/stage-3-videos/install-ubuntu-1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
