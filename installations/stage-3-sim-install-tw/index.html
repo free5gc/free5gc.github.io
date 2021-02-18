@@ -30,7 +30,7 @@
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://www.free5gc.org/installations/stage-3-sim-install-tw/",
-  "wordCount": "934",
+  "wordCount": "1023",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -406,6 +406,33 @@ uesimtun0: <span style="color:#bb60d5">flags</span><span style="color:#666">=</s
 </code></pre></div><p>接著使用 <code>ping</code>:</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ping -I uesimtun0 google.com
 </code></pre></div><p>若有回應代表系統及網路成功運作，恭喜。</p>
+<h2 id="常見問題">常見問題</h2>
+<p>若安裝與執行 free5GC 及 UERANSIM 過程中發生問題，
+先記得有無執行下面幾點，完成再開始測試：</p>
+<p>free5gc VM 若重新啟動，有無先執行設定：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+sudo systemctl stop ufw
+</code></pre></div><p>free5gc VM 若想執行測試 <code>./test.sh TestXXX</code>，檢查設定檔有先恢復原狀</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">~/free5gc/config/amfcfg.yaml
+~/free5gc/config/smfcfg.yaml
+~/free5gc/NFs/upf/build/config/upfcfg.yaml
+</code></pre></div><p>可用 <code>git diff</code> 檢查。若測試仍有問題，可先清除 MongoDB 資料庫再試：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ mongo free5gc
+   ...
+&gt; db.dropDatabase<span style="color:#666">()</span>
+<span style="color:#666">{</span> <span style="color:#4070a0">&#34;dropped&#34;</span> : <span style="color:#4070a0">&#34;free5gc&#34;</span>, <span style="color:#4070a0">&#34;ok&#34;</span> : <span style="color:#40a070">1</span> <span style="color:#666">}</span>
+&gt; <span style="color:#007020">exit</span>
+bye
+</code></pre></div><p>VM 的介面卡名稱及 IP 是否正確，且和相關的設定檔或指令相符。可從
+你的主機 <code>ping 192.168.56.101</code> 及 <code>ping 192.168.56.102</code>，並在
+你的 VM <code>ifconfig</code> 及測試對外連線 <code>ping</code>。</p>
+<p>若已成功安裝測試 free5GC 及 UERANSIM，想知道接下來做什麼，可以完成
+之後的簡單應用。要理解及修改 free5GC 的程式內容，除了 5G 標準文件需要研讀外，
+可從 <code>test.sh</code> 及 <code>run.sh</code> 著手看網路及程式如何設定。基本網路原理有一些參考：</p>
+<ul>
+<li><a href="/stage-3-help/">網路設定參考文件</a></li>
+</ul>
 
 
   
