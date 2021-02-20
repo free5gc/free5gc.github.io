@@ -232,7 +232,7 @@ make webconsole
 </code></pre></div><h2 id="4-使用-webconsole-新增註冊資料">4. 使用 WebConsole 新增註冊資料</h2>
 <p>先啟動 WebConsole 伺服器：</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/webconsole
--o run server.go
+go run server.go
 </code></pre></div><p>終端機印出使用網址 :5000。請在本機打開瀏覽器，輸入網址 <code>http://192.168.56.101:5000</code></p>
 <ul>
 <li>打開網頁後，輸入 帳號 <code>admin</code>，密碼 <code>free5gc</code></li>
@@ -413,6 +413,7 @@ uesimtun0: <span style="color:#bb60d5">flags</span><span style="color:#666">=</s
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
 sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 sudo systemctl stop ufw
+sudo iptables -I FORWARD 1 -j ACCEPT
 </code></pre></div><p>free5gc VM 若想執行測試 <code>./test.sh TestXXX</code>，檢查設定檔有先恢復原狀</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">~/free5gc/config/amfcfg.yaml
 ~/free5gc/config/smfcfg.yaml
