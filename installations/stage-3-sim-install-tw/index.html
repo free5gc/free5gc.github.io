@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="安裝 UE/RAN 模擬器 此示範我們將練習：
  安裝 UERANSIM 簡單測試 free5GC &#43; UERANSIM  1. 建立 ueramsim VM 重複 free5gc VM 的建立步驟，產生一個新的 VM
  VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的 成功後確定可以連網及使用 SSH 登入 更改 hostname 為 ueransim 設定 Host-only 網路介面卡靜態 IP 位址為 192.168.56.102 重新開機，並啟動 free5gc 在 ueransim ping 192.168.56.101 測試與 free5gc 的連線， 同樣在 free5gc ping 192."/>
-<meta name="generator" content="Hugo 0.79.1" />
+<meta name="generator" content="Hugo 0.80.0" />
 
     
 <script type="application/ld+json">
@@ -30,7 +30,7 @@
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://www.free5gc.org/installations/stage-3-sim-install-tw/",
-  "wordCount": "1023",
+  "wordCount": "1030",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -413,7 +413,7 @@ uesimtun0: <span style="color:#bb60d5">flags</span><span style="color:#666">=</s
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
 sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 sudo systemctl stop ufw
-sudo iptables -I FORWARD 1 -j ACCEPT
+sudo iptables -I FORWARD <span style="color:#40a070">1</span> -j ACCEPT
 </code></pre></div><p>free5gc VM 若想執行測試 <code>./test.sh TestXXX</code>，檢查設定檔有先恢復原狀</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">~/free5gc/config/amfcfg.yaml
 ~/free5gc/config/smfcfg.yaml
