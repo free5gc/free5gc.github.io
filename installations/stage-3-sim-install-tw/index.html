@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="安裝 UE/RAN 模擬器 此示範我們將練習：
  安裝 UERANSIM 簡單測試 free5GC &#43; UERANSIM  1. 建立 ueramsim VM 重複 free5gc VM 的建立步驟，產生一個新的 VM
  VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的 成功後確定可以連網及使用 SSH 登入 更改 hostname 為 ueransim 設定 Host-only 網路介面卡靜態 IP 位址為 192.168.56.102 重新開機，並啟動 free5gc 在 ueransim ping 192.168.56.101 測試與 free5gc 的連線， 同樣在 free5gc ping 192."/>
-<meta name="generator" content="Hugo 0.80.0" />
+<meta name="generator" content="Hugo 0.83.1" />
 
     
 <script type="application/ld+json">
@@ -30,7 +30,7 @@
   "@type": "BlogPosting",
   "headline": "",
   "url": "https://www.free5gc.org/installations/stage-3-sim-install-tw/",
-  "wordCount": "1030",
+  "wordCount": "1035",
   "datePublished": "0001-01-01T00:00:00+00:00",
   "author": {
     "@type": "Person",
@@ -203,6 +203,8 @@
 <p>下載 UERANSIM</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~
 git clone https://github.com/aligungr/UERANSIM
+<span style="color:#007020">cd</span> UERANSIM
+git checkout v3.1.0
 </code></pre></div><p>更新系統</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt update
 sudo apt upgrade
