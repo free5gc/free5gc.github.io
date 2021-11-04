@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="Ubuntu Virtual Machine Installation Demo In this demo, we will
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 Update and upgrade Ubuntu  1. Install VirtualBox   search &ldquo;virtualbox download&rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-3-vm-basics/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Ubuntu Virtual Machine Installation Demo In this demo, we will
+ install VirtualBox create a Ubuntu Server VM using VirtualBox use SSH to connect to the Ubuntu VM to install free5GC stage 3 Update and upgrade Ubuntu  1. Install VirtualBox   search &ldquo;virtualbox download&rdquo;, or visit virtualbox.org to download and install VirtualBox (currently 6."/>
+<meta name="generator" content="Hugo 0.80.0" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-3-vm-basics/",
+  "wordCount": "779",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-3-vm-basics/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-3-vm-basics/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <h1 id="ubuntu-virtual-machine-installation-demo">Ubuntu Virtual Machine Installation Demo</h1>
+<p>In this demo, we will</p>
+<ul>
+<li>install VirtualBox</li>
+<li>create a Ubuntu Server VM using VirtualBox</li>
+<li>use SSH to connect to the Ubuntu VM to install free5GC stage 3</li>
+<li>Update and upgrade Ubuntu</li>
+</ul>
+<h2 id="1-install-virtualbox">1. Install VirtualBox</h2>
+<ul>
+<li>
+<p>search &ldquo;<code>virtualbox download</code>&rdquo;, or visit
+<a href="https://virtualbox.org/">virtualbox.org</a> to download and
+install VirtualBox (currently 6.1.18) for your operation system</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/virtualbox-org.png"
+         alt="VirtualBox.org"/>
+      <figcaption>visit https://virtualbox.org</figcaption>
+    </figure>
+	
+
+
+</li>
+<li>
+<p>once installed VirtualBox, launch and see if you have something like
+this:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox1.png"
+         alt="Blank VirtualBox Window"/>
+      <figcaption>Blank VirtualBox Window</figcaption>
+    </figure>
+	
+
+
+</li>
+</ul>
+<h2 id="2-download-ubuntu-server">2. Download Ubuntu Server</h2>
+<ul>
+<li>
+<p>search &ldquo;<code>ubuntu server download</code>&rdquo; on the web and download the latest
+Ubuntu Server LTS, or visit
+<a href="https://ubuntu.com/download/server">ubuntu.com</a>, choose Manual
+Installation Option to download the .iso file (currently 20.04.2 LTS)</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/ubuntu-download.png"
+         alt="Ubuntu Download Page"/>
+      <figcaption>Download Ubuntu Server</figcaption>
+    </figure>
+	
+
+
+</li>
+<li>
+<p>you should have downloaded a .iso image file with name like <code>ubuntu-20.04.1-live-server-amd64.iso</code>, probably in your download directory.</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/ubuntu-downloading.png"
+         alt="Download Ubuntu .iso"/>
+      <figcaption>Download Ubuntu Server .iso file</figcaption>
+    </figure>
+	
+
+
+</li>
+</ul>
+<h2 id="3-create-a-ubuntu-server-vm">3. Create a Ubuntu Server VM</h2>
+<p>Launch VirtualBox and create your first Ubuntu VM using the
+downloaded .iso image file. We use Ubuntu Server instead of Ubuntu Desktop
+because we only need a basic server machine without too many unnecessary
+functionalities. The resulting overhead to your host machine is smaller,
+and the VM starts up faster too.</p>
+<h4 id="some-notes-when-creating-a-new-vm">Some notes when creating a new VM:</h4>
+<ul>
+<li>Name the first VM using a generic name as <code>ubuntu</code>, <code>ubuntu-server</code>, or <code>ubuntu-20.04</code></li>
+<li>You can pick 1 or 2 (or more) CPUs, and about 2048M memory, although you can
+change them later</li>
+<li>in addition to the default NAT network interface, also add another
+&ldquo;Host-only&rdquo; network interface.</li>
+</ul>
+<p>Refer to the videos
+<a href="/stage-3-videos/create-ubuntu-machine/" target="_blank">Creating VM</a>,
+<a href="/stage-3-videos/setting-first-vm/" target="_blank">Setting up VM</a></p>
+<h4 id="start-installing-ubuntu">Start Installing Ubuntu</h4>
+<p>Some notes about installing Ubuntu:</p>
+<ul>
+<li>it is recommended that you choose short username and password for
+ease of typing later</li>
+<li>not choosing LVM will make it a little bit easier later if you want
+to extend your disk space</li>
+<li>choose to include SSH Server</li>
+<li>let security update complete</li>
+</ul>
+<p>Refer to videos <a href="/stage-3-videos/install-ubuntu-1/" target="_blank">Install Ubuntu 1</a>, <a href="/stage-3-videos/install-ubuntu-2/" target="_blank">Install Ubuntu 2</a></p>
+<h4 id="log-in-into-ubuntu">Log in into Ubuntu</h4>
+<p>Reboot after Ubuntu installation complete; wait a little bit for some
+initialization steps complete. Then log in with your username and password.</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-34-vm-prompt.png"
+         alt="vbox-34-vm-prompt.png"/>
+      
+    </figure>
+	
+
+
+<p>First try the <code>ifconfig</code> command：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ubuntu@ubuntu:~$ ifconfig
+
+Command <span style="color:#4070a0">&#39;ifconfig&#39;</span> not found, but can be installed with:
+
+sudo apt install net-tools
+
+ubuntu@ubuntu:~$
+</code></pre></div><p>If some messages like above show, it means <code>ifconfig</code> has not been installed
+yet. (<code>ifconfig</code> is no longer installed by defaults in newer Ubuntu, and
+is replaced by more versatile <code>ip</code> command, but we will use it here for simplicity).</p>
+<p>Follow its suggestion and install <code>ifconfig</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ubuntu@ubuntu:~$ sudo apt install net-tools
+</code></pre></div><p>Below shows the installation result:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-35-vm-net-tools.png"
+         alt="vbox-35-vm-net-tools.png"/>
+      
+    </figure>
+	
+
+
+<p>Run <code>ifconfig</code> again to check the network interfaces:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-36-vm-ifconfig.png"
+         alt="vbox-36-vm-ifconfig.png"/>
+      
+    </figure>
+	
+
+
+<p>Your display may look different, but take notes about the IP address of
+the <em>Host-only</em> interface card. The example above shows <code>192.168.56.101</code>.
+You can SSH from your host machine into this Ubuntu VM using the IP later.
+(Another IP address, <code>10.0.2.15</code> is the IP address of the NAT interface card,
+the apps in your host machine cannot access it).</p>
+<p>Finally check if the VM has internet access:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ubuntu@ubuntu:~$ ping google.com
+</code></pre></div>
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-37-vm-ping.png"
+         alt="vbox-37-vm-ping.png"/>
+      
+    </figure>
+	
+
+
+<p>Refer to the first part of the video <a href="/stage-3-videos/ping-ssh-upgrade/" target="_blank">Ping, SSH, and Upgrade</a></p>
+<h2 id="4-connect-to-the-ubuntu-vm-using-ssh">4. Connect to the Ubuntu VM using SSH</h2>
+<p>Launch your favorite SSH client from the host machine.<br>
+Some operation systems (Mac, Ubuntu, some Windows) have pre-installed
+SSH clients. If you are using Windows, you can also download third-party
+SSH clients. For example, search &ldquo;windows ssh download&rdquo; on the web and
+you can find PuTTY <a href="putty.org">site</a></p>
+<p>The benefit of using SSH is that you can easily copy and paste commands from
+your machine to Ubuntu VM for execution, and vice versa. You can also
+create multiple SSH connections with the Ubuntu VM for control and monitoring
+at the same time.</p>
+<p>Below shows some examples on a Mac host machine. Suppose the
+Host-only network IP is <code>192.168.56.101</code>, and tue username is <code>ubuntu</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ssh 192.168.56.101 -l ubuntu
+</code></pre></div><p>The first time you connect to the VM, your SSH client may show
+some message asking you for confirmation. Enter <code>yes</code>:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-45-ssh-connect.png"
+         alt="vbox-45-ssh-connect.png"/>
+      
+    </figure>
+	
+
+
+<p>(If somehow SSH shows some warning messages telling you the
+machine has potential security risk, you may have to remove
+an entry in the file <code>&lt;your home directory&gt;/.ssh/known_hosts</code>
+related the the IP address).</p>
+<p>If you log in successfully, you will enter a command line interface:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-46-ssh-log-in.png"
+         alt="vbox-46-ssh-log-in.png"/>
+      
+    </figure>
+	
+
+
+<p>Repeat the basic commands such as <code>ping</code>, <code>ifconfig</code> to see if
+the VM is working properly. If so, we can access the Ubuntu VM
+&ldquo;remotely&rdquo; from now on.</p>
+<p><code>ifconfig</code>:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-47-ssh-ifconfig.png"
+         alt="vbox-47-ssh-ifconfig.png"/>
+      
+    </figure>
+	
+
+
+<p><code>ping</code>:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-vm-basics/vbox-48-ssh-ping.png"
+         alt="vbox-48-ssh-ping.png"/>
+      
+    </figure>
+	
+
+
+<p>Refer to the second part of the video <a href="/stage-3-videos/ping-ssh-upgrade/" target="_blank">Ping, SSH, and Upgrade</a></p>
+<h2 id="5-update-and-upgrade-your-ubuntu">5. Update and Upgrade your Ubuntu</h2>
+<p>Let also update and upgrade the Ubuntu VM right now to make sure
+it is up-to-date with proper security updates.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt upgrade
+</code></pre></div><p>Refer to the last part of the video <a href="/stage-3-videos/ping-ssh-upgrade/" target="_blank">Ping, SSH, and Upgrade</a></p>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-vm-basics%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-vm-basics%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-vm-basics%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="Installing and Tesgint free5GC In this demo we will practice
+ Installing basic tools Installing the free5GC core network Testing the free5GC core network  Please notice that the installation procedure is based on free5GC Official Site。
+You should refer to the information above for future installation and configuration in the future." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-3-free5gc-install/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Installing and Tesgint free5GC In this demo we will practice
+ Installing basic tools Installing the free5GC core network Testing the free5GC core network  Please notice that the installation procedure is based on free5GC Official Site。
+You should refer to the information above for future installation and configuration in the future."/>
+<meta name="generator" content="Hugo 0.80.0" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-3-free5gc-install/",
+  "wordCount": "600",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-3-free5gc-install/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-3-free5gc-install/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <h1 id="installing-and-testing-free5gc">Installing and Testing free5GC</h1>
+<p>In this demo we will practice</p>
+<ul>
+<li>Installing basic tools</li>
+<li>Installing the free5GC core network</li>
+<li>Testing the free5GC core network</li>
+</ul>
+<p>Please notice that the installation procedure is based on
+<a href="https://github.com/free5gc/free5gc/wiki/Installation">free5GC Official Site</a>。</p>
+<p>You should refer to the information above for future installation and
+configuration in the future. The demo here is just for illustration
+of the general concepts.</p>
+<h2 id="1-check-os-versions">1. Check OS Versions</h2>
+<p>First issue <code>uname -r</code> to see the Linux kernel version.
+If you installed Ubuntu 20.04, the version looks like <code>5.4.x</code>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ uname -r
+5.4.0-65-generic
+</code></pre></div><p>Please make sure your kernel version is <code>5.0.0-23-generic</code> or
+newer than <code>5.4.0</code>.</p>
+<h2 id="2-install-basic-tools">2. Install Basic Tools</h2>
+<p>First make sure Golang (go) is not installed:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">go version
+</code></pre></div><p>If go is installed, remove it first (assuming it is installed at <code>/usr/local/go</code>):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo rm -rf /usr/local/go
+</code></pre></div><p>To install latest go, search &ldquo;ubunto golan install&rdquo; on the web, and
+get the web site:
+<a href="https://golang.org/doc/install" target="_blank">
+Download and install</a></p>
+<p>On the web site page, choose Linux, and obtain the download URL (
+by right clicking the box &ldquo;Download Go for Linux&rdquo; and chose
+something like &ldquo;Copy link address&rdquo;). The URL address looks like:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
+</code></pre></div><p>With the URL address, we can install the latest go using:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~
+wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.15.8.linux-amd64.tar.gz
+</code></pre></div><p>Then execute the following commands (copy and paste):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">mkdir -p ~/go/<span style="color:#666">{</span>bin,pkg,src<span style="color:#666">}</span>
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOPATH=$HOME/go&#39;</span> &gt;&gt; ~/.bashrc
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GOROOT=/usr/local/go&#39;</span> &gt;&gt; ~/.bashrc
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export PATH=$PATH:$GOPATH/bin:$GOROOT/bin&#39;</span> &gt;&gt; ~/.bashrc
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#39;export GO111MODULE=auto&#39;</span> &gt;&gt; ~/.bashrc
+<span style="color:#007020">source</span> ~/.bashrc
+</code></pre></div><p>And check if go is installed successfully:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">go version
+
+</code></pre></div><p>Next, we will install MongoDb. Copy and paste:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt -y update
+sudo apt -y install mongodb
+sudo systemctl start mongodb
+</code></pre></div><p>You can check if MongoDb is installed by</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">mongo
+</code></pre></div><p>If you can enter MongoDB&rsquo;s command shell, it is installed successfully.
+You can exit the command shell by enter <code>exit</code>, or just type Ctrl-D.</p>
+<p>Next, let&rsquo;s install other development tools. Copy and paste:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt -y install git gcc g++ cmake autoconf libtool pkg-config libmnl-dev libyaml-dev
+go get -u github.com/sirupsen/logrus
+</code></pre></div><p>Refer to video <a href="/stage-3-videos/tools-install/" target="_blank">Install Tools</a></p>
+<h2 id="3-setting-up-networking">3. Setting up Networking</h2>
+<p>To setup network rules, copy and paste:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+sudo systemctl stop ufw
+</code></pre></div><p><em>Note:</em> The name <code>enp0s3</code> is the network interface free5GC use to connect to
+Data Network (i.e. Internet). We already know how to get it by using
+<code>ifconfig</code> and <code>route</code> commands. You should change it to the name corresponding to
+the interface name that can reach internet.</p>
+<p>Also note that these network settings will disappear after reboot. So make sure
+you run the above commands after each reboot. (You can search the web and
+find ways to make the settings persistent).</p>
+<p>Refer to video <a href="/stage-3-videos/routing-setup/" target="_blank">
+Setup Routing</a></p>
+<h2 id="4-install-free5gc-core-network">4. Install free5GC Core Network</h2>
+<p>Let&rsquo;s install the latest free5GC directly:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~
+git clone --recursive https://github.com/free5gc/free5gc.git
+</code></pre></div><p>To build free5GC, do:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+make
+</code></pre></div><p>WE also need to install kernel module gtp5g:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~
+git clone https://github.com/free5gc/gtp5g.git
+<span style="color:#007020">cd</span> gtp5g
+make
+sudo make install
+</code></pre></div><p>To check if gtp5g is installed successfully, see if the following command
+shows some information:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">lsmod | grep gtp
+</code></pre></div><p>Refer to video <a href="/stage-3-videos/free5gc-install/" target="_blank">Install free5GC</a></p>
+<h2 id="5-testing-free5gc">5. Testing free5GC</h2>
+<p>free5GC provides some testing procedures to make sure it works properly.
+First let&rsquo;s just test the basic registration procedure:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+./test.sh TestRegistration
+</code></pre></div><p>If everything runs properly without &ldquo;red&rdquo; error messages, and the word &ldquo;PASS&rdquo;
+appears near the end of the screen output, then free5GC is running properly.</p>
+<p>We can further check other free5GC procedures:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test.sh TestGUTIRegistration
+
+./test.sh TestServiceRequest
+
+./test.sh TestXnHandover
+
+./test.sh TestDeregistration
+
+./test.sh TestPDUSessionReleaseRequest
+
+./test.sh TestPaging
+
+./test.sh TestN2Handover
+
+./test.sh TestNon3GPP
+
+./test.sh TestReSynchronisation
+
+./test_ulcl.sh -om <span style="color:#40a070">3</span> TestRegistration
+</code></pre></div><p>Refer to video <a href="/stage-3-videos/free5gc-test/" target="_blank">Testing free5GC</a></p>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-free5gc-install%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-free5gc-install%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-free5gc-install%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

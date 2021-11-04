@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="free5GC Installation on KVM Minimum Requirement   Software
+ OS: Ubuntu 18.04 Linux kernel: 4.15.0-43-generic gcc 7.3.0 Go 1.11.4 QEMU emulator 2.11.1    Hardware
+ CPU: Intel i5 processor RAM: 4GB Hard drive: 160G NIC card: 1Gbps ethernet card    Hardware recommended
+ CPU: Intel i7 processor RAM: 8GB Hard drive: 160G NIC card: 10Gbps ethernet card    Hardware Tested eNB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-1-all-in-one/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="free5GC Installation on KVM Minimum Requirement   Software
+ OS: Ubuntu 18.04 Linux kernel: 4.15.0-43-generic gcc 7.3.0 Go 1.11.4 QEMU emulator 2.11.1    Hardware
+ CPU: Intel i5 processor RAM: 4GB Hard drive: 160G NIC card: 1Gbps ethernet card    Hardware recommended
+ CPU: Intel i7 processor RAM: 8GB Hard drive: 160G NIC card: 10Gbps ethernet card    Hardware Tested eNB"/>
+<meta name="generator" content="Hugo 0.80.0" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-1-all-in-one/",
+  "wordCount": "1318",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-1-all-in-one/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-1-all-in-one/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <div class="text-center mb-4">
+  
+  <a href="https://bitbucket.org/nctu_5g/free5gc-stage-1/src/master/" target="_blank">
+  <img src="/img/free5GC.png"
+       alt="free5GC"
+       style="width: 40%;">
+  </a>
+  
+</div>
+
+
+<h1 id="free5gc-installation-on-kvm">free5GC Installation on KVM</h1>
+<h2 id="minimum-requirement">Minimum Requirement</h2>
+<ul>
+<li>
+<p>Software</p>
+<ul>
+<li>OS: Ubuntu 18.04</li>
+<li>Linux kernel: 4.15.0-43-generic</li>
+<li>gcc 7.3.0</li>
+<li>Go 1.11.4</li>
+<li>QEMU emulator 2.11.1</li>
+</ul>
+</li>
+<li>
+<p>Hardware</p>
+<ul>
+<li>CPU: Intel i5 processor</li>
+<li>RAM: 4GB</li>
+<li>Hard drive: 160G</li>
+<li>NIC card: 1Gbps ethernet card</li>
+</ul>
+</li>
+<li>
+<p>Hardware recommended</p>
+<ul>
+<li>CPU: Intel i7 processor</li>
+<li>RAM: 8GB</li>
+<li>Hard drive: 160G</li>
+<li>NIC card: 10Gbps ethernet card</li>
+</ul>
+</li>
+</ul>
+<h2 id="hardware-tested">Hardware Tested</h2>
+<p>eNB</p>
+<ul>
+<li>WNC OSQ4G-01E2, 3GPP Rel-13 compliance (4G LTE Small Cell）</li>
+<li>D-Link DWR-1012, 3GPP Rel-12 compliance (4G LTE Small Cell)</li>
+<li>GemTek WLTGFC-101, 3GPP Rel-9 compliance (4G LTE Small Cell)</li>
+</ul>
+<p>UE</p>
+<ul>
+<li>LG C90 cellular phone</li>
+<li>D-Link DWR-932C dongle via USB cable</li>
+</ul>
+<h2 id="preparation">Preparation</h2>
+<h3 id="kvm-environment-setup">KVM Environment Setup</h3>
+<ul>
+<li>VM NIC Cards
+<ol>
+<li>NIC for connecting to the Internet
+<ul>
+<li>Network source: <code>Virtual network - NAT</code></li>
+<li>Interface name in VM: <code>ens3</code> (in this example)</li>
+</ul>
+</li>
+<li>NIC for connecting to eNB:
+<ul>
+<li>Network source: Host device <code>&lt;Host Interface Name&gt;</code></li>
+<li>Interface name in VM: <code>ens4</code> (in this example)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="collect-enodeb-and-usim-information">Collect eNodeB and USIM Information</h3>
+<ul>
+<li>
+<p>eNodeB information (in this example)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">IP Address: 192.188.2.1
+Gateway:    192.188.2.2 (IP of NIC connected to eNB)
+PLMN:
+  MCC: 208
+  MNC: 93
+MME GID:  1
+MME Code: 1
+TAC: 1
+</code></pre></div></li>
+<li>
+<p>USIM information (in this example)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">IMSI 208930000000003
+K    8baf473f2f8fd09487cccbd7097c6862
+OPc  8e27b6af0e692e750f32667a3b14605d
+</code></pre></div></li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p><em>Please follow the instructions from Part A ~ Part C.</em></p>
+<h3 id="part-a-compile-source-code">Part A. Compile Source Code</h3>
+<h4 id="prerequisites">Prerequisites</h4>
+<p>Install MongoDB 3.6.3, Golang 1.11.4.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt-get update
+sudo apt-get -y install mongodb wget git
+sudo systemctl start mongodb <span style="color:#666">(</span><span style="color:#007020;font-weight:bold">if</span> <span style="color:#4070a0">&#39;/usr/bin/mongod&#39;</span> is not running<span style="color:#666">)</span>
+
+<span style="color:#60a0b0;font-style:italic"># Check if golang is installed</span>
+go version
+
+<span style="color:#60a0b0;font-style:italic"># If not, run commands below</span>
+wget -q https://storage.googleapis.com/golang/getgo/installer_linux
+chmod +x installer_linux
+./installer_linux
+<span style="color:#007020">source</span> ~/.bash_profile
+rm -f installer_linux
+
+go get -u -v <span style="color:#4070a0">&#34;github.com/gorilla/mux&#34;</span>
+go get -u -v <span style="color:#4070a0">&#34;golang.org/x/net/http2&#34;</span>
+go get -u -v <span style="color:#4070a0">&#34;golang.org/x/sys/unix&#34;</span>
+</code></pre></div><p>To run free5GC with least privilege, TUN device permission should be a crw-rw-rw-(666).</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ls -al /dev/net/tun
+crw-rw-rw- <span style="color:#40a070">1</span> root root 10, <span style="color:#40a070">200</span> Jan <span style="color:#40a070">14</span> 13:09 /dev/net/tun
+</code></pre></div><p>Write the configuration file for the TUN device.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sh -c <span style="color:#4070a0">&#34;cat &lt;&lt; EOF &gt; /etc/systemd/network/99-free5gc.netdev
+</span><span style="color:#4070a0">[NetDev]
+</span><span style="color:#4070a0">Name=uptun
+</span><span style="color:#4070a0">Kind=tun
+</span><span style="color:#4070a0">EOF&#34;</span>
+
+sudo systemctl <span style="color:#007020">enable</span> systemd-networkd
+sudo systemctl restart systemd-networkd
+</code></pre></div><p>Check <em>IPv6 Kernel Configuration</em>. Although you can skip this step, we suggest that you set this up to support IPv6-enabled UE.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sysctl -n net.ipv6.conf.uptun.disable_ipv6
+
+<span style="color:#666">(</span><span style="color:#007020;font-weight:bold">if</span> the output is <span style="color:#40a070">0</span> and IPv6 is enabled, skip the followings<span style="color:#666">)</span>
+sudo sh -c <span style="color:#4070a0">&#34;echo &#39;net.ipv6.conf.uptun.disable_ipv6=0&#39; &gt; /etc/sysctl.d/30-free5gc.conf&#34;</span>
+sudo sysctl -p /etc/sysctl.d/30-free5gc.conf
+</code></pre></div><p>You are now ready to set the IP address on TUN device. If IPv6 is disabled for TUN device, please remove <code>Address=cafe::1/64</code> from below.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sh -c <span style="color:#4070a0">&#34;cat &lt;&lt; EOF &gt; /etc/systemd/network/99-free5gc.network
+</span><span style="color:#4070a0">[Match]
+</span><span style="color:#4070a0">Name=uptun
+</span><span style="color:#4070a0">[Network]
+</span><span style="color:#4070a0">Address=45.45.0.1/16
+</span><span style="color:#4070a0">Address=cafe::1/64
+</span><span style="color:#4070a0">EOF&#34;</span>
+
+sudo systemctl <span style="color:#007020">enable</span> systemd-networkd
+sudo systemctl restart systemd-networkd
+</code></pre></div><p>Add the following lines into <code>/etc/network/interfaces</code> for network-manager service</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">auto uptun
+iface uptun inet static
+	address 45.45.0.1
+	netmask 255.255.0.0
+
+iface uptun inet6 static
+	pre-up modprobe ipv6
+	address cafe::1
+	netmask 64
+</code></pre></div><p>Restart uptun interface</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo ip a flush uptun
+sudo systemctl restart networking
+
+<span style="color:#60a0b0;font-style:italic"># Check if uptun is up</span>
+sudo apt-get -y install net-tools
+ifconfig uptun
+</code></pre></div><h4 id="amf-smf-upf-hss-and-pcrf">AMF, SMF, UPF, HSS, and PCRF</h4>
+<p>Install the depedencies for building the source</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt-get -y install autoconf libtool gcc pkg-config git flex bison libsctp-dev libgnutls28-dev libgcrypt-dev libssl-dev libidn11-dev libmongoc-dev libbson-dev libyaml-dev
+</code></pre></div><p>Git clone and compile</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git clone https://bitbucket.org/nctu_5g/free5gc-stage-1.git
+<span style="color:#007020">cd</span> free5gc-stage-1
+autoreconf -iv
+./configure --prefix<span style="color:#666">=</span><span style="color:#4070a0">`</span><span style="color:#007020">pwd</span><span style="color:#4070a0">`</span>/install
+make -j <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+make install
+</code></pre></div><h3 id="part-b-vm-internal-network-environment-setting">Part B. VM Internal Network Environment Setting</h3>
+<p>[Option 1] Need to run on every boot</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo ifconfig ens4 192.188.2.2
+sudo sh -c <span style="color:#4070a0">&#39;echo 1 &gt; /proc/sys/net/ipv4/ip_forward&#39;</span>
+sudo iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
+sudo iptables -I INPUT -i uptun -j ACCEPT
+</code></pre></div><p>[Option 2] or configure as auto run on boot</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sh -c <span style="color:#4070a0">&#34;cat &lt;&lt; EOF &gt; /etc/init.d/ngc-network-setup
+</span><span style="color:#4070a0">#!/bin/sh
+</span><span style="color:#4070a0">### BEGIN INIT INFO
+</span><span style="color:#4070a0"># Provides:          ngc-network-setup
+</span><span style="color:#4070a0"># Required-Start:    networkd
+</span><span style="color:#4070a0"># Required-Stop:     networkd
+</span><span style="color:#4070a0"># Default-Start:     networkd
+</span><span style="color:#4070a0"># Default-Stop:      networkd
+</span><span style="color:#4070a0"># Short-Description:
+</span><span style="color:#4070a0"># Description:
+</span><span style="color:#4070a0">#
+</span><span style="color:#4070a0">### END INIT INFO
+</span><span style="color:#4070a0">
+</span><span style="color:#4070a0">ifconfig ens4 192.188.2.2
+</span><span style="color:#4070a0">sh -c &#39;echo 1 &gt; /proc/sys/net/ipv4/ip_forward&#39;
+</span><span style="color:#4070a0">iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
+</span><span style="color:#4070a0">iptables -I INPUT -i uptun -j ACCEPT
+</span><span style="color:#4070a0">EOF&#34;</span>
+
+sudo chmod <span style="color:#40a070">755</span> /etc/init.d/ngc-network-setup
+sudo /etc/init.d/ngc-network-setup
+
+sudo ln -s /etc/init.d/ngc-network-setup /etc/rc3.d/S99ngc-network-setup
+sudo ln -s /etc/init.d/ngc-network-setup /etc/rc4.d/S99ngc-network-setup
+sudo ln -s /etc/init.d/ngc-network-setup /etc/rc5.d/S99ngc-network-setup
+</code></pre></div><h3 id="part-c-run">Part C. Run</h3>
+<h4 id="run-in-all-in-one-mode">Run in all-in-one mode</h4>
+<p>The daemon <code>free5gc-ngcd</code> includes <em>AMF</em>, <em>SMF</em>, <em>UPF</em>, <em>HSS</em>, and <em>PCRF</em>. Thus, instead of running all 5 daemons, you can just run <code>free5gc-ngcd</code> in your development environment.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./free5gc-ngcd
+</code></pre></div><ul>
+<li>While running <code>free5gc-ngcd</code>
+<ul>
+<li>All logs for AMF, SMF, UPF, HSS, and PCRF are written to <code>./install/var/log/free5gc/free5gc.log</code>.</li>
+<li>All settings are managed in one place for <code>./install/etc/free5gc/free5gc.conf</code>.</li>
+<li>You can find the log/conf path at the beginning of the running screen.</li>
+<li>You can user <code>-f</code> argument to specify config file to be used.</li>
+</ul>
+</li>
+</ul>
+<h4 id="run-functions-separately">Run functions separately</h4>
+<p>We also provide 5GC functions running separately.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">./free5gc-upfd
+./free5gc-amfd
+./free5gc-smfd
+./nextepc-hssd
+./nextepc-pcrfd
+</code></pre></div><p>Note: We also provide a <a href="https://www.free5gc.org/cluster"><strong>reference</strong></a> for 5GC functions running in separate machines.</p>
+<h4 id="optional-self-test">[Optional] Self-test</h4>
+<p>We provide a program that checks whether the installation is correct.
+After running the wireshark, select <code>loopback</code> interface, and then filter <code>s1ap || diameter || gtpv2 || gtp</code> and run <code>./test/testngc</code>. You can see the packets virtually created.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./test/testngc -f install/etc/free5gc/test/free5gc.testngc.conf
+</code></pre></div><h3 id="part-d-web-user-interface">Part D. Web User Interface</h3>
+<p>Install <a href="https://nodejs.org/">Node.js</a> and <a href="https://www.npmjs.com/">NPM</a></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt-get -y install curl
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get -y install nodejs
+</code></pre></div><p>Install the dependencies to run WebUI (first time)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> webui
+npm install
+</code></pre></div><p>Run WebUI</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> webui
+npm run dev
+</code></pre></div><p>Now the web server is running on <em>http://localhost:3000</em>.
+The default username and password are &ldquo;<strong>admin</strong>&rdquo; and &ldquo;<strong>1423</strong>&rdquo;.</p>
+<h2 id="core-network-configuration">Core Network Configuration</h2>
+<h4 id="free5gc-configuration-file">free5GC configuration file</h4>
+<p>Modify <code>./install/etc/free5gc/free5gc.conf</code></p>
+<ol>
+<li>
+<p>amf-slap address (line 67)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">amf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">s1ap</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">addr: &lt;IP of GW NIC to eNB</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.2</span>&gt;<span style="color:#bbb">
+</span></code></pre></div></li>
+<li>
+<p>upf-gtpu address (line 162)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">smf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">upf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">addr: &lt;IP of GW NIC to eNB</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.2</span>&gt;<span style="color:#bbb">
+</span></code></pre></div></li>
+<li>
+<p>AMF GUMMEI (line 91)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">amf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">gummei</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">plmn_id</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mcc: &lt;eNB MCC</span>:<span style="color:#bbb"> </span><span style="color:#40a070">208</span>&gt;<span style="color:#4070a0;font-style:italic">
+</span><span style="color:#4070a0;font-style:italic">      </span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mnc: &lt;eNB MNC</span>:<span style="color:#bbb"> </span><span style="color:#40a070">93</span>&gt;<span style="color:#4070a0;font-style:italic">
+</span><span style="color:#4070a0;font-style:italic">    mme_gid: &lt;eNB MME GID: 1&gt;
+</span><span style="color:#4070a0;font-style:italic">    mme_code: &lt;eNB MME Code: 1&gt;</span><span style="color:#bbb">    
+</span></code></pre></div></li>
+<li>
+<p>AMF TAI (line 130)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">amf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">tai</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">plmn_id</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mcc: &lt;eNB MCC</span>:<span style="color:#bbb"> </span><span style="color:#40a070">208</span>&gt;<span style="color:#4070a0;font-style:italic">
+</span><span style="color:#4070a0;font-style:italic">      </span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mnc: &lt;eNB MNC</span>:<span style="color:#bbb"> </span><span style="color:#40a070">93</span>&gt;<span style="color:#4070a0;font-style:italic">
+</span><span style="color:#4070a0;font-style:italic">    </span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">tac: &lt;eNB TAC</span>:<span style="color:#bbb"> </span><span style="color:#40a070">1</span>&gt;<span style="color:#bbb">
+</span></code></pre></div></li>
+</ol>
+<h4 id="add-subscriber-ue">Add subscriber (UE)</h4>
+<ul>
+<li>Add a subscriber by the Web UI
+<ul>
+<li>Run the web server: <code>cd ./webui &amp;&amp; npm run dev</code></li>
+<li>Visit <em>http://localhost:3000</em></li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">  - Username : admin
+  - Password : 1423
+</code></pre></div><ul>
+<li>Add a subscriber with <code>IMSI</code>, <code>K</code>, <code>OPc</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">  - Go to Subscriber Menu.
+  - Click `+` Button to add a new subscriber.
+  - Fill the IMSI, security context(K, OPc, AMF), and APN of the subscriber.
+  - Click `SAVE` Button
+</code></pre></div><ul>
+<li>This addition will take effect immediately on free5GC without restaring any daemon.</li>
+</ul>
+</li>
+</ul>
+<h2 id="rebuild-project">Rebuild Project</h2>
+<p>To completely rebuild the project after modifying source code</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#666">(</span>Control-C <span style="color:#007020">kill</span> free5gc-ngcd<span style="color:#666">)</span>
+make maintainer-clean
+rm -rf ./install
+git pull
+autoreconf -iv
+./configure --prefix<span style="color:#666">=</span><span style="color:#4070a0">`</span><span style="color:#007020">pwd</span><span style="color:#4070a0">`</span>/install
+make -j <span style="color:#4070a0">`</span>nproc<span style="color:#4070a0">`</span>
+make install
+./free5gc-ngcd
+</code></pre></div><h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="note-for-modifying-configuration-file">Note for modifying configuration file</h3>
+<ol>
+<li>Use space for indent. <strong>DO NOT use tab</strong>.</li>
+<li>A white space must be added between the <strong>colon</strong> and <strong>value</strong> after the item name, e.g. <code>addr: 192.188.2.2</code></li>
+</ol>
+<h3 id="testtestngc-test-failure">./test/testngc test failure</h3>
+<ol>
+<li>
+<p>Make sure all configuration files and environment settings are correct.</p>
+</li>
+<li>
+<p>Kill testngc process which didn&rsquo;t finish correctly</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">killall -9 testngc
+</code></pre></div></li>
+<li>
+<p>Remove test subscriber left by previous failed test (<a href="https://github.com/acetcom/nextepc/issues/57#issuecomment-386177165">NextEPC issue #57</a>)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">$ mongo
+&gt; use free5gc
+&gt; db.subscribers.find()  ### (Check the test subscriber)
+&gt; db.subscribers.drop()  ### Remove all subscriber
+&gt; db.subscribers.find()  ### (Check that all subscribers are empty)
+</code></pre></div></li>
+</ol>
+<h3 id="free5gc-ngcd-errors">./free5gc-ngcd errors</h3>
+<ol>
+<li>
+<p><code>ERRR: - The certificate is expired</code> (<a href="https://github.com/acetcom/nextepc/issues/94">NextEPC issue #94</a>)</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> support/freeDiameter
+./make_certs.sh .
+<span style="color:#007020">cd</span> ../..
+make install
+</code></pre></div></li>
+<li>
+<p><code>Address already in use</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">$ killall -9 testngc
+or
+$ killall -9 free5gc-ngcd
+</code></pre></div></li>
+</ol>
+<h3 id="rebuild-failure">Rebuild failure</h3>
+<ol>
+<li><code>config.status: error: cannot find input file: `Makefile.in'</code> (<a href="https://github.com/rscada/libmbus/issues/68">NextEPC issue #68</a>)
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">autoheader <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>    <span style="color:#666">&amp;&amp;</span> aclocal <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>    <span style="color:#666">&amp;&amp;</span> libtoolize --ltdl --copy --force <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>    <span style="color:#666">&amp;&amp;</span> automake --add-missing --copy <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>    <span style="color:#666">&amp;&amp;</span> autoconf <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span>    <span style="color:#666">&amp;&amp;</span> ./configure
+</code></pre></div></li>
+</ol>
+<h2 id="appendix-a-program-the-sim-card">Appendix A: Program the SIM Card</h2>
+<p>Install packages:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt-get install pcscd pcsc-tools libccid python-dev swig python-setuptools python-pip libpcsclite-dev
+sudo pip install pycrypto
+</code></pre></div><p>Download PySIM</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">git clone git://git.osmocom.org/pysim.git
+</code></pre></div><p>Change to pyscard folder and install</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> &lt;pyscard-path&gt;
+sudo /usr/bin/python setup.py build_ext install
+</code></pre></div><p>Verify your reader is ready</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo pcsc_scan
+</code></pre></div><p>Check whether your reader can read the SIM card</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> &lt;pysim-path&gt;
+./pySim-read.py –p <span style="color:#40a070">0</span>
+</code></pre></div><p>Program your SIM card information</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">./pySim-prog.py -p <span style="color:#40a070">0</span> -x <span style="color:#40a070">208</span> -y <span style="color:#40a070">93</span> -t sysmoUSIM-SJS1 -i <span style="color:#40a070">208930000000003</span> --op<span style="color:#666">=</span>8e27b6af0e692e750f32667a3b14605d -k 8baf473f2f8fd09487cccbd7097c6862 -s <span style="color:#40a070">8988211000000088313</span> -a <span style="color:#40a070">23605945</span>
+</code></pre></div><p>You can get your SIM card from <a href="http://shop.sysmocom.de/products/sysmousim-sjs1-4ff"><strong>sysmocom</strong></a>. You also need a card reader to write your SIM card. You can get a card reader from <a href="https://24h.pchome.com.tw/prod/DCAD59-A9009N6WF"><strong>here</strong></a> or equivalent device will do.</p>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-1-all-in-one%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-1-all-in-one%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-1-all-in-one%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

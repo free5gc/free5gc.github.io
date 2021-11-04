@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="安裝 UE/RAN 模擬器 此示範我們將練習：
+ 安裝 UERANSIM 簡單測試 free5GC &#43; UERANSIM  1. 建立 ueramsim VM 重複 free5gc VM 的建立步驟，產生一個新的 VM
+ VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的 成功後確定可以連網及使用 SSH 登入 更改 hostname 為 ueransim 設定 Host-only 網路介面卡靜態 IP 位址為 192.168.56.102 重新開機，並啟動 free5gc 在 ueransim ping 192.168.56.101 測試與 free5gc 的連線， 同樣在 free5gc ping 192." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-3-sim-install-tw/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="安裝 UE/RAN 模擬器 此示範我們將練習：
+ 安裝 UERANSIM 簡單測試 free5GC &#43; UERANSIM  1. 建立 ueramsim VM 重複 free5gc VM 的建立步驟，產生一個新的 VM
+ VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的 成功後確定可以連網及使用 SSH 登入 更改 hostname 為 ueransim 設定 Host-only 網路介面卡靜態 IP 位址為 192.168.56.102 重新開機，並啟動 free5gc 在 ueransim ping 192.168.56.101 測試與 free5gc 的連線， 同樣在 free5gc ping 192."/>
+<meta name="generator" content="Hugo 0.83.1" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-3-sim-install-tw/",
+  "wordCount": "1035",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-3-sim-install-tw/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-3-sim-install-tw/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <h1 id="安裝-ueran-模擬器">安裝 UE/RAN 模擬器</h1>
+<p>此示範我們將練習：</p>
+<ul>
+<li>安裝 UERANSIM</li>
+<li>簡單測試 free5GC + UERANSIM</li>
+</ul>
+<h2 id="1-建立-ueramsim-vm">1. 建立 ueramsim VM</h2>
+<p>重複 free5gc VM 的建立步驟，產生一個新的 VM</p>
+<ul>
+<li>VM 名稱為 ueransim, 記得所有網卡 MAC 都產生新的</li>
+<li>成功後確定可以連網及使用 SSH 登入</li>
+<li>更改 hostname 為 <code>ueransim</code></li>
+<li>設定 Host-only 網路介面卡靜態 IP 位址為 <code>192.168.56.102</code></li>
+<li>重新開機，並啟動 free5gc</li>
+<li>在 ueransim <code>ping 192.168.56.101</code> 測試與 free5gc 的連線，
+同樣在 free5gc <code>ping 192.168.56.102</code> 測試與 ueransim 的連線</li>
+</ul>
+<h2 id="2-安裝-ueransim">2. 安裝 UERANSIM</h2>
+<p>瀏覽器搜尋 ueransim, 得到網址：</p>
+<ul>
+<li><a href="https://github.com/aligungr/UERANSIM">aligungr/UERANSIM: Open source 5G UE and RAN &hellip; - GitHub</a></li>
+</ul>
+<p>瀏覽閱讀一下 UERANSIM 開源專案的基本資訊及用途。進入安裝頁面：</p>
+<ul>
+<li><a href="https://github.com/aligungr/UERANSIM/wiki/Installation">Installation</a></li>
+</ul>
+<p>下載 UERANSIM</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~
+git clone https://github.com/aligungr/UERANSIM
+<span style="color:#007020">cd</span> UERANSIM
+git checkout v3.1.0
+</code></pre></div><p>更新系統</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt upgrade
+</code></pre></div><p>安裝工具</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt install make
+sudo apt install g++
+sudo apt install libsctp-dev lksctp-tools
+sudo apt install iproute2
+sudo snap install cmake --classic
+</code></pre></div><p>編譯 UERANSIM</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/UERANSIM
+make
+</code></pre></div><h2 id="3-安裝-free5gc-webconsole">3. 安裝 free5GC WebConsole</h2>
+<p>free5GC 提供一個簡單網頁介面 WebConsole 來管理 UE 註冊資料，供各 NF 使用。
+WebConsole 需要 Node.js 及 Yarn 工具來編譯。</p>
+<p>首先 SSH 登入 free5gc (<code>192.168.56.101</code>)，先把可能存在的舊工具移除：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo apt remove cmdtest
+sudo apt remove yarn
+</code></pre></div><p>安裝 Node.js 及 Yarn</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+<span style="color:#007020">echo</span> <span style="color:#4070a0">&#34;deb https://dl.yarnpkg.com/debian/ stable main&#34;</span> | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt-get update
+sudo apt-get install -y nodejs yarn
+</code></pre></div><p>開始建立 WebConsole</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+make webconsole
+</code></pre></div><h2 id="4-使用-webconsole-新增註冊資料">4. 使用 WebConsole 新增註冊資料</h2>
+<p>先啟動 WebConsole 伺服器：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc/webconsole
+go run server.go
+</code></pre></div><p>終端機印出使用網址 :5000。請在本機打開瀏覽器，輸入網址 <code>http://192.168.56.101:5000</code></p>
+<ul>
+<li>打開網頁後，輸入 帳號 <code>admin</code>，密碼 <code>free5gc</code></li>
+<li>進入後拉寬瀏覽器，直到看到左側 <code>Subscribers</code></li>
+<li>選取 <code>Subscribers</code> 並新增一筆資料
+<ul>
+<li>注意除了 Operator Code Type 選擇 OP 外，其他欄位先保留預設資料，供後續模擬器使用</li>
+</ul>
+</li>
+<li>新增完成後，終端機按 Ctrl-C 就可停止 WebConsole</li>
+</ul>
+<h2 id="5-設定-free5gc-核網參數及-ueransim-參數">5. 設定 free5GC 核網參數及 UERANSIM 參數</h2>
+<p>在 free5gc, 我們需要編輯三個設定檔：</p>
+<ul>
+<li><code>~/free5gc/config/amfcfg.yaml</code></li>
+<li><code>~/free5gc/config/smfcfg.yaml</code></li>
+<li><code>~/free5gc/NFs/upf/build/config/upfcfg.yaml</code></li>
+</ul>
+<p>SSH 登入 free5gc 後，更改 <code>~/free5gc/config/amfcfg.yaml</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+nano config/amfcfg.yaml
+</code></pre></div><p>將 ngapIpList 裡的 IP 從 <code>127.0.0.1</code> 改成 <code>192.168.56.101</code>，亦即</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  ngapIpList:  <span style="color:#60a0b0;font-style:italic"># the IP list of N2 interfaces on this AMF</span>
+  - 127.0.0.1
+</code></pre></div><p>改成</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  ngapIpList:  <span style="color:#60a0b0;font-style:italic"># the IP list of N2 interfaces on this AMF</span>
+  - 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.1</span>
+</code></pre></div><p>接著更改 <code>~/free5gc/config/smfcfg.yaml</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">nano config/smfcfg.yaml
+</code></pre></div><p>將 userplane_information / up_nodes / UPF / interfaces / endpoints 裡的
+IP 從 <code>127.0.0.8</code> 改成 <code>192.168.56.101</code>，亦即</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+
+  interfaces: <span style="color:#60a0b0;font-style:italic"># Interface list for this UPF</span>
+   - interfaceType: N3 <span style="color:#60a0b0;font-style:italic"># the type of the interface (N3 or N9)</span>
+     endpoints: <span style="color:#60a0b0;font-style:italic"># the IP address of this N3/N9 interface on this UPF</span>
+       - 127.0.0.8
+</code></pre></div><p>改成</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  interfaces: <span style="color:#60a0b0;font-style:italic"># Interface list for this UPF</span>
+   - interfaceType: N3 <span style="color:#60a0b0;font-style:italic"># the type of the interface (N3 or N9)</span>
+     endpoints: <span style="color:#60a0b0;font-style:italic"># the IP address of this N3/N9 interface on this UPF</span>
+       - 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
+</code></pre></div><p>最後更改 <code>~/free5gc/NFs/upf/build/config/upfcfg.yaml</code>，將 gtpu 裡的 IP
+從 <code>127.0.0.8</code> 改為 <code>192.168.56.101</code>，亦即</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  gtpu:
+  - addr: 127.0.0.8
+</code></pre></div><p>改成</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  gtpu:
+  - addr: 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
+</code></pre></div><h2 id="6-設定-ueransim">6. 設定 UERANSIM</h2>
+<p>在 ueransim, 有兩個設定檔跟 free5GC 有關：</p>
+<ul>
+<li><code>~/UERANSIM/config/free5gc-gnb.yaml</code></li>
+<li><code>~/UERANSIM/config/free5gc-ue.yaml</code></li>
+</ul>
+<p>其中第二個檔案為 UE 設定，內容應與 free5gc 的 WebConsole 產生的預設註冊資料一致，
+不需更改。</p>
+<p>首先 SSH 登入 ueransim 後，更改 <code>~/UERANSIM/config/free5gc-gnb.yaml</code>，
+將 ngapIp 及 gtpIp 的 IP 從 <code>127.0.0.1</code> 改成 <code>192.168.56.102</code>，並將 amfConfigs 裡的
+位址改成 <code>192.168.56.101</code>，亦即</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  ngapIp: 127.0.0.1   <span style="color:#60a0b0;font-style:italic"># gNB&#39;s local IP address for N2 Interface (Usually same with local IP)</span>
+  gtpIp: 127.0.0.1    <span style="color:#60a0b0;font-style:italic"># gNB&#39;s local IP address for N3 Interface (Usually same with local IP)</span>
+
+  <span style="color:#60a0b0;font-style:italic"># List of AMF address information</span>
+  amfConfigs:
+    - address: 127.0.0.1
+</code></pre></div><p>改成</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
+  ngapIp: 192.168.56.102  <span style="color:#60a0b0;font-style:italic"># 127.0.0.1   # gNB&#39;s local IP address for N2 Interface (Usually same with local IP)</span>
+  gtpIp: 192.168.56.102  <span style="color:#60a0b0;font-style:italic"># 127.0.0.1    # gNB&#39;s local IP address for N3 Interface (Usually same with local IP)</span>
+
+  <span style="color:#60a0b0;font-style:italic"># List of AMF address information</span>
+  amfConfigs:
+    - address: 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.1</span>
+</code></pre></div><p>接著可以檢視 <code>~/UERANSIM/config/free5gc-ue.yaml</code>，看設定資料是否和 WebConsole 裡的資料一致，例如</p>
+<pre><code># IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 or 16 digits)
+supi: 'imsi-208930000000003'
+# Mobile Country Code value
+mcc: '208'
+# Mobile Network Code value (2 or 3 digits)
+mnc: '93'
+
+# Permanent subscription key
+key: '8baf473f2f8fd09487cccbd7097c6862'
+# Operator code (OP or OPC) of the UE
+op: '8e27b6af0e692e750f32667a3b14605d'
+# This value specifies the OP type and it can be either 'OP' or 'OPC'
+opType: 'OP'
+
+...
+
+# Initial PDU sessions to be established
+sessions:
+  - type: 'IPv4'
+    apn: 'internet'
+    slice:
+      sst: 0x01
+      sd: 0x010203
+
+# List of requested S-NSSAIs by this UE
+slices:
+  - sst: 0x01
+    sd: 0x010203
+
+...
+</code></pre><p>與之前新增的註冊資料一致。</p>
+<h2 id="7-測試-free5gc--ueransim">7. 測試 free5GC + UERANSIM</h2>
+<p>SSH 登入 free5gc， 若曾重新開啟 free5gc，記得先做：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+sudo systemctl stop ufw
+</code></pre></div><p>並執行下列指令：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo iptables -I FORWARD <span style="color:#40a070">1</span> -j ACCEPT
+</code></pre></div><p>確定網路環境及設定檔已更改後，到 free5gc 執行 <code>./run.sh</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
+./run.sh
+</code></pre></div><p>此時 free5GC 核網啟動。</p>
+<p>另外需準備三個終端機視窗執行 UERANSIM 模擬器 (或你會使用 tmux 也可只用一個):</p>
+<p>視窗 1，登入 ueransim，確定模擬器已編譯好，且設定檔也以改好，執行 <code>nr-gnb</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/UERANSIM
+build/nr-gnb -c config/free5gc-gnb.yaml
+</code></pre></div><p>視窗 2，登入 ueransim，用管理員身分執行 <code>nr-gnb</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/UERANSIM
+sudo build/nr-ue -c config/free5gc-ue.yaml
+</code></pre></div><p>視窗 3，登入 ueransim，用 <code>ping</code> 測試模擬器，free5GC 核網，及網際網路是否連通。
+首先，用 <code>ifconfig</code> 檢視是否有建立通道 uesimtun0：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ifconfig
+
+enp0s3: <span style="color:#bb60d5">flags</span><span style="color:#666">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu <span style="color:#40a070">1500</span>
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:fe65:1472  prefixlen <span style="color:#40a070">64</span>  scopeid 0x20&lt;link&gt;
+        ether 08:00:27:65:14:72  txqueuelen <span style="color:#40a070">1000</span>  <span style="color:#666">(</span>Ethernet<span style="color:#666">)</span>
+        RX packets <span style="color:#40a070">80</span>  bytes <span style="color:#40a070">32423</span> <span style="color:#666">(</span>32.4 KB<span style="color:#666">)</span>
+        RX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span>  overruns <span style="color:#40a070">0</span>  frame <span style="color:#40a070">0</span>
+        TX packets <span style="color:#40a070">90</span>  bytes <span style="color:#40a070">12860</span> <span style="color:#666">(</span>12.8 KB<span style="color:#666">)</span>
+        TX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span> overruns <span style="color:#40a070">0</span>  carrier <span style="color:#40a070">0</span>  collisions <span style="color:#40a070">0</span>
+
+enp0s8: <span style="color:#bb60d5">flags</span><span style="color:#666">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu <span style="color:#40a070">1500</span>
+        inet 192.168.56.102  netmask 255.255.255.0  broadcast 192.168.56.255
+        inet6 fe80::a00:27ff:fe5e:be64  prefixlen <span style="color:#40a070">64</span>  scopeid 0x20&lt;link&gt;
+        ether 08:00:27:5e:be:64  txqueuelen <span style="color:#40a070">1000</span>  <span style="color:#666">(</span>Ethernet<span style="color:#666">)</span>
+        RX packets <span style="color:#40a070">1515</span>  bytes <span style="color:#40a070">130490</span> <span style="color:#666">(</span>130.4 KB<span style="color:#666">)</span>
+        RX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span>  overruns <span style="color:#40a070">0</span>  frame <span style="color:#40a070">0</span>
+        TX packets <span style="color:#40a070">1010</span>  bytes <span style="color:#40a070">206670</span> <span style="color:#666">(</span>206.6 KB<span style="color:#666">)</span>
+        TX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span> overruns <span style="color:#40a070">0</span>  carrier <span style="color:#40a070">0</span>  collisions <span style="color:#40a070">0</span>
+
+lo: <span style="color:#bb60d5">flags</span><span style="color:#666">=</span>73&lt;UP,LOOPBACK,RUNNING&gt;  mtu <span style="color:#40a070">65536</span>
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen <span style="color:#40a070">128</span>  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen <span style="color:#40a070">1000</span>  <span style="color:#666">(</span>Local Loopback<span style="color:#666">)</span>
+        RX packets <span style="color:#40a070">3445</span>  bytes <span style="color:#40a070">174416</span> <span style="color:#666">(</span>174.4 KB<span style="color:#666">)</span>
+        RX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span>  overruns <span style="color:#40a070">0</span>  frame <span style="color:#40a070">0</span>
+        TX packets <span style="color:#40a070">3445</span>  bytes <span style="color:#40a070">174416</span> <span style="color:#666">(</span>174.4 KB<span style="color:#666">)</span>
+        TX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span> overruns <span style="color:#40a070">0</span>  carrier <span style="color:#40a070">0</span>  collisions <span style="color:#40a070">0</span>
+
+uesimtun0: <span style="color:#bb60d5">flags</span><span style="color:#666">=</span>4305&lt;UP,POINTOPOINT,RUNNING,NOARP,MULTICAST&gt;  mtu <span style="color:#40a070">1500</span>
+        inet 60.60.0.1  netmask 255.255.255.255  destination 60.60.0.1
+        inet6 fe80::2034:d00:a76:84b7  prefixlen <span style="color:#40a070">64</span>  scopeid 0x20&lt;link&gt;
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen <span style="color:#40a070">500</span>  <span style="color:#666">(</span>UNSPEC<span style="color:#666">)</span>
+        RX packets <span style="color:#40a070">3</span>  bytes <span style="color:#40a070">252</span> <span style="color:#666">(</span>252.0 B<span style="color:#666">)</span>
+        RX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span>  overruns <span style="color:#40a070">0</span>  frame <span style="color:#40a070">0</span>
+        TX packets <span style="color:#40a070">13</span>  bytes <span style="color:#40a070">732</span> <span style="color:#666">(</span>732.0 B<span style="color:#666">)</span>
+        TX errors <span style="color:#40a070">0</span>  dropped <span style="color:#40a070">0</span> overruns <span style="color:#40a070">0</span>  carrier <span style="color:#40a070">0</span>  collisions <span style="color:#40a070">0</span>
+
+</code></pre></div><p>接著使用 <code>ping</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ping -I uesimtun0 google.com
+</code></pre></div><p>若有回應代表系統及網路成功運作，恭喜。</p>
+<h2 id="常見問題">常見問題</h2>
+<p>若安裝與執行 free5GC 及 UERANSIM 過程中發生問題，
+先記得有無執行下面幾點，完成再開始測試：</p>
+<p>free5gc VM 若重新啟動，有無先執行設定：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo sysctl -w net.ipv4.ip_forward<span style="color:#666">=</span><span style="color:#40a070">1</span>
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+sudo systemctl stop ufw
+sudo iptables -I FORWARD <span style="color:#40a070">1</span> -j ACCEPT
+</code></pre></div><p>free5gc VM 若想執行測試 <code>./test.sh TestXXX</code>，檢查設定檔有先恢復原狀</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">~/free5gc/config/amfcfg.yaml
+~/free5gc/config/smfcfg.yaml
+~/free5gc/NFs/upf/build/config/upfcfg.yaml
+</code></pre></div><p>可用 <code>git diff</code> 檢查。若測試仍有問題，可先清除 MongoDB 資料庫再試：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ mongo free5gc
+   ...
+&gt; db.dropDatabase<span style="color:#666">()</span>
+<span style="color:#666">{</span> <span style="color:#4070a0">&#34;dropped&#34;</span> : <span style="color:#4070a0">&#34;free5gc&#34;</span>, <span style="color:#4070a0">&#34;ok&#34;</span> : <span style="color:#40a070">1</span> <span style="color:#666">}</span>
+&gt; <span style="color:#007020">exit</span>
+bye
+</code></pre></div><p>VM 的介面卡名稱及 IP 是否正確，且和相關的設定檔或指令相符。可從
+你的主機 <code>ping 192.168.56.101</code> 及 <code>ping 192.168.56.102</code>，並在
+你的 VM <code>ifconfig</code> 及測試對外連線 <code>ping</code>。</p>
+<p>若已成功安裝測試 free5GC 及 UERANSIM，想知道接下來做什麼，可以完成
+之後的簡單應用。要理解及修改 free5GC 的程式內容，除了 5G 標準文件需要研讀外，
+可從 <code>test.sh</code> 及 <code>run.sh</code> 著手看網路及程式如何設定。基本網路原理有一些參考：</p>
+<ul>
+<li><a href="/stage-3-help/">網路設定參考文件</a></li>
+</ul>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-sim-install-tw%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-sim-install-tw%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-sim-install-tw%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

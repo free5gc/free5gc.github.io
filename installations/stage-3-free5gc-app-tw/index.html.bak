@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="free5GC 小試身手 此示範我們將利用 free5GC 核網 及 UE/RAN 模擬器操作一些簡單的網路應用：
+ ping &#43; tcpdump wget ptt (ssh bbsu@ptt.cc)  ping &#43; tcpdump 首先將 free5GC 核網及 UERANSIM 啟動 (free5gc 需要一個終端機， ueransim 需要兩個終端機）。
+再開啟新的終端機登入 ueransim:
+ssh 192.168.56.102 -l ubuntu 用 ifconfig 確認 uesimtun0 通道已建立，並用 ping 試試藉由 uesimtun0 能否連通：
+$ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-3-free5gc-app-tw/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="free5GC 小試身手 此示範我們將利用 free5GC 核網 及 UE/RAN 模擬器操作一些簡單的網路應用：
+ ping &#43; tcpdump wget ptt (ssh bbsu@ptt.cc)  ping &#43; tcpdump 首先將 free5GC 核網及 UERANSIM 啟動 (free5gc 需要一個終端機， ueransim 需要兩個終端機）。
+再開啟新的終端機登入 ueransim:
+ssh 192.168.56.102 -l ubuntu 用 ifconfig 確認 uesimtun0 通道已建立，並用 ping 試試藉由 uesimtun0 能否連通：
+$ ping google.com PING google.com (172.217.27.142) 56(84) bytes of data."/>
+<meta name="generator" content="Hugo 0.80.0" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-3-free5gc-app-tw/",
+  "wordCount": "869",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-3-free5gc-app-tw/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-3-free5gc-app-tw/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <h1 id="free5gc-小試身手">free5GC 小試身手</h1>
+<p>此示範我們將利用 free5GC 核網 及 UE/RAN 模擬器操作一些簡單的網路應用：</p>
+<ul>
+<li>ping + tcpdump</li>
+<li>wget</li>
+<li>ptt (<code>ssh bbsu@ptt.cc</code>)</li>
+</ul>
+<h1 id="ping--tcpdump">ping + tcpdump</h1>
+<p>首先將 free5GC 核網及 UERANSIM 啟動 (free5gc 需要一個終端機，
+ueransim 需要兩個終端機）。</p>
+<p>再開啟新的終端機登入 ueransim:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ssh 192.168.56.102 -l ubuntu
+</code></pre></div><p>用 <code>ifconfig</code> 確認 <code>uesimtun0</code> 通道已建立，並用 <code>ping</code> 試試藉由
+<code>uesimtun0</code> 能否連通：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping google.com
+PING google.com <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span> 56<span style="color:#666">(</span>84<span style="color:#666">)</span> bytes of data.
+<span style="color:#40a070">64</span> bytes from tsa03s02-in-f14.1e100.net <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">1</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">63</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>3.98 ms
+<span style="color:#40a070">64</span> bytes from tsa03s02-in-f14.1e100.net <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">2</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">63</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>3.87 ms
+<span style="color:#40a070">64</span> bytes from tsa03s02-in-f14.1e100.net <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">3</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">63</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>4.06 ms
+^C
+--- google.com ping statistics ---
+<span style="color:#40a070">3</span> packets transmitted, <span style="color:#40a070">3</span> received, 0% packet loss, <span style="color:#007020">time</span> 2003ms
+rtt min/avg/max/mdev <span style="color:#666">=</span> 3.872/3.970/4.060/0.076 ms
+</code></pre></div><div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping -I uesimtun0 google.com
+PING google.com <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span> from 60.60.0.1 uesimtun0: 56<span style="color:#666">(</span>84<span style="color:#666">)</span> bytes of data.
+<span style="color:#40a070">64</span> bytes from tsa03s02-in-f14.1e100.net <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">1</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.85 ms
+<span style="color:#40a070">64</span> bytes from tsa03s02-in-f14.1e100.net <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">2</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>4.87 ms
+<span style="color:#40a070">64</span> bytes from tsa03s02-in-f14.1e100.net <span style="color:#666">(</span>172.217.27.142<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">3</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>4.76 ms
+^C
+--- google.com ping statistics ---
+<span style="color:#40a070">3</span> packets transmitted, <span style="color:#40a070">3</span> received, 0% packet loss, <span style="color:#007020">time</span> 2004ms
+rtt min/avg/max/mdev <span style="color:#666">=</span> 4.760/5.160/5.847/0.487 ms
+</code></pre></div><p>先用 <code>route -n</code> 觀察現有的 routing table， 顯示出關於兩個網路介面
+<code>enp0s3</code> 及 <code>enp0s8</code> 的規則：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.0.2.2        0.0.0.0         UG    <span style="color:#40a070">100</span>    <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> enp0s3
+10.0.2.0        0.0.0.0         255.255.255.0   U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> enp0s3
+10.0.2.2        0.0.0.0         255.255.255.255 UH    <span style="color:#40a070">100</span>    <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> enp0s3
+192.168.56.0    0.0.0.0         255.255.255.0   U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> enp0s8
+</code></pre></div><p>其中 <code>10.0.2.0/24</code> 網路 及 <code>enp0s3</code> 介面為 VirtualBox NAT 網卡所建立。我們先關閉此介面：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ sudo ifconfig enp0s3 down
+$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.56.0    0.0.0.0         255.255.255.0   U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> enp0s8
+</code></pre></div><p>只剩 Host-only <code>192.168.56.0/24</code> 網路。執行 <code>ping</code> 看看：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping 8.8.8.8
+ping: connect: Network is unreachable
+</code></pre></div><p>發現無法連線，但執行：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping -I uesimtun0 8.8.8.8
+PING 8.8.8.8 <span style="color:#666">(</span>8.8.8.8<span style="color:#666">)</span> from 60.60.0.1 uesimtun0: 56<span style="color:#666">(</span>84<span style="color:#666">)</span> bytes of data.
+<span style="color:#40a070">64</span> bytes from 8.8.8.8: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">1</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>7.17 ms
+<span style="color:#40a070">64</span> bytes from 8.8.8.8: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">2</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.41 ms
+<span style="color:#40a070">64</span> bytes from 8.8.8.8: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">3</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.15 ms
+^C
+--- 8.8.8.8 ping statistics ---
+<span style="color:#40a070">3</span> packets transmitted, <span style="color:#40a070">3</span> received, 0% packet loss, <span style="color:#007020">time</span> 2005ms
+rtt min/avg/max/mdev <span style="color:#666">=</span> 5.150/5.907/7.165/0.895 ms
+</code></pre></div><p>則有反應，因為我們要求 <code>ping</code> 走 free5GC 核網路徑。想要讓 <code>ping 8.8.8.8</code>
+成功，我們可以用 <code>uesimtun0</code> 介面( IP 為 60.60.0.1 ）當作新的預設閘道：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ sudo ip r add default dev uesimtun0
+$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         0.0.0.0         0.0.0.0         U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> uesimtun0
+192.168.56.0    0.0.0.0         255.255.255.0   U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> enp0s8
+</code></pre></div><p>如此所有 <code>192.168.56.0/24</code> 以外的封包都會走 <code>uesimtun0</code>。因此再執行便可成功：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping 8.8.8.8
+PING 8.8.8.8 <span style="color:#666">(</span>8.8.8.8<span style="color:#666">)</span> 56<span style="color:#666">(</span>84<span style="color:#666">)</span> bytes of data.
+<span style="color:#40a070">64</span> bytes from 8.8.8.8: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">1</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.02 ms
+<span style="color:#40a070">64</span> bytes from 8.8.8.8: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">2</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>6.31 ms
+<span style="color:#40a070">64</span> bytes from 8.8.8.8: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">3</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.41 ms
+^C
+--- 8.8.8.8 ping statistics ---
+<span style="color:#40a070">3</span> packets transmitted, <span style="color:#40a070">3</span> received, 0% packet loss, <span style="color:#007020">time</span> 2004ms
+rtt min/avg/max/mdev <span style="color:#666">=</span> 5.017/5.581/6.312/0.541 ms
+...
+</code></pre></div><p>但若想執行：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping google.com
+ping: google.com: Temporary failure in name resolution
+</code></pre></div><p>則得到無法辨認網域網址。要解決此問題，我們可以更改檔案
+<code>/etc/resolv.conf</code> (但注意要記得回復):</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">sudo nano /etc/resolv.conf
+</code></pre></div><p>暫時將 nameserver IP 改成 8.8.8.8</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">nameserver 8.8.8.8
+</code></pre></div><p>這時已可以看到反應：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ ping google.com
+PING google.com <span style="color:#666">(</span>216.58.200.46<span style="color:#666">)</span> 56<span style="color:#666">(</span>84<span style="color:#666">)</span> bytes of data.
+<span style="color:#40a070">64</span> bytes from tsa01s08-in-f46.1e100.net <span style="color:#666">(</span>216.58.200.46<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">1</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.19 ms
+<span style="color:#40a070">64</span> bytes from tsa01s08-in-f46.1e100.net <span style="color:#666">(</span>216.58.200.46<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">2</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>50.4 ms
+<span style="color:#40a070">64</span> bytes from tsa01s08-in-f46.1e100.net <span style="color:#666">(</span>216.58.200.46<span style="color:#666">)</span>: <span style="color:#bb60d5">icmp_seq</span><span style="color:#666">=</span><span style="color:#40a070">3</span> <span style="color:#bb60d5">ttl</span><span style="color:#666">=</span><span style="color:#40a070">61</span> <span style="color:#bb60d5">time</span><span style="color:#666">=</span>5.66 ms
+^C
+--- google.com ping statistics ---
+<span style="color:#40a070">3</span> packets transmitted, <span style="color:#40a070">3</span> received, 0% packet loss, <span style="color:#007020">time</span> 2004ms
+rtt min/avg/max/mdev <span style="color:#666">=</span> 5.191/20.423/50.414/21.207 ms
+</code></pre></div><p>要進一步確認 <code>ping</code> 過程的確藉由 free5GC 核網，我們可以再開
+另一個終端機登入 <code>ueransim</code>，執行下列指令：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ sudo tcpdump -n -i any host 60.60.0.1 or 192.168.56.101
+tcpdump: verbose output suppressed, use -v or -vv <span style="color:#007020;font-weight:bold">for</span> full protocol decode
+listening on any, link-type LINUX_SLL <span style="color:#666">(</span>Linux cooked v1<span style="color:#666">)</span>, capture size <span style="color:#40a070">262144</span> bytes
+</code></pre></div><p>並在原來終端機再下 <code>ping 8.8.8.8</code> 指令。幾秒後兩邊都按 Ctrl-C。
+可以觀察到相關封包的確藉由 <code>uesimtun0</code> 送出及回傳。</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ sudo tcpdump -n -i any host 60.60.0.1 or 192.168.56.101
+tcpdump: verbose output suppressed, use -v or -vv <span style="color:#007020;font-weight:bold">for</span> full protocol decode
+listening on any, link-type LINUX_SLL <span style="color:#666">(</span>Linux cooked v1<span style="color:#666">)</span>, capture size <span style="color:#40a070">262144</span> bytes
+10:24:56.138729 IP 192.168.56.101.38412 &gt; 192.168.56.102.38740: sctp <span style="color:#666">(</span>1<span style="color:#666">)</span> <span style="color:#666">[</span>HB REQ<span style="color:#666">]</span>
+10:24:56.138783 IP 192.168.56.102.38740 &gt; 192.168.56.101.38412: sctp <span style="color:#666">(</span>1<span style="color:#666">)</span> <span style="color:#666">[</span>HB ACK<span style="color:#666">]</span>
+10:24:58.456532 IP 60.60.0.1 &gt; 8.8.8.8: ICMP <span style="color:#007020">echo</span> request, id 33, seq 1, length <span style="color:#40a070">64</span>
+10:24:58.457416 IP 192.168.56.102.2152 &gt; 192.168.56.101.2152: UDP, length <span style="color:#40a070">100</span>
+10:24:58.462136 IP 192.168.56.101.2152 &gt; 192.168.56.102.2152: UDP, length <span style="color:#40a070">92</span>
+10:24:58.462324 IP 8.8.8.8 &gt; 60.60.0.1: ICMP <span style="color:#007020">echo</span> reply, id 33, seq 1, length <span style="color:#40a070">64</span>
+10:24:59.458823 IP 60.60.0.1 &gt; 8.8.8.8: ICMP <span style="color:#007020">echo</span> request, id 33, seq 2, length <span style="color:#40a070">64</span>
+10:24:59.459031 IP 192.168.56.102.2152 &gt; 192.168.56.101.2152: UDP, length <span style="color:#40a070">100</span>
+10:24:59.464214 IP 192.168.56.101.2152 &gt; 192.168.56.102.2152: UDP, length <span style="color:#40a070">92</span>
+10:24:59.464396 IP 8.8.8.8 &gt; 60.60.0.1: ICMP <span style="color:#007020">echo</span> reply, id 33, seq 2, length <span style="color:#40a070">64</span>
+10:25:00.461293 IP 60.60.0.1 &gt; 8.8.8.8: ICMP <span style="color:#007020">echo</span> request, id 33, seq 3, length <span style="color:#40a070">64</span>
+10:25:00.462178 IP 192.168.56.102.2152 &gt; 192.168.56.101.2152: UDP, length <span style="color:#40a070">100</span>
+10:25:00.474941 IP 192.168.56.101.2152 &gt; 192.168.56.102.2152: UDP, length <span style="color:#40a070">92</span>
+10:25:00.475561 IP 8.8.8.8 &gt; 60.60.0.1: ICMP <span style="color:#007020">echo</span> reply, id 33, seq 3, length <span style="color:#40a070">64</span>
+10:25:01.463946 IP 60.60.0.1 &gt; 8.8.8.8: ICMP <span style="color:#007020">echo</span> request, id 33, seq 4, length <span style="color:#40a070">64</span>
+10:25:01.464523 IP 192.168.56.102.2152 &gt; 192.168.56.101.2152: UDP, length <span style="color:#40a070">100</span>
+10:25:01.469297 IP 192.168.56.101.2152 &gt; 192.168.56.102.2152: UDP, length <span style="color:#40a070">92</span>
+10:25:01.470314 IP 8.8.8.8 &gt; 60.60.0.1: ICMP <span style="color:#007020">echo</span> reply, id 33, seq 4, length <span style="color:#40a070">64</span>
+</code></pre></div><h1 id="wget">wget</h1>
+<p>網路上任意找個 檔案下載。例如：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">wget https://golang.org/dl/go1.15.8.darwin-amd64.pkg
+</code></pre></div><p>看是否能下載 Golang 1.15.8 Mac 版本。</p>
+<h1 id="ptt-ssh-bbsupttcc">ptt (<code>ssh bbsu@ptt.cc</code>)</h1>
+<p>直接登入 PTT 試試 SSH 連線：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">ssh bbsu@ptt.cc
+</code></pre></div><h1 id="youtube">Youtube</h1>
+<p>你也可以試著用 UERANSIM 及 free5GC 使用 Youtube 觀看影片。
+你只要安裝有 Desktop 介面的 VM (例如 Ubuntu Desktop)，並按照之前安裝使用
+UERANSIM 的步驟，藉由 <code>uesimtun0</code> 通道連只 free5GC 即可。</p>
+<p>若要減輕你主機的負擔，你也可以試著安裝較輕型的 Desktop VM Lubuntu
+(在 <a href="https://lubuntu.me">lubuntu.me 官網</a>。但由於觀看影片仍需較大的運算資源，
+你仍需為這 VM 加上 2 個 CPU 及 2048 MB 的記憶體。</p>
+<p>可參考影片 <a href="/stage-3-videos-tw/free5gc-youtube/">在 Lubuntu 使用 Youtube</a></p>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-free5gc-app-tw%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-free5gc-app-tw%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-free5gc-app-tw%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

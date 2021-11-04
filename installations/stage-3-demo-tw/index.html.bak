@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="free5GC Stage 3 安裝示範 此示範分兩階段。第一部分我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3 執行 free5GC 的測試腳本  第二部分我們將：
+ 建立第二個 Ubuntu Server VM 藉由 SSH, install a third-party UE and RAN emulator on the VM 藉由 SSH 連線到此 VM， 安裝一開源 UE 及 RAN 的模擬器 (UERANSIM) 啟動 free5GC 5G 核網，並使用此模擬器經由核網連線至網際網路  1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-3-demo-tw/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="free5GC Stage 3 安裝示範 此示範分兩階段。第一部分我們將：
+ 安裝 VirtualBox 在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器) 在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3 執行 free5GC 的測試腳本  第二部分我們將：
+ 建立第二個 Ubuntu Server VM 藉由 SSH, install a third-party UE and RAN emulator on the VM 藉由 SSH 連線到此 VM， 安裝一開源 UE 及 RAN 的模擬器 (UERANSIM) 啟動 free5GC 5G 核網，並使用此模擬器經由核網連線至網際網路  1."/>
+<meta name="generator" content="Hugo 0.80.0" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-3-demo-tw/",
+  "wordCount": "273",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-3-demo-tw/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-3-demo-tw/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <h1 id="free5gc-stage-3-安裝示範">free5GC Stage 3 安裝示範</h1>
+<p>此示範分兩階段。第一部分我們將：</p>
+<ul>
+<li>安裝 VirtualBox</li>
+<li>在 VirtualBox 上安裝 Ubuntu Server VM (虛擬機器)</li>
+<li>在本機藉由 SSH 連線到 Ubuntu 並安裝 free5GC stage 3</li>
+<li>執行 free5GC 的測試腳本</li>
+</ul>
+<p>第二部分我們將：</p>
+<ul>
+<li>建立第二個 Ubuntu Server VM</li>
+<li>藉由 SSH, install a third-party UE and RAN emulator on the VM</li>
+<li>藉由 SSH 連線到此 VM， 安裝一開源 UE 及 RAN 的模擬器 (UERANSIM)</li>
+<li>啟動 free5GC 5G 核網，並使用此模擬器經由核網連線至網際網路</li>
+</ul>
+<h2 id="1-安裝-virtualbox">1. 安裝 VirtualBox</h2>
+<p>開啟瀏覽器搜尋 &ldquo;<code>virtualbox download</code>&quot;， 到 VirtualBox 官網
+<a href="https://virtualbox.org/" target="_blank">virtualbox.org</a>
+下載並安裝最新 VirtualBox. (例如本文撰寫當下為 6.1.6 版本)</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/virtualbox-org.png"
+         alt="VirtualBox.org"/>
+      <figcaption>VirtualBox 官網 https://virtualbox.org</figcaption>
+    </figure>
+	
+
+
+<p>安裝成功後，試著打開 VirtualBox 看是否有類似下圖之視窗 (下圖為
+Mac 版本)：</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-blank-tw.png"
+         alt="vbox-blank-tw.png"/>
+      
+    </figure>
+	
+
+
+<h2 id="2-下載最新-ubuntu-server-lts">2. 下載最新 Ubuntu Server LTS</h2>
+<p>搜尋 &ldquo;<code>ubuntu server download</code>&quot;，到 Ubuntu
+<a href="https://ubuntu.com" target="_blank">官網</a>
+下載最新 Ubuntu Server LTS 的 .iso 光碟檔。(例如在本文撰寫當下的
+<a href="https://ubuntu.com/download/server" target="_blank">下載頁面</a>，
+選擇 Option 3 方式下載)。</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/ubuntu-download.png"
+         alt="Ubuntu Download Page"/>
+      <figcaption>Ubuntu Server LTS 下載頁面</figcaption>
+    </figure>
+	
+
+
+<p>下載的 .iso 檔案名稱類似 <code>ubuntu-20.04.1-live-server-amd64.iso</code>,
+(在瀏覽器的下載目錄下)</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/ubuntu-downloading.png"
+         alt="Download Ubuntu .iso"/>
+      <figcaption>下載 Ubuntu Server .iso 檔案</figcaption>
+    </figure>
+	
+
+
+<h2 id="3-建立一個-ubuntu-server-vm">3. 建立一個 Ubuntu Server VM</h2>
+<p>執行 VirtualBox 並使用下載的 Ubuntu Server .iso 檔建立一個 Ubuntu VM。
+使用 Ubuntu Server，而不是 Ubuntu Desktop，是因為我們只需要基本的伺服器
+功能，Server 版本不會安裝許多不必要的功能機應用程式，空間需求較小且
+開機較快。</p>
+<p>安裝時有幾件注意事項：</p>
+<ul>
+<li>建議先將 VM 名稱設為 <code>ubuntu</code>, <code>ubuntu-server</code>, 或<code>ubuntu-20.04</code></li>
+<li>使用者名稱及密碼建議簡短好打 (之後會常使用)</li>
+<li>建議硬碟格式化時不使用 LVM (日後延展硬碟空間時稍微簡單一點)</li>
+<li>建議選擇安裝 SSH Server，並讓安全更新下載跑完。(這些都可以之後再安裝)</li>
+</ul>
+<p>Ubuntu 安裝完後重新開機，進入終端機視窗。第一次會有一些初始動作，等一會後
+輸入帳號密碼登入：</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-34-vm-prompt.png"
+         alt="vbox-34-vm-prompt.png"/>
+      
+    </figure>
+	
+
+
+<p>先試 <code>ifconfig</code> 指令：</p>
+<pre><code>ubuntu@ubuntu:~$ ifconfig
+
+Command 'ifconfig' not found, but can be installed with:
+
+sudo apt install net-tools
+
+ubuntu@ubuntu:~$
+</code></pre><p>若有上列結果表示 <code>ifconfig</code> 尚未安裝，照其指示下安裝指令並輸入密碼：</p>
+<pre><code>ubuntu@ubuntu:~$ sudo apt install net-tools
+</code></pre><p>下圖為安裝結果：</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-35-vm-net-tools.png"
+         alt="vbox-35-vm-net-tools.png"/>
+      
+    </figure>
+	
+
+
+<p>再次執行 <code>ifconfig</code> 檢查系統網卡：</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-36-vm-ifconfig.png"
+         alt="vbox-36-vm-ifconfig.png"/>
+      
+    </figure>
+	
+
+
+<p>上圖的執行結果如下：</p>
+<pre><code></code></pre><p>你的執行結果根據你的設定可能有些不同，但要注意 Host-only 網路卡所
+使用的 IP 網站。上面的例子為 192.168.56.101。
+你的本機程式可藉由 這網址與 Ubuntu 連線。(另 10.0.2.15 為 NAT 網卡)</p>
+<p>最後試試有無連至網際網路:</p>
+<pre><code>ubuntu@ubuntu:~$ ping google.com
+</code></pre>
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-37-vm-ping.png"
+         alt="vbox-37-vm-ping.png"/>
+      
+    </figure>
+	
+
+
+<h2 id="4-使用-ssh-連到-ubuntu-vm">4. 使用 SSH 連到 Ubuntu VM</h2>
+<p>在本機開啟 SSH 客戶端程式。Windows，Mac，及部分 Windows 均有預先安裝
+的 SSH 程式。Windows 環境也可另外下載，例如搜尋 &ldquo;<code>windows ssh download</code>&rdquo;
+可找到 PuTTY <a href="putty.org">官網</a></p>
+<p>使用 SSH 的好處在於，你可以容易地從本機端 Copy and Paste 指令到 Ubuntu 執行，
+反之亦然，而且可以同時建立多個 SSH 連線與 Ubuntu 溝通進行操作。</p>
+<p>下圖為 Mac 的圖示，先開啟終端機後，輸入如下指令(
+假設 Ubuntu 的 Host-only 網卡網址為 192.168.56.101，而使用者為 ubuntu)：</p>
+<pre><code>ssh 192.168.56.101 -l ubuntu
+</code></pre><p>第一次連至此 VM 時 SSH 會詢問是否要建立連線，輸入 <code>yes</code>：</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-45-ssh-connect.png"
+         alt="vbox-45-ssh-connect.png"/>
+      
+    </figure>
+	
+
+
+<p>登入之後進入命令列：</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-46-ssh-log-in.png"
+         alt="vbox-46-ssh-log-in.png"/>
+      
+    </figure>
+	
+
+
+<p>重複之前 Ubuntu 終端機的簡單指令(<code>ping</code>, <code>ifconfig</code>)
+看看結果是否相同。成功的話接下來可以從“遠端”操作 Ubuntu 了。</p>
+<p><code>ifconfig</code>:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-47-ssh-ifconfig.png"
+         alt="vbox-47-ssh-ifconfig.png"/>
+      
+    </figure>
+	
+
+
+<p><code>ping</code>:</p>
+
+
+
+	
+    <figure class="text-center">
+      <img class="w-90 my-2" src="/installations/stage-3-demo-tw/vbox-48-ssh-ping.png"
+         alt="vbox-48-ssh-ping.png"/>
+      
+    </figure>
+	
+
+
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-demo-tw%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-demo-tw%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-3-demo-tw%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="free5GC Distributed Installation Guide Network Topology  Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.free5gc.org/installations/stage-1-cluster/" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="free5GC Distributed Installation Guide Network Topology  Install free5GC About MongoDB  MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database. Please add UE infomation to webUI on the HSS machine. Please modify the MongoDB address (at the first line of free5gc."/>
+<meta name="generator" content="Hugo 0.80.0" />
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://www.free5gc.org/installations/stage-1-cluster/",
+  "wordCount": "269",
+  "datePublished": "0001-01-01T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "free5GC.ofg"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://www.free5gc.org/installations/stage-1-cluster/">
+
+    <title> | free5GC</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- combined, minified CSS -->
+    
+    <link href="https://www.free5gc.org/css/bootstrap-icons.0799fcdcc0b7a1f7165b6d7dd1ea2280de895281badebe34845b3691a0910b0a.css" rel="stylesheet">
+    
+    <link href="https://www.free5gc.org/css/style.d8d3ca46b31f5e445f452e8cbf40915b1bbc4cd870640af474cc10b8b6dfaa22.css" rel="stylesheet">
+
+    <!-- minified base javascript -->
+    
+    <script defer src="https://www.free5gc.org/js/base.6d4e3026ad8b475550ec72166dad66ce7e1ca14bc425122ad42fef1d9ca82f67.js" crossorigin="anonymous"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <p class="h5 my-0 me-md-auto fw-normal">
+        <a class="nav-link " href="https://www.free5gc.org">
+          <img src="/img/free5GC.png" width="217" height="51">
+        </a>
+      </p>
+      <nav class="btn-group" role="group" aria-label="Basic outlined example">
+          
+          <a class="btn btn-outline-primary"
+             href="/" title="Home">Home</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/roadmap/" title="Roadmap">Roadmap</a>
+          
+        
+          
+          <div id="btn-group-install" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle active"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              Installations
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-install">
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: Cluster"
+                     href="/installations/stage-1-cluster/">Stage 1: Cluster</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 1: All-in-one"
+                     href="/installations/stage-1-all-in-one/">Stage 1: All-in-one</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 2: Standalone 5G"
+                     href="/installations/stage-2-standalone-5g/">Stage 2: Standalone 5G</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="Stage 3: free5GC"
+                     href="/installations/stage-3/">Stage 3: free5GC</a></li>
+              
+            </ul>
+          </div>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/membership/" title="Membership">Membership</a>
+          
+        
+          
+          <a class="btn btn-outline-primary"
+             href="/contactus/" title="Contact Us">Contact Us</a>
+          
+        
+          
+          <div id="btn-group-more" class="btn-group" role="group">
+            <button type="button"
+                    class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-group-more">
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="Download"
+                     href="https://github.com/free5gc/free5gc">Download</a></li>
+              
+                     <li>
+                      <a
+                        class="dropdown-item"
+                        target="_blank"
+                        title="Youtube"
+                        href="https://www.youtube.com/channel/UCywP5Acj50GlhSxZTJXlqtw/videos"
+                        >free5GC YouTube Channel</a
+                      >
+                    </li>
+        
+                    <li>
+                      <a class="dropdown-item" title="History" href="/otherVideo/"
+                        >Other Videos</a
+                      >
+                    </li>
+              
+              <li><a class="dropdown-item"
+                     target="_blank"
+                     title="free5GC Forum"
+                     href="https://forum.free5gc.org/">free5GC Forum</a></li>
+              
+              <li><a class="dropdown-item"
+                     
+                     title="History"
+                     href="/history/">History</a></li>
+              
+            </ul>
+          </div>
+          
+        
+      </nav>
+    </header>
+    
+
+    <div class="container-fluid mx-auto" style="max-width: 960px;">
+
+      
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://www.free5gc.org/installations/stage-1-cluster/"></a></h2>
+    <p class="blog-post-meta">
+
+</p>
+  </header>
+  <div class="text-center mb-4">
+  
+  <a href="https://bitbucket.org/nctu_5g/free5gc-stage-1/src/master/" target="_blank">
+  <img src="/img/free5GC.png"
+       alt="free5GC"
+       style="width: 40%;">
+  </a>
+  
+</div>
+
+
+<h1 id="free5gc-distributed-installation-guide">free5GC Distributed Installation Guide</h1>
+<h2 id="network-topology">Network Topology</h2>
+<div class="text-center my-5">
+  
+  
+  <img src="/img/free5gc-stage-1-cluster-network-topology.png"
+       alt="Stage 1 Network Topology"
+       style="width: 90%;">
+  
+  
+</div>
+
+
+<h2 id="install-free5gc">Install free5GC</h2>
+<h4 id="about-mongodb">About MongoDB</h4>
+<ul>
+<li>MongoDB MUST be installed on the HSS machine in distributed installation and make sure all entities are accessing to the that database.</li>
+<li>Please add UE infomation to webUI on the HSS machine.</li>
+<li>Please modify the MongoDB address (at the first line of <code>free5gc.conf</code> config file) for every entity.</li>
+</ul>
+<h4 id="install-amf-smf-hss-pcrf">Install AMF, SMF, HSS, PCRF</h4>
+<p>Please follow steps in <strong>Part A</strong> under <strong>Installation</strong> from <a href="/installations/stage-1-all-in-one/">free5GC Installation on KVM</a>.</p>
+<h4 id="install-upf">Install UPF</h4>
+<p>Please follow steps in <strong>Part A</strong> and <strong>Part B</strong> under <strong>Installation</strong> from <a href="/installations/stage-1-all-in-one/">free5GC Installation on KVM</a>.</p>
+<h4 id="execution-order">Execution Order</h4>
+<p>Please run UPF daemon <strong>before</strong> running SMF daemon.</p>
+<h2 id="setup-amf">Setup AMF</h2>
+<p>Modify <code>./install/etc/free5gc/free5gc.conf</code></p>
+<ol>
+<li>
+<p>AMF s1ap address</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">amf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">s1ap</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.2</span><span style="color:#bbb">
+</span></code></pre></div></li>
+<li>
+<p>GUMMEI</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">amf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">gummei</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">plmn_id</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mcc</span>:<span style="color:#bbb"> </span><span style="color:#40a070">208</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mnc</span>:<span style="color:#bbb"> </span><span style="color:#40a070">93</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">mme_gid</span>:<span style="color:#bbb"> </span><span style="color:#40a070">1</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">mme_code</span>:<span style="color:#bbb"> </span><span style="color:#40a070">1</span><span style="color:#bbb">
+</span></code></pre></div></li>
+<li>
+<p>TAI</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">amf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">tai</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">plmn_id</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mcc</span>:<span style="color:#bbb"> </span><span style="color:#40a070">208</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#062873;font-weight:bold">mnc</span>:<span style="color:#bbb"> </span><span style="color:#40a070">93</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">tac</span>:<span style="color:#bbb"> </span><span style="color:#40a070">1</span><span style="color:#bbb">
+</span></code></pre></div></li>
+<li>
+<p>SMF SBI</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">smf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">http</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.4</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">port</span>:<span style="color:#bbb"> </span><span style="color:#40a070">8080</span><span style="color:#bbb">
+</span></code></pre></div></li>
+</ol>
+<p>In diameter configuration file <code>./install/etc/free5gc/freediameter/amf.conf</code></p>
+<ol>
+<li>Diameter listen address
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ListenOn = &#34;192.188.2.2&#34;;
+</code></pre></div></li>
+<li>HSS Diameter address in <code>./install/etc/free5gc/freediameter/amf.conf</code>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ConnectPeer = &#34;hss.localdomain&#34; { ConnectTo = &#34;192.188.2.3&#34;; No_TLS; };
+</code></pre></div></li>
+</ol>
+<p>Run <code>./free5gc-amfd</code> to start the AMF deamon.</p>
+<h2 id="setup-hss">Setup HSS</h2>
+<p>In diameter configuration file <code>./install/etc/free5gc/freediameter/hss.conf</code></p>
+<ol>
+<li>Diameter listen address
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ListenOn = &#34;192.188.2.3&#34;;
+</code></pre></div></li>
+<li>AMF diameter address
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ConnectPeer = &#34;amf.localdomain&#34; { ConnectTo = &#34;192.188.2.2&#34;; No_TLS; };
+</code></pre></div></li>
+</ol>
+<p>Run <code>./nextepc-hssd</code> to start the HSS deamon.</p>
+<h2 id="setup-upf">Setup UPF</h2>
+<p>Modify <code>./install/etc/free5gc/free5gc.conf</code></p>
+<ol>
+<li>
+<p>PFCP</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">upf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">pfcp</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.6</span><span style="color:#bbb">
+</span></code></pre></div></li>
+<li>
+<p>GTP-U</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">upf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">gtpu</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.6</span><span style="color:#bbb">
+</span></code></pre></div></li>
+</ol>
+<p>Run <code>./free5gc-upfd</code> to start the UPF deamon.</p>
+<h2 id="setup-smf">Setup SMF</h2>
+<p>Modify <code>./install/etc/free5gc/free5gc.conf</code></p>
+<ol>
+<li>PFCP
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">smf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">pfcp</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.4</span><span style="color:#bbb">
+</span></code></pre></div></li>
+<li>UPF
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">smf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">upf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.6</span><span style="color:#bbb">
+</span></code></pre></div></li>
+<li>SMF SBI
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-yaml" data-lang="yaml"><span style="color:#062873;font-weight:bold">smf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#062873;font-weight:bold">http</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">addr</span>:<span style="color:#bbb"> </span><span style="color:#40a070">192.188.2.4</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#062873;font-weight:bold">port</span>:<span style="color:#bbb"> </span><span style="color:#40a070">8080</span><span style="color:#bbb">
+</span></code></pre></div></li>
+</ol>
+<p>In diameter configuration file <code>./install/etc/free5gc/freediameter/smf.conf</code></p>
+<ol>
+<li>Diameter listen address
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ListenOn = &#34;192.188.2.4&#34;;
+</code></pre></div></li>
+<li>PCRF Diameter address in <code>./install/etc/free5gc/freediameter/smf.conf</code>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ConnectPeer = &#34;pcrf.localdomain&#34; { ConnectTo = &#34;192.188.2.5&#34;; No_TLS; };
+</code></pre></div></li>
+</ol>
+<p>Run <code>./free5gc-smfd</code> to start the SMF daemon.</p>
+<h2 id="setup-pcrf">Setup PCRF</h2>
+<p>In diameter configuration file <code>./install/etc/free5gc/freediameter/pcrf.conf</code></p>
+<ol>
+<li>Diameter listen address
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ListenOn = &#34;192.188.2.5&#34;;
+</code></pre></div></li>
+<li>SMF Diameter address
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">ConnectPeer = &#34;smf.localdomain&#34; { ConnectTo = &#34;192.188.2.4&#34;; No_TLS; };
+</code></pre></div></li>
+</ol>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4></h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-1-cluster%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-1-cluster%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.free5gc.org%2finstallations%2fstage-1-cluster%2f&amp;text=" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+      
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+	    <a href="https://www.free5gc.org"><img class="mb-2" src="/img/free5GC.png" alt="" height="32"></a>
+            <small class="d-block mb-1 text-muted">&copy; Copyright January 2019 free5GC.org</small>
+            <small class="d-block mb-1 text-muted">All rights reserved.</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Contact:</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary" href="mailto:free5GC.org@gmail.com"
+                   target="_self"><span style="text-decoration:underline">free5GC.org@gmail.com</span>
+                </a>
+              </li>
+            </ul>
+	    The free5GC project is hosted by the
+            <a href="https://cslab.nctu.edu.tw/" target="_blank">Communication Service/Software Laboratory (CS Lab)</a>.
+          </div>
+        </div>
+      </footer>
+      
+    </div> <!-- /.container-fluid -->
+  </body>
+
+</html>
+
