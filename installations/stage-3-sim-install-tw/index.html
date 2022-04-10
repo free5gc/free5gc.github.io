@@ -269,7 +269,7 @@ go run server.go
 <ul>
 <li><code>~/free5gc/config/amfcfg.yaml</code></li>
 <li><code>~/free5gc/config/smfcfg.yaml</code></li>
-<li><code>~/free5gc/NFs/upf/build/config/upfcfg.yaml</code></li>
+<li><code>~/free5gc/config/upfcfg.yaml</code></li>
 </ul>
 <p>SSH 登入 free5gc 後，更改 <code>~/free5gc/config/amfcfg.yaml</code></p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
@@ -298,7 +298,7 @@ IP 從 <code>127.0.0.8</code> 改成 <code>192.168.56.101</code>，亦即</p>
    - interfaceType: N3 <span style="color:#60a0b0;font-style:italic"># the type of the interface (N3 or N9)</span>
      endpoints: <span style="color:#60a0b0;font-style:italic"># the IP address of this N3/N9 interface on this UPF</span>
        - 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
-</code></pre></div><p>最後更改 <code>~/free5gc/NFs/upf/build/config/upfcfg.yaml</code>，將 gtpu 裡的 IP
+</code></pre></div><p>最後更改 <code>~/free5gc/config/upfcfg.yaml</code>，將 gtpu 裡的 IP
 從 <code>127.0.0.8</code> 改為 <code>192.168.56.101</code>，亦即</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
   gtpu:
@@ -437,7 +437,7 @@ sudo iptables -I FORWARD <span style="color:#40a070">1</span> -j ACCEPT
 </code></pre></div><p>free5gc VM 若想執行測試 <code>./test.sh TestXXX</code>，檢查設定檔有先恢復原狀</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">~/free5gc/config/amfcfg.yaml
 ~/free5gc/config/smfcfg.yaml
-~/free5gc/NFs/upf/build/config/upfcfg.yaml
+~/free5gc/config/upfcfg.yaml
 </code></pre></div><p>可用 <code>git diff</code> 檢查。若測試仍有問題，可先清除 MongoDB 資料庫再試：</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">$ mongo free5gc
    ...

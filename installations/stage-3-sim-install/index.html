@@ -281,7 +281,7 @@ terminal to quit WebConsole</li>
 <ul>
 <li><code>~/free5gc/config/amfcfg.yaml</code></li>
 <li><code>~/free5gc/config/smfcfg.yaml</code></li>
-<li><code>~/free5gc/NFs/upf/build/config/upfcfg.yaml</code></li>
+<li><code>~/free5gc/config/upfcfg.yaml</code></li>
 </ul>
 <p>First SSH into free5gc VM, and change <code>~/free5gc/config/amfcfg.yaml</code></p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash"><span style="color:#007020">cd</span> ~/free5gc
@@ -310,7 +310,7 @@ change the IP from <code>127.0.0.8</code> to <code>192.168.56.101</code>, namely
    - interfaceType: N3 <span style="color:#60a0b0;font-style:italic"># the type of the interface (N3 or N9)</span>
      endpoints: <span style="color:#60a0b0;font-style:italic"># the IP address of this N3/N9 interface on this UPF</span>
        - 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
-</code></pre></div><p>Finally, edit <code>~/free5gc/NFs/upf/build/config/upfcfg.yaml</code>，and chage gtpu IP
+</code></pre></div><p>Finally, edit <code>~/free5gc/config/upfcfg.yaml</code>，and chage gtpu IP
 from <code>127.0.0.8</code> into <code>192.168.56.101</code>, namely from</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
   gtpu:
