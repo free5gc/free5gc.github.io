@@ -147,7 +147,7 @@
         
                     <li>
                       <a class="dropdown-item" title="History" href="/otherVideo/"
-                        >Other Videos</a
+                        >Other Videos showing free5GC</a
                       >
                     </li>
               
@@ -181,7 +181,7 @@
 
 </p>
   </header>
-  <!-- <h1 id="history-of-free5gc-project">Other Videos:</h1> -->
+  <!-- <h1 id="history-of-free5gc-project">Other Videos showing free5GC:</h1> -->
 <br/>
 <ol>
 	<li style="font-size:16px">Ralf Kundel, et al., "<a href="https://www.kom.tu-darmstadt.de/papers/KMK+22.pdf" target="_blank">User plane hardware acceleration in access networks: Experiences in offloading network functions in real 5g deployments</a>," Hawaii International Conference on System Sciences. Computer Society Press, 2022.</li>
