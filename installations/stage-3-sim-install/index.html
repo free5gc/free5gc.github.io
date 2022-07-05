@@ -314,11 +314,21 @@ change the IP from <code>127.0.0.8</code> to <code>192.168.56.101</code>, namely
 from <code>127.0.0.8</code> into <code>192.168.56.101</code>, namely from</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
   gtpu:
-  - addr: 127.0.0.8
+    forwarder: gtp5g
+    # The IP list of the N3/N9 interfaces on this UPF
+    # If there are multiple connection, set addr to 0.0.0.0 or list all the addresses
+    ifList:
+      - addr: 127.0.0.8
+        type: N3
 </code></pre></div><p>into</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
   gtpu:
-  - addr: 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
+    forwarder: gtp5g
+    # The IP list of the N3/N9 interfaces on this UPF
+    # If there are multiple connection, set addr to 0.0.0.0 or list all the addresses
+    ifList:
+      - addr: 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
+        type: N3
 </code></pre></div><h2 id="setting-ueransim">Setting UERANSIM</h2>
 <p>In the ueransim VM, there are two files related to free5GC：</p>
 <ul>
