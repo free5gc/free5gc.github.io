@@ -287,7 +287,6 @@ nano config/amfcfg.yaml
 </code></pre></div><p>將 userplane_information / up_nodes / UPF / interfaces / endpoints 裡的
 IP 從 <code>127.0.0.8</code> 改成 <code>192.168.56.101</code>，亦即</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
-
   interfaces: <span style="color:#60a0b0;font-style:italic"># Interface list for this UPF</span>
    - interfaceType: N3 <span style="color:#60a0b0;font-style:italic"># the type of the interface (N3 or N9)</span>
      endpoints: <span style="color:#60a0b0;font-style:italic"># the IP address of this N3/N9 interface on this UPF</span>
@@ -302,11 +301,21 @@ IP 從 <code>127.0.0.8</code> 改成 <code>192.168.56.101</code>，亦即</p>
 從 <code>127.0.0.8</code> 改為 <code>192.168.56.101</code>，亦即</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
   gtpu:
-  - addr: 127.0.0.8
+    forwarder: gtp5g
+    # The IP list of the N3/N9 interfaces on this UPF
+    # If there are multiple connection, set addr to 0.0.0.0 or list all the addresses
+    ifList:
+      - addr: 127.0.0.8
+        type: N3
 </code></pre></div><p>改成</p>
 <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">...
   gtpu:
-  - addr: 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
+    forwarder: gtp5g
+    # The IP list of the N3/N9 interfaces on this UPF
+    # If there are multiple connection, set addr to 0.0.0.0 or list all the addresses
+    ifList:
+      - addr: 192.168.56.101  <span style="color:#60a0b0;font-style:italic"># 127.0.0.8</span>
+        type: N3
 </code></pre></div><h2 id="6-設定-ueransim">6. 設定 UERANSIM</h2>
 <p>在 ueransim, 有兩個設定檔跟 free5GC 有關：</p>
 <ul>
