@@ -2,7 +2,7 @@
 <img src="../assets/membership-info.jpeg"/>
 
 > [!INFO] 
-> You can also download the PDF file [here](https://www.free5gc.org/files/2022-09-11-membership.pdf).
+> You can also download the PDF file [here](https://github.com/free5gc/free5gc.github.io/blob/old/files/2022-09-11-membership.pdf).
 
 ## Membership services
 
