@@ -20,9 +20,9 @@ Currently, the major contributors are with National Chiao Tung University (NCTU)
 > If you want us to answer your questions, please consider joining our membership program. 
 > If you are not our member, we may still answer your questions. However, your priority will be the lowest.
 
-## Members
+## **Members**
 
-### Platinum
+### ![](./assets/platinum.png){: style="height:40px;width:40px" align=left} Platinum
 <div class="info-block">
 <img class="info-block-img" src="./assets/members/cht.jpeg"/>
 <img class="info-block-img" src="./assets/members/onf.png"/>
@@ -30,17 +30,17 @@ Currently, the major contributors are with National Chiao Tung University (NCTU)
 <img class="info-block-img" src="./assets/members/edge-core.png"/>
 </div>
 
-### Gold
+### ![](./assets/golden.png){: style="height:40px;width:40px" align=left} Gold
 <div class="info-block">
 <img class="info-block-img" src="./assets/members/wnc.png"/>
 </div>
 
-### Silver
+### ![](./assets/silver.png){: style="height:40px;width:40px" align=left} Silver
 <div class="info-block">
 <img class="info-block-img" src="./assets/members/estinet.png"/>
 </div>
 
-## Hardware Sponsors
+## **Hardware Sponsors**
 <div class="info-block">
 <img class="info-block-img" src="./assets/members/alpha.png"/>
 <img class="info-block-img" src="./assets/members/Intel.png"/>
