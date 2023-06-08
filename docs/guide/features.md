@@ -1,0 +1,56 @@
+# free5GC Specification
+- 3GPP TS 23.501/23.502-Rel-15
+- 5G Standalone (SA) supported
+- Serviced-Based Interface (SBI) supported
+    - Namf, Nsmf, Nausf, Nudm, Nudr, Nnssf, Nnrf, Npcf
+- N1, N2, N3, N4, N6, N9, interfaces supported
+- 5G SA Network Functions supported:
+    - AMF: Access and Mobility Management Function
+        - Registration Management, Connection Management, Reachability Management, Mobility Management, and Authentication
+    - SMF: Session Management Function
+        - Session Management, IP Assigning/Management
+    - UPF: User Plane Function
+        - Support multiple UPF and ULCL (uplink classifier)
+        - Session and Service Continuity (SSC) mode 1
+        - Packet Routing/Forwarding
+    - AUSF: Authentication Server Function
+    - NRF: NF Repository Function
+    - UDM: Unified Data Management
+    - UDR: Unified Data Repository
+    - PCF: Policy and Charging Function
+    - NSSF: Network Slice Selection Function
+    - N3IWF: Non-3GPP Interworking Function
+
+## Supported features
+- Registration
+    - Initial Registration
+    - Periodic Registration
+    - Mobility Registration
+- Authentication
+    - 5G-AKA
+    - EAP-AKA'
+- NAS Security
+    - Ciphering: NEA0, NEA1, NEA2, NEA3
+    - Integrity: NIA0, NIA1, NIA2, NIA3
+- Deregistration:
+    - UE-initiated Deregistration
+- Service Request:
+    - UE triggered Service Request
+    - Network Triggered Service Request
+- AN Release
+- PDU Session Establishment
+- PDU Session Modification (v3.3.0)
+- PDU Session Release
+- Handover
+    - N2 Handover (Indirect mode not supported)
+    - Xn Handover
+- QoS
+    - Control Plane only:
+        1. 5QI, ARP, GBR, MBR of QoS Flow (v3.3.0)
+        2. Session-AMBR supported
+-	Collection and reporting of usage data over N4 interface
+    - Volume measurement periodically
+-	UP Security
+-	Multiple UPFs and ULCL (Uplink Classifier)
+-	Multiple Slice and DNN
+-	Dynamic/Static IPv4 address allocation

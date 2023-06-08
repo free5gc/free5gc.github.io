@@ -1,0 +1,82 @@
+site_name: free5GC
+
+extra_css:
+  - stylesheets/extra.css
+
+repo_name: free5GC
+repo_url: https://github.com/free5gc/free5gc
+
+extra:
+  social:
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/free5gc
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/free5gc/
+    - icon: fontawesome/brands/facebook
+      link: https://www.facebook.com/profile.php?id=100086840296930
+
+theme:
+  name: material
+  logo: assets/icon.png
+  palette:
+    - scheme: default
+      primary: white
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    # - content.tabs.link
+    - content.tooltips
+    # - header.autohide
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    # - navigation.instant
+    # - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    # - toc.integrate
+  locale: en
+    # analytics: {gtag: ''}
+  highlightjs: true
+  hljs_languages:
+      - yaml
+      - django
+
+nav:
+    - Home: index.md
+    - User Guide: guide/
+    - Blogs: blog/
+    - Discussion: https://forum.free5gc.org/
+    - Membership: membership/
+    - About us: https://cslab.cs.nycu.edu.tw/
+    - More:
+      - Relavent Publication: publication.md
+      - Other Videos: videos.md
+
+markdown_extensions:
+  - nl2br
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - search
+  - callouts

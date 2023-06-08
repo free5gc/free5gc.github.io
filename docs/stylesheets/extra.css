@@ -1,0 +1,18 @@
+:root {
+    --md-primary-fg-color:        #84c2ea;
+    --md-primary-fg-color--light: #84c2ea;
+    --md-primary-fg-color--dark:  #84c2ea;
+  }
+
+.info-block {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.info-block-img {
+    max-height: 8vh !important;
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+}
