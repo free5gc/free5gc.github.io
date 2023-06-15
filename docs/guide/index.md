@@ -1,5 +1,10 @@
 # User Guide
 
+## Information
+
+- [Hardware tested](./hardware.md)
+- [Supported features](./features.md)
+
 ## free5GC Installation Guide
 For people who are not familiar with virtual machine and Linux installation, here are some example demonstration:
 
@@ -30,6 +35,5 @@ For Container deployment:
 
 ## Others
 - [Release Note](https://github.com/free5gc/free5gc/releases)
-- [Supported features](./features.md)
 - [Trouble Shooting](./Trouble_Shooting.md)
 - [Appendix](./Appendix.md)
