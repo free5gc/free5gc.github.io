@@ -5,6 +5,7 @@ extra_css:
 
 repo_name: free5GC
 repo_url: https://github.com/free5gc/free5gc
+edit_uri: https://github.com/free5gc/free5gc.github.io/blob/main/docs/
 
 extra:
   social:
