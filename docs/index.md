@@ -8,11 +8,7 @@ The free5GC is an open-source project for 5th generation (5G) mobile core networ
 Currently, the major contributors are with National Chiao Tung University (NCTU). Please refer to our roadmap for the features of each release.
 
 - The source code of the latest version free5GC can be downloaded from [here](https://github.com/free5gc/free5gc).
-
-- The source code of free5GC stage 2 (ARM version) can be downloaded from [here](https://github.com/free5gc/free5GC-ARM).
-
-- The source code of free5GC stage 1 can be downloaded from [here](https://bitbucket.org/nctu_5g/free5gc-stage-1/src/master/).
-
+- Follow our [LinkedIn page](https://www.linkedin.com/company/free5gc/) for getting the news about free5GC!
 
 > [!NOTE] 
 > Thank you very much for your interest in free5GC. Except for stage 1,the license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free. 
