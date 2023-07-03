@@ -78,11 +78,11 @@ sudo systemctl stop ufw
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
-    * To install the latest stable build (v3.2.1):
+    * To install the latest stable build (v3.3.0):
 
     ```bash
         cd ~
-        git clone --recursive -b v3.2.1 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b v3.3.0 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
     ```
 
