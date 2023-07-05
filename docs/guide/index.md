@@ -13,7 +13,7 @@ Here are the features in the roadmap, these item is planned to be supported in t
 * Network Exposure Function (NEF)
 
 ## free5GC Installation Guide
-For people who are not familiar with virtual machine and Linux installation, here are some example demonstration:
+For people who are not familiar with virtual machines and Linux installation, here are some example demonstrations:
 
 - [Creating a Ubuntu VM using VirtualBox](./1-vm-en.md)
 - [Creating and Configuring a free5GC VM](./2-config-vm-en.md)
