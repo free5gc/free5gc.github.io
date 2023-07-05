@@ -1,11 +1,11 @@
-<iframe width="616" height="400" src="https://www.youtube.com/embed/SFO2z5-4zxs?list=PLeDUIabcS2_p4fjApgJHNiVpfYSzz1oJi" title="free5GC Demonstration with 5G SA gNB and UE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<!-- <iframe width="616" height="400" src="https://www.youtube.com/embed/SFO2z5-4zxs?list=PLeDUIabcS2_p4fjApgJHNiVpfYSzz1oJi" title="free5GC Demonstration with 5G SA gNB and UE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
 
 ## What is free5GC?
 <img width="300" src="./assets/logo.png"/>
 
 The free5GC is an open-source project for 5th generation (5G) mobile core networks. The ultimate goal of this project is to implement the 5G core network (5GC) defined in 3GPP Release 15 (R15) and beyond.
 
-Currently, the major contributors are National Chiao Tung University (NCTU). Please refer to our roadmap for the features of each release.
+Currently, the major contributors are from [NYCU](https://en.nycu.edu.tw/). Please refer to our roadmap for the features of each release.
 
 - The source code of the latest version free5GC can be downloaded from [here](https://github.com/free5gc/free5gc).
 - Follow our [LinkedIn page](https://www.linkedin.com/company/free5gc/) for getting the news about free5GC!
@@ -13,7 +13,7 @@ Currently, the major contributors are National Chiao Tung University (NCTU). Ple
 > [!NOTE] 
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free. 
 
-## **Members**
+## **Sponsors**
 
 ### ![](./assets/platinum.png){: style="height:40px;width:40px" align=left} Platinum
 <div class="info-block">

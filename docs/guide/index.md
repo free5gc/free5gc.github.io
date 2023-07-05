@@ -5,6 +5,13 @@
 - [Hardware tested](./hardware.md)
 - [Supported features](./features.md)
 
+## Roadmap
+
+Here are the features in the roadmap, these item is planned to be supported in the near future:
+
+* Charging Function (CHF)
+* Network Exposure Function (NEF)
+
 ## free5GC Installation Guide
 For people who are not familiar with virtual machine and Linux installation, here are some example demonstration:
 
