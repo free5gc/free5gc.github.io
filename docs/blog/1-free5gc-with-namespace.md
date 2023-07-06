@@ -1,14 +1,23 @@
-# Use network namespace to separate the 5GC and RAN simulator
+# Use network namespace to separate the 5G core (5GC) and RAN simulator
 
 ## Overview
 
-This article leverages namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM), is an opensource applying 5G-UE and RAN(gNodeB) simulator, and connect to the free5GC. 
-UERANSIM follows the 3GPP spec for developing, can support multiple 5GC including free5GC. 
+This technique leverages namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM), an opensource 5G-UE and RAN(gNodeB) simulator, and connect to free5GC. 
+UERANSIM follows the 3GPP specification for developing and can support multiple 5G core (5GC) including free5GC. 
 
-Why are we using namespace? Well, you can follow [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config) and [free5GC compose](https://github.com/free5gc/free5gc-compose) to set up environment with VM and docker, but the hardware resources could meet limitation. With network namespace, you can have different and separate network instances of network 
+Why are we using namespace? Well, you can follow [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config) and [free5GC compose](https://github.com/free5gc/free5gc-compose) to set up the environment with VM and docker, but there are limitations for hardware’s capability. With network namespace, you can have different and separate network instances of network 
 interfaces and routing tables that operate independently. 
 
+So, what is network namespace? Network namespace makes a copy of network stack with its own routing table, firewall and devices. A named network namespace is an object at ```/var/run/netns/```. The file descriptor resulting from opening ```/var/run/netns/``` refers to the specified network namespace. Holding that file descriptor open
+keeps the network namespace alive. 
+
+And how to make both namespaces communicating? A virtual Ethernet device (veth) pair provides the abstraction that can be used to create tunnels between network namespaces, and can be used to create bridge to a physical network device in another namespace. Veth pair also be used as standalone network devices.
+When the namespace freed, veth device which attatch to would be destroyed.
+
 The environment is as follow. Suppose you have already installed as well as set up [free5GC](https://free5gc.org/guide/#information) and [UERANSIM](https://github.com/aligungr/UERANSIM/wiki/Installation) properly.
+
+- free5GC v3.3.0
+- UERANSIM v3.1.0
 
 > [!NOTE] 
 > *Namespace free5GC* represents host network namespace. And enp0s5 is an ethernet interface connectting to external.
@@ -17,24 +26,27 @@ The environment is as follow. Suppose you have already installed as well as set 
 
 ```
 Each devices as follow
-| Device        | IP            |
-| ------------- |:-------------:|
-| veth0        | 10.200.200.1   |
-| veth1        | 10.200.200.2   |
-| br-veth0     | none           |
-| br-veth1     | none           |
-| enp0s5       | 10.211.55.23   |
+| Device        | IP             |
+| ------------- | -------------  |
+| veth0         | 10.200.200.1   |
+| veth1         | 10.200.200.2   |
+| br-veth0      | none           |
+| br-veth1      | none           |
+| enp0s5        | 10.211.55.23   |
 
 
 UE information in UERANSIM as follow. Already 
 | IMSI             | DNN           |
-| ---------------- |:-------------:|
+| ---------------- | ------------- |
 | 208930000000003  | internet      |
 ```
 
 ## Configuration file of free5GC and UERANSIM
 ### free5GC 
 - **free5gc/config/amfcfg.yaml**
+
+Replace ngapIpList IP from ```127.0.0.18``` to ```10.200.200.2```:
+
 ```yaml
 info:
   version: 1.0.3
@@ -157,6 +169,9 @@ logger:
     ReportCaller: false
 ```
 - **free5gc/config/smfcfg.yaml**
+
+Replace **userplaneInformation** / **upNodes** / **UPF** / **interfaces** / **endpoints** from ```127.0.0.8``` to ```10.200.200.2```:
+
 ```yaml
 info:
   version: 1.0.2
@@ -250,6 +265,9 @@ logger:
     ReportCaller: false
 ```
 - **free5gc/config/upfcfg.yaml**
+
+Replace **gtpu** from ```127.0.0.8```to ```10.200.200.2```:
+
 ```yaml
 version: 1.0.3
 description: UPF initial local configuration
@@ -285,6 +303,13 @@ logger: # log output setting
 ```
 ### UERANSIM
 - **UERANSIM/config/free5gc-gnb.yaml**
+
+   * Replace ngapIp from ```127.0.0.1```to ```10.200.200.1```
+
+   * Replace gtpIp from ```127.0.0.1```to ```10.200.200.1```
+
+   * Replace **amfConfigs** / **address** from ```127.0.0.1```to ```10.200.200.2```
+
 ```yaml
 mcc: '208'          # Mobile Country Code value
 mnc: '93'           # Mobile Network Code value (2 or 3 digits)
@@ -361,7 +386,7 @@ ciphering:
 ```
 
 ## Environment set up of free5GC and UERANSIM
-First, create a namespace. 
+First, create a namespace:
 
 > [!NOTE]
 > Assume that you are either running as root, or it behoves you to prepend ```sudo``` to commands as necessary.
@@ -369,17 +394,17 @@ First, create a namespace.
 ```
 ip netns add ueransim
 ```
-Next, add the bridge.
+Next, add the bridge:
 ```
 ip link add free5gc-br type bridge
 ```
-Add two pairs of veth.
+Add two pairs of veth:
 ```
 ip link add veth0 type veth peer name br-veth0
 ip link add veth1 type veth peer name br-veth1
 ```
-Now, it could be like
-```
+Now, it could be like:
+```bat
 root@free5gc:~# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -415,21 +440,21 @@ root@free5gc:~# ip a
     link/ether 12:5a:56:00:5b:be brd ff:ff:ff:ff:ff:ff
 ```
 
-**Next**, assign interface to namespace.
+**Next**, assign interface to namespace:
 ```
 ip link set dev veth0 netns ueransim
 ```
-Set ip address.
+Set ip address:
 ```
 ip netns exec ueransim ip a add 10.200.200.1/24 dev veth0
 ```
-Enable both interface. Don't forget **lo**
+Enable both interface. Don't forget **lo**:
 ```
 ip netns exec ueransim ip link set lo up
 ip netns exec ueransim ip link set veth0 up
 ```
-Check with ```ip a```
-```
+Check with **```ip a```**:
+```bat
 root@free5gc:~# ip netns exec ueransim ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -442,12 +467,12 @@ root@free5gc:~# ip netns exec ueransim ip a
     inet 10.200.200.1/24 scope global veth0
        valid_lft forever preferred_lft forever
 ```
-Set for veth1 as well.
+Set for veth1 as well:
 ```
 ip a add 10.200.200.2/24 dev veth1
 ip link set veth1 up
 ```
-Let two interfaces attatch to bridge. 
+Let two interfaces attatch to bridge:
 ```
 ip link set dev br-veth0 master free5gc-br
 ip link set dev br-veth1 master free5gc-br
@@ -455,14 +480,14 @@ ip link set br-veth0 up
 ip link set br-veth1 up
 ip link set free5gc-br up
 ```
-Using ```bridge link``` to check.
-```
+Using ```bridge link``` to check:
+```bat
 root@free5gc:~# bridge link
 5: br-veth0@if6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master free5gc-br state forwarding priority 32 cost 2
 7: br-veth1@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master free5gc-br state forwarding priority 32 cost 2
 ```
-Now it looks like
-```
+Now it looks like:
+```bat
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -504,12 +529,12 @@ Now it looks like
     inet6 fe80::105a:56ff:fe00:5bbe/64 scope link
        valid_lft forever preferred_lft forever
 ```
-**Let's test it**.
+**Let's test it**:
 
 > [!NOTE]
 > You can perform ```ip netns exec ueransim /bin/bash --rcfile <(echo "PS1=\"ueransim> \"")``` to enter namespace and modify shell prefix.
 
-```
+```bat
 root@free5gc:~# ip netns exec ueransim /bin/bash --rcfile <(echo "PS1=\"ueransim> \"")
 ueransim> ping -c2 10.200.200.2
 PING 10.200.200.2 (10.200.200.2) 56(84) bytes of data.
@@ -520,8 +545,8 @@ PING 10.200.200.2 (10.200.200.2) 56(84) bytes of data.
 2 packets transmitted, 2 received, 0% packet loss, time 1020ms
 rtt min/avg/max/mdev = 0.089/0.157/0.226/0.068 ms
 ```
-Insert default routing rule.
-```
+Insert default routing rule:
+```bat
 ueransim> ip route add default via 10.200.200.2
 ueransim> netstat -rn
 Kernel IP routing table
@@ -529,8 +554,8 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 0.0.0.0         10.200.200.2    0.0.0.0         UG        0 0          0 veth0
 10.200.200.0    0.0.0.0         255.255.255.0   U         0 0          0 veth0
 ```
-Try to ping 8.8.8.8
-```
+Try to ping 8.8.8.8:
+```bat
 ueransim> ping -c2 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 
@@ -538,14 +563,14 @@ PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 2 packets transmitted, 0 received, 100% packet loss, time 1028ms
 
 ```
-It is because the main host must translate the source addresses. Besides, the main host need to forward packet. 
-```
+It is because the main host must translate the source addresses. Besides, the main host need to forward packet:
+```bat
 root@free5gc:~# iptables -t nat -A POSTROUTING -o enp0s5 -j MASQUERADE
 root@free5gc:~# sysctl -w net.ipv4.ip_forward=1
 root@free5gc:~# sudo iptables -I FORWARD 1 -j ACCEPT
 ```
-And then.
-```
+And then:
+```bat
 ueransim> ping -c2 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=13.9 ms
@@ -556,10 +581,10 @@ PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 rtt min/avg/max/mdev = 13.866/20.939/28.012/7.073 ms
 ```
 
-After free5GC execute ```run.sh```, it's time for UERANSIM.
+After free5GC execute ```run.sh```, it's time for UERANSIM:
 
 **In terminal 1**:
-```
+```bat
 ueransim> build/nr-gnb -c config/free5gc-gnb.yaml
 UERANSIM v3.1.0
 [2023-07-05 19:58:26.368] [sctp] [info] Trying to establish SCTP connection... (10.200.200.2:38412)
@@ -575,7 +600,7 @@ UERANSIM v3.1.0
 [2023-07-05 19:58:36.108] [ngap] [info] PDU session resource is established for UE[3] count[1]
 ```
 **In terminal 2**:
-```
+```bat
 ueransim> sudo build/nr-ue -c config/free5gc-ue.yaml
 UERANSIM v3.1.0
 [2023-07-05 19:58:35.803] [nas] [debug] NAS layer started
@@ -602,7 +627,7 @@ UERANSIM v3.1.0
 [2023-07-05 19:58:36.113] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
 ```
 **In terminal 3**:
-```
+```bat
 ueransim> ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -631,8 +656,8 @@ PING 8.8.8.8 (8.8.8.8) from 10.60.0.1 uesimtun0: 56(84) bytes of data.
 2 packets transmitted, 2 received, 0% packet loss, time 1006ms
 rtt min/avg/max/mdev = 19.478/26.348/33.219/6.870 ms
 ```
-Also ping to google.com.
-```
+Also ping to google.com:
+```bat
 ueransim> ping -c2 -I uesimtun0 google.com
 PING google.com (172.217.160.110) from 10.60.0.1 uesimtun0: 56(84) bytes of data.
 64 bytes from tsa03s06-in-f14.1e100.net (172.217.160.110): icmp_seq=1 ttl=127 time=17.3 ms
@@ -646,14 +671,14 @@ rtt min/avg/max/mdev = 17.295/23.385/29.476/6.090 ms
 
 ![](./1-2.png)
 
-Same as before, you should create another namespace for UERANSIM, called it ueransim2.
-```
+Same as before, you should create another namespace for UERANSIM, called it ueransim2:
+```bat
 root@free5gc:~# ip netns ls
 ueransim2 (id: 1)
 ueransim (id: 0)
 ```
 And then:
-```
+```bat
 ip link add veth2 type veth peer name br-veth2
 ip link set dev veth2 netns ueransim2
 ip link set br-veth2 master free5gc-br
@@ -667,7 +692,11 @@ ip netns exec ueransim2 ip route add default via 10.200.200.2
 Copy **UERANSIM/config/free5gc-gnb.yaml** and **UERANSIM/config/free5gc-ue.yaml** to **free5gc-gnb2.yaml** and **free5gc-ue2.yaml**, modify:
 
 **free5gc-gnb2.yaml**
-```
+
+   * Replace ngapIp from ```127.0.0.1``` to ```10.200.200.3```
+   * Replace gtpIp from ```127.0.0.1``` to ```10.200.200.3```
+
+```yaml
 ...
 ngapIp: 10.200.200.3 # 127.0.0.1   # gNB's local IP address for N2 Interface (Usually same with local IP)
 gtpIp: 10.200.200.3 # 127.0.0.1    # gNB's local IP address for N3 Interface (Usually same with local IP)
@@ -679,7 +708,10 @@ amfConfigs:
 ...
 ```
 **free5gc-ue2.yaml**
-```
+
+```supi``` change to ```imsi-208930000000004```
+
+```yaml
 ...
 # IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 or 16 digits)
 supi: 'imsi-208930000000004'
@@ -689,7 +721,7 @@ supi: 'imsi-208930000000004'
 > Should register ue to webconsole first.
 
 The result:
-```
+```bat
 ueransim> ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -719,7 +751,7 @@ PING google.com (172.217.160.110) from 10.60.0.1 uesimtun0: 56(84) bytes of data
 rtt min/avg/max/mdev = 17.200/22.863/28.527/5.663 ms
 ```
 
-```
+```bat
 ueransim2> ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -763,141 +795,3 @@ Jimmy Chang
 - https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/
 - https://man7.org/linux/man-pages/man7/namespaces.7.html
 - https://linux.die.net/man/8/iptables
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
