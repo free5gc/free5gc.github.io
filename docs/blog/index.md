@@ -2,6 +2,7 @@
 
 ## Official
 - [5G SCTP LoadBalancer Using LoxiLB Applying on free5GC](https://medium.com/@ben0978327139/b5c05bb723f0)
+- [Use network namespace to separate the 5GC and RAN simulator](./1-free5gc-with-namespace.md)
 
 ## External
 - [Running Free5GC on Platform9 Managed Kubernetes](https://platform9.com/blog/running-free5gc-on-platform9-managed-kubernetes/)

@@ -1,38 +1,39 @@
-# Overview
+# Use network namespace to separate the 5GC and RAN simulator
 
-This article will use namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM) and connect to free5GC core network. UERANSIM is an opensource applying 5G-UE and RAN(gNodeB) simulator. 
-It follows the 3GPP spec for developing, can support multiple 5G CN including free5GC. 
+## Overview
 
-Why are we using namespace? Well, you can follow [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config) and [free5GC compose](https://github.com/free5gc/free5gc-compose) to 
-set up environment with VM and docker, but the hardware resources could meet limitation. With network namespace, you can have different and separate network instances of network 
+This article leverages namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM), is an opensource applying 5G-UE and RAN(gNodeB) simulator, and connect to the free5GC. 
+UERANSIM follows the 3GPP spec for developing, can support multiple 5GC including free5GC. 
+
+Why are we using namespace? Well, you can follow [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config) and [free5GC compose](https://github.com/free5gc/free5gc-compose) to set up environment with VM and docker, but the hardware resources could meet limitation. With network namespace, you can have different and separate network instances of network 
 interfaces and routing tables that operate independently. 
 
 The environment is as follow. Suppose you have already installed as well as set up [free5GC](https://free5gc.org/guide/#information) and [UERANSIM](https://github.com/aligungr/UERANSIM/wiki/Installation) properly.
 
-**Note**. *Namespace free5GC* is localhost, that is, the default namespace. And enp0s5 is an ethernet interface connectting to external.
+> [!NOTE] 
+> *Namespace free5GC* represents host network namespace. And enp0s5 is an ethernet interface connectting to external.
 
-<img width="756" alt="截圖 2023-07-06 01 40 10" src="https://github.com/JiMMyMatrix/free5gc.github.io/assets/112857368/37712c37-95f7-4e35-a6f2-3f2b5fd05ff9">
+![](./1-1.png)
 
-
-
-
+```
 Each devices as follow
-| Device        | IP           |
+| Device        | IP            |
 | ------------- |:-------------:|
-| veth0        | 10.200.200.1      |
-| veth1        | 10.200.200.2      |
-| br-veth0     | none       |
-| br-veth1     | none       |
-| enp0s5       | 10.211.55.23  |
+| veth0        | 10.200.200.1   |
+| veth1        | 10.200.200.2   |
+| br-veth0     | none           |
+| br-veth1     | none           |
+| enp0s5       | 10.211.55.23   |
 
 
 UE information in UERANSIM as follow. Already 
-| IMSI        | DNN           |
-| ------------- |:-------------:|
-| 208930000000003        | internet     |
+| IMSI             | DNN           |
+| ---------------- |:-------------:|
+| 208930000000003  | internet      |
+```
 
-# Configuration file of free5GC and UERANSIM
-## free5GC 
+## Configuration file of free5GC and UERANSIM
+### free5GC 
 - **free5gc/config/amfcfg.yaml**
 ```yaml
 info:
@@ -282,7 +283,7 @@ logger: # log output setting
   reportCaller: false # enable the caller report or not, value: true or false
 
 ```
-## UERANSIM
+### UERANSIM
 - **UERANSIM/config/free5gc-gnb.yaml**
 ```yaml
 mcc: '208'          # Mobile Country Code value
@@ -359,10 +360,12 @@ ciphering:
   EA3: true
 ```
 
-# Environment set up of free5GC and UERANSIM
+## Environment set up of free5GC and UERANSIM
 First, create a namespace. 
 
-***Note***. Assume that you are either running as root, or it behoves you to prepend ```sudo``` to commands as necessary.
+> [!NOTE]
+> Assume that you are either running as root, or it behoves you to prepend ```sudo``` to commands as necessary.
+
 ```
 ip netns add ueransim
 ```
@@ -503,7 +506,9 @@ Now it looks like
 ```
 **Let's test it**.
 
-***Note***. You can perform ```ip netns exec ueransim /bin/bash --rcfile <(echo "PS1=\"ueransim> \"")``` to enter namespace and modify shell prefix.
+> [!NOTE]
+> You can perform ```ip netns exec ueransim /bin/bash --rcfile <(echo "PS1=\"ueransim> \"")``` to enter namespace and modify shell prefix.
+
 ```
 root@free5gc:~# ip netns exec ueransim /bin/bash --rcfile <(echo "PS1=\"ueransim> \"")
 ueransim> ping -c2 10.200.200.2
@@ -637,9 +642,9 @@ PING google.com (172.217.160.110) from 10.60.0.1 uesimtun0: 56(84) bytes of data
 2 packets transmitted, 2 received, 0% packet loss, time 1005ms
 rtt min/avg/max/mdev = 17.295/23.385/29.476/6.090 ms
 ```
-# What if two UERANSIMs with two namespaces?
+## What if two UERANSIMs with two namespaces?
 
-<img width="749" alt="截圖 2023-07-06 04 33 20" src="https://github.com/JiMMyMatrix/free5gc.github.io/assets/112857368/052c6164-3758-4f12-8095-7008e815f0db">
+![](./1-2.png)
 
 Same as before, you should create another namespace for UERANSIM, called it ueransim2.
 ```
@@ -680,7 +685,8 @@ amfConfigs:
 supi: 'imsi-208930000000004'
 ...
 ```
-***Note***. Should register ue to webconsole first.
+> [!NOTE]
+> Should register ue to webconsole first.
 
 The result:
 ```
@@ -743,7 +749,15 @@ PING google.com (172.217.160.110) from 10.60.0.2 uesimtun0: 56(84) bytes of data
 rtt min/avg/max/mdev = 15.786/17.353/18.921/1.567 ms
 ```
 
-# Reference
+## About
+
+Jimmy Chang
+
+- Graduate student major in 5GC Research
+- [LinkedIn](https://www.linkedin.com/in/%E5%BB%BA%E8%80%80-%E5%BC%B5-94591a235/)
+
+
+## Reference
 - https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config
 - https://github.com/free5gc/free5gc/blob/main/test_ulcl.sh
 - https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/
