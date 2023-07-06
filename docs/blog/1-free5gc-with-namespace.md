@@ -49,21 +49,22 @@ Replace ngapIpList IP from ```127.0.0.18``` to ```10.200.200.2```:
 
 ```yaml
 info:
-  version: 1.0.3
+  version: 1.0.9
   description: AMF initial local configuration
 
 configuration:
   amfName: AMF # the name of this AMF
   ngapIpList:  # the IP list of N2 interfaces on this AMF
     - 10.200.200.2 # 127.0.0.18
+  ngapPort: 38412 # the SCTP port listened by NGAP
   sbi: # Service-based interface information
     scheme: http # the protocol for sbi (http or https)
     registerIPv4: 127.0.0.18 # IP used to register to NRF
     bindingIPv4: 127.0.0.18  # IP used to bind the service
     port: 8000 # port used to bind the service
     tls: # the local path of TLS key
-      pem: config/TLS/amf.pem # AMF TLS Certificate
-      key: config/TLS/amf.key # AMF TLS Private key
+      pem: cert/amf.pem # AMF TLS Certificate
+      key: cert/amf.key # AMF TLS Private key
   serviceNameList: # the SBI services provided by this AMF, refer to TS 29.518
     - namf-comm # Namf_Communication service
     - namf-evts # Namf_EventExposure service
@@ -80,7 +81,7 @@ configuration:
     - plmnId: # Public Land Mobile Network ID, <PLMN ID> = <MCC><MNC>
         mcc: 208 # Mobile Country Code (3 digits string, digit: 0~9)
         mnc: 93 # Mobile Network Code (2 or 3 digits string, digit: 0~9)
-      tac: 1 # Tracking Area Code (uinteger, range: 0~16777215)
+      tac: 000001 # Tracking Area Code (3 bytes hex string, range: 000000~FFFFFF)
   plmnSupportList: # the PLMNs (Public land mobile network) list supported by this AMF
     - plmnId: # Public Land Mobile Network ID, <PLMN ID> = <MCC><MNC>
         mcc: 208 # Mobile Country Code (3 digits string, digit: 0~9)
@@ -103,20 +104,27 @@ configuration:
   networkName:  # the name of this core network
     full: free5GC
     short: free
-  locality: area1 # Name of the location where a set of AMF, SMF and UPFs are located
-  networkFeatureSupport5GS: # 5gs Network Feature Support IE, refer to TS 24.501
-    enable: true # append this IE in Registration accept or not
-    length: 1 # IE content length (uinteger, range: 1~3)
-    imsVoPS: 0 # IMS voice over PS session indicator (uinteger, range: 0~1)
-    emc: 0 # Emergency service support indicator for 3GPP access (uinteger, range: 0~3)
-    emf: 0 # Emergency service fallback indicator for 3GPP access (uinteger, range: 0~3)
-    iwkN26: 0 # Interworking without N26 interface indicator (uinteger, range: 0~1)
-    mpsi: 0 # MPS indicator (uinteger, range: 0~1)
-    emcN3: 0 # Emergency service support indicator for Non-3GPP access (uinteger, range: 0~1)
-    mcsi: 0 # MCS indicator (uinteger, range: 0~1)
+  ngapIE: # Optional NGAP IEs
+    mobilityRestrictionList: # Mobility Restriction List IE, refer to TS 38.413
+      enable: true # append this IE in related message or not
+    maskedIMEISV: # Masked IMEISV IE, refer to TS 38.413
+      enable: true # append this IE in related message or not
+    redirectionVoiceFallback: # Redirection Voice Fallback IE, refer to TS 38.413
+      enable: false # append this IE in related message or not
+  nasIE: # Optional NAS IEs
+    networkFeatureSupport5GS: # 5gs Network Feature Support IE, refer to TS 24.501
+      enable: true # append this IE in Registration accept or not
+      length: 1 # IE content length (uinteger, range: 1~3)
+      imsVoPS: 0 # IMS voice over PS session indicator (uinteger, range: 0~1)
+      emc: 0 # Emergency service support indicator for 3GPP access (uinteger, range: 0~3)
+      emf: 0 # Emergency service fallback indicator for 3GPP access (uinteger, range: 0~3)
+      iwkN26: 0 # Interworking without N26 interface indicator (uinteger, range: 0~1)
+      mpsi: 0 # MPS indicator (uinteger, range: 0~1)
+      emcN3: 0 # Emergency service support indicator for Non-3GPP access (uinteger, range: 0~1)
+      mcsi: 0 # MCS indicator (uinteger, range: 0~1)
   t3502Value: 720  # timer value (seconds) at UE side
   t3512Value: 3600 # timer value (seconds) at UE side
-  non3gppDeregistrationTimerValue: 3240 # timer value (seconds) at UE side
+  non3gppDeregTimerValue: 3240 # timer value (seconds) at UE side
   # retransmission timer for paging message
   t3513:
     enable: true     # true or false
@@ -147,26 +155,18 @@ configuration:
     enable: true     # true or false
     expireTime: 6s   # default is 6 seconds
     maxRetryTimes: 4 # the max number of retransmission
+  locality: area1 # Name of the location where a set of AMF, SMF, PCF and UPFs are located
+  sctp: # set the sctp server setting <optinal>, once this field is set, please also add maxInputStream, maxOsStream, maxAttempts, maxInitTimeOut
+    numOstreams: 3 # the maximum out streams of each sctp connection
+    maxInstreams: 5 # the maximum in streams of each sctp connection
+    maxAttempts: 2 # the maximum attempts of each sctp connection
+    maxInitTimeout: 2 # the maximum init timeout of each sctp connection
+  defaultUECtxReq: false # the default value of UE Context Request to decide when triggering Initial Context Setup procedure
 
-# the kind of log output
-# debugLevel: how detailed to output, value: trace, debug, info, warn, error, fatal, panic
-# ReportCaller: enable the caller report or not, value: true or false
-logger:
-  AMF:
-    debugLevel: info
-    ReportCaller: false
-  NAS:
-    debugLevel: info
-    ReportCaller: false
-  FSM:
-    debugLevel: info
-    ReportCaller: false
-  NGAP:
-    debugLevel: info
-    ReportCaller: false
-  Aper:
-    debugLevel: info
-    ReportCaller: false
+logger: # log output setting
+  enable: true # true or false
+  level: info # how detailed to output, value: trace, debug, info, warn, error, fatal, panic
+  reportCaller: false # enable the caller report or not, value: true or false
 ```
 - **free5gc/config/smfcfg.yaml**
 
@@ -174,7 +174,7 @@ Replace **userplaneInformation** / **upNodes** / **UPF** / **interfaces** / **en
 
 ```yaml
 info:
-  version: 1.0.2
+  version: 1.0.7
   description: SMF initial local configuration
 
 configuration:
@@ -182,11 +182,11 @@ configuration:
   sbi: # Service-based interface information
     scheme: http # the protocol for sbi (http or https)
     registerIPv4: 127.0.0.2 # IP used to register to NRF
-    bindingIPv4: 127.0.0.2  # IP used to bind the service
+    bindingIPv4: 127.0.0.2 # IP used to bind the service
     port: 8000 # Port used to bind the service
     tls: # the local path of TLS key
-      key: config/TLS/smf.key # SMF TLS Certificate
-      pem: config/TLS/smf.pem # SMF TLS Private key
+      key: cert/smf.key # SMF TLS Certificate
+      pem: cert/smf.pem # SMF TLS Private key
   serviceNameList: # the SBI services provided by this SMF, refer to TS 29.502
     - nsmf-pdusession # Nsmf_PDUSession service
     - nsmf-event-exposure # Nsmf_EventExposure service
@@ -199,6 +199,7 @@ configuration:
         - dnn: internet # Data Network Name
           dns: # the IP address of DNS
             ipv4: 8.8.8.8
+            ipv6: 2001:4860:4860::8888
     - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
         sst: 1 # Slice/Service Type (uinteger, range: 0~255)
         sd: 112233 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
@@ -206,19 +207,24 @@ configuration:
         - dnn: internet # Data Network Name
           dns: # the IP address of DNS
             ipv4: 8.8.8.8
+            ipv6: 2001:4860:4860::8888
   plmnList: # the list of PLMN IDs that this SMF belongs to (optional, remove this key when unnecessary)
-    - mcc: "208" # Mobile Country Code (3 digits string, digit: 0~9)
-      mnc: "93" # Mobile Network Code (2 or 3 digits string, digit: 0~9)
-  locality: area1 # Name of the location where a set of AMF, SMF and UPFs are located
+    - mcc: 208 # Mobile Country Code (3 digits string, digit: 0~9)
+      mnc: 93 # Mobile Network Code (2 or 3 digits string, digit: 0~9)
+  locality: area1 # Name of the location where a set of AMF, SMF, PCF and UPFs are located
   pfcp: # the IP address of N4 interface on this SMF (PFCP)
-    addr: 127.0.0.1
+    # addr config is deprecated in smf config v1.0.3, please use the following config
+    nodeID: 127.0.0.1 # the Node ID of this SMF
+    listenAddr: 127.0.0.1 # the IP/FQDN of N4 interface on this SMF (PFCP)
+    externalAddr: 127.0.0.1 # the IP/FQDN of N4 interface on this SMF (PFCP)
   userplaneInformation: # list of userplane information
     upNodes: # information of userplane node (AN or UPF)
       gNB1: # the name of the node
         type: AN # the type of the node (AN or UPF)
-      UPF:  # the name of the node
+      UPF: # the name of the node
         type: UPF # the type of the node (AN or UPF)
-        nodeID: 127.0.0.8 # the IP/FQDN of N4 interface on this UPF (PFCP)
+        nodeID: 127.0.0.8 # the Node ID of this UPF
+        addr: 127.0.0.8 # the IP/FQDN of N4 interface on this UPF (PFCP)
         sNssaiUpfInfos: # S-NSSAI information list for this UPF
           - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
               sst: 1 # Slice/Service Type (uinteger, range: 0~255)
@@ -227,6 +233,8 @@ configuration:
               - dnn: internet
                 pools:
                   - cidr: 10.60.0.0/16
+                staticPools:
+                  - cidr: 10.60.100.0/24
           - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
               sst: 1 # Slice/Service Type (uinteger, range: 0~255)
               sd: 112233 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
@@ -234,35 +242,35 @@ configuration:
               - dnn: internet
                 pools:
                   - cidr: 10.61.0.0/16
+                staticPools:
+                  - cidr: 10.61.100.0/24
         interfaces: # Interface list for this UPF
           - interfaceType: N3 # the type of the interface (N3 or N9)
             endpoints: # the IP address of this N3/N9 interface on this UPF
               - 10.200.200.2 # 127.0.0.8
-            networkInstance: internet # Data Network Name (DNN)
+            networkInstances:  # Data Network Name (DNN)
+              - internet
     links: # the topology graph of userplane, A and B represent the two nodes of each link
       - A: gNB1
         B: UPF
+  # retransmission timer for pdu session modification command
+  t3591:
+    enable: true     # true or false
+    expireTime: 16s   # default is 6 seconds
+    maxRetryTimes: 3 # the max number of retransmission
+  # retransmission timer for pdu session release command
+  t3592:
+    enable: true     # true or false
+    expireTime: 16s   # default is 6 seconds
+    maxRetryTimes: 3 # the max number of retransmission
   nrfUri: http://127.0.0.10:8000 # a valid URI of NRF
+  #urrPeriod: 10 # default usage report period in seconds
+  #urrThreshold: 1000 # default usage report threshold in bytes
 
-# the kind of log output
-# debugLevel: how detailed to output, value: trace, debug, info, warn, error, fatal, panic
-# ReportCaller: enable the caller report or not, value: true or false
-logger:
-  SMF:
-    debugLevel: info
-    ReportCaller: false
-  NAS:
-    debugLevel: info
-    ReportCaller: false
-  NGAP:
-    debugLevel: info
-    ReportCaller: false
-  Aper:
-    debugLevel: info
-    ReportCaller: false
-  PFCP:
-    debugLevel: info
-    ReportCaller: false
+logger: # log output setting
+  enable: true # true or false
+  level: info # how detailed to output, value: trace, debug, info, warn, error, fatal, panic
+  reportCaller: false # enable the caller report or not, value: true or false
 ```
 - **free5gc/config/upfcfg.yaml**
 
@@ -288,6 +296,7 @@ gtpu:
       type: N3
       # name: upf.5gc.nctu.me
       # ifname: gtpif
+      # mtu: 1400
 
 # The DNN list supported by UPF
 dnnList:
@@ -783,7 +792,7 @@ rtt min/avg/max/mdev = 15.786/17.353/18.921/1.567 ms
 
 ## About
 
-Jimmy Chang
+Hi, my name is Jimmy Chang. The current research topic is 5G LAN with a focus on the 5G Data Plane. Any questions or errors in the article are welcome for correction. Please feel free to send an email to provide feedback.
 
 - Graduate student major in 5GC Research
 - [LinkedIn](https://www.linkedin.com/in/%E5%BB%BA%E8%80%80-%E5%BC%B5-94591a235/)
