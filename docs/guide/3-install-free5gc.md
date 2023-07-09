@@ -123,7 +123,7 @@ uname -r
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
 ```bash
-git clone -b v0.6.8 https://github.com/free5gc/gtp5g.git
+git clone -b v0.8.1 https://github.com/free5gc/gtp5g.git
 cd gtp5g
 make
 sudo make install
