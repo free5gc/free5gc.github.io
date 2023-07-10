@@ -14,5 +14,5 @@ Your generous support and sponsorship will sustain our technology development an
 Your generosity is appreciated.
 
 > [!TIPS] 
-> - You don’t need to join our membership program to use free5GC. You can download free5GC from [https://github.com/free5gc/free5gc](https://github.com/free5gc/free5gc).
+> - You don’t need to donate to use free5GC. You can download free5GC from [https://github.com/free5gc/free5gc](https://github.com/free5gc/free5gc).
 > - The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free. We will not charge any license fee.
