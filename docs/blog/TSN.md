@@ -6,7 +6,7 @@ This blog focuses on the role of the 5G system in 3GPP Release 16 TSN (Time-Sens
 Traditional Ethernet technology can only achieve "best-effort" communication and cannot meet the high reliability and low latency requirements of industrial manufacturing applications.Therefore, in the context of industrial automation, there is a need to upgrade the traditional "best-effort" Ethernet to provide "deterministic" services.
 
 Time Sensitive Networking (TSN) brings determinism and real-time communication to standard Ethernet through mechanisms and protocols defined by the IEEE 802.1 standard, which is used by Audio Video Bridging (AVB) and TSN. It offers reliable message delivery, minimized jitter, and guaranteed delivery through central management, time scheduling, and other key features. The introduction of TSN technology holds great potential and benefits for real-time applications in industrial control, automation, and other fields.
-![](TSN_OSI_layer.png)
+![](./TSN_OSI_layer.png)
 >[TSN_OSI_layer](https://www.ti.com/lit/wp/spry316b/spry316b.pdf?ts=1689002300310&ref_url=https%253A%252F%252Fwww.google.com%252F)
 
 ### TSN Standard
@@ -30,7 +30,7 @@ To achieve time synchronization between TSN and 5G systems, TSN utilizes the tim
 >[!NOTE] 
 >*gPTP* is an extended version of PTP (Precision Time Protocol) that primarily expands support for second-layer network devices.
 
-![](gPTP_flow.png)
+![](./gPTP_flow.png)
 >[Time Synchronization process of gPTP](https://www.ciscolive.com/c/dam/r/ciscolive/us/docs/2019/pdf/BRKIOT-2517.pdf)
 
 **How can we synchronize the time of two end stations into the same time domain?**
@@ -42,7 +42,7 @@ Check the [link](https://www.nettimelogic.com/resources/PTP%20Basics.pdf) for mo
 ## Intergration of TSN and 5G
 By now, I believe you have gained an understanding of the time synchronization mechanism in TSN. Let's briefly explain how the 5G system supports TSN as a logical TSN bridge. 
 The 3GPP has defined new functionalities such as NW-TT, DS-TT, and TSN-AF, as well as TSN control nodes like CUC and CNC. Please check TS 23.501 Release 16 for more details.
-![](time_aware_system.png)
+![](./time_aware_system.png)
 > System architecture of 5G support TSN
 
 ### DS-TT and NW-TT
