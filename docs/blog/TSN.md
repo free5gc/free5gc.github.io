@@ -2,8 +2,9 @@
 
 This blog focuses on the role of the 5G system in 3GPP Release 16 TSN (Time-Sensitive Networking).
 
-## What is Time-Sensitive Network(TSN)
-Traditional Ethernet technology can only achieve "best-effort" communication and cannot meet the high reliability and low latency requirements of industrial manufacturing applications.Therefore, in the context of industrial automation, there is a need to upgrade the traditional "best-effort" Ethernet to provide "deterministic" services.
+## What is Time-Sensitive Network (TSN)
+Traditional Ethernet technology can only achieve "best-effort" communication and cannot meet the high reliability and low latency requirements of industrial manufacturing applications.
+Therefore, in the context of industrial automation, there is a need to upgrade the traditional "best-effort" Ethernet to provide "deterministic" services.
 
 Time Sensitive Networking (TSN) brings determinism and real-time communication to standard Ethernet through mechanisms and protocols defined by the IEEE 802.1 standard, which is used by Audio Video Bridging (AVB) and TSN. It offers reliable message delivery, minimized jitter, and guaranteed delivery through central management, time scheduling, and other key features. The introduction of TSN technology holds great potential and benefits for real-time applications in industrial control, automation, and other fields.
 ![](./TSN_OSI_layer.png)
@@ -61,7 +62,7 @@ With TSN-AF, CNC can manage the 5G system functioning as a logical bridge and ac
 
 ### TSN control nodes
 To meet the requirements of application services and control TSN, there are two key functions utilized in the TSN system.
-CNC(Centralized Network Controller), as the central controller in the TSN system, receives the information from CUC(Centralized User Configuration) and performs scheduling and planning tasks. It calculates the optimal transmission schedule for the TSN traffic based on factors such as bandwidth requirements, latency constraints, and network conditions. Once the transmission schedule is computed and confirmed, CNC proceeds to deploy the necessary network resource configuration on the TSN switches. This ensures that the TSN network operates efficiently and effectively in delivering the required QoS (Quality of Service) for the application services.
+CNC (Centralized Network Controller), as the central controller in the TSN system, receives the information from CUC (Centralized User Configuration) and performs scheduling and planning tasks. It calculates the optimal transmission schedule for the TSN traffic based on factors such as bandwidth requirements, latency constraints, and network conditions. Once the transmission schedule is computed and confirmed, CNC proceeds to deploy the necessary network resource configuration on the TSN switches. This ensures that the TSN network operates efficiently and effectively in delivering the required QoS (Quality of Service) for the application services.
 
 ## Reference
 - IEEE Std 802.1AS-2020: “IEEE Standard for Local and metropolitan area networks--Timing and Synchronization for Time-Sensitive Applications”.
