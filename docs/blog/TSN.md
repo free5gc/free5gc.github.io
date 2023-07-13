@@ -1,3 +1,5 @@
+<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
+
 # Time-Sensitive Networking over 5G system - Introduction (Rel-16)
 
 This blog focuses on the role of the 5G system in 3GPP Release 16 TSN (Time-Sensitive Networking).

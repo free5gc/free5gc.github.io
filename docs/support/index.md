@@ -1,3 +1,5 @@
+<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
+
 # Technical Support
 
 If you encounter the usage problem on free5GC, please join our official forum [forum.free5gc.org](https://forum.free5gc.org/) and create a new discussion.

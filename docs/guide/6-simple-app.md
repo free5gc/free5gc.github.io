@@ -1,3 +1,5 @@
+<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
+
 # free5GC Simple Apps
 
 In this demo we will use free5GC together with UERANSIM to exercise on some simple network applications:
