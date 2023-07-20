@@ -9,7 +9,7 @@ Unified Data Management is responsible for managing information related to UE. W
 This service is used by ASUF to retrieve authentication-related information and, after authentication, confirm the result.
 
 ![upload_dde9cead3e40f645128a006d5bc56681](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/94313ad4-c325-4010-8ee9-4105748f4c3c)
-*ts33.501*
+>[3GPP TS33.501 v15.2.0](https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/15.02.00_60/ts_133501v150200p.pdf)
 
 In Authentication, AUSF uses the GET operation to retrieve authentication information for the UE. The request contains the UE’s identity (supi or suci) and the serving network name. The serving network name is used in the derivation of the anchor key, which is used by subsensual authentication. UE’s identity will be contained in the URI, and the serving network name will be contained in the request body.
 
@@ -57,7 +57,7 @@ Open the response packet, and we can see the response body matches the Authentic
 ![upload_3acf4b96a27e13f8b35712d5efc402da](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/36534f56-d487-4277-9395-88a1b09f4ef5)
 
 ![upload_f24e1640d05c1614d277517d35b6520f](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/93a1b4db-77ad-42a7-91f9-8fdfcf99a9b6)
-*ts29.503*
+>[3GPP TS29.503 v15.2.1](https://www.etsi.org/deliver/etsi_ts/129500_129599/129503/15.02.01_60/ts_129503v150201p.pdf)
 
 After AUSF authenticates the UE, it will confirm the result with UDM. These details will be used in linking authentication confirmation to the Nudm_UECM_Registration procedure from AMF.
 
@@ -300,8 +300,8 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 ```
 
 ### Reference
-* 3GPP TS29.503 v15.2
-* 3GPP TS23.502 v15.2
-* 3GPP TS23.501 v15.2
-* 3GPP TS33.501 v15.2
-* free5GC v3.3.0
+* [3GPP TS29.503 v15.2.1](https://www.etsi.org/deliver/etsi_ts/129500_129599/129503/15.02.01_60/ts_129503v150201p.pdf)
+* [3GPP TS23.502 v15.2.0](https://www.etsi.org/deliver/etsi_ts/123500_123599/123502/15.02.00_60/ts_123502v150200p.pdf)
+* [3GPP TS23.501 v15.2.0](https://www.etsi.org/deliver/etsi_ts/123500_123599/123501/15.02.00_60/ts_123501v150200p.pdf)
+* [3GPP TS33.501 v15.2.0](https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/15.02.00_60/ts_133501v150200p.pdf)
+* [free5GC v3.3.0](https://github.com/free5gc/free5gc)
