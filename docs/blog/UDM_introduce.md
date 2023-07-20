@@ -42,8 +42,9 @@ if err != nil {
     return nil, openapi.ProblemDetailsSystemFailure(err.Error())
 }
 authSubs, res, err := client.AuthenticationDataDocumentApi.QueryAuthSubsData(context.Background(), supi, nil)
+
+//in the udm/internal/sbi/producer/generate_auth_data.go, GenerateAuthDataProcedure function.
 ```
-*udm/internal/sbi/producer/generate_auth_data.go GenerateAuthDataProcedure function*
 
 From the code, we can see UDM first de-conceal SUCI (line 5), then use QueryAuthSubsData to get authSub from UDR. After that, UDM uses this information to create the authentication vector.
 
@@ -131,8 +132,8 @@ func communicateWithUDM(ue *context.AmfUe, accessType models.AccessType) error {
 	return nil
 }
 
+//in the amf/internal/gmm/handler.go.
 ```
-*amf/internal/gmm/handler.go*
 
 Next, let's take a look at this function. It is called in HandleInitialRegistration, which handles UE's initial registration. UeCmRegistration will use the Nudm_UECM (UECM) service to store related UE Context Management information in UDM. In lines 40, 47, and 54, AMF uses the Nudm_SubscriberDataManagement (SDM) Service to get some subscribe data.
 
@@ -199,8 +200,8 @@ func RegistrationAmf3gppAccessProcedure(registerRequest models.Amf3GppAccessRegi
 	}
 }
 
+//in the udm/internal/sbi/producer/ue_context_management.go
 ```
-*udm/internal/sbi/producer/ue_context_management.go*
 
 In the RegistrationAmf3gppAccessProcedure function, UDM first checks whether the context has been established for that UE; if UDM has such a context, it initiates a Nudm_UECM_DeregistrationNotification to the old AMF later. UDM used the received information to create context and stored it in UDR.
 
@@ -233,8 +234,9 @@ func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) erro
 	if err := handleRequestedNssai(ue, anType); err != nil {
 		return err
 	}
+
+//in the amf/internal/gmm/handler.go.
 ```
-*amf/internal/gmm/handler.go*
 
 In the initialization of HandleInitialRegistration, AMF sends a request to the UDM to receive the UE's NSSAI. After receiving subscribed NSSAI, AMF will compare it to UE's requested NSSAI. If there is a S-NSSAI that has not been subscribed before, AMF will request NSSF for Allowed NSSAI.
 
@@ -293,8 +295,9 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 				gmm_message.SendRegistrationReject(ue.RanUe[anType], nasMessage.Cause5GMMProtocolErrorUnspecified, "")
 				return fmt.Errorf("Handle Requested Nssai of UE failed")
 			}
+
+//in the amf/internal/gmm/handler.go.
 ```
-*amf/internal/gmm/handler.go*
 
 ### Reference
 * 3GPP TS29.503 v15.2
