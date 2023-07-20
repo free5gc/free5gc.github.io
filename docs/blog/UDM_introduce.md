@@ -138,7 +138,7 @@ func communicateWithUDM(ue *context.AmfUe, accessType models.AccessType) error {
 Next, let's take a look at this function. It is called in HandleInitialRegistration, which handles UE's initial registration. UeCmRegistration will use the Nudm_UECM (UECM) service to store related UE Context Management information in UDM. In lines 40, 47, and 54, AMF uses the Nudm_SubscriberDataManagement (SDM) Service to get some subscribe data.
 
 ### Nudm_UEContextManagement Service 
-In the UeCmRegistration function, AMF registers as UE's serving NF on UDM and stores related UE Context Management information in UDM. Looking at the packet, you can see that the request body contains amfInstanceId and guami, representing the amf identity, and ratType, representing the radio access technology type used by UE.
+In the UeCmRegistration function, AMF registers as UE's serving NF on UDM and stores related UE Context Management information in UDM. Looking at the packet, you can see that the request body contains `amfInstanceId` and `guami`, representing the amf identity, and `ratType`, representing the radio access technology type used by UE.
 
  ![upload_c3e5e7c63f1bb7a934877e7fa29b82ec](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/c24e6f2e-4193-4830-aa4f-e6edb97c1490)
 
@@ -207,11 +207,11 @@ In the RegistrationAmf3gppAccessProcedure function, UDM first checks whether the
 
 
 ### Nudm_SubscriberDataManagement (SDM) Service
-The SDM service is used to retrieve the UE's individual subscription data relevant to the consumer's NF from the UDM. In the SDMGetAmData function, AMF gets subscription data used in registration and mobility management. In the response packet, AMF got gpsis, subscribedUeAmbr, and nssai.
+The SDM service is used to retrieve the UE's individual subscription data relevant to the consumer's NF from the UDM. In the SDMGetAmData function, AMF gets subscription data used in registration and mobility management. In the response packet, AMF got `gpsis`, `subscribedUeAmbr`, and `nssai`.
 
 ![upload_6793e16d2435baf3f235d61178245873](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/6b1c0bcb-2b79-4523-ad8b-1cdaad758b52)
 
-The GPSI is used to address a 3GPP subscription in data networks outside the realms of a 3GPP system. It contains either an External ID or an [MSISDN](https://en.wikipedia.org/wiki/MSISDN).The subscribedUeAmbr is The Maximum Aggregated uplink and downlink MBRs (max. bit rate) to be shared across all Non-GBR (non-guaranteed Bit Rate) QoS Flows according to the subscription of the user. (ts23502 Table 5.2.3.3.1-1). 
+The GPSI (Generic Public Subscription Identifier) is used to address a 3GPP subscription in data networks outside the realms of a 3GPP system. It contains either an External ID or an [MSISDN](https://en.wikipedia.org/wiki/MSISDN) （Mobile Subscriber ISDN Number）.The `subscribedUeAmbr` is The Maximum Aggregated uplink and downlink MBRs (max. bit rate) to be shared across all Non-GBR (non-guaranteed Bit Rate) QoS Flows according to the subscription of the user.
 
 ![upload_e45012750cc609c51d59437c24f8fc4f](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/311a2b76-efe3-4afc-84e3-fcc95f65047e)
 
@@ -238,7 +238,7 @@ func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) erro
 //in the amf/internal/gmm/handler.go.
 ```
 
-In the initialization of HandleInitialRegistration, AMF sends a request to the UDM to receive the UE's NSSAI. After receiving subscribed NSSAI, AMF will compare it to UE's requested NSSAI. If there is a S-NSSAI that has not been subscribed before, AMF will request NSSF for Allowed NSSAI.
+In the initialization of HandleInitialRegistration, AMF sends a request to the UDM to receive the UE's NSSAI (Network Slice Selection Assistance Information). After receiving subscribed NSSAI, AMF will compare it to UE's requested NSSAI. If there is a S-NSSAI that has not been subscribed before, AMF will request NSSF for Allowed NSSAI.
 
 ```golang=
 func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
