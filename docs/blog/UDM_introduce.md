@@ -398,7 +398,7 @@ useDefaultSubscribedSnssai(param, authorizedNetworkSliceInfo)
 //in the nssf/internal/sbi/producer/nsselection_for_registration.go, nsselectionForRegistration funcion.
 ```
 
-If NSSF needs to select S-NSSAI, it first finds the mapping of Requested NSSAI to Configured NSSAI for the HPLMN and converts requested S-NSSAI to S-NSSAI in Configured NSSAI for the HPLMN. Then compare these S-NSSAIs with Subscribed S-NSSAIs; if you find one match, set it as `AllowedSnssai`. If NSSF can't find such a mapping or no S-NSSAI in the mapping matches Subscribed S-NSSAIs, it will use default Subscribed S-NSSAIs.
+If NSSF needs to select S-NSSAI, it first finds the mapping of requested NSSAI to configured NSSAI for the HPLMN and converts requested S-NSSAI to S-NSSAI in configured NSSAI for the HPLMN. Then compare these S-NSSAIs with Subscribed S-NSSAIs; if NSSF find one match, set it as `AllowedSnssai`. If NSSF can't find such a mapping or no S-NSSAI in the mapping matches subscribed S-NSSAIs, it will use default subscribed S-NSSAIs.
 
 ### Reference
 * [3GPP TS29.503 v15.2.1](https://www.etsi.org/deliver/etsi_ts/129500_129599/129503/15.02.01_60/ts_129503v150201p.pdf)
