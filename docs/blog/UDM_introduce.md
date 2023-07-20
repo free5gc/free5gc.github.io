@@ -299,6 +299,107 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 //in the amf/internal/gmm/handler.go.
 ```
 
+```golang=
+for _, requestedSnssai := range param.SliceInfoRequestForRegistration.RequestedNssai {
+	if param.Tai != nil && !util.CheckSupportedSnssaiInTa(requestedSnssai, *param.Tai) {
+		// Requested S-NSSAI does not supported in UE's current TA
+		// Add it to Rejected NSSAI in TA
+		authorizedNetworkSliceInfo.RejectedNssaiInTa = append(
+			authorizedNetworkSliceInfo.RejectedNssaiInTa,
+			requestedSnssai)
+		continue
+	}
+
+	var mappingOfRequestedSnssai models.Snssai
+	// TODO: Compared with Restricted S-NSSAI list in configuration under roaming scenario
+	if param.HomePlmnId != nil && !util.CheckStandardSnssai(requestedSnssai) {
+		// Standard S-NSSAIs are supported to be commonly decided by all roaming partners
+		// Only non-standard S-NSSAIs are required to find mappings
+		targetMapping, found := util.FindMappingWithServingSnssai(requestedSnssai,
+			param.SliceInfoRequestForRegistration.MappingOfNssai)
+
+		if !found {
+			// No mapping of Requested S-NSSAI to HPLMN S-NSSAI is provided by UE
+			// TODO: Search for local configuration if there is no provided mapping from UE, and update UE's
+			//       Configured NSSAI
+			checkInvalidRequestedNssai = true
+			authorizedNetworkSliceInfo.RejectedNssaiInPlmn = append(
+				authorizedNetworkSliceInfo.RejectedNssaiInPlmn,
+				requestedSnssai)
+			continue
+		} else {
+			// TODO: Check if mappings of S-NSSAIs are correct
+			//       If not, update UE's Configured NSSAI
+			mappingOfRequestedSnssai = *targetMapping.HomeSnssai
+		}
+	} else {
+		mappingOfRequestedSnssai = requestedSnssai
+	}
+
+	hitSubscription := false
+	for _, subscribedSnssai := range param.SliceInfoRequestForRegistration.SubscribedNssai {
+		if mappingOfRequestedSnssai == *subscribedSnssai.SubscribedSnssai {
+			// Requested S-NSSAI matches one of Subscribed S-NSSAI
+			// Add it to Allowed NSSAI list
+			hitSubscription = true
+
+			var allowedSnssaiElement models.AllowedSnssai
+			allowedSnssaiElement.AllowedSnssai = new(models.Snssai)
+			*allowedSnssaiElement.AllowedSnssai = requestedSnssai
+			nsiInformationList := util.GetNsiInformationListFromConfig(requestedSnssai)
+			if nsiInformationList != nil {
+				// TODO: `NsiInformationList` should be slice in `AllowedSnssai` instead of pointer of slice
+				allowedSnssaiElement.NsiInformationList = append(
+					allowedSnssaiElement.NsiInformationList,
+					nsiInformationList...)
+			}
+			if param.HomePlmnId != nil && !util.CheckStandardSnssai(requestedSnssai) {
+				allowedSnssaiElement.MappedHomeSnssai = new(models.Snssai)
+				*allowedSnssaiElement.MappedHomeSnssai = *subscribedSnssai.SubscribedSnssai
+			}
+
+			// Default Access Type is set to 3GPP Access if no TAI is provided
+			// TODO: Depend on operator implementation, it may also return S-NSSAIs in all valid Access Type if
+			//       UE's Access Type could not be identified
+			var accessType models.AccessType = models.AccessType__3_GPP_ACCESS
+			if param.Tai != nil {
+				accessType = util.GetAccessTypeFromConfig(*param.Tai)
+			}
+
+			util.AddAllowedSnssai(allowedSnssaiElement, accessType, authorizedNetworkSliceInfo)
+
+			checkIfRequestAllowed = true
+			break
+		}
+	}
+
+	if !hitSubscription {
+		// Requested S-NSSAI does not match any Subscribed S-NSSAI
+		// Add it to Rejected NSSAI in PLMN
+		checkInvalidRequestedNssai = true
+		authorizedNetworkSliceInfo.RejectedNssaiInPlmn = append(
+			authorizedNetworkSliceInfo.RejectedNssaiInPlmn,
+			requestedSnssai)
+	}
+}
+
+if !checkIfRequestAllowed {
+	// No S-NSSAI from Requested NSSAI is present in Subscribed S-NSSAIs
+	// Subscribed S-NSSAIs marked as default are used
+	useDefaultSubscribedSnssai(param, authorizedNetworkSliceInfo)
+}
+} else {
+// No Requested NSSAI is provided
+// Subscribed S-NSSAIs marked as default are used
+checkInvalidRequestedNssai = true
+useDefaultSubscribedSnssai(param, authorizedNetworkSliceInfo)
+}
+
+//in the nssf/internal/sbi/producer/nsselection_for_registration.go, nsselectionForRegistration funcion.
+```
+
+If NSSF needs to select S-NSSAI, it first finds the mapping of Requested NSSAI to Configured NSSAI for the HPLMN and converts requested S-NSSAI to S-NSSAI in Configured NSSAI for the HPLMN. Then compare these S-NSSAIs with Subscribed S-NSSAIs; if you find one match, set it as `AllowedSnssai`. If NSSF can't find such a mapping or no S-NSSAI in the mapping matches Subscribed S-NSSAIs, it will use default Subscribed S-NSSAIs.
+
 ### Reference
 * [3GPP TS29.503 v15.2.1](https://www.etsi.org/deliver/etsi_ts/129500_129599/129503/15.02.01_60/ts_129503v150201p.pdf)
 * [3GPP TS23.502 v15.2.0](https://www.etsi.org/deliver/etsi_ts/123500_123599/123502/15.02.00_60/ts_123502v150200p.pdf)
