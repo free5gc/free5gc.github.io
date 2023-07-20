@@ -18,7 +18,7 @@ Upon reception of the Nudm_UEAuthentication_Get Request, the UDM shall de-concea
 * SUPI: A globally unique 5G Subscription Permanent Identifier, used to identify UE.
 * SUCI: Subscription concealed identifier, obtained by encrypting supi through the Home Network Public Key so that supi will not be obtained by a third party on the network.
 
-```golang=
+```golang
 logger.UeauLog.Traceln("In GenerateAuthDataProcedure")
 
 response = &models.AuthenticationInfoResult{}
@@ -61,7 +61,7 @@ Open the response packet, and we can see the response body matches the Authentic
 
 After AUSF authenticates the UE, it will confirm the result with UDM. These details will be used in linking authentication confirmation to the Nudm_UECM_Registration procedure from AMF.
 
-```golang=
+```golang
 func communicateWithUDM(ue *context.AmfUe, accessType models.AccessType) error {
 	ue.GmmLog.Debugln("communicateWithUDM")
 	amfSelf := context.GetSelf()
@@ -132,6 +132,7 @@ func communicateWithUDM(ue *context.AmfUe, accessType models.AccessType) error {
 	return nil
 }
 
+
 //in the amf/internal/gmm/handler.go.
 ```
 
@@ -142,7 +143,7 @@ In the UeCmRegistration function, AMF registers as UE's serving NF on UDM and st
 
  ![upload_c3e5e7c63f1bb7a934877e7fa29b82ec](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/c24e6f2e-4193-4830-aa4f-e6edb97c1490)
 
-```golang=
+```golang
 // TS 29.503 5.3.2.2.2
 func RegistrationAmf3gppAccessProcedure(registerRequest models.Amf3GppAccessRegistration, ueID string) (
 	header http.Header, response *models.Amf3GppAccessRegistration, problemDetails *models.ProblemDetails,
@@ -217,7 +218,7 @@ The GPSI (Generic Public Subscription Identifier) is used to address a 3GPP subs
 
 In the SDMGetSmfSelectData function, AMF gets subscribed S-NSSAIs (Single Network Slice Selection Assistance Information) and Data Network Names for these S-NSSAIs. AMF will use this information to select an SMF that manages the PDU Session.
 
-```golang=
+```golang
 func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) error {
 	ue.GmmLog.Infoln("Handle InitialRegistration")
 
@@ -240,7 +241,7 @@ func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) erro
 
 In the initialization of HandleInitialRegistration, AMF sends a request to the UDM to receive the UE's NSSAI (Network Slice Selection Assistance Information). After receiving subscribed NSSAI, AMF will compare it to UE's requested NSSAI. If there is a S-NSSAI that has not been subscribed before, AMF will request NSSF for Allowed NSSAI.
 
-```golang=
+```golang
 func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 	amfSelf := context.GetSelf()
 
@@ -298,6 +299,7 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 
 //in the amf/internal/gmm/handler.go.
 ```
+
 
 ```golang=
 for _, requestedSnssai := range param.SliceInfoRequestForRegistration.RequestedNssai {
