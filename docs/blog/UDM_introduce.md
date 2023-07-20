@@ -43,6 +43,7 @@ if err != nil {
 }
 authSubs, res, err := client.AuthenticationDataDocumentApi.QueryAuthSubsData(context.Background(), supi, nil)
 ```
+
 *udm/internal/sbi/producer/generate_auth_data.go GenerateAuthDataProcedure function*
 
 From the code, we can see UDM first de-conceal SUCI (line 5), then use QueryAuthSubsData to get authSub from UDR. After that, UDM uses this information to create the authentication vector.
@@ -200,6 +201,7 @@ func RegistrationAmf3gppAccessProcedure(registerRequest models.Amf3GppAccessRegi
 }
 
 ```
+
 *udm/internal/sbi/producer/ue_context_management.go*
 
 In the RegistrationAmf3gppAccessProcedure function, UDM first checks whether the context has been established for that UE; if UDM has such a context, it initiates a Nudm_UECM_DeregistrationNotification to the old AMF later. UDM used the received information to create context and stored it in UDR.
@@ -234,6 +236,7 @@ func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) erro
 		return err
 	}
 ```
+
 *amf/internal/gmm/handler.go*
 
 In the initialization of HandleInitialRegistration, AMF sends a request to the UDM to receive the UE's NSSAI. After receiving subscribed NSSAI, AMF will compare it to UE's requested NSSAI. If there is a S-NSSAI that has not been subscribed before, AMF will request NSSF for Allowed NSSAI.
@@ -294,6 +297,7 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 				return fmt.Errorf("Handle Requested Nssai of UE failed")
 			}
 ```
+
 *amf/internal/gmm/handler.go*
 
 ### Reference
