@@ -51,19 +51,17 @@ Tacker provides several key features and functionalities:
 ![](./slice-4.png)
 
 
-## Deploy free5GC Network Slice 
+## Deploy a free5GC Network Slice 
 0. In our implementation, we install OpenStack and Tacker on two different virtual machines for resource utilization reasons, but in fact, they can be installed on the same virtual machine. 
 
 1. we need to install OpenStack on a virtual machine. Specific details and corresponding compatibility can be found on OpenStack official website. Using devstack scripts for installation enables operators to customize the environment based on their needs, such as extra plugins (softwares that extends the functionality of OpenStack environment) and overcommit (allows deploying NFs that require more resource than existing physical resourcce) functionality. Upon completion, a web UI enabled by horizon can be used  to access and operate on your own personalized OpenStack cloud. ![](./slice-5.png)
-
-
 
 2. Install Tacker on another virtual machine, which requires four OpenStack service components, keystone, mistral, barbican and horizon. Once the installation is completed, we can register our OpenStack VIM on Tacker using `openstack vim register`command. 
 3. Create two instances that will be used as images (one for control plane VNFs, one for UPF) for the VNFs that we will create. Then, `ssh` into those instances to set up the configurations for the VNFs, such as, installing required packages and `git clone` free5GC source code. Once all the configurations are done, use OpenStack dashboard to take snapshot of these instances, which will be used as the images for VNFs. 
 
 3. Import all the VNF descriptors(VNFD) of the VNFs we need by using `openstack vnf descriptor create` command. VNFDs should be written in accordance with TOSCA format. TOSCA format allows you to define the virtual links(a virtual network VNFs will be running in) and virtual deployment unit(operation unit of a VNF). 
     Below is an example of UPF VNFD:
-```yaml=
+```yaml
 tosca_definitions_version: tosca_simple_profile_for_nfv_1_0_0
 description: description
 node_types:
@@ -144,7 +142,7 @@ topology_template:
 ```
 4. Import the network service descriptor(NSD) using `openstack ns descriptor create` command; the NSD should also be written in accordance with TOSCA format. Once all the VNFDs and NSD are all successfully imported, we can use `openstack ns create` to deploy the network slice. The VNFs specified in the NSD will also be instantiated along with the network slice. Their instances can be viewed on OpenStack dashboard enabled by Horizon or just use `openstack vnf list` to check the status of the VNFs.
     Below is an example of NSD
-```yaml=
+```yaml
 tosca_definitions_version: tosca_simple_profile_for_nfv_1_0_0
 description: Import Common Slice VNFDs (already on-boarded)
 imports:
