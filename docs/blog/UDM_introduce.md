@@ -305,3 +305,7 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 * [3GPP TS23.501 v15.2.0](https://www.etsi.org/deliver/etsi_ts/123500_123599/123501/15.02.00_60/ts_123501v150200p.pdf)
 * [3GPP TS33.501 v15.2.0](https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/15.02.00_60/ts_133501v150200p.pdf)
 * [free5GC v3.3.0](https://github.com/free5gc/free5gc)
+
+### About
+Hello! My name is 張哲睿, and my current research topic is ATSSS (Access Traffic Steering, Switching and Splitting), I will continue to write articles related to 5G networks in the future. If you find any mistakes in my articles or have any topics you want to know about, please contact me.
+* [Linkedln](https://www.linkedin.com/in/%E5%93%B2%E7%9D%BF-%E5%BC%B5-77096621a/)
