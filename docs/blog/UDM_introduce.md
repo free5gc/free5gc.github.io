@@ -6,7 +6,7 @@ In this article, I will introduce UDM and its three services that will be used i
 Unified Data Management is responsible for managing information related to UE. When other NFs need to use the UE subscription information, they will obtain it from UDM through the SBI of UDM.
 
 ### Nudm_UEAuthentication Service
-This service is used by ASUF to retrieve authentication-related information and, after authentication, confirm the result.
+This service is used by AUSF to retrieve authentication-related information and, after authentication, confirm the result.
 
 ![upload_dde9cead3e40f645128a006d5bc56681](https://github.com/Jerry0666/Network-function-UDM-introduction/assets/131638457/94313ad4-c325-4010-8ee9-4105748f4c3c)
 >[3GPP TS33.501 v15.2.0](https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/15.02.00_60/ts_133501v150200p.pdf)
