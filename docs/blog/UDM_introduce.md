@@ -301,7 +301,7 @@ func handleRequestedNssai(ue *context.AmfUe, anType models.AccessType) error {
 ```
 
 
-```golang=
+```golang
 if param.SliceInfoRequestForRegistration.RequestedNssai != nil &&
 	len(param.SliceInfoRequestForRegistration.RequestedNssai) != 0 {
 	// Requested NSSAI is provided
