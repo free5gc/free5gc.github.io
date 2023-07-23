@@ -52,10 +52,10 @@ Tacker provides several key features and functionalities:
 ## Deploy a free5GC Network Slice 
 0. In our implementation, we install OpenStack and Tacker on two different virtual machines for resource utilization reasons, but in fact, they can be installed on the same virtual machine. 
 
-1. we need to install OpenStack on a virtual machine. Specific details and corresponding compatibility can be found on OpenStack official website. Using devstack scripts for installation enables operators to customize the environment based on their needs, such as extra plugins (softwares that extends the functionality of OpenStack environment) and overcommit (allows deploying NFs that require more resource than existing physical resourcce) functionality. Upon completion, a web UI enabled by horizon can be used  to access and operate on your own personalized OpenStack cloud. ![](./slice-5.png)
+1. we need to install OpenStack on a virtual machine. Specific details and corresponding compatibility can be found on OpenStack official website. Using devstack scripts for installation enables operators to customize the environment based on their needs, such as extra plugins (softwares that extends the functionality of OpenStack environment) and overcommit (allows deploying NFs that require more resource than existing physical resourcce) functionality. Upon completion, a web UI enabled by Horizon can be used  to access and operate on your own personalized OpenStack cloud. ![](./slice-5.png)
 
-2. Install Tacker on another virtual machine, which requires four OpenStack service components, keystone, mistral, barbican and horizon. Once the installation is completed, we can register our OpenStack VIM on Tacker using `openstack vim register`command. 
-3. Create two instances that will be used as images (one for control plane VNFs, one for UPF) for the VNFs that we will create. Then, `ssh` into those instances to set up the configurations for the VNFs, such as, installing required packages (go language, mongodb, libtool, etc.) and `git clone` free5GC source code. Once all the configurations are done, use OpenStack dashboard to take snapshot of these instances, which will be used as the images for VNFs. 
+2. Install Tacker on another virtual machine, which requires four OpenStack service components, Keystone, Mistral, Barbican and Horizon. Once the installation is completed, we can register our OpenStack VIM on Tacker using `openstack vim register`command. 
+3. Create two instances that will be used as images (one for control plane VNFs, one for UPF) for the VNFs that we will create. Then, `ssh` into those instances to set up the configurations for the VNFs, such as, installing required packages (go language, mongodb, libtool, etc.) and `git clone` free5GC source code. Once all the configurations are done, use OpenStack dashboard to take snapshots of these instances, which will be used as the images for VNFs. 
 
 3. Import all the VNF descriptors(VNFD) of the VNFs we need by using `openstack vnf descriptor create` command. VNFDs should be written in accordance with TOSCA format. TOSCA format allows you to define the virtual links(a virtual network VNFs will be running in) and virtual deployment unit(operation unit of a VNF). 
     Below is an example of UPF VNFD:
@@ -177,10 +177,10 @@ Tacker provides several key features and functionalities:
 6. `ssh` into the VNF instances to make the necessary configuration for each VNF and start the free5GC VNF.
 7. Voila! Now we have a fully functional free5GC network slice
 
-There are many other ways to set up a network slice. For example, we can deploy VNFs that are of the same network slice on different VIM, or we can deploy all the network slices on the same VIM, as long as it is specified in the VNFDs. 
+There are many other ways to set up a network slice. For example, we can deploy VNFs of the same network slice on different VIMs, or we can deploy all the network slices on the same VIM, as long as it is specified in the VNFDs. 
 
 ## About
-Hi, my name is Daniel Hsieh. I am a CS major graduate student. My research field is network slicing. If there are any questions about the article please feel free to contact.
+Hi, my name is Daniel Hsieh. I am a CS major graduate student. My research field is network slicing. If there are any questions about the article, please feel free to contact.
 * email: e657shai@gmail.com
 
 ## Reference
