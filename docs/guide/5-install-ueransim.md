@@ -258,7 +258,7 @@ build/nr-gnb -c config/free5gc-gnb.yaml
 In terminal 2, SSH into ueransim, and execute `nr-ue` with admin right:
 ```
 cd ~/UERANSIM
-sudo build/nr-ue -c config/free5gc-ue.yaml
+sudo build/nr-ue -c config/free5gc-ue.yaml # for multiple-UEs, use -n and -t for number and delay
 ```
 
 In terminal 3, SSH into ueransim, and ping `192.168.56.101` to see free5gc is alive. Then, use ifconfig to see if the tunnel `uesimtun0` has been created (by nr-ue):
