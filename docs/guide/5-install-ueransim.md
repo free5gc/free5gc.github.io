@@ -29,7 +29,7 @@ To download UERANSIM:
 cd ~
 git clone https://github.com/aligungr/UERANSIM
 cd UERANSIM
-git checkout v3.1.0
+git checkout 3a96298
 ```
 
 Update and upgrade ueransim VM first:
