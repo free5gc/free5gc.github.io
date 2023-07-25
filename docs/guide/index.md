@@ -9,7 +9,7 @@
 
 ## Roadmap
 
-Here are the features in the roadmap, these item is planned to be supported in the near future:
+Here are the features on the roadmap. These items are planned to be supported in the near future:
 
 * Charging Function (CHF)
 * Network Exposure Function (NEF)
