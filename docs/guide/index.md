@@ -11,6 +11,7 @@
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
+* OAuth on SBA
 * Charging Function (CHF)
 * Network Exposure Function (NEF)
 
