@@ -2,6 +2,10 @@
 
 # Use network namespace to separate the 5G core (5GC) and RAN simulator
 
+>[!NOTE]
+> Author: Jimmy Chang
+> Date: 2023/7/5
+
 ## Overview
 
 This technique leverages namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM), an opensource 5G-UE and RAN(gNodeB) simulator, and connect to free5GC. 

@@ -2,6 +2,10 @@
 
 # Time-Sensitive Networking over 5G system - Introduction (Rel-16)
 
+>[!NOTE]
+> Author: Ya-shih Tseng
+> Date: 2023/7/12
+
 This blog focuses on the role of the 5G system in 3GPP Release 16 TSN (Time-Sensitive Networking).
 
 ## What is Time-Sensitive Network (TSN)

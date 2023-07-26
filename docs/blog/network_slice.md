@@ -1,4 +1,9 @@
 # How to deploy a free5GC network slice on OpenStack
+
+>[!NOTE]
+> Author: Daniel Hsieh
+> Date: 2023/7/26
+
 ## What's Network Slicing
 Network slicing allows for the creation of multiple logical, isolated, and independent virtual networks that can coexist within a shared physical infrastructure. Each network slice provides dedicated and customized network resources to meet the specific requirements of different services
 The main elements of a network slice include:
@@ -9,13 +14,13 @@ The main elements of a network slice include:
 
 ![](./slice-1.png)
 
-Take Figure 1 as an example. The first slice is designed for mobile devices such as smartphones. Such slice requires a huge diversity of VNFs and, virtual links with high speed and low latency to support the broadband service of smartphones. In 5G network, Those slices are referred to as eMBB(enhanced mobile boradband) slices.
+Take Figure 1 as an example. The first slice is designed for mobile devices such as smartphones. Such slice requires a huge diversity of VNFs, and virtual links with high speed and low latency to support the broadband service of smartphones. In 5G network, Those slices are referred to as eMBB(enhanced mobile boradband) slices.
 
-The second slice is designed for autonomous driving. In such scenario, extremely low latency and high reliability are paramount to ensure the vehicles' operability, smoothness and safety. To achieve low latency, some of the NFs should be deployed close to the access node,i.e. on edge cloud. To achieve high reliability, a NF should have multiple instances on available physical resources to make the slice more fault tolerant. Such slice is referred to as URLLC(Ultra-Reliable Low-Latency Communications) slice. 
+The second slice is designed for autonomous driving. In such scenario, extremely low latency and high reliability are paramount to ensure the vehicles' operability, smoothness and safety. To achieve low latency, some of the NFs should be deployed close to the access node,i.e. on edge cloud. To achieve high reliability, a NF should have multiple instances on available physical resources to make the slice more fault tolerant. Such slice is referred to as URLLC (Ultra-Reliable Low-Latency Communications) slice. 
 
-The third slice is designed for massive IoT. IoT devices are expected to not move and send very small amount of data intermittently. Due to the nature of such devices, functions that handle mobiltiy and always-on connections are not needed. Such slices are referred to as mIoT(massive IoT) slices.
+The third slice is designed for massive IoT. IoT devices are expected to not move and send very small amount of data intermittently. Due to the nature of such devices, functions that handle mobiltiy and always-on connections are not needed. Such slices are referred to as mIoT (massive IoT) slices.
 ## MANO Architecture
-In this article, we utilize MANO network function virtualization (NFV) architecture to deploy virtual network function(VNF). It plays the role of creating, deploying and, managing VNFs. MANO consists of three main functional components: NFV Orchestrator (NFVO), Virtualized Infrastructure Manager (VIM), and Virtual Network Function Manager (VNFM).
+In this article, we utilize MANO network function virtualization (NFV) architecture to deploy virtual network function (VNF). It plays the role of creating, deploying, and managing VNFs. MANO consists of three main functional components: NFV Orchestrator (NFVO), Virtualized Infrastructure Manager (VIM), and Virtual Network Function Manager (VNFM).
 
 ![](./slice-2.png)
 1. NFVO manages the underlying resource by coordinating VIM and VNFM. It handles tasks such as receiving requests, service instantiation, scaling, termination, and monitoring.
@@ -57,7 +62,7 @@ Tacker provides several key features and functionalities:
 2. Install Tacker on another virtual machine, which requires four OpenStack service components, Keystone, Mistral, Barbican and Horizon. Once the installation is completed, we can register our OpenStack VIM on Tacker using `openstack vim register`command. 
 3. Create two instances that will be used as images (one for control plane VNFs, one for UPF) for the VNFs that we will create. Then, `ssh` into those instances to set up the configurations for the VNFs, such as, installing required packages (go language, mongodb, libtool, etc.) and `git clone` free5GC source code. Once all the configurations are done, use OpenStack dashboard to take snapshots of these instances, which will be used as the images for VNFs. 
 
-3. Import all the VNF descriptors(VNFD) of the VNFs we need by using `openstack vnf descriptor create` command. VNFDs should be written in accordance with TOSCA format. TOSCA format allows you to define the virtual links(a virtual network VNFs will be running in) and virtual deployment unit(operation unit of a VNF). 
+3. Import all the VNF descriptors (VNFD) of the VNFs we need by using `openstack vnf descriptor create` command. VNFDs should be written in accordance with TOSCA format. TOSCA format allows you to define the virtual links (a virtual network VNFs will be running in) and virtual deployment unit(operation unit of a VNF). 
     Below is an example of UPF VNFD:
     ```yaml
     tosca_definitions_version: tosca_simple_profile_for_nfv_1_0_0
@@ -138,7 +143,7 @@ Tacker provides several key features and functionalities:
           - link:
               node: CP1
     ```
-4. Import the network service descriptor(NSD) using `openstack ns descriptor create` command; the NSD should also be written in accordance with TOSCA format. Once all the VNFDs and NSD are all successfully imported, we can use `openstack ns create` to deploy the network slice. The VNFs specified in the NSD will also be instantiated along with the network slice. Their instances can be viewed on OpenStack dashboard enabled by Horizon or just use `openstack vnf list` to check the status of the VNFs.
+4. Import the network service descriptor (NSD) using `openstack ns descriptor create` command; the NSD should also be written in accordance with TOSCA format. Once all the VNFDs and NSD are all successfully imported, we can use `openstack ns create` to deploy the network slice. The VNFs specified in the NSD will also be instantiated along with the network slice. Their instances can be viewed on OpenStack dashboard enabled by Horizon or just use `openstack vnf list` to check the status of the VNFs.
     Below is an example of NSD
     ```yaml
     tosca_definitions_version: tosca_simple_profile_for_nfv_1_0_0
