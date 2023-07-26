@@ -1,4 +1,4 @@
-# How to deploy a free5GC slice on OpenStack
+# How to deploy a free5GC network slice on OpenStack
 ## What's Network Slicing
 Network slicing allows for the creation of multiple logical, isolated, and independent virtual networks that can coexist within a shared physical infrastructure. Each network slice provides dedicated and customized network resources to meet the specific requirements of different services
 The main elements of a network slice include:
