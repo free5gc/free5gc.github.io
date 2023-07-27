@@ -7,10 +7,12 @@
 ## What's Network Slicing
 Network slicing allows for the creation of multiple logical, isolated, and independent virtual networks that can coexist within a shared physical infrastructure. Each network slice provides dedicated and customized network resources to meet the specific requirements of different services
 The main elements of a network slice include:
-1. Virtualized Network Functions (VNFs): Each network slice can include a set of virtualized network functions that provide specific network capabilities and services. These VNFs can include functions like routing, switching, firewalling, load balancing, or any other network service required by the slice.
 
-3. Isolation and Resource Allocation: Network slicing ensures the isolation of resources between slices, preventing interference and conflicts. It allows for the allocation of dedicated and optimized resources such as bandwidth, processing power, and storage to each slice based on its specific needs.
-4. Orchestration and Management: Network slice orchestration involves the creation, provisioning, and management of network slices. It involves configuring the appropriate VNFs, assigning resources, and establishing connectivity between the different components of a slice. 
+* Virtualized Network Functions (VNFs): Each network slice can include a set of virtualized network functions that provide specific network capabilities and services. These VNFs can include functions like routing, switching, firewalling, load balancing, or any other network service required by the slice.
+  
+* Isolation and Resource Allocation: Network slicing ensures the isolation of resources between slices, preventing interference and conflicts. It allows for the allocation of dedicated and optimized resources such as bandwidth, processing power, and storage to each slice based on its specific needs.
+  
+* Orchestration and Management: Network slice orchestration involves the creation, provisioning, and management of network slices. It involves configuring the appropriate VNFs, assigning resources, and establishing connectivity between the different components of a slice. 
 
 ![](./slice-1.png)
 >[NFV Enabling Network Slicing for 5G](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7899415)
@@ -25,20 +27,26 @@ In this article, we utilize MANO network function virtualization (NFV) architect
 
 ![](./slice-2.png)
 >[NFV MANO Architecture](https://telcocloudbridge.com/blog/a-beginners-guide-to-nfv-management-orchestration-mano/?expand_article=1)
-1. NFVO manages the underlying resource by coordinating VIM and VNFM. It handles tasks such as receiving requests, service instantiation, scaling, termination, and monitoring.
 
-3. VNFM manages the lifecycle of VNF instances. It interacts with the VIM to instantiate, configure, monitor, and terminate VNF instances. 
-4. VIM is responsible for managing the underlying virtualized infrastructure that hosts the VNFs. It abstracts the physical resources, such as compute, storage, and networking, and provides a unified view to the NFVO. The VIM handles tasks like resource allocation, performance monitoring, fault management, and virtualization management.
+* NFVO manages the underlying resource by coordinating VIM and VNFM. It handles tasks such as receiving requests, service instantiation, scaling, termination, and monitoring.
+
+* VNFM manages the lifecycle of VNF instances. It interacts with the VIM to instantiate, configure, monitor, and terminate VNF instances.
+
+* VIM is responsible for managing the underlying virtualized infrastructure that hosts the VNFs. It abstracts the physical resources, such as compute, storage, and networking, and provides a unified view to the NFVO. The VIM handles tasks like resource allocation, performance monitoring, fault management, and virtualization management.
 
 For VIM, we use OpenStack, an open-source software that provides IaaS, to utilize the physical resources. For VNFM and NFVO, we use Tacker, a service component of OpenStack, to manage VNFs.
 ## OpenStack
 OpenStack is an open-source cloud computing platform that provides a set of software tools for building and managing customized clouds. OpenStack offers a infrastructure-as-a-service (IaaS) solution, enabling organizations to create and manage virtualized resources in a cloud environment. It is designed to be modular and consists of various components that work together to deliver a comprehensive cloud computing platform. Some of the key components include:
-1. Nova: Nova is the computing component of OpenStack and serves as the main compute engine. It manages the creation, scheduling, and management of virtual machines (VMs) and provides APIs for controlling and interacting with the compute resources.
 
-4. Cinder: Cinder is the block storage component of OpenStack. It provides persistent storage for virtual machines. With Cinder, users can create and manage volumes that can be attached to instances, allowing for flexible and scalable storage options.
-5. Neutron: Neutron is the networking component of OpenStack. It provides a networking-as-a-service (NaaS) solution, allowing users to define and manage network resources. Neutron supports virtual LANs, software-defined networking (SDN), and network function virtualization (NFV), etc.
-6. Keystone: Keystone is the identity service component of OpenStack. It provides authentication and authorization services, enabling users to securely access and manage resources within the cloud. Keystone supports multiple authentication mechanisms, including username/password, token-based, and external identity providers.
-8. Horizon: Horizon is the web-based dashboard for OpenStack. It provides a user-friendly interface for managing and monitoring the cloud infrastructure. With Horizon, users can perform various tasks, such as launching instances, managing storage resources, and configuring networking options.
+* Nova: Nova is the computing component of OpenStack and serves as the main compute engine. It manages the creation, scheduling, and management of virtual machines (VMs) and provides APIs for controlling and interacting with the compute resources.
+
+* Cinder: Cinder is the block storage component of OpenStack. It provides persistent storage for virtual machines. With Cinder, users can create and manage volumes that can be attached to instances, allowing for flexible and scalable storage options.
+
+* Neutron: Neutron is the networking component of OpenStack. It provides a networking-as-a-service (NaaS) solution, allowing users to define and manage network resources. Neutron supports virtual LANs, software-defined networking (SDN), and network function virtualization (NFV), etc.
+
+* Keystone: Keystone is the identity service component of OpenStack. It provides authentication and authorization services, enabling users to securely access and manage resources within the cloud. Keystone supports multiple authentication mechanisms, including username/password, token-based, and external identity providers.
+
+* Horizon: Horizon is the web-based dashboard for OpenStack. It provides a user-friendly interface for managing and monitoring the cloud infrastructure. With Horizon, users can perform various tasks, such as launching instances, managing storage resources, and configuring networking options.
 
 ![](./slice-3.png)
 >[OpenStack Architecture](https://www.acecloudhosting.com/blog/openstack-the-catalyst-of-the-public-cloud-market/)
@@ -48,11 +56,13 @@ OpenStack is highly flexible and customizable, allowing organizations to tailor 
 To enable NFV, we need another service component of OpenStack called Tacker. Tacker is designed to simplify the deployment and lifecycle management of VNFs and network service functions (NSFs) in a cloud infrastructure. It leverages OpenStack's existing components, such as Nova, Neutron, and Heat, to provide a comprehensive solution for network service orchestration.
 Tacker provides several key features and functionalities:
 
-1. Service Templates: Tacker uses service templates to define the composition and behavior of network services. These templates describe the VNFs and NSFs involved, their interconnections, resource requirements, etc. Service templates are written using the TOSCA (Topology and Orchestration Specification for Cloud Applications) standard.
+* Service Templates: Tacker uses service templates to define the composition and behavior of network services. These templates describe the VNFs and NSFs involved, their interconnections, resource requirements, etc. Service templates are written using the TOSCA (Topology and Orchestration Specification for Cloud Applications) standard.
 
-2. Lifecycle Management: Tacker automates the entire lifecycle of network services, including provisioning, scaling, healing, and termination. It leverages Heat, OpenStack's orchestration service, to manage the underlying infrastructure resources required by the services and handle dynamic scaling of VNFs based on traffic demands.
-3. VNF Manager: Tacker includes a VNF Manager component responsible for managing the lifecycle of VNFs. It interacts with OpenStack's compute and networking services, to instantiate and manage VNF instances.
-4. Multi-VIM Support: Tacker supports multiple virtual infrastructure managers  to accommodate different cloud platforms and environments. It can interact with OpenStack, VMware vSphere and Kubernetes and so on, enabling operators to deploy network services across heterogeneous infrastructure environments.
+* Lifecycle Management: Tacker automates the entire lifecycle of network services, including provisioning, scaling, healing, and termination. It leverages Heat, OpenStack's orchestration service, to manage the underlying infrastructure resources required by the services and handle dynamic scaling of VNFs based on traffic demands.
+
+* VNF Manager: Tacker includes a VNF Manager component responsible for managing the lifecycle of VNFs. It interacts with OpenStack's compute and networking services, to instantiate and manage VNF instances.
+
+* Multi-VIM Support: Tacker supports multiple virtual infrastructure managers  to accommodate different cloud platforms and environments. It can interact with OpenStack, VMware vSphere and Kubernetes and so on, enabling operators to deploy network services across heterogeneous infrastructure environments.
 
 ![](./slice-4.png)
 >[Tacker Architecture](https://wiki.openstack.org/wiki/Tacker)
@@ -63,10 +73,11 @@ Tacker provides several key features and functionalities:
 
 1. we need to install OpenStack on a virtual machine. Specific details and corresponding compatibility can be found on OpenStack official website. Using devstack scripts for installation enables operators to customize the environment based on their needs, such as extra plugins (softwares that extends the functionality of OpenStack environment) and overcommit (allows deploying NFs that require more resource than existing physical resourcce) functionality. Upon completion, a web UI enabled by Horizon can be used  to access and operate on your own personalized OpenStack cloud. ![](./slice-5.png)
 
-2. Install Tacker on another virtual machine, which requires four OpenStack service components, Keystone, Mistral, Barbican and Horizon. Once the installation is completed, we can register our OpenStack VIM on Tacker using `openstack vim register`command. 
+2. Install Tacker on another virtual machine, which requires four OpenStack service components, Keystone, Mistral, Barbican and Horizon. Once the installation is completed, we can register our OpenStack VIM on Tacker using `openstack vim register`command.
+   
 3. Create two instances that will be used as images (one for control plane VNFs, one for UPF) for the VNFs that we will create. Then, `ssh` into those instances to set up the configurations for the VNFs, such as, installing required packages (go language, mongodb, libtool, etc.) and `git clone` free5GC source code. Once all the configurations are done, use OpenStack dashboard to take snapshots of these instances, which will be used as the images for VNFs. 
 
-3. Import all the VNF descriptors (VNFD) of the VNFs we need by using `openstack vnf descriptor create` command. VNFDs should be written in accordance with TOSCA format. TOSCA format allows you to define the virtual links (a virtual network VNFs will be running in) and virtual deployment unit(operation unit of a VNF). 
+4. Import all the VNF descriptors (VNFD) of the VNFs we need by using `openstack vnf descriptor create` command. VNFDs should be written in accordance with TOSCA format. TOSCA format allows you to define the virtual links (a virtual network VNFs will be running in) and virtual deployment unit (operation unit of a VNF). 
     Below is an example of UPF VNFD:
     ```yaml
     tosca_definitions_version: tosca_simple_profile_for_nfv_1_0_0
@@ -147,7 +158,7 @@ Tacker provides several key features and functionalities:
           - link:
               node: CP1
     ```
-4. Import the network service descriptor (NSD) using `openstack ns descriptor create` command; the NSD should also be written in accordance with TOSCA format. Once all the VNFDs and NSD are all successfully imported, we can use `openstack ns create` to deploy the network slice. The VNFs specified in the NSD will also be instantiated along with the network slice. Their instances can be viewed on OpenStack dashboard enabled by Horizon or just use `openstack vnf list` to check the status of the VNFs.
+5. Import the network service descriptor (NSD) using `openstack ns descriptor create` command. The NSD should also be written in accordance with TOSCA format. Once all the VNFDs and NSD are all successfully imported, we can use `openstack ns create` to deploy the network slice. The VNFs specified in the NSD will also be instantiated along with the network slice. Their instances can be viewed on OpenStack dashboard enabled by Horizon or just use `openstack vnf list` to check the status of the VNFs.
     Below is an example of NSD
     ```yaml
     tosca_definitions_version: tosca_simple_profile_for_nfv_1_0_0
@@ -184,16 +195,20 @@ Tacker provides several key features and functionalities:
           type: tosca.nodes.nfv.VNF8
     ```
 6. `ssh` into the VNF instances to make the necessary configuration for each VNF and start the free5GC VNF.
-7. Voila! Now we have a fully functional free5GC network slice
+7. Voila! Now we have a fully functional free5GC network slice.
 
 There are many other ways to set up a network slice. For example, we can deploy VNFs of the same network slice on different VIMs, or we can deploy all the network slices on the same VIM, as long as it is specified in the VNFDs. 
 
 ## About
 Hi, my name is Daniel Hsieh. I am a CS major graduate student. My research field is network slicing. If there are any questions about the article, please feel free to contact.
+
 * email: e657shai@gmail.com
 
 ## Reference
 * https://www.acecloudhosting.com/blog/openstack-the-catalyst-of-the-public-cloud-market/
+
 * https://telcocloudbridge.com/blog/a-beginners-guide-to-nfv-management-orchestration-mano/
+  
 * https://wiki.openstack.org/wiki/Tacker
+  
 * B. Chatras, U. S. Tsang Kwong and N. Bihannic, "NFV enabling network slicing for 5G," 2017 20th Conference on Innovations in Clouds, Internet and Networks (ICIN), Paris, France, 2017, pp. 219-225, doi: 10.1109/ICIN.2017.7899415.
