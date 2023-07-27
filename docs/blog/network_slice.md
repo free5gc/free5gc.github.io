@@ -7,6 +7,7 @@
 ## What's Network Slicing
 Network slicing allows for the creation of multiple logical, isolated, and independent virtual networks that can coexist within a shared physical infrastructure. Each network slice provides dedicated and customized network resources to meet the specific requirements of different services
 The main elements of a network slice include:
+
 * Virtualized Network Functions (VNFs): Each network slice can include a set of virtualized network functions that provide specific network capabilities and services. These VNFs can include functions like routing, switching, firewalling, load balancing, or any other network service required by the slice.
   
 * Isolation and Resource Allocation: Network slicing ensures the isolation of resources between slices, preventing interference and conflicts. It allows for the allocation of dedicated and optimized resources such as bandwidth, processing power, and storage to each slice based on its specific needs.
@@ -36,6 +37,7 @@ In this article, we utilize MANO network function virtualization (NFV) architect
 For VIM, we use OpenStack, an open-source software that provides IaaS, to utilize the physical resources. For VNFM and NFVO, we use Tacker, a service component of OpenStack, to manage VNFs.
 ## OpenStack
 OpenStack is an open-source cloud computing platform that provides a set of software tools for building and managing customized clouds. OpenStack offers a infrastructure-as-a-service (IaaS) solution, enabling organizations to create and manage virtualized resources in a cloud environment. It is designed to be modular and consists of various components that work together to deliver a comprehensive cloud computing platform. Some of the key components include:
+
 * Nova: Nova is the computing component of OpenStack and serves as the main compute engine. It manages the creation, scheduling, and management of virtual machines (VMs) and provides APIs for controlling and interacting with the compute resources.
 
 * Cinder: Cinder is the block storage component of OpenStack. It provides persistent storage for virtual machines. With Cinder, users can create and manage volumes that can be attached to instances, allowing for flexible and scalable storage options.
