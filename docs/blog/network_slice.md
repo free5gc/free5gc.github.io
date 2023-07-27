@@ -199,10 +199,14 @@ There are many other ways to set up a network slice. For example, we can deploy 
 
 ## About
 Hi, my name is Daniel Hsieh. I am a CS major graduate student. My research field is network slicing. If there are any questions about the article, please feel free to contact.
+
 * email: e657shai@gmail.com
 
 ## Reference
 * https://www.acecloudhosting.com/blog/openstack-the-catalyst-of-the-public-cloud-market/
+
 * https://telcocloudbridge.com/blog/a-beginners-guide-to-nfv-management-orchestration-mano/
+  
 * https://wiki.openstack.org/wiki/Tacker
+  
 * B. Chatras, U. S. Tsang Kwong and N. Bihannic, "NFV enabling network slicing for 5G," 2017 20th Conference on Innovations in Clouds, Internet and Networks (ICIN), Paris, France, 2017, pp. 219-225, doi: 10.1109/ICIN.2017.7899415.
