@@ -15,7 +15,7 @@ The main elements of a network slice include:
 ![](./slice-1.png)
 >[NFV Enabling Network Slicing for 5G](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7899415)
 
-Take Figure 1 as an example. The first slice is designed for mobile devices such as smartphones. Such slice requires a huge diversity of VNFs, and virtual links with high speed and low latency to support the broadband service of smartphones. In 5G network, Those slices are referred to as eMBB(enhanced mobile broadband) slices.
+Take Figure 1 as an example. The first slice is designed for mobile devices such as smartphones. Such slice requires a huge diversity of VNFs, and virtual links with high speed and low latency to support the broadband service of smartphones. In 5G network, Those slices are referred to as eMBB (enhanced mobile broadband) slices.
 
 The second slice is designed for autonomous driving. In such scenario, extremely low latency and high reliability are paramount to ensure the vehicles' operability, smoothness and safety. To achieve low latency, some of the NFs should be deployed close to the access node,i.e. on edge cloud. To achieve high reliability, a NF should have multiple instances on available physical resources to make the slice more fault tolerant. Such slice is referred to as URLLC (Ultra-Reliable Low-Latency Communications) slice. 
 
