@@ -13,8 +13,9 @@ The main elements of a network slice include:
 4. Orchestration and Management: Network slice orchestration involves the creation, provisioning, and management of network slices. It involves configuring the appropriate VNFs, assigning resources, and establishing connectivity between the different components of a slice. 
 
 ![](./slice-1.png)
+>[NFV Enabling Network Slicing for 5G](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7899415)
 
-Take Figure 1 as an example. The first slice is designed for mobile devices such as smartphones. Such slice requires a huge diversity of VNFs, and virtual links with high speed and low latency to support the broadband service of smartphones. In 5G network, Those slices are referred to as eMBB(enhanced mobile boradband) slices.
+Take Figure 1 as an example. The first slice is designed for mobile devices such as smartphones. Such slice requires a huge diversity of VNFs, and virtual links with high speed and low latency to support the broadband service of smartphones. In 5G network, Those slices are referred to as eMBB (enhanced mobile broadband) slices.
 
 The second slice is designed for autonomous driving. In such scenario, extremely low latency and high reliability are paramount to ensure the vehicles' operability, smoothness and safety. To achieve low latency, some of the NFs should be deployed close to the access node,i.e. on edge cloud. To achieve high reliability, a NF should have multiple instances on available physical resources to make the slice more fault tolerant. Such slice is referred to as URLLC (Ultra-Reliable Low-Latency Communications) slice. 
 
@@ -23,6 +24,7 @@ The third slice is designed for massive IoT. IoT devices are expected to not mov
 In this article, we utilize MANO network function virtualization (NFV) architecture to deploy virtual network function (VNF). It plays the role of creating, deploying, and managing VNFs. MANO consists of three main functional components: NFV Orchestrator (NFVO), Virtualized Infrastructure Manager (VIM), and Virtual Network Function Manager (VNFM).
 
 ![](./slice-2.png)
+>[NFV MANO Architecture](https://telcocloudbridge.com/blog/a-beginners-guide-to-nfv-management-orchestration-mano/?expand_article=1)
 1. NFVO manages the underlying resource by coordinating VIM and VNFM. It handles tasks such as receiving requests, service instantiation, scaling, termination, and monitoring.
 
 3. VNFM manages the lifecycle of VNF instances. It interacts with the VIM to instantiate, configure, monitor, and terminate VNF instances. 
@@ -39,6 +41,7 @@ OpenStack is an open-source cloud computing platform that provides a set of soft
 8. Horizon: Horizon is the web-based dashboard for OpenStack. It provides a user-friendly interface for managing and monitoring the cloud infrastructure. With Horizon, users can perform various tasks, such as launching instances, managing storage resources, and configuring networking options.
 
 ![](./slice-3.png)
+>[OpenStack Architecture](https://www.acecloudhosting.com/blog/openstack-the-catalyst-of-the-public-cloud-market/)
 
 OpenStack is highly flexible and customizable, allowing organizations to tailor the cloud infrastructure to their specific needs. It supports multiple hypervisors, including KVM, VMware, and Hyper-V.
 ## Tacker
@@ -52,6 +55,7 @@ Tacker provides several key features and functionalities:
 4. Multi-VIM Support: Tacker supports multiple virtual infrastructure managers  to accommodate different cloud platforms and environments. It can interact with OpenStack, VMware vSphere and Kubernetes and so on, enabling operators to deploy network services across heterogeneous infrastructure environments.
 
 ![](./slice-4.png)
+>[Tacker Architecture](https://wiki.openstack.org/wiki/Tacker)
 
 
 ## Deploy a free5GC Network Slice 
@@ -191,4 +195,5 @@ Hi, my name is Daniel Hsieh. I am a CS major graduate student. My research field
 ## Reference
 * https://www.acecloudhosting.com/blog/openstack-the-catalyst-of-the-public-cloud-market/
 * https://telcocloudbridge.com/blog/a-beginners-guide-to-nfv-management-orchestration-mano/
+* https://wiki.openstack.org/wiki/Tacker
 * B. Chatras, U. S. Tsang Kwong and N. Bihannic, "NFV enabling network slicing for 5G," 2017 20th Conference on Innovations in Clouds, Internet and Networks (ICIN), Paris, France, 2017, pp. 219-225, doi: 10.1109/ICIN.2017.7899415.
