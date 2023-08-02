@@ -1,0 +1,123 @@
+# Authentication Mechanism in NRF: What Is OAuth?
+	Abstract
+Regarding the theme this time, I briefly introduce OAuth. OAuth 2.0 defines four types of the authorization flow. I choose the Client Credentials Flow to explain because the authentication mechanism in NRF is closely related to the Client Credentials Flow. Next, I explain how to apply the concept of the Client Credentials Flow to NRF. Then I introduce Nnrf_AccessToken Service because Nnrf_AccessToken Service is closely related to the Client Credentials Flow. Finally, I do a simple implementation of the authentication mechanism in NRF, and I share the environment setting and method of operation with you.
+
+	OAuth
+I introduce OAuth before explaining the authentication mechanism in NRF. Regarding the OAuth flow, we can log in to the account through the platform before we want to access an application. After logging in, we agree that an application can limitedly obtain the information of the user on the platform. The application can be LinkedIn or YouTube. The platform can be Google or Facebook. The full English name of OAuth is Open standard Authorization. OAuth is an open standard, and it used to deal with authorization-related behaviors. OAuth 2.0 defines four types of the authorization flow. The four types of the authorization flow are Authorization Code, Implicit, Resource Owner Password Credentials, and Client Credentials.
+In this article, I only explain the entire authorization of the Client Credentials Flow because the authentication mechanism in NRF adopts the Client Credentials. If you want to know more details, you can refer to this article.
+
+	Client Credentials Flow
+The Client Credentials Flow is mainly composed of the Client, the Authorization Server, and the Resource Server in the Figure 1. First, the Client provides the Client ID, the Client Secret Token, the Scope, and the Grant Type to the Authorization Server. Second, the Authorization Server verifies the information provided by the Client. After the Authorization Server verifies the information, it signs with the private key and sends the Access Token to the Client. Third, the Client obtains resources from the Resource Server with the Access Token. The three steps are the entire authorization of the Client Credentials Flow. In addition, the Client and the Authorization Server have their own Scope list. The Scope list records a series of the things. The Client or the Authorization Server is permitted to do the things. The things can be obtaining the user’s name or deleting posts.	
+	
+ 
+Figure 1. Client Credentials Flow
+
+I explain how to apply the Client Credentials Flow to NRF after talking about the Client Credentials Flow.
+
+	Client Credentials Flow in NRF
+The Figure 2 and the Figure 3 originate from the Figure 13.4.1.1-1 and the Figure 13.4.1.1-2 of the TS 33.501. The entire flow in Figure 2 is the same as Step 1 and Step 2 in the Figure 1. The role of the Client is played by the NF Service Consumer, and the role of the Authorization Server is played by the NRF. First, the NF Service Consumer registers with NRF. Then the NF Service Consumer sends the Nnrf_AccessToken_Get Request to NRF. The Nnrf_AccessToken_Get Request includes the Consumer NF Type, the Expected NF Type, the Expected NF Service Name and the Client ID. The NF Type can be AMF or SMF, and the NF Service Name can be namf-comm or nsmf-pdusession. NRF verifies the information provided by the NF Service Consumer after it receives the Nnrf_AccessToken_Get Request. NRF generates an Access Token and uses the NRF private key to sign on the Access Token after the verification is successful. Finally, NRF returns the Nnrf_AccessToken_Get Response to the NF Service Consumer. The NF Service Consumer stores the Access Token within the validity period after it gets the Access Token. The services provided by the NF Service Producer are in the Expected NF Service Name. The NF Service Consumer don’t need to verify again when it wants to use the services provided by the NF Service Producer.
+
+ 
+Figure 2. NF Service Consumer Obtaining Access Token before NF Service Access
+
+The entire flow in Figure 3 is the same as Step 3 in the Figure 1. The role of the Client is played by the NF Service Consumer, and the role of the Resource Server is played by the NF Service Producer. First, the NF Service Consumer sends the NF Service Request to the NF Service Producer with the Access Token. Simply put, the NF Service Consumer wants to consume the service provided by the NF Service Producer. The NF Service Producer use the NRF public key to verify the signed on the Access Token after it receives the NF Service Request. If the verification is successful, the NF Service Producer will send the NF Service Response to the NF Service Consumer. Simply put, the NF Service Consumer can consume the services provided by the NF Service Producer.
+
+ 
+Figure 3. NF Service Consumer Requesting Service Access with an Access Token
+
+I talk about the Nnrf_AccessToken Service after explaining how to apply the Client Credentials Flow to NRF.
+
+	Nnrf_AccessToken Service
+The Figure 4 originates from the Figure 5.4.2.2.1-1 of the TS 29.510. First, the NF Service Consumer sends the POST /oauth2/token to NRF, and the data is stored in the AccessTokenReq. The attribute name, the data type, and the formulation rule of the AccessTokenReq are shown in the Table 1. The Table 1 originates from the Table 6.3.5.2.2-1 of the TS 29.510. The value of the grant_type must be set to the client_credentials in the Table 1, and it is checked in the Figure 5. The nfInstanceId and the targetNfInstanceId are the ID of the NF Service Consumer and the NF Service Producer respectively. The nfType and the targetNfType are the network function name of the NF Service Consumer and the NF Service Producer respectively. The network function name can be the AMF or SMF. The scope stores the services. The NF Service Consumer want to consume the services. The services are provided by the NF Service Producer. The services can be the namf-comm or nsmf-pdusession. The requesterPlmn and the targetPlmn are mainly used in the roaming.
+
+
+ 
+Figure 4. Access Token Request
+
+Table 1. Definition of Type AccessTokenReq
+ 
+
+ 
+Figure 5. Grant Type Value Setting
+
+NRF sends AccessTokenRsp to the NF Service Consumer in the Step 2a of the Figure 4. The attribute name, the data type, and the formulation rule of the AccessTokenRsp are shown in the Table 2. The Table 2 originates from the Table 6.3.5.2.3-1 of the TS 29.510. The AccessTokenRsp contains four attribute names. The four attribute names are the access_token, the token_type, the expires_in, and the scope. The access_token stores all the attribute names and values of the AccessTokenClaims in the Table 3. The Table 3 originates form the Table 6.3.5.2.4-1 of the TS 29.510. The value of the token_type must be set to the Bearer, and it can be seen in the Figure 6. The expires_in stores information related to the expiration date. The NF Service Consumer and the NF Service Producer have their own scope list. The scope in the AccessTokenRsp has a series of these services, and the NF Service Producer is permitted to consume these services. The scope in the AccessTokenClaims has a series of these services, and the NF Service Consumer is authorized by the NF Service Producer and permitted to consume these services.
+
+Table 2. Definition of Type AccessTokenRsp
+ 
+
+In the Table 3, the iss is called issuer, and the content usually stores the ID of NRF. The sub is called subject, and the content stores the ID of the NF Service Consumer. The aud is called audience, and the content stores the ID of the NF Service Producer. The scope is skipped because it is just mentioned. The exp stores information related to the validity period.
+
+Table 3. Definition of Type AccessTokenClaims
+ 
+
+The Figure 6 and the Figure 7 are the AccessTokenProcedure function. This function is executed in NRF. This function mainly does things. First, this function receives the AccessTokenReq sent by the NF Service Customer. Next, this function calls the AccessTokenScopeCheck function. The AccessTokenScopeCheck function checks whether the content of the attribute name in the AccessTokenReq complies with the requirements of the TS 29.510. If not, the AccessTokenProcedure function immediately returns the AccessTokenErr to the NF Service Customer. Then the AccessTokenProcedure function starts to create the Access Token. The Access Token is stored in the AccessTokenRsp. The AccessTokenRsp is snet back to the NF Service Customer. The Iss in the AccessToken obtains its own ID in NRF. The Sub and Aud are obtained from the NfInstancedId and the TargetNfInstanceId in the AccessTokenReq respectively. The Scope is obtained from the scope in the AccessTokenReq. The expiration is set to the 1000 in the Figure 6. Therefore, the value of the exp is the current time plus 1000.
+After the Access Token is created, the AccessTokenProcedure function uses the NRF private key to sign on the Access Token. After signing, the AccessTokenProcedure function checks whether there is an error. If so, the AccessTokenProcedure function immediately sends the AccessTokenErr to the NF Service Customer. Finally, the AccessTokenProcedure function puts the signed Access Token into the AccessTokenRsp. The value of the TokenType is set to the Bearer by the AccessTokenProcedure function. The AccessTokenProcedure function sets the ExprieIn and the Scope in the Figure 7. Above, this is what the AccessTokenProcedure function handles.
+Finally, I do a simple implementation about the Access Token. Next, I share the environment setting and method of operation with you.
+
+ 
+Figure 6. AccessTokenProcedure Function
+
+ 
+Figure 7. AccessTokenProcedure Function
+
+	Implementation
+
+The Table 4 is my environment setting. I provide the Table 4 for you. You can refer it.
+
+Table 4. Environment
+Name	Information
+Ubuntu	20.04.6 Server
+Kernel	5.4.0-155
+free5GC	3.3.0
+Go	1.17.8
+RAM	2 GB
+Disk	20 GB
+CPU	2 cores
+
+You remove the part of the tls and add the content of the cert, rootcert and oauth under sbi in the nrfcfg.yaml before implementing about the Access Token.
+
+ 
+Figure 8. nrfcfg.yaml
+
+You find the http://127.0.0.10:8000/nnrf-nfm/v1/nf-instances/0427faaa-1a73-4938-bf16-681beed7d09 in the Figure 9, and you get the 0427faaa-1a73-4938-bf16-681beed7d09. The 0427faaa-1a73-4938-bf16-681beed7d09 is the nfInstanceID.
+
+ 
+Figure 9. NRF Log
+
+You execute curl -X GET {apiRoot}/nnrf-nfm/v1/nf-instances/{nfInstanceID}, and you obtain the detail information about the nfInstanceID. You can see the nfType of the nfInstanceID is AUSF in the Figure 10, and the information about the nfInstanceID is used when you implement the Access Token.
+
+ 
+Figure 10. Nnrf_NFManagement API
+
+Then you execute curl -X POST -H “Content-Type: application/json” -d ‘{“nfInstanceId”: {nfInstanceID}, “grant_type”: “client_credentials”, “nfType”: {nfType}, “targetNfType”: “UDR”, “scope”: “nudr-dr”}’ {apiRoot}/oauth2/token.
+
+ 
+Figure 11. Nnrf_AccessToken API
+
+AUSF sends the AccessTokenReq to NRF after you execute the above command. In the AccessTokenReq, the nfInstanceId is set to 0427faaa-1a73-4938-bf16-681beed7d09. The grant_type is set to the client_credentials. The nfType is set to AUSF. The targetNfType is set to UDR. The scope is set to nudr-dr. The information is shown in the Figure 12. The NRF Access Token Log is empty because the targetNfInstanceId, the requesterPlmn and the targetPlmn are not set.
+
+ 
+Figure 12. NRF Access Token Log
+
+Next, you can see the Access Token. In the Figure 13, the value of the Sub is 0427faaa-1a73-4938-bf16-681beed7d09. The Sub represents AUSF, and AUSF belongs to the NF Service Customer. The value of the Scope is the nudr-dr. The value of the Exp is 1690909311.
+
+ 
+Figure 13. NRF Access Token Log
+
+Next, you can see the AccessTokenRsp. In the Figure 14, you can see that the Access Token is become the long symbols because the Access Token is encrypted by the private key of NRF and stored in the AccessTokenRsp. The value of the Token Type is set to the Bearer. The value of the ExpiresIn is set to the 1000. The value of the Scope is set to the nudr-dr.
+
+ 
+Figure 14. NRF Access Token Log
+
+Finally, you can see the 200 in the Figure 15. The 200 means that AUSF sends the AccessTokenReq to NRF. NRF successfully sends to AUSF after verification.
+
+ 
+Figure 15. NRF Access Token Log
+
+	Reference
+	https://medium.com/%E9%BA%A5%E5%85%8B%E7%9A%84%E5%8D%8A%E8%B7%AF%E5%87%BA%E5%AE%B6%E7%AD%86%E8%A8%98/%E7%AD%86%E8%A8%98-%E8%AA%8D%E8%AD%98-oauth-2-0-%E4%B8%80%E6%AC%A1%E4%BA%86%E8%A7%A3%E5%90%84%E8%A7%92%E8%89%B2-%E5%90%84%E9%A1%9E%E5%9E%8B%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%AE%E7%95%B0-c42da83a6015
+	TS 29.510
+	TS 33.501
+	https://blog.techbridge.cc/2019/02/01/linux-curl-command-tutorial/
+	https://github.com/free5gc/free5gc/issues/434
+
