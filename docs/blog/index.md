@@ -8,7 +8,7 @@
 - [2023/7/12: Time-Sensitive Networking over 5G system - Introduction (Rel-16)](./TSN.md)
 - [2023/7/19: Network function UDM introduction](./UDM_introduce.md)
 - [2023/7/26: How to deply free5GC network slice on OpenStack](./network_slice.md)
-- [2023/8/2: Authentication Mechanism in NRF: What Is OAuth?](./Authentication_Mechanism_in_NRF_What_Is_OAuth.md)
+- [2023/8/2: Authentication Mechanism in NRF: What Is OAuth?](./20230802.md)
 
 ## External
 - [Running Free5GC on Platform9 Managed Kubernetes](https://platform9.com/blog/running-free5gc-on-platform9-managed-kubernetes/)
