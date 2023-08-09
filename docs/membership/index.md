@@ -3,9 +3,7 @@
 # Sponsorship Info
 
 ## Sponsorship Tiers
-free5GC is a nonprofit organization dedicated to developing innovative and next-generation features for open-source code of 
-the 5G Core (5GC) Network under Apache 2.0 license. 
-Your generous support and sponsorship will sustain our technology development and the operation of the community. Your company/organization logo will be displayed on the free5GC website and listed as the sponsorship you participate. Here are the sponsorship tiers we offer.
+free5GC is a nonprofit organization dedicated to developing innovative and next-generation features for open-source code of the 5G Core (5GC) Network under Apache 2.0 license. Your generous support and sponsorship will sustain our technology development and the operation of the community. Your company/organization logo will be displayed on the free5GC website and listed as the sponsorship you participate. Here are the sponsorship tiers we offer.
 
 * Sponsor – donation under US $17,000 
 * Bronze Sponsor – donation from US $17,000 to US $34,000
