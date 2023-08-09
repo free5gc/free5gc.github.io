@@ -7,10 +7,10 @@
 
 The free5GC is an open-source project for 5th generation (5G) mobile core networks. The ultimate goal of this project is to implement the 5G core network (5GC) defined in 3GPP Release 15 (R15) and beyond.
 
-Currently, the major contributors are from National Yang Ming Chiao Tung University ([NYCU]((https://en.nycu.edu.tw/))). Please refer to our roadmap for the features of each release.
+Currently, the major contributors are from National Yang Ming Chiao Tung University ([NYCU](https://en.nycu.edu.tw/){target=_blank}). Please refer to our roadmap for the features of each release.
 
-- The source code of the latest version of free5GC can be downloaded from [here](https://github.com/free5gc/free5gc).
-- Follow our [LinkedIn](https://www.linkedin.com/company/free5gc/) page to get the news about free5GC!
+- The source code of the latest version of free5GC can be downloaded from [here](https://github.com/free5gc/free5gc){target=_blank}.
+- Follow our [LinkedIn](https://www.linkedin.com/company/free5gc/){target=_blank} page to get the news about free5GC.
 
 > [!NOTE] 
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free. 
