@@ -9,6 +9,7 @@
 - [2023/7/19: Network function UDM introduction](./UDM_introduce.md)
 - [2023/7/26: How to deply free5GC network slice on OpenStack](./network_slice.md)
 - [2023/8/2: Authentication Mechanism in NRF: What Is OAuth?](./20230802.md)
+- [2023/8/9: Fuzz Testing in Go: Discovering Vulnerabilities and Analyzing a Real Case (CVE-2022-43677)](./fuzzing/main.md)
 
 ## External
 - [Running Free5GC on Platform9 Managed Kubernetes](https://platform9.com/blog/running-free5gc-on-platform9-managed-kubernetes/)
