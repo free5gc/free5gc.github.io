@@ -418,4 +418,4 @@ In conclusion, fuzz testing is a critical practice in software development, enab
 I'm Yu-Sheng Liu, a master's student at National Yang Ming Chiao Tung University. My research topic focuses on improving the performance of the 5G core network, such as reducing the latency of message propagation in SBI.
 If you have any questions, please don't hesitate to contact me!
 
-* [LinkIn](https://www.linkedin.com/in/yu-sheng-liu-41a45a24a/)
+* [LinkedIn](https://www.linkedin.com/in/yu-sheng-liu-41a45a24a/)
