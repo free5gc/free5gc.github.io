@@ -156,7 +156,7 @@ kubectl exec -it [pod-name] -- [command]
 "kubectl apply -f " deploys resources defined in a YAML file, such as pods, services, or deployments, to your cluster.
 ```bat
 kubectl apply -f [yaml-file]
- ```
+```
 "kubectl delete" deletes a specific resource by specifying its type and name, freeing up resources and cleaning the cluster.
 ```bat
 kubectl delete [resource-type] [resource-name]
