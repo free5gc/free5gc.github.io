@@ -1,4 +1,4 @@
-# Introduce Kubernetes and Deployment free5GC on Kubernetes with helm
+# Introduce Kubernetes and Deploy free5GC on Kubernetes with helm
 >[!NOTE]
 > Author: Elisa Lee
 > Date: 2023/8/16
@@ -32,7 +32,7 @@ Consider a "node" as a tangible computing entity akin to a physical machine. Ana
 In essence, this intricate interplay of nodes, services, and orchestration elements underscores the dynamism and efficiency inherent to the Kubernetes ecosystem. Through these interlocking mechanisms, the platform optimizes resource utilization, ensures effective communication, and enables the seamless execution of applications across a distributed infrastructure.
 
 ### Master Nodes
-We've now explored all the scalable components and the task runner. Undoubtedly, to orchestrate and oversee everything, a central command hub is necessary – this is referred to as the master mode. Although direct intervention within these nodes isn't typically required to ensure the seamless operation of the entire system, it's still beneficial for you to grasp a basic understanding of its functionality.
+We've now explored all the scalable components and the task runner. Undoubtedly, to orchestrate and oversee everything, a central command hub is necessary – this is referred to as the master node. Although direct intervention within these nodes isn't typically required to ensure the seamless operation of the entire system, it's still beneficial for you to grasp a basic understanding of its functionality.
 #### API server 
 It determines which interface among all nodes can be externally accessed. Any subsequent commands you execute will be channeled through this service to the designated node or pod. Furthermore, essential cluster information can also be obtained from this service.
 #### Scheduler
@@ -75,7 +75,7 @@ sudo apt upgrade -y
 sudo apt install -y curl wget apt-transport-https
 ```
 #### Install gtp5g
-"gtp5g" refers to a tailored Linux kernel module specifically designed to manage packets through PFCP (Packet Forwarding Control Protocol) Information Elements (IEs) such as PDR (Packet Detection Rule) and FAR (Forwarding Action Rule). For comprehensive insights, you can delve into the 3GPP specifications TS 29.281 and TS 29.244.
+"gtp5g" refers to a customized Linux kernel module specifically designed to handle packets by PFCP (Packet Forwarding Control Protocol) Information Elements (IEs) such as PDR (Packet Detection Rule) and FAR (Forwarding Action Rule). For comprehensive insights, you can delve into the 3GPP specifications TS 29.281 and TS 29.244.
 To employ the UPF (User Plane Function) component effectively, it's imperative to operate on either the 5.0.0-23-generic or 5.4.x version of the Linux kernel. This ensures optimal compatibility and seamless integration with the necessary functionalities.
 ```bat
 sudo apt install gcc
