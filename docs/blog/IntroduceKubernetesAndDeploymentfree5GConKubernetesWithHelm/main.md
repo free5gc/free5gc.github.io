@@ -144,7 +144,7 @@ kubectl get pods
 ```bat
 kubectl describe pod [pod-name]
 ```
-"kubectl logs"fetches the logs of a specific pod, helping you troubleshoot issues and monitor application output.
+"kubectl logs" fetches the logs of a specific pod, helping you troubleshoot issues and monitor application output.
 
 ```bat
 kubectl logs [pod-name]
@@ -155,11 +155,11 @@ kubectl exec -it [pod-name] -- [command]
 ```   
 "kubectl apply -f " deploys resources defined in a YAML file, such as pods, services, or deployments, to your cluster.
 ```bat
-kubectl apply -f [yaml-file]:
+kubectl apply -f [yaml-file]
  ```
-"kubectl delete"deletes a specific resource by specifying its type and name, freeing up resources and cleaning the cluster.
+"kubectl delete" deletes a specific resource by specifying its type and name, freeing up resources and cleaning the cluster.
 ```bat
-kubectl delete [resource-type] [resource-name]:
+kubectl delete [resource-type] [resource-name]
 ```   
 "kubectl expose deployment" creates a new service, typically of type LoadBalancer, to expose a deployment's pods to external network traffic.
 ```bat
@@ -184,7 +184,7 @@ kubectl get namespaces
 ```
 "kubectl create namespace" creates a new namespace, allowing you to logically separate and organize resources.   
 ```bat
-kubectl create namespace [namespace-name]:
+kubectl create namespace [namespace-name]
 ```
 "kubectl port-forward" enables you to create a network tunnel between your local machine and a specific pod running within a Kubernetes cluster. This allows you to access services or applications running inside the pod as if they were running on your local machine. The command forwards traffic from a specified local port to a port on the selected pod.
 ```bat
@@ -192,7 +192,7 @@ kubectl port-forward [pod-name] [local-port]:[remote-port]
 ```
 
 #### Start minikube
-Use use flannel as cni plugin to start minikue Flannel is a popular "Container Network Interface" (CNI) plugin used for networking in Kubernetes and other container orchestration platforms. It provides a simple and lightweight network fabric designed to facilitate communication between containers and pods in a distributed environment, such as a Kubernetes cluster.
+Use flannel as cni plugin to start minikue. Flannel is a popular "Container Network Interface" (CNI) plugin used for networking in Kubernetes and other container orchestration platforms. It provides a simple and lightweight network fabric designed to facilitate communication between containers and pods in a distributed environment, such as a Kubernetes cluster.
 ```bat
 sudo usermod -aG docker $USER && newgrp docker
 minikube start --driver=docker --cpus=4 --memory=8g --disk-size=20g --cni=flannel
@@ -252,7 +252,7 @@ kubectl port-forward -n prometheus svc/prometheus-grafana 8080:80
 ```
 Execute the following command in your local machine's terminal, and subsequently, you will be able to access the WebConsole via localhost:8080.
 ```bat
-ssh -L localhost:5000:localhost:5000 ubuntu@[VM ip]
+ssh -L localhost:8080:localhost:8080 ubuntu@[VM ip]
 ```
 ![](./grafana_login.jpg)
 A variety of dashboards are available, offering different perspectives for those who are interested. Below is a snapshot of one such dashboard option.
