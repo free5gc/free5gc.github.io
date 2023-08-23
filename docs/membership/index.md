@@ -11,7 +11,7 @@ free5GC is a nonprofit organization dedicated to developing innovative and next-
 * Gold Sponsor – donation from US $68,000 to US $102,000
 * Platinum Sponsor – donation for more than US $102,000
 
-Your generosity is appreciated. You can now support free5GC by using your credit cards. Please visit https://fund.nycu.edu.tw/plans/HYnZMprdAGx for donation.
+You can now support free5GC using your credit cards through the link：https://fund.nycu.edu.tw/plans/HYnZMprdAGx. Your generosity is appreciated.
 
 
 > [!TIPS] 
