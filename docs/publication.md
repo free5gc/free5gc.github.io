@@ -42,3 +42,4 @@
 26. Leonardo Bonati, et al., "Open, Programmable, and Virtualized 5G Networks: State-of-the-Art and the Road Ahead," Computer Networks, 2020.
 27. Hung-Yen Weng, Ren-Hung Hwang, and Chin-Feng Lai, "Live MPEG-DASH video streaming cache management with cognitive mobile edge computing," Ambient Intelligence and Humanized Computing p.1-18, 2020.
 28. Junaid Jalal, "Enabling Edge Computing In 5G Via Local Area Data Network: Implementation and Experiments," Master Thesis, University of Agder, 2019.
+29. David Soldani, "eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)"
