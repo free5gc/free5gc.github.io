@@ -68,7 +68,8 @@ nav:
     - Blogs: blog/
     - Supports: support/
     - Sponsorship: membership/
-    - About us: https://cslab.cs.nycu.edu.tw/index.php/people/
+    - About us: 
+      - Intro: https://cslab.cs.nycu.edu.tw/index.php/people/
     - More:
       - Relavent Publication: publication.md
       - Other Videos: videos.md
