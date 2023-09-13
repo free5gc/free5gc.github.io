@@ -11,8 +11,9 @@
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
-* OAuth on SBA
 * Charging Function (CHF)
+* Registration without authentication, due to RAN did the AMF RESELECTION
+* OAuth on SBA
 * Network Exposure Function (NEF)
 
 ## free5GC Installation Guide
