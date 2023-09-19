@@ -2,17 +2,6 @@
 
 # Publications using free5GC
 
-## From NYCU
-1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
-2. C.-Y. Hsieh, Y.-W. Chang, C. Chen, and J.-C. Chen, "Poster: Design and Implementation of a Generic 5G User Plane Function Development Framework," ACM International Conference on Mobile Computing and Networking (MobiCom ‘21), (New Orleans, United States), pp. 846–848, Oct. 2021. (Won second place of the ACM MobiCom 2021 Student Research Competition)
-3. Yu-Herng Chai, and Fuchun Joseph Lin, "Evaluating Dedicated Slices of Different Configurations in 5G Core," Computer and Communications, 9(7), p.55-72, 2021.
-4. Cheng-Chin Tsai, Fuchun Joseph Lin, and Hiroshige Tanaka, "Evaluation of 5G Core Slicing on User Plane Function," Communications and Network, 13(3), p.79-92, 2021.
-5. Wei-Cheng Chang, and Fuchun Joseph Lin, "Coordinated Management of 5G Core Slices by MANO and OSS/BSS," Computer and Communications, 9(6), p.52-72, 2021.
-6. Seungjoon Seok, et al, "Towards Service and Networking Intelligence for Humanity: A Report on APNOMS 2020," Network and Systems Management, 29(4), p.1-11, 2021.
-7. Yi-Bing Lin, Chien-Chao Tseng, and Ming-Hung Wang, "Effects of Transport Network Slicing on 5G Applications," Future Internet, 13(3), p.69, 2021.
-8. Tze-Jie Tan, et al., "A Reliable Intelligent Routing Mechanism in 5G Core Network (5GC)," Annual International Conference on Mobile Computing and Networking, 2020.
-9. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
-
 ## Not from NYCU
 1. Ralf Kundel, et al., "User plane hardware acceleration in access networks: Experiences in offloading network functions in real 5g deployments," Hawaii International Conference on System Sciences. Computer Society Press, 2022.
 2. Taeyun Kim, et al., "An Implementation Study of Network Data Analytic Function in 5G," IEEE International Conference on Consumer Electronics, 2022.
@@ -43,3 +32,14 @@
 27. Hung-Yen Weng, Ren-Hung Hwang, and Chin-Feng Lai, "Live MPEG-DASH video streaming cache management with cognitive mobile edge computing," Ambient Intelligence and Humanized Computing p.1-18, 2020.
 28. Junaid Jalal, "Enabling Edge Computing In 5G Via Local Area Data Network: Implementation and Experiments," Master Thesis, University of Agder, 2019.
 29. David Soldani, "eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)"
+
+## From NYCU
+1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
+2. C.-Y. Hsieh, Y.-W. Chang, C. Chen, and J.-C. Chen, "Poster: Design and Implementation of a Generic 5G User Plane Function Development Framework," ACM International Conference on Mobile Computing and Networking (MobiCom ‘21), (New Orleans, United States), pp. 846–848, Oct. 2021. (Won second place of the ACM MobiCom 2021 Student Research Competition)
+3. Yu-Herng Chai, and Fuchun Joseph Lin, "Evaluating Dedicated Slices of Different Configurations in 5G Core," Computer and Communications, 9(7), p.55-72, 2021.
+4. Cheng-Chin Tsai, Fuchun Joseph Lin, and Hiroshige Tanaka, "Evaluation of 5G Core Slicing on User Plane Function," Communications and Network, 13(3), p.79-92, 2021.
+5. Wei-Cheng Chang, and Fuchun Joseph Lin, "Coordinated Management of 5G Core Slices by MANO and OSS/BSS," Computer and Communications, 9(6), p.52-72, 2021.
+6. Seungjoon Seok, et al, "Towards Service and Networking Intelligence for Humanity: A Report on APNOMS 2020," Network and Systems Management, 29(4), p.1-11, 2021.
+7. Yi-Bing Lin, Chien-Chao Tseng, and Ming-Hung Wang, "Effects of Transport Network Slicing on 5G Applications," Future Internet, 13(3), p.69, 2021.
+8. Tze-Jie Tan, et al., "A Reliable Intelligent Routing Mechanism in 5G Core Network (5GC)," Annual International Conference on Mobile Computing and Networking, 2020.
+9. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
