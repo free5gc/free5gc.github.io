@@ -24,9 +24,10 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Installing](./3-install-free5gc.md) and [Testing](./4-test-free5gc.md) free5GC Core Network
 - [Installing a UE/RAN Simulator](./5-install-ueransim.md)
 - [free5GC Simple Apps](./6-simple-app.md)
-- All of tutorial videos are available at our Youtube Channel
+- All of tutorial videos are available at our Youtube channel:
   - [English](https://www.youtube.com/watch?v=R-9vH_6VJ2Q&list=PLeDUIabcS2_rQd3yVJrBAYb-MbcqNgjC9)
   - [Chinese](https://www.youtube.com/watch?v=lD5iYvCB4CQ&list=PLeDUIabcS2_pdhCN3sz5gFdT-mTukyX-v)
+
 - [Environment setup of multiple SMF, DNN, and UPF](https://www.youtube.com/watch?v=AEMrjKRWarw)
 
 ## Configuration
