@@ -71,7 +71,7 @@ nav:
     - About us: 
       - Intro: https://cslab.cs.nycu.edu.tw/index.php/people/
     - More:
-      - Relavent Publication: publication.md
+      - Relavent Publications: publication.md
       - Other Videos: videos.md
 
 markdown_extensions:
