@@ -60,7 +60,9 @@ These are Linux system pre-defined Netlink protocols. Therefore, if users want t
 Due to the shortage of protocol numbers and the need to prevent kernel modification, kernel developers extended Netlink and introduced [Generic Netlink](https://wiki.linuxfoundation.org/networking/generic_netlink_howto). Generic Netlink supports 1023 protocols, addressing the protocol number limitation, and it allocates protocol IDs automatically.
 
 The following figure is Generic Netlink structure:
+
 <img width="652" alt="截圖 2023-09-18 21 40 31" src="https://github.com/free5gc/free5gc.github.io/assets/112857368/10687ef3-0db5-49ba-a39c-e1f1644d5f56">
+
 
 - The ***Netlink subsystem*** which serves as the underlying transport layer for all of the Generic Netlink communications.
 - The ***Generic Netlink bus*** which is implemented inside the kernel, but which is available to userspace through the socket API and inside the kernel via the normal Netlink and Generic Netlink APIs.
