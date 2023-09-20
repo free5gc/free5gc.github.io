@@ -1,4 +1,9 @@
+# Introduction of gtp5g and some kernel concepts
 
+>[!NOTE]
+> Author: Jimmy
+> Date: 2023/9/20
+---
 
 ## Overview
 GTP, or the General Packet Radio System Tunneling Protocol, is a group of IP-based communication protocols used to transport General Packet Radio Services (GPRS) within LTE, 5G NR, and other networks. GTP can be broken down into several components: GTP-C, GTP-U, and GTP prime. GTP-C and GTP-U are responsible for the control plane and user plane, respectively, while GTP prime is utilized for transmitting charging data through the Ga interface as defined in the 3GPP GPRS Core Network.
