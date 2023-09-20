@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2023/9/20: Introduction of gtp5g and some kernel concepts](./Introduction_of_gtp5g_and_some_kernel_concepts.md)
 - [2023/9/13: CHarging Function(CHF) Overview](./20230913.md)
 - [2023/9/6: The role of VNFD and NSD in 5G Network Slicing](./0905-2023blog.md)
 - [2023/8/30: Article Sharing: eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)](./20230830.md)
