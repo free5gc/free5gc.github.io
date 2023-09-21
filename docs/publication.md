@@ -32,6 +32,22 @@
 27. Hung-Yen Weng, Ren-Hung Hwang, and Chin-Feng Lai, "Live MPEG-DASH video streaming cache management with cognitive mobile edge computing," Ambient Intelligence and Humanized Computing p.1-18, 2020.
 28. Junaid Jalal, "Enabling Edge Computing In 5G Via Local Area Data Network: Implementation and Experiments," Master Thesis, University of Agder, 2019.
 29. David Soldani, "eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)"
+30. Matan Broner, Sangwoo Lee, Liuyi Jin, and Radu Stoleru, "Poster: Towards Multi-Radio Access in 5G Networks," MobiSys '23: Proceedings of the 21st Annual International Conference on Mobile Systems, Applications and ServicesJune, p.575–576, 2023
+31. Francesco Mancini, Leonardo Tamiano, and Giuseppe Bianchi, "5GShell: a plug-and-play framework for automating the deployment of 5G cellular networks," 26th Conference on Innovation in Clouds, Internet and Networks and Workshops (ICIN), 2023
+32. Branislava Zivkovic, and Zoran Cica, "Network Traffic Capturing in Open-Source 5G Core Network Platform," 10th International Conference on Electrical, Electronic and Computing Engineering (IcETRAN), 2023
+33. Gabriel Lando, Lucas Augusto Fonseca Schierholt, Mateus Paludo Milesi, and Juliano Araujo Wickboldt, "Evaluating the performance of open source software implementations of the 5G network core," NOMS 2023-2023 IEEE/IFIP Network Operations and Management Symposium, 2023
+34. Zixu Tian, Rajendra Patil, Mohan Gurusamy, and Joshua McCloud, "ADSeq-5GCN: Anomaly Detection from Network Traffic Sequences in 5G Core Network Control Plane," IEEE 24th International Conference on High Performance Switching and Routing (HPSR), 2023
+35. Taeho Park, Hochan Lee, Heewon Kim, Subin Han, Taeyun Kim, and Sangheon Pack, "Divide and Cache: A Novel Control Plane Framework for Private 5G Networks," IEEE 20th Consumer Communications & Networking Conference (CCNC), 2023
+36. Seungchan Woo, Jaehyoung Park, Soonhong Kwon, Kyungmin Park, Jonghyun Kim, and Jong-Hyouk Lee, "Simulation of Data Hijacking Attacks for a 5G-Advanced Core Network," Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit), 2023
+37. Zhao Liu, Ping Wang, Yongjing Li, Zhan Xu, and Ming Zhao, "A Blockchain-based Method for Monitoring Userplane Congestion in Mobile Core Network," IEEE 13th International Conference on Electronics Information and Emergency Communication (ICEIEC), 2023
+38. Domenico Scotece, Asma Noor, Luca Foschini, and Antonio Corradi, "5G-Kube: Complex Telco Core Infrastructure Deployment Made Low-Cost," IEEE Communications Magazine, p.26-30, ( Volume: 61, Issue: 7, July 2023)
+39. Serkut Ayvaşık, Edwin Babaians, Arled Papa, Yash Deshpande, Alba Jano, Wolfgang Kellerer, and Eckehard Steinbach, "Demo: Remote Robot Control with Haptic Feedback over the Munich 5G Research Hub Testbed," IEEE 24th International Symposium on a World of Wireless, Mobile and Multimedia Networks (WoWMoM), 2023
+40. Robert Pell, Mohammad Shojafar, Dimitrios Kosmanos, and Sotiris Moschoyiannis, "Service Classification of Network Traffic in 5G Core Networks using Machine Learning, "IEEE International Conference on Edge Computing and Communications (EDGE)," IEEE International Conference on Edge Computing and Communications (EDGE), 2023
+41. Nathalie Wehbe, Hyame Assem Alameddine, Makan Pourzandi, and Chadi Assi, "5GShield: HTTP/2 Anomaly Detection in 5G Service-Based Architecture," 2023 IFIP Networking Conference (IFIP Networking), 2023
+42. Francesco Mancini, and Giuseppe Bianchi, "ScasDK - A Development Kit for Security Assurance test in Multi-Network-Function 5G," ARES '23: Proceedings of the 18th International Conference on Availability, Reliability and Security, 2023
+43. Jiasheng Wu, Yue Gao, Lin Wang, Jingjing Zhang, and Dapeng Oliver Wu, "How to Allocate Resources in Cloud Native Networks Towards 6G," IEEE Network, p.1-7, 2023
+44. Koya Ito, and Noboru Izuka, "Proposal of Client-Server Based Vertical Handover Scheme Using Virtual Routers for Edge Computing in Local 5G Networks and WLANs," IEEE 13th Annual Computing and Communication Workshop and Conference (CCWC), 2023
+45. Zujany Salazar, Fatiha Zaïdi, Huu-Nghia Nguyen, Wissam Mallouli, Ana Rosa Cavalli, and Edgardo Montes De Oca, "A Network Traffic Mutation Based Ontology, and Its Application to 5G Networks," IEEE Access ( Volume: 11), 2023
 
 ## From NYCU
 1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
@@ -43,3 +59,5 @@
 7. Yi-Bing Lin, Chien-Chao Tseng, and Ming-Hung Wang, "Effects of Transport Network Slicing on 5G Applications," Future Internet, 13(3), p.69, 2021.
 8. Tze-Jie Tan, et al., "A Reliable Intelligent Routing Mechanism in 5G Core Network (5GC)," Annual International Conference on Mobile Computing and Networking, 2020.
 9. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
+10. Yin-Chi Li, Ping-Tsan Liu, Yi-An Tai, Che-Hung Liu, Man-Hsin Chen, Chi-Yu Li, and Guan-Hua Tu, "A Runtime Anomaly Detector via Service Communication Proxy for 5G Mobile Networks," IEEE INFOCOM 2023
+11. Ho-Cheng Lee, Fuchun Joseph Lin, Jyh-Cheng Chen, Chien Chen, and Patrick Wang, "Enhancing 5G Core with Multi-Access Edge Computing," 32nd Wireless and Optical Communications Conference (WOCC), 2023
