@@ -21,7 +21,7 @@ Additional information:
 
 ## Netlink, Generic Netlink and Rtnetlink
 ### Netlink
-Before we continue, i need to introduce [Netlink](https://man7.org/linux/man-pages/man7/netlink.7.html) first. What is Netlink? Netlink is an IPC (Inter Process Communicate) protocol which can connect kernel space and user space processes by socket.  Traditionally, it used three methods: **Ioctl**, **sysfs**, or **procfs**, to facilitate communication between the kernel and user space. However, it can only be initiated from user space, not from kernel space. Netlink can support not only **initiated from kernel and user space** but also:
+Before we continue, I need to introduce [Netlink](https://man7.org/linux/man-pages/man7/netlink.7.html) first. What is Netlink? Netlink is an IPC (Inter Process Communication) protocol which can connect kernel space and user space processes by socket.  Traditionally, it used three methods: **Ioctl**, **sysfs**, or **procfs**, to facilitate communication between the kernel and user space. However, it can only be initiated from user space, not from kernel space. Netlink can support not only **initiated from kernel and user space** but also:
 
 - Bidirectional transmission, asynchronous communication.
 - Standard socket API used in user space.
@@ -68,14 +68,29 @@ Due to the shortage of protocol numbers and the need to prevent kernel modificat
 
 The following figure is Generic Netlink structure:
 
-<img width="652" alt="截圖 2023-09-18 21 40 31" src="https://github.com/free5gc/free5gc.github.io/assets/112857368/10687ef3-0db5-49ba-a39c-e1f1644d5f56">
+```mermaid
+graph TD
+A1[Application_1] --- B[Kernel_Socket_API] 
+A2[Application_2] --- B[Kernel_Socket_API]
+
+B[Kernel_Socket_API] --- C[Netlink_Subsystem]
+B[Kernel_Socket_API] --- C[Netlink_Subsystem]
+
+C[Netlink_Subsystem] --- D[Generic_Netlink_Bus]
+
+D[Generic_Netlink_Bus] --- E1[Controller]
+D[Generic_Netlink_Bus] --- E2[Kernel_User_1]
+D[Generic_Netlink_Bus] --- E3[Kernel_User_2]
 
 
+```
+
+- The Generic Netlink users **application_1** and **application_2** could communicate both user space and kernel space endpoint through Kernel_socket_API. 
 - The ***Netlink subsystem*** which serves as the underlying transport layer for all of the Generic Netlink communications.
 - The ***Generic Netlink bus*** which is implemented inside the kernel, but which is available to userspace through the socket API and inside the kernel via the normal Netlink and Generic Netlink APIs.
 - The ***Generic Netlink users*** who communicate with each other over the Generic Netlink bus; users can exist both in kernel and user space.
-- The ***Generic Netlink controller*** which is part of the kernel and is responsible for dynamically allocating Generic Netlink communication channels and other management tasks. The Generic Netlink controller is implemented as a standard Generic Netlink user, however, it listens on a special, pre-allocated Generic Netlink channel.
-- The kernel socket API. Generic Netlink sockets are created with the PF_NETLINK domain and the NETLINK_GENERIC protocol values.
+- The ***Generic Netlink controller*** which is part of the kernel and is responsible for dynamically allocating Generic Netlink communication channels and other management tasks. The Generic Netlink controller is implemented as a standard Generic Netlink kernel user, however, it listens on a special, pre-allocated Generic Netlink channel.
+- The **kernel socket API**. Generic Netlink sockets are created with the PF_NETLINK domain and the NETLINK_GENERIC protocol values.
 
 ### RtNetlink
 The last one is [rtnetlink](https://man7.org/linux/man-pages/man7/rtnetlink.7.html), it also known as Netlink protocol type NETLINK_ROUTE, user space program could read and alter kernel's routing table or create new network device.
@@ -874,10 +889,11 @@ static int genl_validate_assign_mc_groups(struct genl_family *family)
 
 
 ## About
-Jimmy Chang
-- Graduate student majoring in 5GC Research
-- As I am a beginner in the Linux kernel, please feel free to send me an email if you find any errors.
-- jimmy9507.cs11@nycu.edu.tw
+- Jimmy Chang
+	- Graduate student majoring in 5GC Research
+	- As I am a beginner in the Linux kernel, please feel free to send me an email if you find any errors.
+	- [mail](jimmy9507.cs11@nycu.edu.tw)
+ 	- [Linkin](https://www.linkedin.com/in/建耀-張-94591a235/)
 
 ## Reference
 - https://bootlin.com
