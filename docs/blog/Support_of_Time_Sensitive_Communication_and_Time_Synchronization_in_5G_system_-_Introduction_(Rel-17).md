@@ -91,6 +91,8 @@ TSCTSF may support AF to
 
 
 ## Abbreviation
+
+| Column 1 | Column 2 |
 |---|---|
 |TSN|Time-Sensitive network|
 |TT|TSN Translator|
