@@ -105,6 +105,8 @@ TSCTSF may support AF to
 |GM|Grand Master|
 |AF|Application Function|
 |TSCTSF|Time Sensitive Communication and Time Synchronization Function|
+|PMIC|Port Management Information Container|
+|UMIC|User Plane Node Management Information Container|
 
 ## Conclusion
 Release 17 expanded and improved the integration with IEEE TSN. This included enabling uplink synchronization through the 5G System (5GS), enhancing End-to-End Quality of Service (QoS) across multiple clock domains, and facilitating direct communication between UE within the 5GS network.
