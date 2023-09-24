@@ -18,6 +18,7 @@ This article will introduce TSN enhancements in 3GPP Release 17. We will start b
 
 According to 3GPP TS 23.501 Release 17, 5GS's role in TSN goes beyond just acting as a bridge. It now extends to UDP/IP applications. In addition to its original support for Ethernet through IEEE 802.1AS Time-Aware System, it has been updated to include four types of PTP instances described in IEEE 1588.
 
+#### What is BC and TC?
 ![Difference types of PTP instances](20230927/clocks.png)
 > Difference types of PTP instances (clocks).
 
