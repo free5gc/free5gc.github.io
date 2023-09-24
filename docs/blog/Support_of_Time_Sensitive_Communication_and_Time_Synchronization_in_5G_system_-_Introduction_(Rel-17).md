@@ -1,4 +1,5 @@
 # Support of Time Sensitive Communication and Time Synchronization in 5G system - Introduction (Rel-17)
+
 >[!NOTE]
 > Author: Ya-shih Tseng
 > Date: 2023/9/27
