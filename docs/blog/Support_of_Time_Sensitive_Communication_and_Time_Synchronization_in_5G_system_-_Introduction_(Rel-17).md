@@ -43,6 +43,12 @@ Subsequently, the egress TT creates an egress timestamp (TSe) for PTP events (i.
 
 - As for 5GS operates as BC, NW-TT and DS-TT should support **generate** Sync, Follow_Up and Announce message. If DS-TT doesn't support it, NW-TT will take over.
 
+### PTP transparent
+TTs can support the following PTP transport modes described in IEEE 1588:
+- over UDP/IPv4
+- over UDP/IPv6
+- over IEEE 802.3 (Ethernet)
+
 ### Delay measurements
 Different PTP instances have different measurements of path delay due to hardware limitations.
 
@@ -57,7 +63,9 @@ Let's see what's the diference between them.
 - For E2E (End-to-End) slaves send delay requests to the Master, passing through other devices in the network. Each TC (Transparent Clock) modifies the request to update the time it has spent locally. Finally, it reaches the Master, so the E2E measured delay represents the total time taken along the entire path.
 - For P2P (Point-to-Point) devices, they send requests to nearby neighbors to measure the delay time between each other.
 
+
 By now, We introduce few supports for PTP instances. Then, How should these functionalities be managed?
+
 ## Time Sensitive Communication and Time Synchronization Function
 In release 16, TSN AF is used for exchanging messages to manage TSN bridges in conjunction with centralized network configuration (CNC). This means that TSN AF is responsible for managing the ports of DS-TT and NW-TT. Additionally, in release 17, **TSCTSF is a new component introduced between PCF and NEF. To support AF requests related to time-sensitive communication.**
 
@@ -83,17 +91,18 @@ TSCTSF may support AF to
 
 
 ## Abbreviation
-    TSN          Time-Sensitive network
-    TT           TSN Translator
-    NW-TT        Network-Side TSN Translator
-    DS-TT        Device-Side TSN Translator
-    PTP          Precision Time Protocol
-    BC           Boundary Clock
-    E2E-TC       End-to-End Transparent Clock
-    P2P-TC       Peer-to-Peer Transparent Clock
-    GM           Grand Master
-    AF           Application Function
-    TSCTSF       Time Sensitive Communication and Time Synchronization Function
+|---|---|
+|TSN|Time-Sensitive network|
+|TT|TSN Translator|
+|NW-TT|Network-Side TSN Translator|
+|DS-TT|Device-Side TSN Translator|
+|PTP|Precision Time Protocol|
+|BC|Boundary Clock|
+|E2E-TC|End-to-End Transparent Clock|
+|P2P-TC|Peer-to-Peer Transparent Clock|
+|GM|Grand Master|
+|AF|Application Function|
+|TSCTSF|Time Sensitive Communication and Time Synchronization Function|
 
 ## Conclusion
 Release 17 expanded and improved the integration with IEEE TSN. This included enabling uplink synchronization through the 5G System (5GS), enhancing End-to-End Quality of Service (QoS) across multiple clock domains, and facilitating direct communication between UE within the 5GS network.
