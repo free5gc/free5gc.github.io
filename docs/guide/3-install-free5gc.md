@@ -125,7 +125,7 @@ uname -r
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
 ```bash
-git clone -b v0.8.1 https://github.com/free5gc/gtp5g.git
+git clone -b v0.8.2 https://github.com/free5gc/gtp5g.git
 cd gtp5g
 make
 sudo make install
@@ -152,8 +152,8 @@ sudo apt remove yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get update
-sudo apt-get install -y nodejs yarn
+sudo apt update
+sudo apt install -y nodejs yarn
 ```
 
 2. Build WebConsole
