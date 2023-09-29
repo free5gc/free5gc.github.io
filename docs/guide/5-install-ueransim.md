@@ -123,7 +123,7 @@ Next edit `~/free5gc/config/smfcfg.yaml`:
 ```
 nano config/smfcfg.yaml
 ```
-and in the entry `inside userplane_information / up_nodes / UPF / interfaces / endpoints`, change the IP from `127.0.0.8` to `192.168.56.101`, namely from:
+and in the entry inside `userplaneInformation / upNodes / UPF / interfaces / endpoints`, change the IP from `127.0.0.8` to `192.168.56.101`, namely from:
 ```
 ...
   interfaces: # Interface list for this UPF
