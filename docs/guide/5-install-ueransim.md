@@ -88,9 +88,11 @@ The screen shows the port number `:5000` at the end. Open your web browser from 
 
 - On the login page, enter username `admin` and password `free5gc`.
 - Once logged in, widen the page until you see “Subscribers” on the left-hand side column.
-- Choose `Subscribers` and create a new data:
-    - Note that other than the “Operator Code Type” field which you should choose “OP” for now, leave other fields unchanged. This registration data is used for ease of testing and actual use later.
-- After the data is created successfully, you can press `Ctrl-C` on the terminal to quit WebConsole.
+- Click on the `Subscribers` tab and then on the `New Subscriber` button
+    - Scroll down to `Operator Code Type` and change it from "OPc" to "OP".
+    - Leave the other fields unchanged. This registration data is used for ease of testing and actual use later.
+    - Scroll all the way down and click on `Submit`.
+- Once the data shows up on the "Subscribers" table, you can press `Ctrl-C` on the terminal to kill the WebConsole process on the free5gc VM
 
 ## 5. Setting free5GC and UERANSIM Parameters
 
