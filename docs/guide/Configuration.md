@@ -42,4 +42,4 @@ Notice: If user wants to use the setting, aware to set 192.168.0.1 to your host 
 * DestinationIP and DestinationPort will be the packet destination.
 * UPF field will be the packet datapath when it match the destination above.
 
-***For more detail of SMF config, please refer to [here](https://github.com/free5gc/free5gc/wiki/SMF-Config).***
+***For more detail of SMF config, please refer to [here](./SMF-Config.md).***
