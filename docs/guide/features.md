@@ -42,6 +42,10 @@
 - AN Release
 - PDU Session Establishment
 - PDU Session Modification (v3.3.0)
+- Converged Charging (CHF has been published, all of the functions will be enabled in the incoming release)
+    - Billing Domain (webconsole)
+    - ABMF, RF, and CGF built-in CHF
+    - Flow-based Charging (FBC)
 - PDU Session Release
 - Handover
     - N2 Handover (Indirect mode not supported)

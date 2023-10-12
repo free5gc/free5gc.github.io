@@ -48,6 +48,10 @@
 43. Jiasheng Wu, Yue Gao, Lin Wang, Jingjing Zhang, and Dapeng Oliver Wu, "How to Allocate Resources in Cloud Native Networks Towards 6G," IEEE Network, p.1-7, 2023
 44. Koya Ito, and Noboru Izuka, "Proposal of Client-Server Based Vertical Handover Scheme Using Virtual Routers for Edge Computing in Local 5G Networks and WLANs," IEEE 13th Annual Computing and Communication Workshop and Conference (CCWC), 2023
 45. Zujany Salazar, Fatiha Zaïdi, Huu-Nghia Nguyen, Wissam Mallouli, Ana Rosa Cavalli, and Edgardo Montes De Oca, "A Network Traffic Mutation Based Ontology, and Its Application to 5G Networks," IEEE Access ( Volume: 11), 2023
+46. Jon Larrea, Andrew E. Ferguson, and Mahesh K. Marina "CoreKube: An Efficient, Autoscaling and Resilient Mobile Core System" ACM MobiCom 2023
+47. Ruoting Xiong, Kit-Lun Tong, Yi Ren, Wei Ren, and Gerard Parr, "From 5G to 6G: It is Time to Sniff the Communications between a Base Station and Core Networks" ACM MobiCom 2023
+48. Bhavishya Sharma, Shwetha Vittal, and A Antony Franklin "FlexCore: Leveraging XDP-SCTP for Scalable and Resilient Network Slice Service in Future 5G Core" APNET 2023
+49. Francesco Mancini, Giuseppe Bianchi "ScasDK - A Development Kit for Security Assurance test in Multi-Network-Function 5G" ARES 2023
 
 ## From NYCU
 1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
