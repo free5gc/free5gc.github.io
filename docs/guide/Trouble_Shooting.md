@@ -40,7 +40,40 @@ sudo ./gtp5g-link del {Dev-Name}
 sudo ip link del upfgtp
 ```
 
-### 7. Decode HTTP/2 packet in Wireshark
+### 7. SMF cannot communicate with UPF / UPF cannot start after a reboot or crash
+
+The message below shows up on the logs:
+
+`[WARN][SMF][Main] Failed to setup an association with UPF[127.0.0.8], error:Request Transaction [1]: retry-out`
+
+Verify on the logs if you got this message:
+
+`[ERRO][UPF][Main] UPF Cli Run Error: open Gtp5g: open link: create: operation not supported`
+
+If yes, then try to load the GTP module on the system:
+
+```modprobe gtp5g```
+
+If this outputs an error like this:
+
+`modprobe: FATAL: Module gtp5g not found in directory /lib/modules/5.4.0-xxx-generic`
+
+Reinstall the GTP-U kernel module using:
+```bash
+cd ~/free5gc/gtp5g/
+make
+sudo make install
+```
+
+Then, once running the core `run.sh` script, you should obtain the message `[INFO][SMF][Main] Received PFCP Association Setup Accepted Response from UPF[127.0.0.8]` on the logs and it should work as normal
+
+After that, if it's required to reload the module, just run `modprobe gtp5g` again
+
+**Note:** The symptoms described above may happen if the host machine updated it's kernel version recently
+
+References: [Free5GC Forum](https://forum.free5gc.org/t/erro-upf-main-upf-cli-run-error-open-gtp5g-open-link-create-operation-not-supported/1795) and [Install Guide](./3-install-free5gc.md)
+
+### 8. Decode HTTP/2 packet in Wireshark
     
 1. Run Network Function
 
@@ -58,7 +91,7 @@ sudo ip link del upfgtp
 
     ![](https://i.imgur.com/ctBIYQy.png)
 
-### 7. Decode H2C (HTTP2 clear text without TLS)
+### 9. Decode H2C (HTTP2 clear text without TLS)
 
 The similar reason as NEA0 NAS message. Althrough H2C is clear text, wirshark still considers these packets as the normal TCP packets and does not decode them by HTTP2.
 
