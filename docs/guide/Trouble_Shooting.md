@@ -44,28 +44,44 @@ sudo ip link del upfgtp
 
 The message below shows up on the logs:
 
-`[WARN][SMF][Main] Failed to setup an association with UPF[127.0.0.8], error:Request Transaction [1]: retry-out`
+```log
+[WARN][SMF][Main] Failed to setup an association with UPF[127.0.0.8], error:Request Transaction [1]: retry-out
+```
 
 Verify on the logs if you got this message:
 
-`[ERRO][UPF][Main] UPF Cli Run Error: open Gtp5g: open link: create: operation not supported`
+```log
+[ERRO][UPF][Main] UPF Cli Run Error: open Gtp5g: open link: create: operation not supported
+```
 
 If yes, then try to load the GTP module on the system:
 
-```modprobe gtp5g```
+```bash
+modprobe gtp5g
+```
 
 If this outputs an error like this:
 
-`modprobe: FATAL: Module gtp5g not found in directory /lib/modules/5.4.0-xxx-generic`
+```log
+modprobe: FATAL: Module gtp5g not found in directory /lib/modules/5.4.0-xxx-generic
+```
 
 Reinstall the GTP-U kernel module using:
 ```bash
-cd ~/free5gc/gtp5g/
-make
+cd ~
+git clone -b v0.8.2 https://github.com/free5gc/gtp5g.git
+cd ~/gtp5g
+sudo make
 sudo make install
 ```
 
-Then, once running the core `run.sh` script, you should obtain the message `[INFO][SMF][Main] Received PFCP Association Setup Accepted Response from UPF[127.0.0.8]` on the logs and it should work as normal
+Then, once running the core `run.sh` script, you should obtain the message on the logs:
+
+```log
+[INFO][SMF][Main] Received PFCP Association Setup Accepted Response from UPF[127.0.0.8]
+```
+
+and it should work as normal
 
 After that, if it's required to reload the module, just run `modprobe gtp5g` again
 
