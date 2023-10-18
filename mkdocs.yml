@@ -80,6 +80,14 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
   - attr_list
+  - extra
+  - tables
+  - mdx_math:
+        enable_dollar_delimiter: True
+  - fenced_code
+
+extra_javascript: 
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 plugins:
   - search
