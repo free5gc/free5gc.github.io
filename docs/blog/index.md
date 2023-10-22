@@ -4,7 +4,7 @@
 
 ## Official
 - [2023/10/18: LTE Authentication Introduction: EPS-AKA'](./20231018/20231018.md)
-- [2023/10/4: Introduce of MPTCP](./20231004/20231004.md)
+- [2023/10/4: Introduction of MPTCP](./20231004/20231004.md)
 - [2023/9/27: Support of Time Sensitive Communication and Time Synchronization in 5G system - Introduction (Rel-17)](./20230927/Support_of_Time_Sensitive_Communication_and_Time_Synchronization_in_5G_system_-_Introduction_(Rel-17).md)
 - [2023/9/20: Introduction of gtp5g and some kernel concepts](./20230920/Introduction_of_gtp5g_and_some_kernel_concepts.md)
 - [2023/9/13: CHarging Function(CHF) Overview](./20230913/20230913.md)
