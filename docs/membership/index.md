@@ -11,8 +11,6 @@ free5GC is a nonprofit organization dedicated to developing innovative and next-
 * Gold Sponsor – donation from US $68,000 to US $102,000
 * Platinum Sponsor – donation for more than US $102,000
 
-You can now support free5GC using your credit cards through the link：[https://fund.nycu.edu.tw/plans/HYnZMprdAGx](https://fund.nycu.edu.tw/plans/HYnZMprdAGx). Your generosity is appreciated.
-
 You can now support free5GC with your credit card. Simply follow the two-step instructions provided here and use the [link](https://www.paypal.com/donate/?hosted_button_id=CE8KS8AP7M6GE). ([Download instruction PDF](https://github.com/free5gc/free5gc.github.io/blob/main/free5GC%20donation%20instruction.pdf)). Donations made in the US can be tax-deductible.
 
 Sponsors who can read Chinese can use this [link](https://donate.nycu.edu.tw/contents/project_ct?p_id=47) to donate.
