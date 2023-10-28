@@ -11,7 +11,7 @@ In this demo, we will
 
 ## 1. Install VirtualBox
 
-Search `virtualbox download`, or visit [virtualbox.org](virtualbox.org) to download and install VirtualBox (currently 6.1.18) for your operation system.
+Search `virtualbox download`, or visit [virtualbox.org](https://www.virtualbox.org/) to download and install VirtualBox (currently 7.0.12) for your operation system.
 ![](1-1.png)
 
 Once installed VirtualBox, launch and see if you have something like this:
