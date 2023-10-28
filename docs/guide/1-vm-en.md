@@ -19,10 +19,10 @@ Once installed VirtualBox, launch and see if you have something like this:
 
 ## 2. Download Ubuntu Server
 
-Search `ubuntu server download` on the web and download the latest Ubuntu Server LTS, or visit [ubuntu.com](ubuntu.com), choose Manual Installation Option to download the `.iso` file (currently 20.04.2 LTS)
+Search `ubuntu server download` on the web and download the latest Ubuntu Server LTS, or visit [ubuntu.com](https://ubuntu.com/download/server), choose Manual Installation Option to download the `.iso` file (currently 20.04.6 LTS)
 ![](1-3.png)
 
-You should have downloaded a `.iso image` file with name like `ubuntu-20.04.1-live-server-amd64.iso`, probably in your download directory.
+You should have downloaded a `.iso image` file with name like `ubuntu-20.04.6-live-server-amd64.iso`, probably in your download directory.
 ![](1-4.png)
 
 ## 3. Create a Ubuntu Server VM
