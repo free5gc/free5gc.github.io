@@ -2,7 +2,7 @@
 
 # SMF Config / ULCL Config
 This document explains the detail of SMF config.
-Also provide some examples about conversion between config file and real userplane topology
+Also provide some examples about conversion between config file and real User Plane topology
 
 ***ULCL limitation:
 The branching UPF now can't connect to the Internet. 
