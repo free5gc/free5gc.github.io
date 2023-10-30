@@ -16,7 +16,7 @@ $ mongo --eval "db.dropDatabase()" free5gc
 ## 3. Run Webconsole server
 ```
 $ cd ~/free5gc/webconsole
-$ go run server.go
+$ ./bin/webconsole
 ```
     
 ## 4. Use browser to connect to Webconsole

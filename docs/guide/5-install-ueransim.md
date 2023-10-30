@@ -81,7 +81,7 @@ make webconsole
 First start up the WebConsole server:
 ```
 cd ~/free5gc/webconsole
-go run server.go
+./bin/webconsole
 ```
 
 The screen shows the port number `:5000` at the end. Open your web browser from your host machine, and enter the URL `http://192.168.56.101:5000`
