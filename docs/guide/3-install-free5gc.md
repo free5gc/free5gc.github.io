@@ -24,7 +24,7 @@
 
     * If another version of Go is installed, remove the existing version and install Go 1.18.10:
 
-        ```
+        ```bash
         # this assumes your current version of Go is in the default location
         sudo rm -rf /usr/local/go
         wget https://dl.google.com/go/go1.18.10.linux-amd64.tar.gz
@@ -33,7 +33,7 @@
 
     * If Go is not installed on your system:
 
-        ```
+        ```bash
         wget https://dl.google.com/go/go1.18.10.linux-amd64.tar.gz
         sudo tar -C /usr/local -zxvf go1.18.10.linux-amd64.tar.gz
         mkdir -p ~/go/{bin,pkg,src}
