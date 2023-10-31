@@ -21,7 +21,7 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 <div class="info-block">
 <img class="info-block-img" src="./assets/members/cht.jpeg"/>
 <img class="info-block-img" src="./assets/members/onf.png"/>
-<img class="info-block-img" src="./assets/members/fujitsu.png"/>
+<!-- <img class="info-block-img" src="./assets/members/fujitsu.png"/> -->
 <img class="info-block-img" src="./assets/members/edge-core.png"/>
 </div>
 
