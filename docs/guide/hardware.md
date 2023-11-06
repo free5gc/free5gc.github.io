@@ -20,8 +20,8 @@ Some 5G UE and gNodeB hardware have been tested with free5GC by partners or comm
     - Amarisoft gNodeB ([forum link](https://forum.free5gc.org/t/running-free5gc-stage3-with-amarisoft-gnodeb-ue/532))
     - Nokia gNodeB ([forum link](https://forum.free5gc.org/t/real-ue-register-failed/281))
     - Nokia (AMIA AirScale Indoor Subrack 473098A)
-    - OpenAirInterface
-    - Open Source RAN Project - srsRAN
+    - [OpenAirInterface](https://hackmd.io/@CHC1024/S1eybXknt)
+    - [Open Source RAN Project - srsRAN](https://github.com/s5uishida/free5gc_srsran_sample_config)
 
 Reports of tested hardware not listed above on Github issue or free5GC forum are welcome.
 
