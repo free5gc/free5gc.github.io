@@ -15,6 +15,10 @@
         - Support multiple UPF and ULCL (uplink classifier)
         - Session and Service Continuity (SSC) mode 1
         - Packet Routing/Forwarding
+    - CHF: Charging Function (will be supported in release v3.3.1)
+        - Online/Offline Charging
+        - Webconsole acts as BD (Billing Domain)
+        - Flow-Based Charging on PDU Session
     - AUSF: Authentication Server Function
     - NRF: NF Repository Function
     - UDM: Unified Data Management
