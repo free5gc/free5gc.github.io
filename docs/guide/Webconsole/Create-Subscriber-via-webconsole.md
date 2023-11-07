@@ -49,7 +49,7 @@ Password: free5gc
             - 5QI
             - Uplink GBR/MBR
             - Downlink GBR/MBR
-            - Flow Base Charging Config
+            - Flow-Based Charging Config
 
 ![](./images/subscriberData1.png)
 ![](./images/subscriberData2.png)
