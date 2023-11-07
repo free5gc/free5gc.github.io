@@ -33,7 +33,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Environment](./Environment.md)
 - [Basic](./Configuration.md)
 - [SMF](./SMF-Config.md)
-- [Webconsole](./New-Subscriber-via-webconsole.md)
+- [Webconsole](./Webconsole/Create-Subscriber-via-webconsole.md)
 - [Select UPF based on S-NSSAI](https://github.com/s5uishida/free5gc_ueransim_snssai_upf_sample_config)
 - [Select nearby UPF according to the connected gNodeB](https://github.com/s5uishida/free5gc_ueransim_nearby_upf_sample_config)
 - [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config)
