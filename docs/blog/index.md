@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2023/11/15: free5GC OAuth2 Procedure](./20231115/free5GC_OAuth2_Procedure.md)
 - [2023/11/08: Introduction of IP Multimedia Subsystem Part 1](./20231108/20231108.md)
 - [2023/10/18: LTE Authentication Introduction: EPS-AKA'](./20231018/20231018.md)
 - [2023/10/4: Introduction of MPTCP](./20231004/20231004.md)
