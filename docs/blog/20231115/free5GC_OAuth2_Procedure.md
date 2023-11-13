@@ -3,7 +3,6 @@
 >[!NOTE]
 > Author: Andy Chen (CTFang) 
 > Date: 2023/11/15
----
 
 ![OAuth2_Light](./OAuth2_light.png)
 
