@@ -10,9 +10,10 @@
 
 ![OAuth2_Light](./OAuth2_light.png)
 
-[0]. NF_Registration: See TS 29.510 Section5.2.2.2 NFRegister for more details.
-[1]. The GetTokenCtx() function generates a context and inserts the access token into the request header.
-[2]. If the token has expired, the NF would use SendAccTokenReq() to obtain a new token from NRF.
+**Description** 
+[0]. NF_Registration: See *TS 29.510 Section5.2.2.2 NFRegister* for more details.
+[1]. The ```GetTokenCtx()``` function generates a context and inserts the access token into the request header.
+[2]. If the token has expired, the NF would use ```SendAccTokenReq()``` to obtain a new token from NRF.
 [3]. NRF would verify the request NFType and the requested service for authorization, and issue the token if authorized.
 
 ## Note
