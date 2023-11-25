@@ -77,6 +77,8 @@ sudo systemctl stop ufw
 sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 ```
 
+**Note:** In Ubuntu Server 20.04 and 22.04 the dn_interface may be called `enp0s3` or `enp0s4` by default. Use the command `ip a` to help to figure it out
+
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
