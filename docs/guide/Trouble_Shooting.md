@@ -122,3 +122,18 @@ To see the details of H2C packets, do the following configuration.
     ![](https://i.imgur.com/Ct4KLgO.png)
 
     Decode the packets from the TCP ports listened by each NF as HTTP2 packets.
+
+### 10. To clear all iptables rules
+
+If something went wrong, it's possible to reset iptables' rules back using:
+```bash
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t mangle -F
+sudo iptables -F
+sudo iptables -X
+```
+
+Then remember to readd the [rules required](./5-install-ueransim.md#7-testing-ueransim-against-free5gc) by the free5GC
