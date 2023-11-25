@@ -69,7 +69,7 @@ modprobe: FATAL: Module gtp5g not found in directory /lib/modules/5.4.0-xxx-gene
 Reinstall the GTP-U kernel module using:
 ```bash
 cd ~
-git clone -b v0.8.2 https://github.com/free5gc/gtp5g.git
+git clone -b v0.8.3 https://github.com/free5gc/gtp5g.git
 cd ~/gtp5g
 sudo make
 sudo make install

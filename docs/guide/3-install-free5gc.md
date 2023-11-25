@@ -125,7 +125,7 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
     ```
-    git clone -b v0.8.2 https://github.com/free5gc/gtp5g.git
+    git clone -b v0.8.3 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make
     sudo make install
