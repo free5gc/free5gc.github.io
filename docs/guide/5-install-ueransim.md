@@ -229,12 +229,14 @@ The data appear to be the same as what we set in WebConsole.
 
 ## 7. Testing UERANSIM against free5GC
 
-SSH into free5gc. If you have rebooted free5gc, remember to do:
+SSH into free5gc. If you have rebooted free5gc, remember to run:
 ```
 sudo sysctl -w net.ipv4.ip_forward=1
-sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o <dn_interface> -j MASQUERADE
 sudo systemctl stop ufw
 ```
+
+**Note:** In Ubuntu Server 20.04 and 22.04 the dn_interface may be called `enp0s3` or `enp0s4` by default. Use the command `ip a` to help to figure it out
 
 In addition, execute the following command:
 ```
