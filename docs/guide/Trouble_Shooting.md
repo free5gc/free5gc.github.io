@@ -136,4 +136,4 @@ sudo iptables -F
 sudo iptables -X
 ```
 
-Then remember to read the [rules required](./5-install-ueransim.md#7-testing-ueransim-against-free5gc) by the free5GC.
+Then remember to add back the [rules required](./5-install-ueransim.md#7-testing-ueransim-against-free5gc) by the free5GC.
