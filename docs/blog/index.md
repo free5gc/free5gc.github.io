@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2023/11/29: Basic concept of RCU: Read, Copy, Update](./20231129/20231129.md)
 - [2023/11/22: Nephio: a Cloud Native Network Automation Linux Foundation Project](./20231122/20231122.md)
 - [2023/11/15: free5GC OAuth2 Procedure](./20231115/free5GC_OAuth2_Procedure.md)
 - [2023/11/08: Introduction of IP Multimedia Subsystem Part 1](./20231108/20231108.md)
