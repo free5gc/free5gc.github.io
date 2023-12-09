@@ -115,7 +115,7 @@ Add MongoDB public GPG key
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
 ```
-**NOTE:** if you are installing a version different than 7.0, remember, change it on the command above
+**Note:** if you are installing a version other than 7.0, remember, change it on the command above
 
 Create the APT list entry file using the command below
 ```bash
