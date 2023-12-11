@@ -97,4 +97,44 @@ Program your SIM card information
 
 You can get your SIM card from [**sysmocom**](https://shop.sysmocom.de/SIM/).
 
+## Appendix G: Install MongoDB 7.0.x on Ubuntu Server 22.04.03
 
+Check that the system CPU supports AVX instructions as it's required since MongoDB 5.0. If not (i.e. the command below returns empty output), use MongoDB 4.4.x (see step 3 from [installation prerequisites instructions](https://free5gc.org/guide/3-install-free5gc/#a-prerequisites))
+
+```bash
+grep --color avx /proc/cpuinfo
+```
+
+Before you begin the installation, update the package manager database and make sure MongoDB prerequisites are installed
+```bash
+sudo apt update
+sudo apt install gnupg curl
+```
+Add MongoDB public GPG key
+```bash
+curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
+```
+**Note:** if you are installing a version other than 7.0, remember, change it on the command above
+
+Create the APT list entry file using the command below
+```bash
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+```
+
+Refresh the package database then install MongoDB
+
+```bash
+sudo apt update
+sudo apt install -y mongodb-org
+```
+
+For detailed instructions on how to freeze the installed version or install a specific version of MongoDB, please, check the reference below or [follow this direct URL](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#install-the-mongodb-packages)
+
+Don't forget to load the DB service using
+
+```bash
+sudo systemctl start mongod
+```
+
+Reference: [MongoDB official website](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
