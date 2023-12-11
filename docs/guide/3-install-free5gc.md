@@ -6,14 +6,14 @@
 
 1\. Linux Kernel Version
 
-* In order to use the UPF element, you must use the `5.0.0-23-generic` or `5.4.x` version of the Linux kernel.  free5gc uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g), which has been tested and compiled against that kernel versions only. If you installed Ubuntu 20.04, the version looks like 5.4.x. To determine the version of the Linux kernel you are using:
+* In order to use the UPF element, you must use the `5.0.0-23-generic` or `5.4.x` version of the Linux kernel.  free5gc uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g), which has been tested and compiled against that kernel versions only. If you installed Ubuntu 20.04, the version should be like 5.4.x. To determine the version of the Linux kernel you are using:
 
 ```
 $ uname -r
 5.4.0-65-generic
 ```
 
-You will not be able to run most of the tests in [Test](https://github.com/free5gc/free5gc/wiki/Test) section unless you deploy a UPF.
+You will not be able to run most of the tests in [Test](./4-test-free5gc.md) page unless you deploy a UPF.
 
 2\. Golang Version
 
