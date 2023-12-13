@@ -5,12 +5,12 @@
 free5gc has been tested against the following environment:
 
 - Software
-    - OS: Ubuntu 20.04.1
-    - gcc 7.3.0
-    - Go 1.14.4 linux/amd64
-    - kernel version 5.4.0-42-generic
+    - OS: Ubuntu 20.04.6 LTS
+    - gcc 9.4.0
+    - go 1.18.10 linux/amd64
+    - kernel version 5.4.0-169-generic
 
-The listed kernel version is required for the UPF element.
+**Note:** The listed kernel version is required for the UPF element.
 
 - Minimum Hardware
     - CPU: Intel i5 processor
