@@ -3,7 +3,7 @@
 # Blogs
 
 ## Official
-- [2023/12/06: Article Sharing: Evaluating Dedicated Slices of Different Configurations in 5G Core](./20231213/20231213.md)
+- [2023/12/13: Article Sharing: Evaluating Dedicated Slices of Different Configurations in 5G Core](./20231213/20231213.md)
 - [2023/12/06: Introduction of IP Multimedia Subsystem Part 2](./20231206/20231206.md)
 - [2023/11/29: Basic concept of RCU: Read, Copy, Update](./20231129/20231129.md)
 - [2023/11/22: Nephio: a Cloud Native Network Automation Linux Foundation Project](./20231122/20231122.md)
