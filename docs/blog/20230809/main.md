@@ -419,3 +419,6 @@ I'm Yu-Sheng Liu, a master's student at National Yang Ming Chiao Tung University
 If you have any questions, please don't hesitate to contact me!
 
 * [LinkedIn](https://www.linkedin.com/in/yu-sheng-liu-41a45a24a/)
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

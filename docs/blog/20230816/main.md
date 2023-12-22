@@ -269,3 +269,6 @@ https://github.com/Orange-OpenSource/towards5gs-helm
 https://github.com/k8snetworkplumbingwg/multus-cni
 ## About
 Hello, I am Elisa Lee. My ongoing research revolves around VoNR (Voice over New Radio). I encourage any inquiries or identification of errors within the article, as they are welcomed for correction. Your feedback is invaluable, so please don't hesitate to reach out via email to share your insights.
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

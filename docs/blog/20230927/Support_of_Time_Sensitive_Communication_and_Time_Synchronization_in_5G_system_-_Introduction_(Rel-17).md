@@ -131,3 +131,6 @@ Release 17 expanded and improved the integration with IEEE TSN. This included en
 Hi, This is Ya-shih Tseng. I am currently researching the implementation of 5G TSN as part of my master's studies. Feel free to discuss with me.
 
 - Here is my [linkedin profile](www.linkedin.com/in/yashihh-tseng)
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

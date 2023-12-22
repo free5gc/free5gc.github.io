@@ -65,3 +65,6 @@ Hello, I am Andy Chen. I have just started making contributions to the free5GC c
 Additionally, I have provided the graph with a dark background.
 
 ![OAuth2_Dark](./OAuth2_dark.png)
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

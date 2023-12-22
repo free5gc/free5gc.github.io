@@ -77,3 +77,6 @@ CNC (Centralized Network Controller), as the central controller in the TSN syste
 
 ## About
 Hi, This is Ya-shih Tseng. I am currently researching the implementation of 5G TSN (Time-Sensitive Networking) as part of my master's studies. In the future, I will introduce more information about TSN. Hope you enjoy it.
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

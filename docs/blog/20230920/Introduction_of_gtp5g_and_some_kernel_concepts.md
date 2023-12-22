@@ -905,3 +905,6 @@ static int genl_validate_assign_mc_groups(struct genl_family *family)
 - https://www.cnblogs.com/ssyfj/p/16230540.html
 - [IT blog by Ian Chen](https://ithelp.ithome.com.tw/articles/10302887)
 - [IT blog by 0xff07](https://ithelp.ithome.com.tw/articles/10243519)
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

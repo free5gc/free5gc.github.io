@@ -810,3 +810,6 @@ Hi, my name is Jimmy Chang. The current research topic is 5G LAN with a focus on
 - https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/
 - https://man7.org/linux/man-pages/man7/namespaces.7.html
 - https://linux.die.net/man/8/iptables
+
+>[!NOTE]
+> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.
