@@ -138,3 +138,25 @@ sudo systemctl start mongod
 ```
 
 Reference: [MongoDB official website](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
+
+## Appendix H: Using the `reload_host_config.sh` script
+
+The script was designed to help reapplying [the configurations](./5-install-ueransim.md#7-testing-ueransim-against-free5gc) after a VM reboot
+
+Its usage is fairly simple, just run
+
+```bash
+./reload_host_config.sh <dn_interface>
+```
+
+For example, if your DN interface (e.g. free5GC's VM LAN interface) is named `enp0s4`, the command above will be
+
+```bash
+./reload_host_config.sh enp0s4
+```
+
+If you are unsure regarding the name of the interface, run `ip a` (see the image below) to help to figure it out
+
+![](A-reload-config-script-example.png)
+
+An example of the expected output is depicted above
