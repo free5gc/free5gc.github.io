@@ -243,6 +243,8 @@ In addition, execute the following command:
 sudo iptables -I FORWARD 1 -j ACCEPT
 ```
 
+**Tip:** As per the information on the [appendix page](./Appendix.md#appendix-h-using-the-reload_host_configsh-script), it's possible to use a script to reload the config above automatically after reboot
+
 Also, make sure you have make proper changes to the free5GC configuration files, then run `./run.sh`:
 ```
 cd ~/free5gc
