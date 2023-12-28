@@ -19,6 +19,10 @@ Here are the features on the roadmap. These items are planned to be supported in
 ## free5GC Installation Guide
 For people who are not familiar with virtual machines and Linux installation, here are some example demonstrations:
 
+>[!NOTE]
+> If you have to develop a new feature on free5GC, please check the links below to install the free5GC.
+> Otherwise, for normal use/test purposes, we recommend you use the [free5GC Compose](https://github.com/free5gc/free5gc-compose) to launch the free5GC without complicated configuration settings.
+
 - [Creating a Ubuntu VM using VirtualBox](./1-vm-en.md)
 - [Creating and Configuring a free5GC VM](./2-config-vm-en.md)
 - [Installing](./3-install-free5gc.md) and [Testing](./4-test-free5gc.md) free5GC Core Network
