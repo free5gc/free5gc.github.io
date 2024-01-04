@@ -52,6 +52,8 @@
 47. Ruoting Xiong, Kit-Lun Tong, Yi Ren, Wei Ren, and Gerard Parr, "From 5G to 6G: It is Time to Sniff the Communications between a Base Station and Core Networks" ACM MobiCom 2023
 48. Bhavishya Sharma, Shwetha Vittal, and A Antony Franklin "FlexCore: Leveraging XDP-SCTP for Scalable and Resilient Network Slice Service in Future 5G Core" APNET 2023
 49. Francesco Mancini, Giuseppe Bianchi "ScasDK - A Development Kit for Security Assurance test in Multi-Network-Function 5G" ARES 2023
+50. Endri Goshi, Michael Jarschel, Rastin Pries, Mu He, Wolfgang Kellerer, "Investigating Inter-NF Dependencies in Cloud-Native 5G Core Networks" 2021 17th International Conference on Network and Service Management (CNSM) IEEE
+51. Weihong Cai, Hongyue Lv, Fanfeng Kong, "A Concurrent Improvement Design for UDM Architecture in Free5GC" 2023 8th International Conference on Information Systems Engineering (ICISE) IEEE
 
 ## From NYCU
 1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
@@ -65,3 +67,5 @@
 9. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
 10. Yin-Chi Li, Ping-Tsan Liu, Yi-An Tai, Che-Hung Liu, Man-Hsin Chen, Chi-Yu Li, and Guan-Hua Tu, "A Runtime Anomaly Detector via Service Communication Proxy for 5G Mobile Networks," IEEE INFOCOM 2023
 11. Ho-Cheng Lee, Fuchun Joseph Lin, Jyh-Cheng Chen, Chien Chen, and Patrick Wang, "Enhancing 5G Core with Multi-Access Edge Computing," 32nd Wireless and Optical Communications Conference (WOCC), 2023
+12. Yi Liu, Qiaoling Li, Qingping Cao, Zhilan Huang, Yangchun Li, Yongbing Fan, "Evaluation of Free5GC Forwarding Performance on Private and Public Clouds" 2022 IEEE Cloud Summit
+13. Muthuraman Elangovan, Muhammad Shahid Iqbal, Chien Chen, Jyh-Cheng Chen, "Accelerating free5GC Data Plane Using Programmable Hardware" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS) IEEE
