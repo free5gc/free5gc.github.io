@@ -26,12 +26,15 @@
     - PCF: Policy and Charging Function
     - NSSF: Network Slice Selection Function
     - N3IWF: Non-3GPP Interworking Function
+    - N3IWUE: Non-3GPP Interworking User Equipment
 
 ## Supported features
 - Registration
     - Initial Registration
     - Periodic Registration
     - Mobility Registration
+    - Registration without authentication, due to RAN did the AMF reselection
+- NAS Reroute when serving AMF can not handle UE registration with unmatch NSSAI
 - Authentication
     - 5G-AKA
     - EAP-AKA'
