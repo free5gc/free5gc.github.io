@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2024/01/10: PacketRusher: A new UE/gNB simulator and CP/UP load tester](./20240110/20240110.md)
 - [2024/01/03: UE-initiated PLR Measurement Procedure in PMFP Procedure](./20240103/20240103.md)
 - [2023/12/13: Article Sharing: Evaluating Dedicated Slices of Different Configurations in 5G Core](./20231213/20231213.md)
 - [2023/12/06: Introduction of IP Multimedia Subsystem Part 2](./20231206/20231206.md)
