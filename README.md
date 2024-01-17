@@ -1,6 +1,6 @@
-# Free5GC Website
+# free5GC Website
 
-This repository contains the source code of Free5GC's website available at [https://free5gc.org/](https://free5gc.org/)
+This repository contains the source code of free5GC's website available at [https://free5gc.org/](https://free5gc.org/)
 
 ## Prerequisites
 
