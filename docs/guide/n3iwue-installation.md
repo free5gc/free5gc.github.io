@@ -12,6 +12,7 @@ In this demo we will practice:
 
 Repeat the steps of cloning `free5gc` VM from the base VM, create a new VM for the N3IWUE:
 
+- You can refer to [Installing free5gc](https://free5gc.org/guide/3-install-free5gc/) to install free5gc VM
 - Name the VM `n3iwue`, and create new MAC addresses for all network cards.
 - Make sure the VM has internet access and can log in using SSH.
 - Change the hostname to `n3iwue`.
