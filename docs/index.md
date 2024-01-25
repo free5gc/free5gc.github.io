@@ -19,9 +19,9 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 
 ### ![](./assets/platinum.png){: style="height:40px;width:40px" align=left} Platinum
 <div class="info-block">
+<img class="info-block-img" src="./assets/members/saviah.jpeg"/>
 <img class="info-block-img" src="./assets/members/cht.jpeg"/>
 <img class="info-block-img" src="./assets/members/onf.png"/>
-<!-- <img class="info-block-img" src="./assets/members/fujitsu.png"/> -->
 <img class="info-block-img" src="./assets/members/edge-core.png"/>
 </div>
 
