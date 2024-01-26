@@ -115,7 +115,7 @@ N3UEInformation:
   IPSecIfaceAddr: 192.168.56.103 # IP address of Nwu interface (IKE) on this N3UE
 ```
 
-## 6. Testing N3IWF with free5GC
+## 6. Testing N3IWUE with free5GC
 
 SSH into free5gc. If you have rebooted free5gc, remember to run:
 ```
