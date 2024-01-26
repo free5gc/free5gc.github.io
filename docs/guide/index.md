@@ -35,6 +35,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Creating and Configuring a free5GC VM](./2-config-vm-en.md)
 - [Build and Install free5GC](./3-install-free5gc.md) from source code and [Test](./4-test-free5gc.md) free5GC
 - [Installing a UE/RAN Simulator](./5-install-ueransim.md)
+- [Installing a N3IWUE](./n3iwue-installation.md)
 - [free5GC Simple Apps](./6-simple-app.md)
 - All of tutorial videos are available at our Youtube channel:
     - [English](https://www.youtube.com/watch?v=R-9vH_6VJ2Q&list=PLeDUIabcS2_rQd3yVJrBAYb-MbcqNgjC9)
