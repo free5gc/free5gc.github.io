@@ -111,7 +111,7 @@ You can check the following informations below:
 
 ## Run N3IWUE 
 You can access the N3IWUE bash and run it:
-```
+```bash
 # access N3IWUE bash
 docker exec -it n3iwue bash
 
