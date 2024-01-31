@@ -108,3 +108,13 @@ You can check the following informations below:
 
 - [ulcl-example branch](https://github.com/free5gc/free5gc-compose/tree/ulcl-example), or
 - [patch file](https://github.com/ianchen0119/free5gc-compose-ulcl)
+
+## Run N3IWUE 
+You can access the N3IWUE bash and run it:
+```
+# access N3IWUE bash
+docker exec -it n3iwue bash
+
+# run N3IWUE
+./run.sh
+```
