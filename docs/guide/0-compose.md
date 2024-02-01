@@ -110,7 +110,20 @@ You can check the following informations below:
 - [patch file](https://github.com/ianchen0119/free5gc-compose-ulcl)
 
 ## [Optional] Run N3IWUE
-If you want to use N3IWUE, you can access the N3IWUE container and run N3IWUE using the following commands:
+If you want use N3IWUE, you need to open your web browser from your host machine, and enter the URL `http://localhost:5000`
+
+- On the login page, enter username `admin` and password `free5gc`.
+- Once logged in, widen the page until you see “Subscribers” on the left-hand side column.
+- Click on the `Subscribers` tab and then on the `New Subscriber` button
+    - Scroll down to `Operator Code Type` and change it from "OPc" to "OP".
+    - Make sure the following config between `free5gc-compose/config/n3uecfg.yaml` and `Subscriber` you create are the same:
+        - PLMNID (ex. 208930000001234)
+        - K
+        - SQN
+        - OP value (choose OP instead of OPC)
+    - Scroll all the way down and click on `Submit`.
+
+Then you can access the N3IWUE container and run N3IWUE using the following commands:
 ```bash
 # access N3IWUE bash
 docker exec -it n3iwue bash
