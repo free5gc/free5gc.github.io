@@ -58,7 +58,6 @@
 53. Taeho Park, Hochan Lee, Heewon Kim, Subin Han, Taeyun Kim, Sangheon Pack, "Divide and Cache: A Novel Control Plane Framework for Private 5G Networks" 2023 IEEE 20th Consumer Communications & Networking Conference (CCNC) IEEE
 54. M. Quadrini, D. Verde, M. Luglio, C. Roseti, F. Zampognaro, "Implementation and Testing of MP-TCP ATSSS in a 5G Multi-Access Configuration" 2023 International Symposium on Networks, Computers and Communications (ISNCC) IEEE
 
-
 ## From NYCU
 1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
 2. C.-Y. Hsieh, Y.-W. Chang, C. Chen, and J.-C. Chen, "Poster: Design and Implementation of a Generic 5G User Plane Function Development Framework," ACM International Conference on Mobile Computing and Networking (MobiCom ‘21), (New Orleans, United States), pp. 846–848, Oct. 2021. (Won second place of the ACM MobiCom 2021 Student Research Competition)
