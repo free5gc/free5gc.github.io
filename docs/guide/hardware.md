@@ -1,6 +1,6 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
-# Hardware Tested 
+# Tested Hardware
 
 Some 5G UE and gNodeB hardware have been tested with free5GC by partners or community members:
 

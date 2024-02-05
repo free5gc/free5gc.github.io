@@ -4,8 +4,9 @@
 
 ## Information
 
-- [Hardware tested](./hardware.md)
+- [Tested hardware](./hardware.md)
 - [Supported features](./features.md)
+- [How to contribute](./contribute.md)
 
 ## Roadmap
 
@@ -58,6 +59,8 @@ For Container deployment:
 
 - [free5GC Compose](https://github.com/free5gc/free5gc-compose) (Docker Compose)
 - [Towards5gs-helm](https://github.com/Orange-OpenSource/towards5gs-helm) (Kubernetes)
+    - [Deploying free5GC on Kubernetes by Danilo Granados](https://www.linkedin.com/feed/update/urn:li:activity:7150871881020002305?utm_source=share&utm_medium=member_desktop)
+    - [Deploying free5GC in a multi-cluster Environment by Danilo Granados](https://www.linkedin.com/feed/update/urn:li:activity:7159899595810992128?utm_source=share&utm_medium=member_desktop)
 
 ## Others
 - [Release Note](https://github.com/free5gc/free5gc/releases)
