@@ -9,7 +9,7 @@
 ## 5G Docs/Specs
 
 - [Tech-invite (3GPP Specs)](https://www.tech-invite.com/)
-    - For biginner: TS 23.501, 23.502
+    - For beginner: TS 23.501, 23.502
     - NF Service: TS 29.50X
 - [Awesome 5G](https://github.com/calee0219/awesome-5g)
 - [5GC APIs](https://github.com/jdegre/5GC_APIs)
