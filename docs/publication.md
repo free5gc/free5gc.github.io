@@ -69,3 +69,5 @@
 11. Ho-Cheng Lee, Fuchun Joseph Lin, Jyh-Cheng Chen, Chien Chen, and Patrick Wang, "Enhancing 5G Core with Multi-Access Edge Computing," 32nd Wireless and Optical Communications Conference (WOCC), 2023
 12. Yi Liu, Qiaoling Li, Qingping Cao, Zhilan Huang, Yangchun Li, Yongbing Fan, "Evaluation of Free5GC Forwarding Performance on Private and Public Clouds" 2022 IEEE Cloud Summit
 13. Muthuraman Elangovan, Muhammad Shahid Iqbal, Chien Chen, Jyh-Cheng Chen, "Accelerating free5GC Data Plane Using Programmable Hardware" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS) IEEE
+14. Y. Chen, C. Chen, J.-W. Chang, and J.-C. Chen, "A Generic High-Availability Solution to Next-Generation Mobile Core Networks," in Proc. of International Conference on 6G Networking (6GNet '23), (Paris, France), Oct. 2023.
+15. C.-Y. Hsieh, Y. Ren, and J.-C. Chen, "Edge-Cloud Offloading: Knapsack Potential Game in 5G Multi-Access Edge Computing," IEEE Transactions on Wireless Communications, vol. 22, no. 11, pp. 7158-7171, Nov. 2023.
