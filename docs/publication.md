@@ -54,6 +54,9 @@
 49. Francesco Mancini, Giuseppe Bianchi "ScasDK - A Development Kit for Security Assurance test in Multi-Network-Function 5G" ARES 2023
 50. Endri Goshi, Michael Jarschel, Rastin Pries, Mu He, Wolfgang Kellerer, "Investigating Inter-NF Dependencies in Cloud-Native 5G Core Networks" 2021 17th International Conference on Network and Service Management (CNSM) IEEE
 51. Weihong Cai, Hongyue Lv, Fanfeng Kong, "A Concurrent Improvement Design for UDM Architecture in Free5GC" 2023 8th International Conference on Information Systems Engineering (ICISE) IEEE
+52. Sinta Novanana, Gunawan Wibisono "5G Lab as a Service (Laas) Simulator Deployment: Study Case Scenarios in Indonesian Higher Education" 2023 3rd International Conference on Electronic and Electrical Engineering and Intelligent System (ICE3IS) IEEE
+53. Taeho Park, Hochan Lee, Heewon Kim, Subin Han, Taeyun Kim, Sangheon Pack, "Divide and Cache: A Novel Control Plane Framework for Private 5G Networks" 2023 IEEE 20th Consumer Communications & Networking Conference (CCNC) IEEE
+54. M. Quadrini, D. Verde, M. Luglio, C. Roseti, F. Zampognaro, "Implementation and Testing of MP-TCP ATSSS in a 5G Multi-Access Configuration" 2023 International Symposium on Networks, Computers and Communications (ISNCC) IEEE
 
 ## From NYCU
 1. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
@@ -71,3 +74,5 @@
 13. Muthuraman Elangovan, Muhammad Shahid Iqbal, Chien Chen, Jyh-Cheng Chen, "Accelerating free5GC Data Plane Using Programmable Hardware" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS) IEEE
 14. Y. Chen, C. Chen, J.-W. Chang, and J.-C. Chen, "A Generic High-Availability Solution to Next-Generation Mobile Core Networks," in Proc. of International Conference on 6G Networking (6GNet '23), (Paris, France), Oct. 2023.
 15. C.-Y. Hsieh, Y. Ren, and J.-C. Chen, "Edge-Cloud Offloading: Knapsack Potential Game in 5G Multi-Access Edge Computing," IEEE Transactions on Wireless Communications, vol. 22, no. 11, pp. 7158-7171, Nov. 2023.
+16. Yu-Sheng Liu , Shixiong Qi, Po-Yi Lin, Han-Sing Tsai, K. K. Ramakrishnan, Jyh-Cheng Chen, "L25GC+: An Improved, 3GPP-compliant 5G Core for Low-latency Control Plane Operations" IEEE International Conference on Cloud Networking.
+17. Tse-Han Wang, Min-Chih Hu, Li-Hsing Yen, Chien-Chao Tseng "Heterogeneous UPF Integration Framework and 5G User Plane Acceleration" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS)
