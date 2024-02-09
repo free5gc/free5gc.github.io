@@ -28,7 +28,7 @@ To download N3IWUE in home directory:
 ```
 cd ~
 git clone https://github.com/free5gc/n3iwue.git
-cd ..
+cd n3iwue
 ```
 
 Update and upgrade the VM of N3IWUE:
