@@ -43,7 +43,7 @@ sudo nano /etc/hostname
 # or 
 sudo vi /etc/hostname
 ```
-In the file, change ubuntu into `free5gc`。If you are using nano ，you can press `Ctrl-O` to save the file, then `Ctrl-X` to exit.
+In the file, change ubuntu into `free5gc`. If you are using nano ，you can press `Ctrl-O` to save the file, then `Ctrl-X` to exit.
 
 Let’s also change the file `/etc/hosts` by replacing the ubuntu inside into `free5gc`:
 ```
