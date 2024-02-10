@@ -54,27 +54,10 @@ make
 ```
 
 ## 3. Install free5GC WebConsole
-free5GC provides a simple web tool WebConsole to help creating and managing UE registrations to be used by various 5G network functions (NF). To build WebConsole we need Node.js and Yarn.
+free5GC provides a simple web tool WebConsole to help creating and managing UE registrations to be used by various 5G network functions (NF). 
 
-First SSH into free5gc (`192.168.56.101`)，and remove obsolete tools that may exists:
-```
-sudo apt remove cmdtest
-sudo apt remove yarn
-```
+If WebConsole isn't installed yet, please, SSH into free5gc's VM (`192.168.56.101`) and follow the [instructions contained on this section here](./3-install-free5gc.md#d-install-webconsole).
 
-Then install `Node.js` and `Yarn`:
-```
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install -y nodejs yarn
-```
-
-To build WebConsole:
-```
-cd ~/free5gc
-make webconsole
-```
 
 ## 4. Use WebConsole to Add an UE
 
