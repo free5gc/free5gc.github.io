@@ -148,13 +148,12 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 
 ## D. Install WebConsole
 
-1. Before building WebConsole, install nodejs and yarn packages first:
+1. Before building WebConsole, install nodejs first:
 
     ```
-    sudo apt remove yarn cmdtest
     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
     sudo apt update
-    sudo apt install -y nodejs yarn
+    sudo apt install -y nodejs
     ```
 
 2. Build WebConsole
