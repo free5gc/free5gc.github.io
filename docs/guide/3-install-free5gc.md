@@ -154,7 +154,7 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
     sudo apt remove yarn cmdtest
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - 
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
     sudo apt update
     sudo apt install -y nodejs yarn
     ```
