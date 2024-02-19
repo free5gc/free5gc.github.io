@@ -172,6 +172,7 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 
         ```
         cd ~/free5gc/webconsole/frontend
+        corepack enable
         yarn install
         yarn build
         rm -rf ../public
