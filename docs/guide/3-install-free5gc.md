@@ -129,7 +129,7 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
     ```
-    git clone -b v0.8.3 https://github.com/free5gc/gtp5g.git
+    git clone -b v0.8.5 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make
     sudo make install
@@ -148,15 +148,12 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 
 ## D. Install WebConsole
 
-1. Before building WebConsole, install nodejs and yarn packages first:
+1. Before building WebConsole, install nodejs first:
 
     ```
-    sudo apt remove cmdtest
-    sudo apt remove yarn
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
     sudo apt update
-    sudo apt install -y nodejs yarn
+    sudo apt install -y nodejs
     ```
 
 2. Build WebConsole
