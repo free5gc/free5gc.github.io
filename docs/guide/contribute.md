@@ -2,6 +2,10 @@
 
 # How to contribute
 
+## Design Documents
+
+- [SMF](./Smf/design.md)
+
 ## Recommended Articles
 
 - [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)

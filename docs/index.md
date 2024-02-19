@@ -39,6 +39,7 @@ We are delighted to unveil the release of free5GC v3.4.0! In this latest version
 ### Next Step(s)
 
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
+
 - Online/Offline Charging (Incomming release)
 - SBI R17 support (Will be released in 2024 Q3 or Q4)
 - release TNGF
