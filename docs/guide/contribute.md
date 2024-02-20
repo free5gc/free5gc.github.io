@@ -2,7 +2,25 @@
 
 # How to contribute
 
+To contribute to free5GC project, you can consider to:
+
+1\. Raise the GitHub issue
+
+You can create the Issue on the [free5GC repo](https://github.com/free5gc/free5gc) directly.
+A issue could be 1. bugs report or 2. feature request, each issue would be assigned to the free5GC commiter by project owner, then assignee will solve the problem asap.
+
+2\. Create the Patch (Pull Request)
+
+The source code of the free5GC is stored at [https://github.com/free5gc/free5gc](https://github.com/free5gc/free5gc).
+Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow) for collaboration.
+
+
 ## Design Documents
+
+We maintain the design documents to help people started contributing to the free5GC, it includes the following topics:
+- Software Architecture
+- Dedicated issue and solution
+- Domain knowledges for 5GC development
 
 - [SMF](./Smf/design.md)
 
