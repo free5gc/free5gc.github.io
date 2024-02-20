@@ -3,7 +3,7 @@
 # Blogs
 
 ## Official
-- [2024/02/09: SMF PFCP Software Architecture](./20240209/20240209.md)
+
 - [2024/01/19: Registration Procedures](./20240119/20240119.md)
 - [2024/01/10: PacketRusher: A new UE/gNB simulator and CP/UP load tester](./20240110/20240110.md)
 - [2024/01/03: UE-initiated PLR Measurement Procedure in PMFP Procedure](./20240103/20240103.md)
