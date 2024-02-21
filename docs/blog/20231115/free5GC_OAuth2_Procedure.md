@@ -1,7 +1,7 @@
 # Introduction to free5GC OAuth2 Procedure
 
 >[!NOTE]
-> Author: Andy Chen (CTFang) 
+> Author: Andy Chen (CTFang, Tsung-Fang Chen) 
 > Date: 2023/11/15
 > Update: 2024/02/21
 
