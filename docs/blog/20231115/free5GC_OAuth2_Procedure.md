@@ -3,6 +3,7 @@
 >[!NOTE]
 > Author: Andy Chen (CTFang) 
 > Date: 2023/11/15
+> Update: 2024/02/21
 
 ![OAuth2_Light](./OAuth2_light.png)
 
@@ -20,11 +21,11 @@
 
 
 ## Note
-The OAuth2 functions are under development in free5GC. They will be released after thorough testing. Furthermore, there may be a more detailed workflow article related to this topic.
+The OAuth2 functions had been relased in free5GC [v3.4.0](https://github.com/free5gc/free5gc/releases/v3.4.0).
 
-### In Progress
+### Pull Requests
 - free5gc/NRF [PR#27](https://github.com/free5gc/nrf/pull/27)
-- free5gc/openapi [PR#17](https://github.com/free5gc/openapi/pull/17)
+- free5gc/free5gc[PR#525](https://github.com/free5gc/free5gc/pull/525)
 - There would be related Pull Request for each NF. 
 
 ### Future Work
