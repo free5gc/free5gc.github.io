@@ -34,7 +34,7 @@ We are delighted to unveil the release of free5GC v3.4.0! In this latest version
     - [Issue #421](https://github.com/free5gc/free5gc/issues/421)
     - [Issue #387](https://github.com/free5gc/free5gc/issues/387)
 - Release N3IWUE
-    - Source code: https://github.com/free5gc/n3iwue
+    - Source code: [https://github.com/free5gc/n3iwue](https://github.com/free5gc/n3iwue)
 
 ### Next Step(s)
 

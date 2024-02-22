@@ -23,6 +23,7 @@ We maintain the design documents to help people started contributing to the free
 - Domain knowledges for 5GC development
 
 - [SMF](./Smf/design.md)
+- [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
 
 ## Recommended Articles
 
