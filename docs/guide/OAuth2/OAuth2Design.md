@@ -87,7 +87,7 @@ We use part of the SMF code, for explanation.
     - Validating the access token when there is a service request, the NF must use the NRF's public key to ensure security. So, we have to tell the NF the location of the NRF certificate. (We can retrieve the Public key from the certificate).  
     ```yaml
     configuration:
-    nrfCertPem: cert/nrf.pem # NRF Certificate
+      nrfCertPem: cert/nrf.pem # NRF Certificate
     ```
 
     - We apply ```AuthorizationCheck()``` via ```router.use()```. (Take the Nsmf_pdusession service, for example). 
