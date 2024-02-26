@@ -18,11 +18,12 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 ## Design Documents
 
 We maintain the design documents to help people started contributing to the free5GC, it includes the following topics:
-- Software Architecture
-- Dedicated issue and solution
-- Domain knowledges for 5GC development
+1. Software Architecture
+2. Dedicated issue and solution
+3. Domain knowledges for 5GC development
 
 - [SMF](./Smf/design.md)
+- [CHF](./Chf/design.md)
 - [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
 
 ## Recommended Articles
