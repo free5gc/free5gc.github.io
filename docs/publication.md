@@ -2,6 +2,9 @@
 
 # Publications using free5GC
 
+- [ACM Library](https://dl.acm.org/action/doSearch?AllField=free5GC)
+- [IEEE Xplore](https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=free5GC)
+
 ## Not from NYCU
 1. David Soldani, "eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)",2023
 2. Matan Broner, Sangwoo Lee, Liuyi Jin, and Radu Stoleru, "Poster: Towards Multi-Radio Access in 5G Networks," MobiSys '23: Proceedings of the 21st Annual International Conference on Mobile Systems, Applications and ServicesJune, p.575–576, 2023
