@@ -44,4 +44,4 @@ The feature of the usage report has been supported since v3.3.0, the key points 
 Although 3GPP defined the FBC and QBC (QoS Flow-Based Charging),
 But free5GC now only supports the FBC on the data usage of PDU Session(s), So we will focus on the FBC in this document.
 
-![Alt text](image-2.png)
+![Alt text](image-1.png)
