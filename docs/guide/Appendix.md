@@ -157,6 +157,6 @@ For example, if your DN interface (e.g. free5GC's VM LAN interface) is named `en
 
 If you are unsure regarding the name of the interface, run `ip a` (see the image below) to help to figure it out
 
-![](A-reload-config-script-example.png)
+![](./images/A-reload-config-script-example.png)
 
 An example of the expected output is depicted above
