@@ -140,4 +140,4 @@ cd ~/n3iwue
 
 ## 7. Result
 Success: N3IWUE can ping data network through N3IWF
-![](1-13.png)
+![](./images/1-13.png)
