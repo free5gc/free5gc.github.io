@@ -61,11 +61,11 @@
     - Control Plane only:
         1. 5QI, ARP, GBR, MBR of QoS Flow (v3.3.0)
         2. Session-AMBR supported
--	Collection and reporting of usage data over N4 interface
+- Collection and reporting of usage data over N4 interface
     - Volume measurement periodically
--	UP Security
--	Multiple UPFs and ULCL (Uplink Classifier)
--	Multiple Slice and DNN
--	Dynamic/Static IPv4 address allocation
--   OAuth2 on SBI 
+- UP Security
+- Multiple UPFs and ULCL (Uplink Classifier)
+- Multiple Slice and DNN
+- Dynamic/Static IPv4 address allocation
+- OAuth2 on SBI 
     - [Design Document](./OAuth2/OAuth2Design.md)
