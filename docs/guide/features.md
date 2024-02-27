@@ -67,3 +67,5 @@
 -	Multiple UPFs and ULCL (Uplink Classifier)
 -	Multiple Slice and DNN
 -	Dynamic/Static IPv4 address allocation
+-   OAuth2 on SBI 
+    - [Design Document](./OAuth2/OAuth2Design.md)
