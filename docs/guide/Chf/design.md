@@ -17,17 +17,17 @@ We implement the converged charging system (CHF) and several changes:
 Online and Offline charging rely on the usage report(s) reported from UPF to SMF via the PFCP Session Report (defined in *3GPP TS 29.244*).
 The feature of the usage report has been supported since *v3.3.0*; the key points of the design are listed below:
 
-- URR's (Usage Reporting Rules) ID in the range of 0 ~ 5 is preserved for default settings:
-    - ID `0` for MBQE (Measurement Before QoS Enforcement) of the single UPF.
-    - ID `1` for MAQE (Measurement After QoS Enforcement) of the single UPF.
-    - ID `2` for MBQE of the branching UPF (ULCL).
-    - ID `3` for MAQE of the branching UPF (ULCL).
-    - ID `4` for MBQE of the anchor UPF (ULCL).
-    - ID `5` for MAQE of the anchor UPF (ULCL).
+- URR's (Usage Reporting Rules) ID in the range of 1 ~ 6 is preserved for default settings:
+    - ID `1` for MBQE (Measurement Before QoS Enforcement) of the single UPF.
+    - ID `2` for MAQE (Measurement After QoS Enforcement) of the single UPF.
+    - ID `3` for MBQE of the branching UPF (ULCL).
+    - ID `4` for MAQE of the branching UPF (ULCL).
+    - ID `5` for MBQE of the anchor UPF (ULCL).
+    - ID `6` for MAQE of the anchor UPF (ULCL).
     
 - Uplink and Downlink PDRs share the same URR.
 
-- The URR ID of the charging URR will be 6 or greater number.
+- The URR ID of the charging URR will be 7 or greater number.
 
 - If the charging method is **Online Charging**:
     - The URR has the Start of the SDF (Service Data Flow) trigger.
