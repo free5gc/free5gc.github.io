@@ -10,7 +10,7 @@ The Authentication Server Function (AUSF) plays a critical role in the security 
 This blog aims to shed light on the software architecture surrounding the AUSF's handling of UE authentication requests. We will explore how the AUSF operates within the 5G core network, focusing on its interactions with other network functions such as the Unified Data Management (UDM) and the Network Repository Function (NRF). Additionally, we will delve into the flow of authentication messages, the security mechanisms in place, and how the AUSF manages sessions and security contexts.
 
 ### <u>Description</u>
-![5GAKA_Authentication_Procedure](./5GAKA_Authentication_Procedure.png)
+![Ausf_Architecture](./Ausf_Architecture.png)
 
 When the AUSF (Authentication Server Function) is initiated within a 5G network, it activates several key functionalities crucial for managing the authentication and security of User Equipment (UE). These functionalities can be broadly categorized into three main areas: Secure Communication Setup, Authentication Protocol Handling, and Service-based Interface Management. Each of these areas plays a vital role in ensuring that the AUSF effectively secures network access and communication.
 
@@ -56,6 +56,7 @@ When the AUSF (Authentication Server Function) is initiated within a 5G network,
 
 - *3GPP TS 23.509*: Authentication Server Services (5G System)
 - *3GPP TS 33.501*: Security architecture and procedures for 5G System
+- [CHF Design Document](https://free5gc.org/guide/Chf/design/)
 
 ## About
 Greetings, I'm Chou, a newcomer to free5gc. I'm excited to share my experiment for the first time. If you spot any errors or have any questions, please don't hesitate to reach out. Your feedback is greatly appreciated.
@@ -76,4 +77,4 @@ Greetings, I'm Chou, a newcomer to free5gc. I'm excited to share my experiment f
 </p>
 
 - Linkedin: [https://www.linkedin.com/in/%E5%AE%9A%E9%81%A0-%E5%91%A8-4b3800193/](https://www.linkedin.com/in/%E5%AE%9A%E9%81%A0-%E5%91%A8-4b3800193/)
-- Github: [https://github.com/TYuan0816](https://github.com/ming-hsien)
+- Github: [https://github.com/TYuan0816](https://github.com/TYuan0816)
