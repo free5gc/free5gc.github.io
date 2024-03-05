@@ -1,4 +1,4 @@
-# SMF PFCP Software Architecture
+# AUSF Software Architecture
 
 >[!NOTE]
 > Author: TingYuan Chou
@@ -7,7 +7,7 @@
 ## Introduction
 The Authentication Server Function (AUSF) plays a critical role in the security framework of 5G networks, particularly in handling the authentication of User Equipment (UE). It serves as a central entity that facilitates the authentication process between the UE and the network, ensuring that only authorized users gain access. This process involves the generation and verification of authentication vectors, and the implementation of the 5G AKA (Authentication and Key Agreement) protocol.
 
-This blog aims to shed light on the software architecture surrounding the AUSF's handling of UE authentication requests. We will explore how the AUSF operates within the 5G core network, focusing on its interactions with other network functions such as the Unified Data Management (UDM) and the Network Repository Function (NRF). Additionally, we will delve into the flow of authentication messages, the security mechanisms in place, and how the AUSF manages sessions and security contexts.
+This blog aims to shed light on the software architecture surrounding the AUSF's handling of UE authentication requests. We will explore how the AUSF operates within the 5G core network, focusing on its interactions with other network functions, such as the Unified Data Management (UDM) and the Network Repository Function (NRF). Additionally, we will delve into the flow of authentication messages, the security mechanisms in place, and how the AUSF manages sessions and security contexts.
 
 ### <u>Description</u>
 ![Ausf_Architecture](./Ausf_Architecture.png)
@@ -18,9 +18,9 @@ When the AUSF (Authentication Server Function) is initiated within a 5G network,
 
    - Once the AUSF receives an authentication request, typically from the AMF (Access and Mobility Management Function) as part of the 5G security procedures, it will be processed through a secure communication channel. The AUSF listens for incoming authentication requests through its service-based interface, ensuring secure and reliable transport, often utilizing protocols like HTTPS for secure transmission over the network.
 
-[2] **Service-based interface handler for AUSF :**
+[2] **Service-based interface handler for AUSF:**
 
-   1. [2-1] ***UE Authentication :***
+   1. [2-1] ***UE Authentication:***
       - (1) **EAP-AKA** :  The EAP-AKA' authentication process, as detailed in RFC 5448 and 3GPP TS 33.501, is a sophisticated mechanism designed to ensure secure communication between the User Equipment (UE) and the network. This process involves several steps, starting with the generation of an authentication vector (AV) by the Unified Data Management/Authentication Repository and Processing Function (UDM/ARPF), and culminates in the successful establishment of a secure session between the UE and the network.
 
       ![Alt text](EAP-AKA.png)
