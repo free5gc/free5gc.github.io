@@ -22,3 +22,5 @@
 9. [UE and eNodeB in Hardware (conventional cell phone + SDR) and free5GC: a pratical approach in 5G](https://www.youtube.com/watch?v=ph1dZNrduOU), LABORA Research Group, July 3, 2020
 
 10. [OpenAirInterface and free5GC: a pratical approach in 5G networks](https://www.youtube.com/watch?v=ZZZ8UjgyWn4), LABORA Research Group, June 29, 2020
+
+11. [Complete Free5GC Installation on Kubernetes Cluster (Step-by-Step)](https://www.telecomhall.net/t/complete-free5gc-installation-on-kubernetes-cluster-step-by-step/25479)
