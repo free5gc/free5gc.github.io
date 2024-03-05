@@ -56,7 +56,7 @@ When the AUSF (Authentication Server Function) is initiated within a 5G network,
 
 - *3GPP TS 23.509*: Authentication Server Services (5G System)
 - *3GPP TS 33.501*: Security architecture and procedures for 5G System
-- [CHF Design Document](https://free5gc.org/guide/Chf/design/)
+- [LTE Authentication Introduction: EPS-AKA](https://free5gc.org/blog/20231018/20231018/)
 
 ## About
 Greetings, I'm Chou, a newcomer to free5gc. I'm excited to share my experiment for the first time. If you spot any errors or have any questions, please don't hesitate to reach out. Your feedback is greatly appreciated.
