@@ -22,6 +22,7 @@ We maintain the design documents to help people started contributing to the free
 2. Dedicated issue and solution
 3. Domain knowledges for 5GC development
 
+- [AUSF](./Ausf/design.md)
 - [SMF](./Smf/design.md)
 - [CHF](./Chf/design.md)
 - [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
