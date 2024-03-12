@@ -16,8 +16,8 @@ UPF has N3, N4, N6 and N9 four interfaces. Their usages are below:
 
 The free5GC implements UPF in two parts, which are:
 
-- Control plane: GO-UPF(N4)
-- Data plane: GTP5G(N3, N6, N9)
+- Control plane: GO-UPF (N4)
+- Data plane: GTP5G (N3, N6, N9)
 
 ***GTP5G*** is a communication protocol essential for data transmission within the 5G core network. It operates on the user plane, which is responsible for transporting user data between user equipment and the Internet.
 
@@ -26,14 +26,14 @@ This article will focus on the Data plane. Discuss how GO-UPF and GTP5G  handle 
 ## free5GC Uplink and Downlink Processing Workflow
 ![free5GC_UL/DL_Workflow](./gtp5g_ULDL.jpg)
 
-[1] **go-upf configuration**
+[1] **GO-UPF configuration**
 - ```NewDriver()```
   - In addition to initializing a GTP5G device for handling uplink and downlink packets, it is also necessary to configure the corresponding routes for this device.
 
 - ```OpenGtp5gLink()```
-  - The function OpenGtp5gLink() passes the UDP Socket representing N3, accessed through f.Fd(), as a parameter in the IFLA_LINKINFO message to the gtp5g kernel module in the kernel space. The gtp5g module then uses this socket to establish a UDP tunnel for N3.
+  - The function `OpenGtp5gLink()` passes the UDP Socket representing N3, accessed through f.Fd(), as a parameter in the `IFLA_LINKINFO` message to the gtp5g kernel module in the kernel space. The gtp5g module then uses this socket to establish a UDP tunnel for N3.
 - ```RouteAdd()```
-  - Add the corresponding route for the N6 Downlink.
+  - Add the corresponding route for the N6 Downlink, it indicates all of the traffic, sent to UE, will proceed by the gtp5g network device.
 
 [2] **gtp5g_init() initializes gtp5g kernel module:**
 
@@ -41,7 +41,7 @@ This article will focus on the Data plane. Discuss how GO-UPF and GTP5G  handle 
   - The Proc filesystem is a virtual filesystem that allows userspace programs to access kernel data structures and state.
 
 - ```register_pernet_subsys()```
-  - The register_pernet_subsys() function is used to register a pernet subsystem. A pernet subsystem is a framework for managing network namespaces. This allows the gtp5g module to run in different network namespaces.
+  - The `register_pernet_subsys()` function is used to register a pernet subsystem. A pernet subsystem is a framework for managing network namespaces. This allows the gtp5g module to run in different network namespaces.
 
 - ```generic family```
   - The gtp5g_genl_family structure is used to define a generic netlink family. A generic netlink family is a way for userspace programs to communicate with the kernel.
@@ -82,8 +82,8 @@ This article will focus on the Data plane. Discuss how GO-UPF and GTP5G  handle 
 [6] **Downlink transmission**
 
 1. ```gtp5g_dev_xmit()```
-    - This function is defined by gtp5g_netdev_ops so it is called when a packet needs to be transmitted.
+    - This function is defined by `gtp5g_netdev_ops` so it is called when a packet needs to be transmitted.
 2. ```gtp5g_handle_skb_ipv4()```
    - It will query the PDR based on the destination IP. If found successfully, the FAR will then be checked to determine how to handle the packet.
 3. ```gtp5g_xmit_skb_ipv4()```
-   - If FAR action is confirmed as FAR_ACTION_FORW, the function gtp5g_xmit_skb_ipv4() will be called and packets will be sent to the UDP tunnel.
+   - If FAR action is confirmed as `FAR_ACTION_FORW`, the function `gtp5g_xmit_skb_ipv4()` will be called and packets will be sent to the UDP tunnel.

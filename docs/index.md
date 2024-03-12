@@ -30,8 +30,10 @@ Users will see the data usage on the webconsole after the PDU Session is created
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
 - SBI R17 support (Will be released in 2024 Q3 or Q4)
+- release NEF
 - release TNGF
 - Packet Rusher CI integration
+- Kubernetes deployment (quick installation)
 
 ## **Sponsors**
 
