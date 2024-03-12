@@ -27,6 +27,7 @@ This article will focus on the Data plane. Discuss how GO-UPF and GTP5G  handle 
 ![free5GC_UL/DL_Workflow](./gtp5g_ULDL.jpg)
 
 [1] **GO-UPF configuration**
+
 - ```NewDriver()```
   - In addition to initializing a GTP5G device for handling uplink and downlink packets, it is also necessary to configure the corresponding routes for this device.
 
