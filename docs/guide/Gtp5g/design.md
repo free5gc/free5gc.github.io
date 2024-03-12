@@ -85,3 +85,16 @@ This article will focus on the Data plane. Discuss how GO-UPF and GTP5G  handle 
     - It will query the PDR based on the destination IP. If found successfully, the FAR will then be checked to determine how to handle the packet.
   3. `gtp5g_xmit_skb_ipv4()`:
     - If FAR action is confirmed as `FAR_ACTION_FORW`, the function `gtp5g_xmit_skb_ipv4()` will be called and packets will be sent to the UDP tunnel.
+
+## Reference
+
+- *3GPP TS 23.501*: System architecture for the 5G System
+- *gtp5g 原始程式碼解說* https://ithelp.ithome.com.tw/articles/10302887
+
+## About me
+
+Hi, I am Han-Hong Chen, a beginner to 5G and free5gc. This is my first time writing technical article. Let me know without hesitation if there is any mistake in the article.
+
+### Connect with Me
+
+- GitHub: [https://github.com/HanHongChen](https://github.com/HanHongChen)
