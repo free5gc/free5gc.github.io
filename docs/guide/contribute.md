@@ -25,6 +25,7 @@ We maintain the design documents to help people started contributing to the free
 - [AUSF](./Ausf/design.md)
 - [SMF](./Smf/design.md)
 - [UPF (GTP5G)](./Gtp5g/design.md)
+- [UPF (PFCP)](./Upf_PFCP/design.md)
 - [CHF](./Chf/design.md)
 - [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
 
