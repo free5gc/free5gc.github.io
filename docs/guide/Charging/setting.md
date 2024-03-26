@@ -187,6 +187,10 @@ In this demo, we will practice:
 
     ![demo](./images/demo.gif)
 
+- Result
+
+    ![result](./images/result.png)
+
 - You can try it out for the **Charing Functionality** now!
 
 

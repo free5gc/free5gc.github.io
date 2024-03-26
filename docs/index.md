@@ -23,7 +23,7 @@ Users will see the data usage on the webconsole after the PDU Session is created
 ![](./assets/charging-demo.gif)
 
 > [!NOTE] 
-> The history of the version release can be found at [history page](./history.md).
+> The history of the version release can be found on the [history page](./history.md).
 
 ### Next Step(s)
 
