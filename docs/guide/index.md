@@ -37,6 +37,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Installing a UE/RAN Simulator](./5-install-ueransim.md)
 - [Installing a N3IWUE](./n3iwue-installation.md)
 - [Enable OAuth2 on SBI](./OAuth2/oauth2_enable.md)
+- [Charging](./Charging/setting.md)
 - [free5GC Simple Apps](./6-simple-app.md)
 - All of tutorial videos are available at our Youtube channel:
     - [English](https://www.youtube.com/watch?v=R-9vH_6VJ2Q&list=PLeDUIabcS2_rQd3yVJrBAYb-MbcqNgjC9)
