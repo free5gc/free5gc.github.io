@@ -2,7 +2,7 @@
 
 ## 2024
 
-### TBD: v3.4.1
+### 3/28: v3.4.1
 
 In free5GC v3.4.1, Convergent Charging on PDU Session will be fully supported!
 Users will see the data usage on the webconsole after the PDU Session is created (please note that: The charging method (Online/Offline) needs to be determined during the subscription creation).

@@ -15,12 +15,14 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE] 
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free.
 
-## 2024/3/6: Incomming Release (free5GC v3.4.1)
+## 2024/3/6: free5GC v3.4.1 released!
 
-In free5GC v3.4.1, Convergent Charging on PDU Session will be fully supported!
+In free5GC v3.4.1, Convergent Charging on PDU Session was fully supported!
 Users will see the data usage on the webconsole after the PDU Session is created (please note that: The charging method (Online/Offline) needs to be determined during the subscription creation).
 
 ![](./assets/charging-demo.gif)
+
+If you're interested in the implementation details, please visit the [CHF design document](https://free5gc.org/guide/Chf/design/).
 
 > [!NOTE] 
 > The history of the version release can be found on the [history page](./history.md).
@@ -32,6 +34,7 @@ We remain committed to enhancing free5GC with new features, and we have a roadma
 - SBI R17 support (Will be released in 2024 Q3 or Q4)
 - release NEF
 - release TNGF
+- 5G LAN
 - Packet Rusher CI integration
 - Kubernetes deployment (quick installation)
 
