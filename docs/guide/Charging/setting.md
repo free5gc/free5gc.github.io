@@ -13,7 +13,7 @@ In this demo, we will practice:
 
 
 
-# 0. Preface
+## 0. Preface
 
 - *free5GC* provides Converge Charging, which includes **Online** and **Offline**.  
 - Support Slice-level and Flow-level Charging.
@@ -64,7 +64,7 @@ In this demo, we will practice:
 
     
 
-# 2. Check Charging Data in Webconsole
+## 2. Check Charging Data in Webconsole
 
 - Click **UE CHARGING** in webconsole sidebar
 
@@ -84,7 +84,7 @@ In this demo, we will practice:
 
 ​		
 
-# 3. Test with UERANSIM 
+## 3. Test with UERANSIM 
 
 - Refer to [this](./../5-install-ueransim.md) to set up your environment.
 

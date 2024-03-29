@@ -29,14 +29,17 @@ If you're interested in the implementation details, please visit the [CHF design
 
 ### Next Step(s)
 
+![](./assets/roadmap-0324.png)
+
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
 - SBI R17 support (Will be released in 2024 Q3 or Q4)
 - release NEF
 - release TNGF
-- 5G LAN
 - Packet Rusher CI integration
 - Kubernetes deployment (quick installation)
+- Time Sensitive Network (TSN)
+- 5G LAN
 
 ## **Sponsors**
 
