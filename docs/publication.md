@@ -62,21 +62,21 @@
 54. Junaid Jalal, "Enabling Edge Computing In 5G Via Local Area Data Network: Implementation and Experiments," Master Thesis, University of Agder, 2019.
 
 ## From NYCU
-1. Yu-Sheng Liu , Shixiong Qi, Po-Yi Lin, Han-Sing Tsai, K. K. Ramakrishnan, Jyh-Cheng Chen, "L25GC+: An Improved, 3GPP-compliant 5G Core for Low-latency Control Plane Operations" IEEE International Conference on Cloud Networking,2023
-2. Tse-Han Wang, Min-Chih Hu, Li-Hsing Yen, Chien-Chao Tseng "Heterogeneous UPF Integration Framework and 5G User Plane Acceleration" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS)
-3. Yin-Chi Li, Ping-Tsan Liu, Yi-An Tai, Che-Hung Liu, Man-Hsin Chen, Chi-Yu Li, and Guan-Hua Tu, "A Runtime Anomaly Detector via Service Communication Proxy for 5G Mobile Networks," IEEE INFOCOM 2023
-4. Ho-Cheng Lee, Fuchun Joseph Lin, Jyh-Cheng Chen, Chien Chen, and Patrick Wang, "Enhancing 5G Core with Multi-Access Edge Computing," 32nd Wireless and Optical Communications Conference (WOCC), 2023
-5. Muthuraman Elangovan, Muhammad Shahid Iqbal, Chien Chen, Jyh-Cheng Chen, "Accelerating free5GC Data Plane Using Programmable Hardware" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS) IEEE
-6. Y. Chen, C. Chen, J.-W. Chang, and J.-C. Chen, "A Generic High-Availability Solution to Next-Generation Mobile Core Networks," in Proc. of International Conference on 6G Networking (6GNet '23), (Paris, France), Oct. 2023.
-7. C.-Y. Hsieh, Y. Ren, and J.-C. Chen, "Edge-Cloud Offloading: Knapsack Potential Game in 5G Multi-Access Edge Computing," IEEE Transactions on Wireless Communications, vol. 22, no. 11, pp. 7158-7171, Nov. 2023.
-8. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
-9. Yi Liu, Qiaoling Li, Qingping Cao, Zhilan Huang, Yangchun Li, Yongbing Fan, "Evaluation of Free5GC Forwarding Performance on Private and Public Clouds" 2022 IEEE Cloud Summit
-10. C.-Y. Hsieh, Y.-W. Chang, C. Chen, and J.-C. Chen, "Poster: Design and Implementation of a Generic 5G User Plane Function Development Framework," ACM International Conference on Mobile Computing and Networking (MobiCom ‘21), (New Orleans, United States), pp. 846–848, Oct. 2021. (Won second place of the ACM MobiCom 2021 Student Research Competition)
-11. Yu-Herng Chai, and Fuchun Joseph Lin, "Evaluating Dedicated Slices of Different Configurations in 5G Core," Computer and Communications, 9(7), p.55-72, 2021.
-12. Cheng-Chin Tsai, Fuchun Joseph Lin, and Hiroshige Tanaka, "Evaluation of 5G Core Slicing on User Plane Function," Communications and Network, 13(3), p.79-92, 2021.
-13. Wei-Cheng Chang, and Fuchun Joseph Lin, "Coordinated Management of 5G Core Slices by MANO and OSS/BSS," Computer and Communications, 9(6), p.52-72, 2021.
-14. Yi-Bing Lin, Chien-Chao Tseng, and Ming-Hung Wang, "Effects of Transport Network Slicing on 5G Applications," Future Internet, 13(3), p.69, 2021.
-15. Seungjoon Seok, et al, "Towards Service and Networking Intelligence for Humanity: A Report on APNOMS 2020," Network and Systems Management, 29(4), p.1-11, 2021.
-16. Tze-Jie Tan, et al., "A Reliable Intelligent Routing Mechanism in 5G Core Network (5GC)," Annual International Conference on Mobile Computing and Networking, 2020.
-17. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
-
+1. Shixiong Qi,  K. K. Ramakrishnan, Jyh-Cheng Chen, "L26GC: Evolving the Low Latency Core for Future Cellular Networks" IEEE Internet Computing Early Access ,2024,Page(s):1 - 7
+2. Yu-Sheng Liu , Shixiong Qi, Po-Yi Lin, Han-Sing Tsai, K. K. Ramakrishnan, Jyh-Cheng Chen, "L25GC+: An Improved, 3GPP-compliant 5G Core for Low-latency Control Plane Operations" IEEE International Conference on Cloud Networking,2023
+3. Tse-Han Wang, Min-Chih Hu, Li-Hsing Yen, Chien-Chao Tseng "Heterogeneous UPF Integration Framework and 5G User Plane Acceleration" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS)
+4. Yin-Chi Li, Ping-Tsan Liu, Yi-An Tai, Che-Hung Liu, Man-Hsin Chen, Chi-Yu Li, and Guan-Hua Tu, "A Runtime Anomaly Detector via Service Communication Proxy for 5G Mobile Networks," IEEE INFOCOM 2023
+5. Ho-Cheng Lee, Fuchun Joseph Lin, Jyh-Cheng Chen, Chien Chen, and Patrick Wang, "Enhancing 5G Core with Multi-Access Edge Computing," 32nd Wireless and Optical Communications Conference (WOCC), 2023
+6. Muthuraman Elangovan, Muhammad Shahid Iqbal, Chien Chen, Jyh-Cheng Chen, "Accelerating free5GC Data Plane Using Programmable Hardware" 2023 24st Asia-Pacific Network Operations and Management Symposium (APNOMS) IEEE
+7. Y. Chen, C. Chen, J.-W. Chang, and J.-C. Chen, "A Generic High-Availability Solution to Next-Generation Mobile Core Networks," in Proc. of International Conference on 6G Networking (6GNet '23), (Paris, France), Oct. 2023.
+8. C.-Y. Hsieh, Y. Ren, and J.-C. Chen, "Edge-Cloud Offloading: Knapsack Potential Game in 5G Multi-Access Edge Computing," IEEE Transactions on Wireless Communications, vol. 22, no. 11, pp. 7158-7171, Nov. 2023.
+9. V. Jain, H.-T. Chu, S. Qi, C.-A. Lee, H.-C. Chang, C.-Y. Hsieh, K. K. Ramakrishnan, and J.-C. Chen, "L25GC: A Low Latency 5G Core Network based on High-Performance NFV Platforms," full paper, ACM SIGCOMM Conference (SIGCOMM ‘22), (Amsterdam, Netherlands), pp. 143–157, Aug. 2022.
+10. Yi Liu, Qiaoling Li, Qingping Cao, Zhilan Huang, Yangchun Li, Yongbing Fan, "Evaluation of Free5GC Forwarding Performance on Private and Public Clouds" 2022 IEEE Cloud Summit
+11. C.-Y. Hsieh, Y.-W. Chang, C. Chen, and J.-C. Chen, "Poster: Design and Implementation of a Generic 5G User Plane Function Development Framework," ACM International Conference on Mobile Computing and Networking (MobiCom ‘21), (New Orleans, United States), pp. 846–848, Oct. 2021. (Won second place of the ACM MobiCom 2021 Student Research Competition)
+12. Yu-Herng Chai, and Fuchun Joseph Lin, "Evaluating Dedicated Slices of Different Configurations in 5G Core," Computer and Communications, 9(7), p.55-72, 2021.
+13. Cheng-Chin Tsai, Fuchun Joseph Lin, and Hiroshige Tanaka, "Evaluation of 5G Core Slicing on User Plane Function," Communications and Network, 13(3), p.79-92, 2021.
+14. Wei-Cheng Chang, and Fuchun Joseph Lin, "Coordinated Management of 5G Core Slices by MANO and OSS/BSS," Computer and Communications, 9(6), p.52-72, 2021.
+15. Yi-Bing Lin, Chien-Chao Tseng, and Ming-Hung Wang, "Effects of Transport Network Slicing on 5G Applications," Future Internet, 13(3), p.69, 2021.
+16. Seungjoon Seok, et al, "Towards Service and Networking Intelligence for Humanity: A Report on APNOMS 2020," Network and Systems Management, 29(4), p.1-11, 2021.
+17. Tze-Jie Tan, et al., "A Reliable Intelligent Routing Mechanism in 5G Core Network (5GC)," Annual International Conference on Mobile Computing and Networking, 2020.
+18. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
