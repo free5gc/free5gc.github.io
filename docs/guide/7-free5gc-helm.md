@@ -33,9 +33,9 @@
     - We take `eth1` as the interface connected to DN, the following values should be changed:
         1. `global.n6network.subnetIP`, `global.n6network.gatewayIP`
         2. `free5gc-upf.n6if.ipAddress`
-        3. For chaning the interface, these values should be modified: `global.n2network.masterIf`, `global.n3network.masterIf`, `global.n4network.masterIf`, `global.n6network.masterIf`
+        3. For changing the interface, these values should be modified: `global.n2network.masterIf`, `global.n3network.masterIf`, `global.n4network.masterIf`, `global.n6network.masterIf`
     - `free5gc-helm/charts/free5gc/value.yaml`
-        ```
+        ```yaml
         global:
           n6network:
             enabled: true
@@ -48,7 +48,7 @@
             excludeIP: 10.100.100.254
         ```
     - `free5gc-helm/charts/free5gc/charts/free5gc-upf/values.yaml`
-        ```
+        ```yaml
         upf:    
             n6if:  # DN
                 ipAddress: 192.168.50.66
@@ -62,7 +62,7 @@
     - Some CNI plugin, like Flannel, kube-ovn, allow this funtionality by default
 - Setup Calico CNI for IP Forwarding
     1. `/var/snap/microk8s/current/args/cni-network/cni.yaml`
-        ```
+        ```yaml
         kind: ConfigMap
         data:
             cni_network_config: |-
@@ -101,7 +101,7 @@
 - Use `kubectl apply` to declarative create persistent volume
     - `kubectl apply -f persistent-vol-for-mongodb.yaml`
     - `persistent-vol-for-mongodb.yaml`
-        ```
+        ```yaml
         apiVersion: v1
         kind: PersistentVolume
         metadata:
@@ -180,9 +180,3 @@
     kubectl exec -it -n free5gc deployment/ueransim-ue -- ping -I uesimtun0 8.8.8.8
     ```
     ![](./images/7-3.png)
-
-
-
-
-
-
