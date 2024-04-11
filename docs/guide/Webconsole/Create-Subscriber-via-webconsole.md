@@ -49,11 +49,10 @@ Password: free5gc
             - 5QI
             - Uplink GBR/MBR
             - Downlink GBR/MBR
-            - Flow-Based Charging Config
+            - [Flow-Based Charging Config](../Charging/setting.md)
 
 ![](./images/subscriberData1.png)
 ![](./images/subscriberData2.png)
-![](./images/subscriberData3.png)
 
 
 > Check that the new subscriber was added successfully

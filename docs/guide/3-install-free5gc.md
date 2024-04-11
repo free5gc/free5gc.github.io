@@ -88,7 +88,7 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 
         ```
         cd ~
-        git clone --recursive -b v3.3.0 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b v3.4.1 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
         ```
 
