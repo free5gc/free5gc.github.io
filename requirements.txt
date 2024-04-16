@@ -18,7 +18,7 @@ hatchling==1.17.1
 httpcore==0.17.2
 httpx==0.24.1
 hyperlink==21.0.0
-idna==3.4
+idna==3.7
 importlib-metadata==6.6.0
 jaraco.classes==3.2.3
 jeepney==0.8.0
