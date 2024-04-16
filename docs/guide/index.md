@@ -40,7 +40,6 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Installing a UE/RAN Simulator](./5-install-ueransim.md)
 - [Installing a N3IWUE](./n3iwue-installation.md)
 - [Enable OAuth2 on SBI](./OAuth2/oauth2_enable.md)
-- [Charging](./Charging/setting.md)
 - [free5GC Simple Apps](./6-simple-app.md)
 - All of tutorial videos are available at our Youtube channel:
     - [English](https://www.youtube.com/watch?v=R-9vH_6VJ2Q&list=PLeDUIabcS2_rQd3yVJrBAYb-MbcqNgjC9)
@@ -52,6 +51,8 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Basic](./Configuration.md)
 - [SMF](./SMF-Config.md)
 - [Webconsole](./Webconsole/Create-Subscriber-via-webconsole.md)
+- [Charging](./Charging/setting.md)
+- [Set Static IP for UE](./Static-IP/set-static-ip.md)
 - [Select UPF based on S-NSSAI](https://github.com/s5uishida/free5gc_ueransim_snssai_upf_sample_config)
 - [Select nearby UPF according to the connected gNodeB](https://github.com/s5uishida/free5gc_ueransim_nearby_upf_sample_config)
 - [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config)
