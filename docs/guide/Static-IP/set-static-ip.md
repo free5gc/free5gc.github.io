@@ -57,11 +57,11 @@ We first have to know the static IP pool for specific DNN.
 
 In this step, we would go through how to set static IP addresses for subscribers and verify the settings. 
 
-- You could also refer to this for how to create subscribers.](./../Webconsole/Create-Subscriber-via-webconsole.md)
+- You could also refer to [this]((./../Webconsole/Create-Subscriber-via-webconsole.md)) for how to create subscribers.
 - We would create two subscribers:
     - *imsi-208930000000001*
     - *imsi-208930000000002*
-    - Both have slices *010203* and *112233,* but have different IP settings.
+    - Both have slices *010203* and *112233,* but have different IP address settings.
 
 ### imsi-208930000000001
 
@@ -110,7 +110,7 @@ In this step, we would go through how to set static IP addresses for subscribers
 
 - **010203** 
     - Set **10.60.100.163** for this DNN and click Verify.
-        - <font color="red">Note that **10.60.100.163** was set by the other UE</font>
+        - <font color="red">Note that **10.60.100.163** was set to another UE</font>
 
         ![ue2_010203_static_ip_verify_collision](./images/ue2_010203_static_ip_verify_collision.png)
         - Change to  **10.60.100.165**
@@ -130,12 +130,12 @@ In this step, we would go through how to set static IP addresses for subscribers
 
 ![ue1_ueransim](./images/ue1_ueransim.png)
 
-- This UE gets **10.60.100.163** for slice 010203, which is what we set before
-- This UE gets **10.61.100.165** for slice 112233, which is what we set before
+- This UE gets **10.60.100.163** for slice 010203, which is what we assigned before.
+- This UE gets **10.61.100.165** for slice 112233, which is what we assigned before
 
 ### imsi-208930000000002
 
 ![ue2_ueransim](./images/ue2_ueransim.png)
 
-- This UE gets **10.60.100.165** for slice 010203, which is what we set before
-- This UE gets **10.61.0.1** for slice 112233, the IP address in pools.
+- This UE gets **10.60.100.165** for slice 010203, which is what we assigned before
+- This UE gets **10.61.0.1** for slice 112233, the IP address in pools assigned by SMF.
