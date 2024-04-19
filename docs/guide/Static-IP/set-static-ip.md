@@ -57,7 +57,7 @@ We first have to know the static IP pool for specific DNN.
 
 In this step, we would go through how to set static IP addresses for subscribers and verify the settings. 
 
-- You could also refer to [this]((./../Webconsole/Create-Subscriber-via-webconsole.md)) for how to create subscribers.
+- You could also refer to [this](./../Webconsole/Create-Subscriber-via-webconsole.md) for how to create subscribers.
 - We would create two subscribers:
     - *imsi-208930000000001*
     - *imsi-208930000000002*
