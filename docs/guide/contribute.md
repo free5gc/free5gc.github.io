@@ -22,6 +22,7 @@ We maintain the design documents to help people started contributing to the free
 2. Dedicated issue and solution
 3. Domain knowledges for 5GC development
 
+- [AMF](./Amf/design.md)
 - [AUSF](./Ausf/design.md)
 - [SMF](./Smf/design.md)
 - [UPF (GTP5G)](./Gtp5g/design.md)
