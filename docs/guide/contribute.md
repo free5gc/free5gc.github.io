@@ -14,6 +14,10 @@ A issue could be 1. bugs report or 2. feature request, each issue would be assig
 The source code of the free5GC is stored at [https://github.com/free5gc/free5gc](https://github.com/free5gc/free5gc).
 Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow) for collaboration.
 
+> [!NOTE] 
+> Our pull request commit messages must comply with the [**Conventional Commit Message**](https://www.conventionalcommits.org/en/v1.0.0/) format. 
+> This will be checked by the pull request CI action.
+
 
 ## Design Documents
 
