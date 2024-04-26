@@ -12,7 +12,6 @@
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
-* Charging Function (CHF)
 * Session AMBR in Data Plane
 * Network Exposure Function (NEF)
 
