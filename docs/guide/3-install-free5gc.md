@@ -17,13 +17,13 @@ You will not be able to run most of the tests in [Test](./4-test-free5gc.md) pag
 
 2\. Golang Version
 
-* As noted above, free5gc is built and tested with Go 1.18.10
+* As noted above, free5gc is built and tested with Go 1.21.8
 * To check the version of Go on your system, from a command prompt:
 ```
 go version
 ```
 
-* If another version of Go is installed, remove the existing version and install Go 1.18.10:
+* If another version of Go is installed, remove the existing version and install Go 1.21.8:
 
 ```bash
 # this assumes your current version of Go is in the default location:
