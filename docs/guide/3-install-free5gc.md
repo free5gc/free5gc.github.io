@@ -28,15 +28,15 @@ go version
 ```bash
 # this assumes your current version of Go is in the default location:
 sudo rm -rf /usr/local/go
-wget https://dl.google.com/go/go1.18.10.linux-amd64.tar.gz
-sudo tar -C /usr/local -zxvf go1.18.10.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.21.8.linux-amd64.tar.gz
+sudo tar -C /usr/local -zxvf go1.21.8.linux-amd64.tar.gz
 ```
 
 * If Go is not installed on your system:
 
 ```bash
-wget https://dl.google.com/go/go1.18.10.linux-amd64.tar.gz
-sudo tar -C /usr/local -zxvf go1.18.10.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.21.8.linux-amd64.tar.gz
+sudo tar -C /usr/local -zxvf go1.21.8.linux-amd64.tar.gz
 mkdir -p ~/go/{bin,pkg,src}
 # The following assume that your shell is bash:
 echo 'export GOPATH=$HOME/go' >> ~/.bashrc
@@ -79,12 +79,20 @@ sudo systemctl stop ufw
 sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 ```
 
+Or use `reload_host_config.sh` from free5GC
+```
+sudo ./<PATH-TO-free5GC>/reload_host_config.sh <interface>
+
+Example:
+sudo ./free5gc/reload_host_config.sh enp0s3
+```
+
 **Note:** In Ubuntu Server 20.04 and 22.04 the dn_interface may be called `enp0s3` or `enp0s4` by default. Use the command `ip a` to help to figure it out
 
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
-    * To install the latest stable build (v3.3.0):
+    * To install the latest stable build (v3.4.1):
 
         ```
         cd ~
