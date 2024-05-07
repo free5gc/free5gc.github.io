@@ -32,6 +32,7 @@ We maintain the design documents to help people started contributing to the free
 - [UPF (GTP5G)](./Gtp5g/design.md)
 - [UPF (PFCP)](./Upf_PFCP/design.md)
 - [CHF](./Chf/design.md)
+- [PCF (Charging)](./PCF/charging.md)
 - [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
 - [Problem Details](https://github.com/free5gc/free5gc.github.io/tree/main/docs/guide/ProblemDetails)
 

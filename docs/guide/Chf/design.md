@@ -98,3 +98,4 @@ Charging on PDU Session is achieved by **FBC charging, with specific rating grou
 - In our implementations, UPF is composed of the `go-upf` (Controller) and `gtp5g` (Executor).
     - `gtp5g` sends the usage report to `go-upf` via unix socket.
     - `gtp5g` is able to send multiple reports at once, which reduces the communication effort in UPF.
+- [PCF Charing Design](./../PCF/charging.md)
