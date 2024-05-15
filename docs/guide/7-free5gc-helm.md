@@ -1,10 +1,24 @@
 # free5GC Helm Installation
 ## Prerequirements
-### Microk8s Installation
-- Install packages
+### MicroK8s Installation
+- Install MicroK8s
     ```
-    sudo snap install microk8s --classic --channel=1.29/stable
+    sudo snap install microk8s --classic --channel=1.28/stable
     ```
+    - Join the group
+        ```
+        sudo usermod -a -G microk8s $USER
+        mkdir -p ~/.kube
+        chmod 0700 ~/.kube
+        ```
+    - Re-enter the session
+        ```
+        su - $USER
+        ```
+    - Verify the Installation 
+        ```
+        microk8s status --wait-ready
+        ```
 - To [work with local kubectl](https://microk8s.io/docs/working-with-kubectl)
     ```
     sudo snap install kubectl --classic
@@ -12,11 +26,7 @@
     microk8s config > ~/.kube/config
     su - $USER
     ```
-- Verify the Installation 
-    ```
-    microk8s status --wait-ready
-    ```
-- Create namespace for free5gc
+- Create namespace for free5GC
     ```
     kubectl create ns free5gc
     ```
@@ -67,12 +77,18 @@
         data:
             cni_network_config: |-
                 {
-                    # Append IP forwarding settings
-                    "container_settings": {
-                        "allow_ip_forwarding": true
-                    }
+                    # ...
+                    "plugins": [
+                        {
+                            # Append IP forwarding settings
+                            "container_settings": {
+                                "allow_ip_forwarding": true
+                            },
+                        }
+                    ]
                 }
         ```
+        - Refer to the [Calico CNI Docs](https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings)
     2. Apply settings
         ```
         kubectl apply -f /var/snap/microk8s/current/args/cni-network/cni.yaml
@@ -132,10 +148,14 @@
     ```
     
 ### Helm Chart
+- Clone the repository
+    ```
+    git clone https://github.com/free5gc/free5gc-helm.git
+    ```
 - Enter the directory: `free5gc-helm/charts/`
 - free5GC
     ```
-    microk8s helm install -n free5gc free5gc-helm ./free5gc/ 
+    helm install -n free5gc free5gc-helm ./free5gc/ 
     ```
     - Install with customized interface settings
         ```
@@ -146,7 +166,7 @@
         ```
 - UERANSIM
     ```
-    microk8s helm install -n free5gc ueransim ./ueransim/ 
+    helm install -n free5gc ueransim ./ueransim/ 
     ```
 - Verification
     - List installed charts
@@ -177,6 +197,7 @@
         ![](./images/7-2.png)
 - Ping externel network with tunnel 
     ```
-    kubectl exec -it -n free5gc deployment/ueransim-ue -- ping -I uesimtun0 8.8.8.8
+    kubectl exec -it -n free5gc deployment/ueransim-ue \
+    -- ping -I uesimtun0 8.8.8.8
     ```
     ![](./images/7-3.png)
