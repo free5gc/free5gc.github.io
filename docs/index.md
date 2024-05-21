@@ -29,7 +29,7 @@ If you're interested in the implementation details, please visit the [CHF design
 
 ### Next Step(s)
 
-![](./assets/roadmap-0324.png)
+![](./assets/roadmap-0524.png)
 
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
