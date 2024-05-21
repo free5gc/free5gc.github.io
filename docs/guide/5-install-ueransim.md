@@ -300,3 +300,25 @@ Now use `ping`:
 ping -I uesimtun0 google.com
 ```
 If `ping` gets replies, then free5GC is running properly. Congratulations!
+
+## 8. Testing UERANSIM deregister via nr-cli
+
+Create new terminal, use nr-cli to show the running device
+```
+./build/nr-cli --dump
+UERANSIM-gnb-208-93-1
+imsi-208930000000001
+```
+
+Control `imsi-208930000000001` to send dereg normal to the free5GC
+```
+sudo ./build/nr-cli imsi-208930000000001 --exec "deregister normal"
+```
+And you would see the De-registration signal/logs in UE:
+```
+[2024-05-21 08:01:57.175] [nas] [debug] De-registration required due to [NORMAL]
+[2024-05-21 08:01:57.185] [nas] [debug] Starting de-registration procedure due to [NORMAL]
+[2024-05-21 08:01:57.185] [nas] [debug] Performing local release of PDU session[1]
+[2024-05-21 08:01:57.185] [nas] [debug] Performing local release of PDU session[2]
+[2024-05-21 08:01:57.185] [nas] [info] UE switches to state [MM-DEREGISTER-INITIATED]
+```
