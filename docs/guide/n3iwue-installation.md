@@ -132,11 +132,10 @@ N3UEInformation:
 SSH into free5gc. If you have rebooted free5gc, remember to run:
 
 ```
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo iptables -t nat -A POSTROUTING -o <dn_interface> -j MASQUERADE
-# e.g. sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
-sudo systemctl stop ufw
-sudo systemctl disable ufw
+cd free5gc
+sudo ./reload_host_config.sh <Interface Name>
+
+eg: sudo ./reload_host_config.sh ens18
 ```
 
 **Tip:** Set `net.ipv4.ip_forward=1` in `/etc/sysctl.conf` to enable packet forwarding permanently
