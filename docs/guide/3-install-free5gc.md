@@ -55,6 +55,10 @@ sudo apt -y update
 sudo apt -y install wget git
 ```
 
+* To check whether AVX is supported by the CPU, you can use the command:
+        ```
+        lscpu | grep avx
+        ```
 * Install MongoDB Community Edition (check [this appendix section](./Appendix.md#appendix-g-install-mongodb-70x-on-ubuntu-server-220403) for more information)
     1. Import the public key used by the package management system
         ```
@@ -88,7 +92,10 @@ sudo apt -y install wget git
 * **WARNING: MongoDB 5.0+ requires a CPU with AVX support. Or downgrade your MongoDB to 4.4**
     * see [this post on MongoDB's official forum](https://www.mongodb.com/community/forums/t/mongodb-5-0-cpu-intel-g4650-compatibility/116610/2)
     * see also [docker-library/mongo#485 (comment)](https://github.com/docker-library/mongo/issues/485#issuecomment-891991814)
-
+    * When you are using `Ubuntu 20.04` and a CPU without AVX support, you can use the `mongodb` package provided by Ubuntu. 
+        ```
+        sudo apt install mongodb # MongoDB Server v3.6.8
+        ```
 
 4\. User-plane Supporting Packages
 
