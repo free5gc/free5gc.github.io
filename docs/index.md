@@ -15,7 +15,7 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE] 
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free.
 
-## 2024/7/2: free5GC v3.4.2 released!
+## 2024/7/3: free5GC v3.4.2 released!
 
 The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for OpenAPI Release 17. New features include setting static IPs for UEs and OAuth2 authentication for the webconsole, plus a ULCL example in free5gc-compose. Bug fixes and a new commit message check are also included.
 
