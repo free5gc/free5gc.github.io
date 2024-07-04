@@ -17,23 +17,30 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 
 ## 2024/7/2: free5GC v3.4.2 released!
 
-The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for OpenAPI Release 17. New features include setting static IPs for UEs and OAuth2 authentication for the webconsole, plus an ULCL example in free5gc-compose. Bug fixes and a new commit message check are also included.
+The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for OpenAPI Release 17. New features include setting static IPs for UEs and OAuth2 authentication for the webconsole, plus a ULCL example in free5gc-compose. Bug fixes and a new commit message check are also included.
 
-[Refactor]
-	- Go version bump to Go1.21
-	- Refactor NFs for preparation upgrading openapi to Release17
+**[Refactor]**
 
-[Features]
-	- Set Static-IP for UE in webconsole 
-	- Webconsole acts as AF and uses OAuth2 authentication to get OAM service from NFs
-	- Add ULCL docker-compose example in [free5gc-compose](https://github.com/free5gc/free5gc-compose)
+- Go version bump to Go1.21
+- Refactor NFs for preparation upgrading openapi to Release17
 
-[Bugs]
-	- Fix N3IWUE fails to ping when having flow rules([v1.0.1](https://github.com/free5gc/n3iwue/tree/v1.0.1))
-	- Fix some bugs report from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
 
-[Chore]
-	- Apply [Conventional Commit Message](https://www.conventionalcommits.org/en/v1.0.0/) check in Pull Request
+**[Features]**
+
+- Set Static-IP for UE in webconsole 
+- Webconsole acts as AF and uses OAuth2 authentication to get OAM service from NFs
+- Add ULCL docker-compose example in [free5gc-compose](https://github.com/free5gc/free5gc-compose)
+
+
+**[Bugs]**
+
+- Fix N3IWUE fails to ping when having flow rules([v1.0.1](https://github.com/free5gc/n3iwue/tree/v1.0.1))
+- Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
+
+
+**[Chore]**
+
+- Apply [Conventional Commit Message](https://www.conventionalcommits.org/en/v1.0.0/) check in Pull Request
 
 
 
