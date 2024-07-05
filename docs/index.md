@@ -30,6 +30,8 @@ The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for Open
 - Set Static-IP for UE in webconsole 
 - Webconsole acts as AF and uses OAuth2 authentication to get OAM service from NFs
 - Add ULCL docker-compose example in [free5gc-compose](https://github.com/free5gc/free5gc-compose)
+- Session AMBR in Data Plane
+- CHF on k8s
 
 
 **[Bugs]**

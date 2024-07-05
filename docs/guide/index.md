@@ -12,10 +12,13 @@
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
-* Session AMBR in Data Plane
-* Network Exposure Function (NEF)
-* Trusted Non-3GPP Gateway Function (TNGF)
-* Upgrade to Release17
+- Kubernetes deployment (quick installation)
+- Release TNGF
+- Release NEF
+- SBI R17 support
+- Packet Rusher CI integration
+- Time Sensitive Network (TSN)
+- 5G LAN
 
 If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
 
