@@ -78,12 +78,12 @@ Open your web browser from your host machine, and enter the URL `http://192.168.
 - Once logged in, widen the page until you see “Subscribers” on the left-hand side column.
 - Click on the `Subscribers` tab and then on the `New Subscriber` button
   - Scroll down to `Operator Code Type` and change it from "OPc" to "OP".
-  - Make sure the following config between `n3iwue/config/n3ue.yaml` and `Subscriber` you create are the same:
-    - PLMNID (ex. 208930000001234)
+  - Make sure the following config between `n3iwue/config/n3ue.yaml` and the `Subscriber` you are creating are the same:
+    - SUPI(IMSI) (ex. 208930000001234)
     - K
     - SQN
-    - OP value (choose OP instead of OPC)
-  - Scroll all the way down and click on `Submit`.
+    - OP value (Operator Code Value)
+  - Scroll the page all the way down and click on `Create`.
 
 ## 4. Setting N3IWF Config
 
