@@ -89,9 +89,19 @@
                 }
         ```
         - Refer to the [Calico CNI Docs](https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings)
-    2. Apply settings
+    2. `/var/snap/microk8s/current/args/kubelet`
+        - append the following line
+            ```
+            --allowed-unsafe-sysctls "net.ipv4.ip_forward"
+            ```
+    3. Apply settings
         ```
         kubectl apply -f /var/snap/microk8s/current/args/cni-network/cni.yaml
+        ```
+    4. Restart MicroK8s
+        ```
+        microk8s stop
+        microk8s start
         ```
 - **Otherwise,** Use `kube-ovn` CNI plugin
     ```
@@ -114,14 +124,14 @@
 
 ## Installation
 ### Create Persistent Volumn
-- Use `kubectl apply` to declarative create persistent volume
+- Use `kubectl apply` to declarative create persistent volume for mongo
     - `kubectl apply -f persistent-vol-for-mongodb.yaml`
     - `persistent-vol-for-mongodb.yaml`
         ```yaml
         apiVersion: v1
         kind: PersistentVolume
         metadata:
-          name: example-local-pv9
+          name: free5gc-pv-mongo
           labels:
             project: free5gc
         spec:
@@ -130,6 +140,7 @@
           accessModes:
           - ReadWriteOnce
           persistentVolumeReclaimPolicy: Retain
+          storageClassName: microk8s-hostpath
           local:
             path: </path/to/storage>
           nodeAffinity:
@@ -140,6 +151,35 @@
                   operator: In
                   values:
                   - <work-node-name>
+        ```
+        - directory on `/path/to/storage` should be created previously
+- Use `kubectl apply` to declarative create persistent volume for `nrf.pem`
+    - `kubectl apply -f persistent-vol-for-cert.yaml`
+    - `persistent-vol-for-cert.yaml`
+        ```yaml
+        apiVersion: v1
+        kind: PersistentVolume
+        metadata:
+        name: free5gc-pv-cert
+        labels:
+            project: free5gc
+        spec:
+        capacity:
+            storage: 2Mi
+        accessModes:
+        - ReadOnlyMany
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: microk8s-hostpath
+        local:
+            path: </path/to/storage>
+        nodeAffinity:
+            required:
+            nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - <work-node-name>
         ```
         - directory on `/path/to/storage` should be created previously
 - Check persistent volume
