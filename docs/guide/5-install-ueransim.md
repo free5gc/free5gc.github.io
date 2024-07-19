@@ -22,7 +22,7 @@ Repeat the steps of cloning `free5gc` VM from the base VM, create a new VM for t
 ## 2. Install UERANSIM
 
 Search “ueransim” on the web, and get the [web site](https://github.com/aligungr/UERANSIM).
-On the web site, review what the UERANSIM open-source project is about, then browse into the [installation page](Installation).
+On the web site, check what the UERANSIM open-source project is about. Then navigate to the [installation page](https://github.com/aligungr/UERANSIM/wiki/Installation) or follow the instructions below.
 
 To download UERANSIM:
 ```
