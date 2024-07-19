@@ -29,10 +29,13 @@ To download UERANSIM:
 cd ~
 git clone https://github.com/aligungr/UERANSIM
 cd UERANSIM
+# if using free5GC v3.3.0 or below
 git checkout 3a96298
+# if using free5GC v3.4.0 or above
+git checkout e4c492d
 ```
 
-Update and upgrade ueransim VM first:
+Update and upgrade UERANSIM VM first:
 ```
 sudo apt update
 sudo apt upgrade
