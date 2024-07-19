@@ -131,7 +131,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
         ```
         cd ~
-        git clone --recursive -b v3.4.1 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b v3.4.2 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
         ```
 
@@ -172,7 +172,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
     ```
-    git clone -b v0.8.6 https://github.com/free5gc/gtp5g.git
+    git clone -b v0.8.10 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make
     sudo make install
