@@ -66,14 +66,7 @@ If this outputs an error like this:
 modprobe: FATAL: Module gtp5g not found in directory /lib/modules/5.4.0-xxx-generic
 ```
 
-Reinstall the GTP-U kernel module using:
-```bash
-cd ~
-git clone -b v0.8.3 https://github.com/free5gc/gtp5g.git
-cd ~/gtp5g
-sudo make
-sudo make install
-```
+Reinstall the GTP-U kernel module (refer to [these instructions](./3-install-free5gc.md#c-install-user-plane-function-upf))
 
 Then, once running the core `run.sh` script, you should obtain the message on the logs:
 
