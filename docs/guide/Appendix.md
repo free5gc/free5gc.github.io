@@ -39,25 +39,37 @@ The below commands may be helpful for development purposes.
 
 ## Appendix E: Change Kernel Version
 1. Check the previous kernel version: `uname -r`
-2. Search specific kernel version and install, take `5.0.0-23-generic` for example
+2. Search for a specific kernel version and install (e.g. `5.0.0-23-generic`)
 ```bash
+sudo apt update # make sure package lists are up to date
 sudo apt search 'linux-image-5.0.0-23-generic'
-sudo apt install 'linux-image-5.0.0-23-generic'
-sudo apt install 'linux-headers-5.0.0-23-generic'
 ```
-3. Update initramfs and grub
+Example output for the command above:
+```bash
+Sorting... Done
+Full Text Search... Done
+linux-image-5.0.0-23-generic/focal-updates,focal-security 5.0.0-23.126~20.04.1 amd64
+  Signed kernel image generic
+```
+Install the new kernel image:
+```bash
+sudo apt install linux-image-5.0.0-23-generic linux-headers-5.0.0-23-generic
+```
+3. Update initramfs and GRUB
 ```bash
 sudo update-initramfs -u -k all
 sudo update-grub
 ```
-4. Reboot, enter grub and choose kernel version `5.0.0-23-generic`
+4. Reboot, enter GRUB, and select the newly installed kernel version `5.0.0-23-generic`
 ```bash
 sudo reboot
 ```
+5. Reinstall the GTP-U kernel module on the new kernel version
+
+Follow the `Retrieve the 5G GTP-U kernel module using git and build it` instructions of the [install guide](./3-install-free5gc.md#c-install-user-plane-function-upf)
 #### Optional: Remove Kernel Image
 ```
-sudo apt remove 'linux-image-5.0.0-23-generic'
-sudo apt remove 'linux-headers-5.0.0-23-generic'
+sudo apt remove linux-image-5.0.0-23-generic linux-headers-5.0.0-23-generic
 ```
 
 ## Appendix F: Program the SIM Card
