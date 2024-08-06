@@ -12,39 +12,43 @@ Modify `~/free5gc/config/tngfcfg.yaml` file
 ```yaml
 # --- Bind Interfaces ---
 IKEBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this TNGF
-RadiusBindAddress: <YOUR_FREE5GC_IP> #192.168.137.103 # IP address of Nwu interface (IKE) on this TNGF
+RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this TNGF
 ```
 
 ## 2. Use WebConsole to Add UE
 * Start your webconsole server
-    ```
+    ```sh
     cd ~/free5gc/webconsole/
+    make # If webconsole haven't compile in previous step
     ./bin/webconsole
     ```
 * Open your web browser from your host machine, and enter the URL `http://<FREE5GC_IP>:5000`
 * On the login page, enter username `admin` and password `free5gc`
 * Go to `SUBSCRIBERS` and click on `CREATE`
 * Check `SUPI(IMSI)` field is unique and modify other fields whatever you need
-![image](./TNGFUE/subscribe.png)
+![subscribe](./subscribe.png)
 * Scroll all the way down and click on `CREATE`.
 
 ## 3. AP setting
 
+#### AP information
+![APinformation](./AP_info.png)
+
 #### Setting ESSID
 > **Network → Wireless → Edit → Interface Configuration → General Setup**
-> ![image](./TNGFUE/AP1.png)
+> ![AP1](./AP1.png)
 
 #### Setting as below, RADIUS Authentication Server is free5gc IP
 > **Interface Configuration → Wireless Security**
-> ![image](./TNGFUE/AP2.png)
+> ![AP2](./AP2.png)
 > 
 
 #### Open Dynamic DHCP
 > **Network → Interface → Edit lan →  DHCP server → Advance Setting**
-> ![image](./TNGFUE/AP3.png)
+> ![AP3](./AP3.png)
 
 ## 4. TNGFUE Installation
-Install TNGFUE in another wireless device.
+Install TNGFUE in another device with WIFI connectivity.
 ### Get Source Code
 ```
 git clone https://github.com/free5gc/tngfue.git
@@ -110,12 +114,8 @@ In ```tngfue/wpa_supplicant/sec.conf```:
 
 You can find all the parameters listed below on the Web Console subscriber page.
 
-- `K:` 
 - `imsi_identity:` SUPI(IMSI)
 - `MSIN:` SUPI without the PLMN part
-- `SQN:`
-- `AMF:` Authentication Management Field
-- `OPC:` Operator Code Value
 
 Format: 
 ```
@@ -196,15 +196,19 @@ ip r add default via 192.168.1.202 dev <YOUR_WIFI_INTERFACE_NAME>
 #### Run
 ```
 cd ~/tngfue/wpa_supplicant
-sudo ./wpa_supplicant -c ../wpa_supplicant.conf -i <YOUR_WIFI_INTERFACE_NAME> -dd
+sudo ./wpa_supplicant -c ../wpa_supplicant.conf -i <YOUR_WIFI_INTERFACE_NAME>
 ```
 
 When the session connects successfully, you will see these five interfaces established. 
-![image](./TNGFUE/interfaces.png)
+![interfaces](./interfaces.png)
 
+And TNGFUE will show that connection is completed.
+![tngfue1](./tngfue1.png)
+![tngfue2](./tngfue2.png)
 
 ### C. Transfer data over the greTun0 interface
 
 ```
 ping -I greTun0 8.8.8.8
 ```
+![ping](./ping.png)
