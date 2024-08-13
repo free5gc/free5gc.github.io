@@ -12,8 +12,11 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 - The source code of the latest version of free5GC can be downloaded from [here](https://github.com/free5gc/free5gc){target=_blank}.
 - Follow our [LinkedIn](https://www.linkedin.com/company/free5gc/){target=_blank} page to get the news about free5GC.
 
-> [!NOTE] 
+> [!NOTE]
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free.
+
+> [!NOTE]
+> Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
 
 ## 2024/7/3: free5GC v3.4.2 released!
 
@@ -27,7 +30,7 @@ The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for Open
 
 **[Features]**
 
-- Set Static-IP for UE in webconsole 
+- Set Static-IP for UE in webconsole
 - Webconsole acts as AF and uses OAuth2 authentication to get OAM service from NFs
 - Add ULCL docker-compose example in [free5gc-compose](https://github.com/free5gc/free5gc-compose)
 - Session AMBR in Data Plane
@@ -46,7 +49,7 @@ The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for Open
 
 
 
-> [!NOTE] 
+> [!NOTE]
 > The history of the version release can be found on the [history page](./history.md).
 
 ### Next Step(s)
