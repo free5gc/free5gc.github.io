@@ -130,3 +130,32 @@ sudo iptables -X
 ```
 
 Then remember to add back the [rules required](./5-install-ueransim.md#7-testing-ueransim-against-free5gc) by the free5GC.
+
+### 11. Fix UERANSIM's EAP-AKA' behavior
+
+If you face issues similar to the one reported on [the forum](https://forum.free5gc.org/t/authentication-method-eap-aka-not-working/2260) or the message `SEMANTICALLY_INCORRECT_MESSAGE` when seting up UERANSIM's UE after configuring it to use EAP-AKA-PRIME as authentication method on Webconsole, check the solution below:
+
+#### First method
+
+Clone the nightly version from commit `85a0fbf`:
+
+Follow the cloning instructions from [this guide page here](https://free5gc.org/guide/5-install-ueransim/#2-install-ueransim)
+
+#### Second method
+
+Update your UERANSIM installation with the fix:
+
+1. Enter UERANSIM's folder (the folder where the source code is already cloned):
+```bash
+cd UERANSIM
+```
+
+2. Move the version of your source code to the commit where the fixes were merged:
+```bash
+git checkout 85a0fbf
+```
+
+3. Rebuild UERANSIM
+```bash
+make
+```
