@@ -33,6 +33,8 @@ cd UERANSIM
 git checkout 3a96298
 # if using free5GC v3.4.0 or above
 git checkout e4c492d
+# if using free5GC v3.4.x and to get EAP-AKA-PRIME fix
+git checkout 85a0fbf
 ```
 
 Update and upgrade UERANSIM VM first:
