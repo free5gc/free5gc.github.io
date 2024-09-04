@@ -159,3 +159,50 @@ git checkout 85a0fbf
 ```bash
 make
 ```
+### 12. N3IWUE fails to connect with `[ERRO][N3UE][IKE] Not Success` message
+
+As per the instructions on [N3IWUE install guide](./n3iwue-installation.md#3-use-webconsole-to-add-ue), the parameters of the configuration file `n3ue.yaml` must match those on free5GC's database. 
+
+If you get log messages like those below:
+
+```bash
+# on free5GC
+[WARN][AMF][Gmm][amf_ue_ngap_id:RU:6,AU:8(Non3GPP)][supi:SUPI:imsi-208930000001234] NAS MAC verification failed(received: 0xc0c0d135, expected: 0x6f1f9365)
+[ERRO][AMF][Gmm][amf_ue_ngap_id:RU:6,AU:8(Non3GPP)][supi:SUPI:imsi-208930000001234] NAS message is ciphered, but MAC verification failed
+# on N3IWUE
+[INFO][N3UE][IKE] Get EAP
+[ERRO][N3UE][IKE] Not Success
+^C4 packets captured
+4 packets received by filter
+0 packets dropped by kernel
+[FATA][N3UE][Init] panic: runtime error: invalid memory address or nil pointer dereference
+```
+
+Double check if SQN matches. If not, update it on N3IWUE's side using:
+
+```bash
+nano n3iwue/config/n3ue.yaml # adjust this path if needed
+```
+
+Refer to the `Security` section on the file:
+
+```bash
+info:
+    version: 1.0.1
+    description: Non-3GPP UE configuration
+configuration:
+    N3IWFInformation:
+...
+    Security:
+                K: b73a90cbcf3afb622dba83c58a8415df
+                RAND: b120f1c1a0102a2f507dd543de68281f
+                SQN: 16f3b3f71005
+                AMF: 8000
+                OP: b672047e003bb952dca6cb8af0e5b779
+                OPC: df0c67868fa25f748b7044c6e7c245b8
+```
+
+Note that SQN is dinamically updated while N3IWUE is running, so this issue might get caused by the N3IWUE being killed during the authentication phase which may cause the value to not match (e.g. it was updated on just one side).
+
+Once the parameters are updated, save and close the configuration file. Now N3IWUE should work correctly.
+
