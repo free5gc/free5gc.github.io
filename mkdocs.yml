@@ -91,3 +91,7 @@ extra_javascript:
 plugins:
   - search
   - callouts
+
+copyright: |
+  Copyright © free5GC a Series of LF Projects, LLC
+  For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
