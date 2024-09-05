@@ -2,6 +2,26 @@
 
 ## 2024
 
+## 9/5: v3.4.3
+
+The release of free5GC v3.4.3 includes several new features, such as new network function TNGF, support for an empty SD value in SNSSAI, and the ability to disable CGF in CHF. It also features a refactored Subscriber Modal Page in the Webconsole. Additionally, several bugs have been fixed, including issues with double registration with N3IWF and unauthorized UE context releases, along with other bug fixes reported via GitHub issues and the free5GC forum.
+
+**[Features]**
+
+- Release TNGF
+- Support empty SD value (SNSSAI)
+- Support disable CGF in CHF
+
+**[Refactor]**
+
+- Refactor Subscriber Modal Page in Webconsole
+
+**[Bugs]**
+
+- Fix can't registration with N3IWF twice problems
+- Fix UEs can be context released by a second UE without authentication (src: [Issue](https://github.com/free5gc/free5gc/issues/580))
+- Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
+
 ### 7/3: v3.4.2
 
 The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring all Network Functions. New features include setting static IPs for UEs and OAuth2 authentication for the webconsole, plus a ULCL example in free5gc-compose. Bug fixes and a new commit message check are also included.

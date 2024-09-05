@@ -18,48 +18,35 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE]
 > Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
 
-## 2024/7/3: free5GC v3.4.2 released!
-
-The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring for OpenAPI Release 17. New features include setting static IPs for UEs and OAuth2 authentication for the webconsole, plus a ULCL example in free5gc-compose. Bug fixes and a new commit message check are also included.
-
-**[Refactor]**
-
-- Go version bump to Go1.21
-- Refactor NFs for preparation upgrading openapi to Release17
-
+## 2024/9/5: free5GC v3.4.3 released!
+The release of free5GC v3.4.3 includes several new features, such as new network function TNGF, support for an empty SD value in SNSSAI, and the ability to disable CGF in CHF. It also features a refactored Subscriber Modal Page in the Webconsole. Additionally, several bugs have been fixed, including issues with double registration with N3IWF and unauthorized UE context releases, along with other bug fixes reported via GitHub issues and the free5GC forum.
 
 **[Features]**
 
-- Set Static-IP for UE in webconsole
-- Webconsole acts as AF and uses OAuth2 authentication to get OAM service from NFs
-- Add ULCL docker-compose example in [free5gc-compose](https://github.com/free5gc/free5gc-compose)
-- Session AMBR in Data Plane
-- CHF on k8s
+- Release TNGF ([TNGFUE Installation](./guide/TNGF/tngfue-installation.md))
+- Support empty SD value (SNSSAI)
+- Support disable CGF in CHF
 
+**[Refactor]**
+
+- Refactor Subscriber Modal Page in Webconsole
 
 **[Bugs]**
 
-- Fix N3IWUE fails to ping when having flow rules([v1.0.1](https://github.com/free5gc/n3iwue/tree/v1.0.1))
+- Fix can't registration with N3IWF twice problems
+- Fix UEs can be context released by a second UE without authentication (src: [Issue](https://github.com/free5gc/free5gc/issues/580))
 - Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
-
-
-**[Chore]**
-
-- Apply [Conventional Commit Message](https://www.conventionalcommits.org/en/v1.0.0/) check in Pull Request
-
-
 
 > [!NOTE]
 > The history of the version release can be found on the [history page](./history.md).
 
 ### Next Step(s)
 
-![](./assets/roadmap-0724.png)
+![](./assets/roadmap-0924.png)
 
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
 - Kubernetes deployment (quick installation)
-- Release TNGF
 - Release NEF
 - SBI R17 support (Will be released in 2024 Q3 or Q4)
 - Packet Rusher CI integration
