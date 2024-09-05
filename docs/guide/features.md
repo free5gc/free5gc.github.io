@@ -27,6 +27,8 @@
     - NSSF: Network Slice Selection Function
     - N3IWF: Non-3GPP Interworking Function
     - N3IWUE: Non-3GPP Interworking User Equipment
+    - TNGF: Trusted Non-3GPP Gateway Function
+    - TNGFUE: Trusted Non-3GPP Gateway Function User Equipment
 
 ## Supported features
 - Registration
