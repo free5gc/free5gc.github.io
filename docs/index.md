@@ -23,7 +23,7 @@ The release of free5GC v3.4.3 includes several new features, such as new network
 
 **[Features]**
 
-- Release TNGF ([TNGFUE Installation](./guide/TNGF/tngfue-installation.md))
+- Release TNGF & TNGFUE ([TNGFUE Installation](./guide/TNGF/tngfue-installation.md))
 - Support empty SD value (SNSSAI)
 - Support disable CGF in CHF
 
