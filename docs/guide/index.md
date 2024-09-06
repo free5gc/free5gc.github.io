@@ -8,20 +8,6 @@
 - [Supported features](./features.md)
 - [How to contribute](./contribute.md)
 
-## Roadmap
-
-Here are the features on the roadmap. These items are planned to be supported in the near future:
-
-- Kubernetes deployment (quick installation)
-- Release TNGF
-- Release NEF
-- SBI R17 support
-- Packet Rusher CI integration
-- Time Sensitive Network (TSN)
-- 5G LAN
-
-If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
-
 ## free5GC Installation Guide
 
 >[!NOTE]
@@ -72,6 +58,19 @@ For Container deployment:
 - [Towards5gs-helm](https://github.com/Orange-OpenSource/towards5gs-helm) (Kubernetes)
     - [Deploying free5GC on Kubernetes by Danilo Granados](https://www.linkedin.com/feed/update/urn:li:activity:7150871881020002305?utm_source=share&utm_medium=member_desktop)
     - [Deploying free5GC in a multi-cluster Environment by Danilo Granados](https://www.linkedin.com/feed/update/urn:li:activity:7159899595810992128?utm_source=share&utm_medium=member_desktop)
+
+## Roadmap
+
+Here are the features on the roadmap. These items are planned to be supported in the near future:
+
+- Kubernetes deployment (quick installation)
+- Release NEF
+- SBI R17 support
+- Packet Rusher CI integration
+- Time Sensitive Network (TSN)
+- 5G LAN
+
+If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
 
 ## Others
 - [Release Note](https://github.com/free5gc/free5gc/releases)
