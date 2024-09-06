@@ -67,6 +67,9 @@ nav:
   - Home: index.md
   - User Guide: guide/
   - Blogs: blog/
+  - Documents: doc/
+  - Tutorials: 
+    - Intro: https://github.com/free5gc/free5GLab
   - Supports: support/
   - More:
       - Relavent Publications: publication.md
