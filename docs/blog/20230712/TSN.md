@@ -32,7 +32,7 @@ With the increasing demands for wireless control in applications such as industr
 
 ### Time Synchronization
 To achieve time synchronization between TSN and 5G systems, TSN utilizes the time synchronization method defined in IEEE 802.1AS, which is the generalized Precision Time Protocol (gPTP). gPTP supports time synchronization for Time-aware end stations and Time-aware Bridges in Layer 2.  In the 3GPP TS23.501 release 16 specification, the 5G system plays the role of a "Time-aware system" as defined in IEEE 802.1AS and is designated as a Logical bridge, connecting TSN system end stations.
->[!NOTE] 
+>[!NOTE]
 >*gPTP* is an extended version of PTP (Precision Time Protocol) that primarily expands support for second-layer network devices.
 
 **How can we synchronize the time of two end stations into the same time domain?**
@@ -44,7 +44,7 @@ First, the time synchronization architecture includes Master clocks and Slave cl
 Check the [link](https://www.nettimelogic.com/resources/PTP%20Basics.pdf) for more detail about how PTP works.
 
 ## Intergration of TSN and 5G
-By now, I believe you have gained an understanding of the time synchronization mechanism in TSN. Let's briefly explain how the 5G system supports TSN as a logical TSN bridge. 
+By now, I believe you have gained an understanding of the time synchronization mechanism in TSN. Let's briefly explain how the 5G system supports TSN as a logical TSN bridge.
 The 3GPP has defined new functionalities such as NW-TT, DS-TT, and TSN-AF, as well as TSN control nodes like CUC and CNC. Please check TS 23.501 Release 16 for more details.
 ![](./time_aware_system.png)
 > System architecture of 5G support TSN
@@ -78,5 +78,3 @@ CNC (Centralized Network Controller), as the central controller in the TSN syste
 ## About
 Hi, This is Ya-shih Tseng. I am currently researching the implementation of 5G TSN (Time-Sensitive Networking) as part of my master's studies. In the future, I will introduce more information about TSN. Hope you enjoy it.
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

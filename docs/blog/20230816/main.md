@@ -4,10 +4,10 @@
 > Date: 2023/8/16
 ## Abstract
 In the initial section of the article, I will provide an introduction to Kubernetes. Moving on to the subsequent part, I will delve into the utilization of Kubernetes for facilitating the deployment of free5GC. Lastly, in the final segment of the article, I will elaborate on the effective utilization of Kubernetes for monitoring services.
-## Introduce Kubernetes 
+## Introduce Kubernetes
 Do you know why Kubernetes is called k8s?
 
-It's due to a shorthand notation that uses the first letter "k," followed by the number "8," and ending with the last letter "s" to represent the full name. 
+It's due to a shorthand notation that uses the first letter "k," followed by the number "8," and ending with the last letter "s" to represent the full name.
 Kubernetes,stands as an open-source container orchestration platform that bestows organizations with the capacity to adeptly govern, deploy, and expand containerized applications. Initially conceived by Google and presently overseen by the Cloud Native Computing Foundation (CNCF), Kubernetes has ascended to become a pivotal technological underpinning within the realm of contemporary cloud-native computing.
 
 For those who find themselves unacquainted with the intricacies of Kubernetes, let us embark on an exploration of its architectural framework.
@@ -33,7 +33,7 @@ In essence, this intricate interplay of nodes, services, and orchestration eleme
 
 ### Master Nodes
 We've now explored all the scalable components and the task runner. Undoubtedly, to orchestrate and oversee everything, a central command hub is necessary – this is referred to as the master node. Although direct intervention within these nodes isn't typically required to ensure the seamless operation of the entire system, it's still beneficial for you to grasp a basic understanding of its functionality.
-#### API server 
+#### API server
 It determines which interface among all nodes can be externally accessed. Any subsequent commands you execute will be channeled through this service to the designated node or pod. Furthermore, essential cluster information can also be obtained from this service.
 #### Scheduler
 Similar to an airport's control tower, its function is akin to orchestrating the deployment of pods on specific nodes based on the rules you've established and the data obtained from the API server. The effectiveness of these rules is pivotal, as they often determine the system's overall efficiency.
@@ -129,7 +129,7 @@ helm list -A
 #### Install multus-cni
 "multus-cni" is a project that provides a Kubernetes network plugin, specifically a "Container Network Interface" (CNI) plugin, which enables the attachment of multiple network interfaces to pods in a Kubernetes cluster.
 ```bat
-git clone https://github.com/k8snetworkplumbingwg/multus-cni.git 
+git clone https://github.com/k8snetworkplumbingwg/multus-cni.git
 ```
 ### Deploy free5GC
 #### Useful kubectl command
@@ -137,7 +137,7 @@ Now, I will proceed to introduce a selection of kubectl command that can be empl
 
 "kubectl get pods" retrieves a list of running pods in the current namespace along with their names, statuses, and other relevant information.
 ```bat
-kubectl get pods 
+kubectl get pods
 ```
 "kubectl describe pod" is used to get detailed information about a specific pod, including its status, events, labels, and more.
 
@@ -152,7 +152,7 @@ kubectl logs [pod-name]
 "kubectl exec -it" allows you to execute a command inside a running pod. The `-it` flag enables interactive terminal access.
 ```bat
 kubectl exec -it [pod-name] -- [command]
-```   
+```
 "kubectl apply -f " deploys resources defined in a YAML file, such as pods, services, or deployments, to your cluster.
 ```bat
 kubectl apply -f [yaml-file]
@@ -160,7 +160,7 @@ kubectl apply -f [yaml-file]
 "kubectl delete" deletes a specific resource by specifying its type and name, freeing up resources and cleaning the cluster.
 ```bat
 kubectl delete [resource-type] [resource-name]
-```   
+```
 "kubectl expose deployment" creates a new service, typically of type LoadBalancer, to expose a deployment's pods to external network traffic.
 ```bat
 kubectl expose deployment [deployment-name] --type=LoadBalancer --port=[port]
@@ -182,7 +182,7 @@ kubectl describe node [node-name]
 ```bat
 kubectl get namespaces
 ```
-"kubectl create namespace" creates a new namespace, allowing you to logically separate and organize resources.   
+"kubectl create namespace" creates a new namespace, allowing you to logically separate and organize resources.
 ```bat
 kubectl create namespace [namespace-name]
 ```
@@ -197,7 +197,7 @@ Use flannel as cni plugin to start minikue. Flannel is a popular "Container Netw
 sudo usermod -aG docker $USER && newgrp docker
 minikube start --driver=docker --cpus=4 --memory=8g --disk-size=20g --cni=flannel
 ## verify minikube installation
-minikube status 
+minikube status
 ```
 ![](./minikube_status.jpg)
 #### Enable Multus-CNI Plugin
@@ -270,5 +270,3 @@ https://github.com/k8snetworkplumbingwg/multus-cni
 ## About
 Hello, I am Elisa Lee. My ongoing research revolves around VoNR (Voice over New Radio). I encourage any inquiries or identification of errors within the article, as they are welcomed for correction. Your feedback is invaluable, so please don't hesitate to reach out via email to share your insights.
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

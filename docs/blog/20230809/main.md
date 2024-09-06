@@ -17,7 +17,7 @@ Fuzz testing, commonly known as fuzzing, is an automated software testing techni
 The primary objective of fuzzing is to identify security flaws, crashes, or abnormal program behavior caused by invalid or unexpected inputs.
 
 ### How Fuzz Testing Works
-Fuzz testing involves subjecting the target software or system to a large number of inputs, including random or malformed data, to see how it handles them. 
+Fuzz testing involves subjecting the target software or system to a large number of inputs, including random or malformed data, to see how it handles them.
 The idea is to explore edge cases and input combinations that may not have been adequately tested during traditional software testing.
 Here's how the fuzzing process typically works:
 
@@ -71,7 +71,7 @@ Here's how the fuzzing process typically works:
 
 
 ### Conclusion for fuzz testing
-Fuzz testing, or fuzzing, is a powerful and essential technique in the realm of software security testing. 
+Fuzz testing, or fuzzing, is a powerful and essential technique in the realm of software security testing.
 By providing a diverse set of inputs and exploring uncharted code paths, fuzz testing uncovers vulnerabilities and defects that might otherwise remain hidden.
 
 Next, we will use Go fuzzing as an example to introduce how to develop a fuzzing in Go.
@@ -404,7 +404,7 @@ Fuzz testing is a powerful technique for improving the security and reliability 
 
 In the context of Go programming, Go fuzzing is well-supported and integrates seamlessly with the standard testing framework. Developers can create fuzzing functions to target specific functions and uncover potential issues using random or mutated inputs.
 
-To demonstrate the effectiveness of fuzz testing, we presented a real case, CVE-2022-43677, which affected free5GC version 3.2.1. By developing a fuzzing function for the NGAP decoder, we were able to identify a vulnerability that caused a crash. 
+To demonstrate the effectiveness of fuzz testing, we presented a real case, CVE-2022-43677, which affected free5GC version 3.2.1. By developing a fuzzing function for the NGAP decoder, we were able to identify a vulnerability that caused a crash.
 
 In conclusion, fuzz testing is a critical practice in software development, enabling developers to proactively discover and resolve bugs and vulnerabilities. It empowers them to deliver more secure and robust software systems, providing users with a higher level of confidence in the applications they use. By incorporating fuzz testing as part of the software development lifecycle, developers can significantly enhance the quality and security of their software products.
 
@@ -420,5 +420,3 @@ If you have any questions, please don't hesitate to contact me!
 
 * [LinkedIn](https://www.linkedin.com/in/yu-sheng-liu-41a45a24a/)
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

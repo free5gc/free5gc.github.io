@@ -143,7 +143,7 @@ func communicateWithUDM(ue *context.AmfUe, accessType models.AccessType) error {
 
 Next, let's take a look at this function. It is called in HandleInitialRegistration, which handles UE's initial registration. UeCmRegistration will use the Nudm_UECM (UECM) service to store related UE Context Management information in UDM. In lines 40, 47, and 54, AMF uses the Nudm_SubscriberDataManagement (SDM) Service to get some subscribe data.
 
-### Nudm_UEContextManagement Service 
+### Nudm_UEContextManagement Service
 In the UeCmRegistration function, AMF registers as UE's serving NF on UDM and stores related UE Context Management information in UDM. Looking at the packet, you can see that the request body contains `amfInstanceId` and `guami`, representing the amf identity, and `ratType`, representing the radio access technology type used by UE.
 
  ![upload_c3e5e7c63f1bb7a934877e7fa29b82ec](5.png)
@@ -442,5 +442,3 @@ Hello! My name is 張哲睿, and my current research topic is ATSSS (Access Traf
 
 * [Linkedln](https://www.linkedin.com/in/%E5%93%B2%E7%9D%BF-%E5%BC%B5-77096621a/)
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

@@ -4,10 +4,10 @@
 > Author: Ya-shih Tseng
 > Date: 2023/9/27
 
-Before you read the article, I suggest you to read  [Time-Sensitive Networking over 5G system - Introduction (Rel-16)](https://free5gc.org/blog/TSN/). 
+Before you read the article, I suggest you to read  [Time-Sensitive Networking over 5G system - Introduction (Rel-16)](https://free5gc.org/blog/TSN/).
 
 ## Overview
-This article will introduce TSN enhancements in 3GPP Release 17. We will start by discussing the new roles introduced in 5GS and their applicable scenarios. The architecture has been modified to accommodate a wider range of applications, and additional network functions have been added to offer a broader range of services. 
+This article will introduce TSN enhancements in 3GPP Release 17. We will start by discussing the new roles introduced in 5GS and their applicable scenarios. The architecture has been modified to accommodate a wider range of applications, and additional network functions have been added to offer a broader range of services.
 
 
 ![Architcture to enable time sensitive communication and time synchronization](./tsn_architecture.png)
@@ -32,7 +32,7 @@ To support above applications, DS-TT and NW-TT have expanded their functionaliti
 
 ## Capability of DS-TT and NW-TT
 
-With release 17 now supporting for the scenarios when Master clock is behind the UE (uplink time sync, UE – UE time sync), behind the network (downlink time sync) and support for multiple (g)PTP domains. 
+With release 17 now supporting for the scenarios when Master clock is behind the UE (uplink time sync, UE – UE time sync), behind the network (downlink time sync) and support for multiple (g)PTP domains.
 
 >[!NOTE]
 >In release 16, the roles of 5GS, DS-TT, and NW-TT are fixed. The Data Network side follows the TSN master, while the UE side follows the slave. When a packet enters, the entry time is first recorded in NW-TT, and the exit time is recorded in DS-TT. The difference between these two times determines the packet's resident time.
@@ -132,5 +132,3 @@ Hi, This is Ya-shih Tseng. I am currently researching the implementation of 5G T
 
 - Here is my [linkedin profile](www.linkedin.com/in/yashihh-tseng)
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

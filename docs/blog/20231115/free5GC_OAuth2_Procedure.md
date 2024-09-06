@@ -1,15 +1,15 @@
 # Introduction to free5GC OAuth2 Procedure
 
 >[!NOTE]
-> Author: Andy Chen (CTFang, Tsung-Fang Chen) 
+> Author: Andy Chen (CTFang, Tsung-Fang Chen)
 > Date: 2023/11/15
 > Update: 2024/02/21
 
 ![OAuth2_Light](./OAuth2_light.png)
 
-**Description** 
+**Description**
 
-[0-0]. NF_Registration: See *TS 29.510 Section5.2.2.2 NFRegister* for more details. 
+[0-0]. NF_Registration: See *TS 29.510 Section5.2.2.2 NFRegister* for more details.
 
 [0-1]. When an NF registers with NRF using NFProfile, NRF adds ```CustomInfo.oauth2=true``` to NFProfile and replies to NF upon successful registration. (See *TS29.510* for more detailed information about CustomInfo.)
 
@@ -26,7 +26,7 @@ The OAuth2 functions had been relased in free5GC [v3.4.0](https://github.com/fre
 ### Pull Requests
 - free5gc/NRF [PR#27](https://github.com/free5gc/nrf/pull/27)
 - free5gc/free5gc[PR#525](https://github.com/free5gc/free5gc/pull/525)
-- There would be related Pull Request for each NF. 
+- There would be related Pull Request for each NF.
 
 ### Future Work
 - ```allowedNfTypes```: *TS 29.510 Section6.1.6.2.2 Definition of type NFProfile*
@@ -48,12 +48,12 @@ Hello, I am Andy Chen. I have just started making contributions to the free5GC c
 	<img align="center"
   		src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg"
   		alt="Linkedin" height="30" width="40" />
-</a> 
+</a>
 <a href="https://github.com/andy89923" target="blank">
   	<img align="center"
       src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg"
       alt="Github" height="30" width="40" />
-</a> 
+</a>
 </p>
 
 - Linkedin: [https://www.linkedin.com/in/tsung-fang-chen-437a71191/](https://www.linkedin.com/in/tsung-fang-chen-437a71191/)
@@ -67,5 +67,3 @@ Additionally, I have provided the graph with a dark background.
 
 ![OAuth2_Dark](./OAuth2_dark.png)
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

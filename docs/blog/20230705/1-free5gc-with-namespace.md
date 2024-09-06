@@ -8,14 +8,14 @@
 
 ## Overview
 
-This technique leverages namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM), an opensource 5G-UE and RAN(gNodeB) simulator, and connect to free5GC. 
-UERANSIM follows the 3GPP specification for developing and can support multiple 5G core (5GC) including free5GC. 
+This technique leverages namespace to run [UERANSIM](https://github.com/aligungr/UERANSIM), an opensource 5G-UE and RAN(gNodeB) simulator, and connect to free5GC.
+UERANSIM follows the 3GPP specification for developing and can support multiple 5G core (5GC) including free5GC.
 
-Why are we using namespace? Well, you can follow [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config) and [free5GC compose](https://github.com/free5gc/free5gc-compose) to set up the environment with VM and docker, but there are limitations for hardware’s capability. With network namespace, you can have different and separate network instances of network 
-interfaces and routing tables that operate independently. 
+Why are we using namespace? Well, you can follow [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config) and [free5GC compose](https://github.com/free5gc/free5gc-compose) to set up the environment with VM and docker, but there are limitations for hardware’s capability. With network namespace, you can have different and separate network instances of network
+interfaces and routing tables that operate independently.
 
 So, what is network namespace? Network namespace makes a copy of network stack with its own routing table, firewall and devices. A named network namespace is an object at ```/var/run/netns/```. The file descriptor resulting from opening ```/var/run/netns/``` refers to the specified network namespace. Holding that file descriptor open
-keeps the network namespace alive. 
+keeps the network namespace alive.
 
 And how to make both namespaces communicating? A virtual Ethernet device (veth) pair provides the abstraction that can be used to create tunnels between network namespaces, and can be used to create bridge to a physical network device in another namespace. Veth pair also be used as standalone network devices.
 When the namespace freed, veth device which attatch to would be destroyed.
@@ -25,7 +25,7 @@ The environment is as follow. Suppose you have already installed as well as set 
 - free5GC v3.3.0
 - UERANSIM v3.1.0
 
-> [!NOTE] 
+> [!NOTE]
 > *Namespace free5GC* represents host network namespace. And enp0s5 is an ethernet interface connectting to external.
 
 ![](./1-1.png)
@@ -41,14 +41,14 @@ Each devices as follow
 | enp0s5        | 10.211.55.23   |
 
 
-UE information in UERANSIM as follow. Already 
+UE information in UERANSIM as follow. Already
 | IMSI             | DNN           |
 | ---------------- | ------------- |
 | 208930000000003  | internet      |
 ```
 
 ## Configuration file of free5GC and UERANSIM
-### free5GC 
+### free5GC
 - **free5gc/config/amfcfg.yaml**
 
 Replace ngapIpList IP from ```127.0.0.18``` to ```10.200.200.2```:
@@ -772,19 +772,19 @@ ueransim2> ip a
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host 
+    inet6 ::1/128 scope host
        valid_lft forever preferred_lft forever
 5: uesimtun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 500
-    link/none 
+    link/none
     inet 10.60.0.2/32 scope global uesimtun0
        valid_lft forever preferred_lft forever
-    inet6 fe80::16a4:523a:a86:bf83/64 scope link stable-privacy 
+    inet6 fe80::16a4:523a:a86:bf83/64 scope link stable-privacy
        valid_lft forever preferred_lft forever
 12: veth2@if11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether fa:12:bb:9c:fa:40 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 10.200.200.3/24 scope global veth2
        valid_lft forever preferred_lft forever
-    inet6 fe80::f812:bbff:fe9c:fa40/64 scope link 
+    inet6 fe80::f812:bbff:fe9c:fa40/64 scope link
        valid_lft forever preferred_lft forever
 ueransim2> ping -c2 -I uesimtun0 google.com
 PING google.com (172.217.160.110) from 10.60.0.2 uesimtun0: 56(84) bytes of data.
@@ -811,5 +811,3 @@ Hi, my name is Jimmy Chang. The current research topic is 5G LAN with a focus on
 - https://man7.org/linux/man-pages/man7/namespaces.7.html
 - https://linux.die.net/man/8/iptables
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

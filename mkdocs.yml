@@ -24,7 +24,7 @@ theme:
     - scheme: default
       primary: white
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
       primary: blue grey
@@ -55,22 +55,20 @@ theme:
     - search.suggest
     - toc.follow
     # - toc.integrate
-  locale: en
+  locale:
+    en
     # analytics: {gtag: ''}
   highlightjs: true
   hljs_languages:
-      - yaml
-      - django
+    - yaml
+    - django
 
 nav:
-    - Home: index.md
-    - User Guide: guide/
-    - Blogs: blog/
-    - Supports: support/
-    - Sponsorship: membership/
-    - About us: 
-      - Intro: https://cslab.cs.nycu.edu.tw/index.php/people/
-    - More:
+  - Home: index.md
+  - User Guide: guide/
+  - Blogs: blog/
+  - Supports: support/
+  - More:
       - Relavent Publications: publication.md
       - Other Videos: videos.md
 
@@ -82,11 +80,11 @@ markdown_extensions:
   - attr_list
   - tables
   - mdx_math:
-        enable_dollar_delimiter: True
+      enable_dollar_delimiter: True
   - fenced_code
 
-extra_javascript: 
-    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 plugins:
   - search

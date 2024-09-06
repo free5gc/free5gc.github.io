@@ -41,7 +41,7 @@ There are servel usages define in [include/uapi/linux/netlink.h](https://elixir.
 #define NETLINK_SELINUX		7	/* SELinux event notifications */
 #define NETLINK_ISCSI		8	/* Open-iSCSI */
 #define NETLINK_AUDIT		9	/* auditing */
-#define NETLINK_FIB_LOOKUP	10	
+#define NETLINK_FIB_LOOKUP	10
 #define NETLINK_CONNECTOR	11
 #define NETLINK_NETFILTER	12	/* netfilter subsystem */
 #define NETLINK_IP6_FW		13
@@ -70,7 +70,7 @@ The following figure is Generic Netlink structure:
 
 ```mermaid
 graph TD
-A1[Application_1] --- B[Kernel_Socket_API] 
+A1[Application_1] --- B[Kernel_Socket_API]
 A2[Application_2] --- B[Kernel_Socket_API]
 
 B[Kernel_Socket_API] --- C[Netlink_Subsystem]
@@ -85,7 +85,7 @@ D[Generic_Netlink_Bus] --- E3[Kernel_User_2]
 
 ```
 
-- The Generic Netlink users **application_1** and **application_2** could communicate both user space and kernel space endpoint through Kernel_socket_API. 
+- The Generic Netlink users **application_1** and **application_2** could communicate both user space and kernel space endpoint through Kernel_socket_API.
 - The ***Netlink subsystem*** which serves as the underlying transport layer for all of the Generic Netlink communications.
 - The ***Generic Netlink bus*** which is implemented inside the kernel, but which is available to userspace through the socket API and inside the kernel via the normal Netlink and Generic Netlink APIs.
 - The ***Generic Netlink users*** who communicate with each other over the Generic Netlink bus; users can exist both in kernel and user space.
@@ -354,13 +354,13 @@ struct gtp5g_dev {
 
     struct hlist_head *i_teid_hash; // Used for GTP-U packet detect
     struct hlist_head *addr_hash;   // Used for IPv4 packet detect
-    
+
     /* IEs list related to PDR */
     struct hlist_head *related_far_hash; // PDR list waiting the FAR to handle
     struct hlist_head *related_qer_hash; // PDR list waiting the QER to handle
     struct hlist_head *related_bar_hash;
     struct hlist_head *related_urr_hash;
-    
+
     /* Used by proc interface */
     struct list_head proc_list;
 };
@@ -393,7 +393,7 @@ static inline void *netdev_priv(const struct net_device *dev)
 }
 ```
 
-Close the udp socket (sk1u) is used to receive uplink (N3) packet: 
+Close the udp socket (sk1u) is used to receive uplink (N3) packet:
 ```cpp
 // src/gtpu/dev.c
 static void gtp5g_dev_uninit(struct net_device *dev)
@@ -421,7 +421,7 @@ static netdev_tx_t gtp5g_dev_xmit(struct sk_buff *skb, struct net_device *dev)
 
     skb_reset_inner_headers(skb);
 
-    /* PDR lookups in gtp5g_build_skb_*() need rcu read-side lock. 
+    /* PDR lookups in gtp5g_build_skb_*() need rcu read-side lock.
      * */
     rcu_read_lock();
     switch (proto) {
@@ -593,7 +593,7 @@ EXPORT_SYMBOL_GPL(__rtnl_link_register);
 
 
 ### gtp5g_genl_family
-Gtp5g defines the genl (Generic Netlink) interface to facilitate communication between user and kernel space after register 'family'. As mentioned earlier, there is a Generic Netlink Controller responsible for bus allocation and dynamically assigns tunnel based on genl family id (name). 
+Gtp5g defines the genl (Generic Netlink) interface to facilitate communication between user and kernel space after register 'family'. As mentioned earlier, there is a Generic Netlink Controller responsible for bus allocation and dynamically assigns tunnel based on genl family id (name).
 
 ```cpp
 // src/genl/genl.c
@@ -684,7 +684,7 @@ static const struct genl_ops gtp5g_genl_ops[] = {
   - `genl_validate_ops()`
   - `genl_family_find_byname()`
   - `genl_validate_assign_mc_groups()`
-  
+
 ```cpp
 int genl_register_family(struct genl_family *family)
 {
@@ -906,5 +906,3 @@ static int genl_validate_assign_mc_groups(struct genl_family *family)
 - [IT blog by Ian Chen](https://ithelp.ithome.com.tw/articles/10302887)
 - [IT blog by 0xff07](https://ithelp.ithome.com.tw/articles/10243519)
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.

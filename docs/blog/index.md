@@ -41,5 +41,4 @@
 - [Deploying 5G core network with Free5GC, Kubernetes and Helm](https://medium.com/rahasak/deploying-5g-core-network-with-free5gc-kubernets-and-helm-charts-29741cea3922){target=_blank}
 - [Running Free5GC on Platform9 Managed Kubernetes](https://platform9.com/blog/running-free5gc-on-platform9-managed-kubernetes/){target=_blank}
 
->[!NOTE]
-> If you are interested in supporting free5GC, we welcome your donation. Please visit this [link](https://free5gc.org/membership/) for more details.
+
