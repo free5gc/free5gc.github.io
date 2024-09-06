@@ -32,10 +32,12 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Installing a TNGFUE](./TNGF/tngfue-installation.md)
 - [Enable OAuth2 on SBI](./OAuth2/oauth2_enable.md)
 - [free5GC Simple Apps](./6-simple-app.md)
-- All of tutorial videos are available at our YouTube channel:
+
+<!-- TODO: should update the tutorial videos -->
+<!-- - All of tutorial videos are available at our YouTube channel:
     - [English](https://www.youtube.com/watch?v=R-9vH_6VJ2Q&list=PLeDUIabcS2_rQd3yVJrBAYb-MbcqNgjC9)
     - [Chinese](https://www.youtube.com/watch?v=lD5iYvCB4CQ&list=PLeDUIabcS2_pdhCN3sz5gFdT-mTukyX-v)
-    - [Environment setup of multiple SMF, DNN, and UPF](https://www.youtube.com/watch?v=AEMrjKRWarw)
+    - [Environment setup of multiple SMF, DNN, and UPF](https://www.youtube.com/watch?v=AEMrjKRWarw) --> 
 
 ## Configuration
 - [Environment](./Environment.md)
