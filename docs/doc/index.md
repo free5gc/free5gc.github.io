@@ -7,15 +7,15 @@ We maintain the design documents to help people started contributing to the free
 2. Dedicated issue and solution
 3. Domain knowledges for 5GC development
 
-- [AMF](../guide/Amf/design.md)
-- [AUSF](../guide/Ausf/design.md)
-- [SMF](../guide/Smf/design.md)
-- [UPF (GTP5G)](../guide/Gtp5g/design.md)
-- [UPF (PFCP)](../guide/Upf_PFCP/design.md)
-- [CHF](../guide/Chf/design.md)
-- [PCF (Charging)](../guide/PCF/charging.md)
-- [OAuth2 on SBI](../guide/OAuth2/OAuth2Design.md)
-- [N3IWUE](../guide/N3IWUE/n3iwue.md)
+- [AMF](./Amf/design.md)
+- [AUSF](./Ausf/design.md)
+- [SMF](./Smf/design.md)
+- [UPF (GTP5G)](./Gtp5g/design.md)
+- [UPF (PFCP)](./Upf_PFCP/design.md)
+- [CHF](./Chf/design.md)
+- [PCF (Charging)](./PCF/charging.md)
+- [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
+- [N3IWUE](./N3IWUE/n3iwue.md)
 - [Problem Details](https://github.com/free5gc/free5gc.github.io/tree/main/docs/guide/ProblemDetails)
 
 ## 5GC Docs/Specs
