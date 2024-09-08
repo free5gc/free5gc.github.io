@@ -161,4 +161,4 @@ Success: N3IWUE can ping data network through N3IWF
 
 ## Appendix
 
-- [Design Document](./N3IWUE/n3iwue.md)
+- [Design Document](../doc/N3IWUE/n3iwue.md)
