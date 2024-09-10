@@ -15,6 +15,7 @@ extra:
       link: https://www.linkedin.com/company/free5gc/
     - icon: fontawesome/brands/facebook
       link: https://www.facebook.com/profile.php?id=100086840296930
+  generator: false
 
 theme:
   name: material
