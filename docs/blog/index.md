@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2024/09/28: How L25GC+ achieved the low-latency communication](./20240918/20240918.md)
 - [2024/06/28: Introduction to 5G-QoS](./20240628/20240628.md)
 - [2024/06/26: NTN Overview](./20240626/20240626.md)
 - [2024/05/21: Introduction to Onos](./20240521/20240521.md)
