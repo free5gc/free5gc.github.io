@@ -26,7 +26,7 @@ When the AUSF (Authentication Server Function) is initiated within a 5G network,
       ![Alt text](EAP-AKA.png)
       > Authentication procedure for EAP-AKA, described in *3GPP TS 33.501 clause 6.1.3.1*
       
-      The EAP-AKA' authentication sequence unfolds as follows, correlating with the sequence diagram above which is depicted in [TS33.501](6.1.3.1)
+      The EAP-AKA' authentication sequence unfolds as follows, correlating with the sequence diagram above which is depicted in [TS33.501](https://www.tech-invite.com/3m33/toc/tinv-3gpp-33-501_h.html#e-6-1-3-1)
 
       - **Authentication Vector (AV) Creation:** Initiated by the UDM/ARPF generating a tailored AV.
       - **AV Transmission to AUSF:** The AV is sent to the AUSF, signaling readiness for authentication.
@@ -39,7 +39,7 @@ When the AUSF (Authentication Server Function) is initiated within a 5G network,
       ![Alt text](5GAKA_Authentication_Procedure.png)
       > Authentication procedure for 5G AKA , described in *3GPP TS 33.501 clause 6.1.3.2*
       
-      The authentication procedure unfolds as follows, aligned with the flow above which is depicted in [TS33.501](6.1.3.2)
+      The authentication procedure unfolds as follows, aligned with the flow above which is depicted in [TS33.501](https://www.tech-invite.com/3m33/toc/tinv-3gpp-33-501_h.html#e-6-1-3-2)
 
       - **Authentication Vector (AV) Creation:** The UDM/ARPF generates a 5G AV, initiating the process.
       - **AV Transmission to AUSF:** The AV is dispatched to the AUSF to begin the authentication challenge.
