@@ -221,4 +221,4 @@ sudo ./free5gc/reload_host_config.sh enp0s3
         go build -o bin/webconsole server.go
         ```
 
-   **Note: 2GB or more of OS memory is recommended. WebConsole may be failed to build if memory is less then 1GB.**
+   **Note: An OS with 2GB or more of RAM is recommended. WebConsole may fail to build if available RAM is below 1GB.**
