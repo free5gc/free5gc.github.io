@@ -61,15 +61,13 @@ cd tngfue
 
 #### Build/Compile Configuration
 
-Go to `wpa_supplicant/`
+Make sure the flag `CONFIG_EAP_VENDOR_TEST` of the `.config` file inside `wpa_supplicant` folder is enabled as shown below:
 ```
-cd wpa_supplicant
-```
-
-Check EAP_VENDOR_TEST option is true *(y)* in `.config` file
-```
+...
 CONFIG_EAP_VENDOR_TEST=y
+...
 ```
+**Tip:** This setting is [already enabled](https://github.com/free5gc/tngfue/blob/main/wpa_supplicant/.config#L152)
 
 #### TNGFUE Settings
 
