@@ -43,6 +43,8 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 > ![AP2](./AP2.png)
 > 
 
+**Tip:** If WPA2-EAP isn't available on the OpenWrt firmware installed, check [this troubleshooting section](./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-option-in-openwrt-installation).
+
 #### Open Dynamic DHCP
 > **Network → Interface → Edit lan →  DHCP server → Advance Setting**
 > ![AP3](./AP3.png)
