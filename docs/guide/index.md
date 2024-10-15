@@ -50,6 +50,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Select nearby UPF according to the connected gNodeB](https://github.com/s5uishida/free5gc_ueransim_nearby_upf_sample_config)
 - [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config)
 - [Netns5g - A free5gc and UERANSIM deployment using Linux network namespaces](https://github.com/konradkar2/netns5g)
+- [Traffic Influence](./8-traffic-influence.md)
 
 ## Deployment
 
