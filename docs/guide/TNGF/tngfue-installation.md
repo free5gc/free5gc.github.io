@@ -1,7 +1,7 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
 ## 1. free5GC installation
-(Optional) If you install free5GC on a VM, add a network adapter set to bridged mode, and set the card name to your AP. Some additional information on how to configure multiple network interfaces on the VM are available on [the docs](../2-config-vm-en.md#4-setting-static-ip-address) and on [Ubuntu docs page](https://ubuntu.com/server/docs/configuring-networks).
+(Optional) If you install free5GC on a VM, add a network adapter set to bridged mode, and set the card name to your AP. Some additional information on how to configure multiple network interfaces on the VM are available on [the docs](../2-config-vm-en.md#4-setting-static-ip-address) and on [Ubuntu docs page](https://documentation.ubuntu.com/server/explanation/networking/configuring-networks/).
 
 #### Follow the tutorial in free5GC official site: 
 - [Installing free5GC and webconsole](https://free5gc.org/guide/3-install-free5gc/)
@@ -19,29 +19,32 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 * Start your webconsole server
     ```sh
     cd ~/free5gc/webconsole/
-    make # If webconsole haven't compile in previous step
+    make # If webconsole was not previously compiled
     ./bin/webconsole
     ```
 * Open your web browser from your host machine, and enter the URL `http://<FREE5GC_IP>:5000`
 * On the login page, enter username `admin` and password `free5gc`
 * Go to `SUBSCRIBERS` and click on `CREATE`
-* Check `SUPI(IMSI)` field is unique and modify other fields whatever you need
+* Check that the `SUPI (IMSI)` field is unique and modify other fields as necessary to ensure data consistency with [sec.conf file](#security-parameters)
 ![subscribe](./subscribe.png)
-* Scroll all the way down and click on `CREATE`.
+* Then, scroll the page all the way down and click on `CREATE`.
 
-## 3. AP setting
+## 3. Access Point Setup
+
+**Note:** The steps of this section were tested using OpenWrt as AP firmware (see screenshot below)
 
 #### AP information
 ![APinformation](./AP_info.png)
 
-#### Setting ESSID
+#### Configuring Wi-Fi Network ESSID
 > **Network → Wireless → Edit → Interface Configuration → General Setup**
 > ![AP1](./AP1.png)
 
-#### Setting as below, RADIUS Authentication Server is free5gc IP
+#### Configuring Wi-Fi Network Security
 > **Interface Configuration → Wireless Security**
 > ![AP2](./AP2.png)
-> 
+
+**Note:** `RADIUS Authentication Server` is free5GC's IP. `RADIUS Authentication Secret` must match the one from `RadiusSecret` parameter on [tngfcfg.yaml file](https://github.com/free5gc/free5gc/blob/main/config/tngfcfg.yaml)
 
 **Tip:** If WPA2-EAP isn't available on the OpenWrt firmware installed, check [this troubleshooting section](./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-option-in-openwrt-installation).
 
