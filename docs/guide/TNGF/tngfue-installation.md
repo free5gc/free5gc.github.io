@@ -1,7 +1,7 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
 ## 1. free5GC installation
-(Optional) If you install free5GC in a VM, add a network adapter set to bridged mode, and set the card name to your AP.
+(Optional) If you install free5GC on a VM, add a network adapter set to bridged mode, and set the card name to your AP. Some additional information on how to configure multiple network interfaces on the VM are available on [the docs](../2-config-vm-en.md#4-setting-static-ip-address) and on [Ubuntu docs page](https://ubuntu.com/server/docs/configuring-networks).
 
 #### Follow the tutorial in free5GC official site: 
 - [Installing free5GC and webconsole](https://free5gc.org/guide/3-install-free5gc/)
