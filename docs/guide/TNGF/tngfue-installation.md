@@ -48,9 +48,10 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 
 **Tip:** If WPA2-EAP isn't available on the OpenWrt firmware installed, check [this troubleshooting section](./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-option-in-openwrt-installation).
 
+<!-- The next step is not required. For further details, see: https://forum.free5gc.org/t/running-tngfue-on-another-subnet/2571/4
 #### Open Dynamic DHCP
 > **Network → Interface → Edit lan →  DHCP server → Advance Setting**
-> ![AP3](./AP3.png)
+> ![AP3](./AP3.png) -->
 
 ## 4. TNGFUE Installation
 Install TNGFUE in another device with a Wi-Fi interface available
@@ -182,6 +183,8 @@ On TNGFUE's machine:
 ```
 ./run.sh
 ```
+Then skip to [this section](#example-output)
+
 * **(Alternatively)** Run manually:
 
 #### Make sure xfrm and greTun0 is not exist
