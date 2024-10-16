@@ -10,6 +10,7 @@ Some 5G UE and gNodeB hardware have been tested with free5GC by partners or comm
     - [Samsung S21 5G](https://www.samsung.com/us/smartphones/galaxy-s21-5g/)
     - Huawei P40 5G ([forum link](https://forum.free5gc.org/t/running-free5gc-stage3-with-amarisoft-gnodeb-ue/532))
     - Huawei Mate30 5G ([forum link](https://forum.free5gc.org/t/real-ue-register-failed/281))
+    - iPhone13 mini ([test link written in japanese](https://qiita.com/Takashi_Eifuku/items/1b710477dee680f76909))
 
 - gNodeB:
     - Alpha gNodeB
