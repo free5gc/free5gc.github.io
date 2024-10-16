@@ -53,7 +53,7 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 > ![AP3](./AP3.png)
 
 ## 4. TNGFUE Installation
-Install TNGFUE in another device with WIFI connectivity.
+Install TNGFUE in another device with a Wi-Fi interface available
 ### Get Source Code
 ```
 git clone https://github.com/free5gc/tngfue.git
@@ -61,6 +61,24 @@ cd tngfue
 ```
 
 ### TNGFUE Configuration
+
+* Use the `prepare` script:
+
+(Optional) Open the script and adjust it with the desired parameters/vars
+```
+nano prepare.sh
+```
+
+**Note:** Double check the Wi-Fi interface name (i.e. `IFACE_NAME`). It must match the name on the OS.
+
+Run the script to begin building TNGFUE
+```
+./prepare.sh
+```
+
+Then skip to the [next section](#5-testing) of this page
+
+* **(Alternatively)** To configure and build manually:
 
 #### Build/Compile Configuration
 
@@ -177,12 +195,22 @@ sudo apt-get install libnl-route-3-dev
 ```
 
 ## 5. Testing
-### A. Run free5GC with tngf
+### A. Run free5GC with TNGF
+
+On free5GC's machine:
 ```
 cd ~/free5gc
 ./run.sh -tngf
 ```
-### B. Run tngfue
+### B. Run TNGFUE
+
+On TNGFUE's machine:
+* Use the `run` script:
+```
+./run.sh
+```
+* **(Alternatively)** Run manually:
+
 #### Make sure xfrm and greTun0 is not exist
 > If you don't have a successful connection with TNGF before, you can just skip this step.
 
@@ -201,8 +229,8 @@ ip r add default via 192.168.1.202 dev <YOUR_WIFI_INTERFACE_NAME>
 cd ~/tngfue/wpa_supplicant
 sudo ./wpa_supplicant -c ../wpa_supplicant.conf -i <YOUR_WIFI_INTERFACE_NAME>
 ```
-
-When the session connects successfully, you will see these five interfaces established. 
+#### Example output
+When the session successfully connects, it will be possible to see these five interfaces established. 
 ![interfaces](./interfaces.png)
 
 And TNGFUE will show that connection is completed.
