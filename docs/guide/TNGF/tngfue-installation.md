@@ -165,34 +165,7 @@ OPC:8e27b6af0e692e750f32667a3b14605d
 cd ~/tngfue/wpa_supplicant/
 make
 ```
-
-**Trouble shooting: Missing packages when building binary**
-
-Update Packages source before installing packages!
-```
-sudo apt-get update
-```
-
-openssl/ssl.h: No such file or directory
-```
-sudo apt-get install libssl-dev
-```
-dbus/dbus.h: No such file or directory
-```
-sudo apt-get install libdbus-1-dev
-```
-netlink/netlink.h: No such file or directory
-```
-sudo apt-get install libnl-3-dev
-```
-/usr/bin/ld: cannot find -lnl-genl-3
-```
-sudo apt-get install libnl-genl-3-dev
-```
-/usr/bin/ld: cannot find -lnl-route-3
-```
-sudo apt-get install libnl-route-3-dev
-```
+For more information, see [this troubleshooting section](../Trouble_Shooting.md#14-troubleshooting-missing-packages-when-trying-to-build-tngfue-on-ubuntu)
 
 ## 5. Testing
 ### A. Run free5GC with TNGF

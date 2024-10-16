@@ -250,3 +250,35 @@ reboot
 ```
 References: [OpenWrt Wiki](https://openwrt.org/docs/guide-user/network/wifi/freeradius) and [OpenWrt Github Issue #3363](https://github.com/openwrt/luci/issues/3363)
 
+
+### 14. Troubleshooting missing packages when trying to build TNGFUE on Ubuntu
+
+* First, remember to update packages source before installing packages
+```
+sudo apt update
+```
+
+* To install all prerequisites in one line:
+sudo apt install libssl-dev libdbus-1-dev libnl-3-dev libnl-genl-3-dev libnl-route-3-dev
+
+* **(Alternatively)** Error messages and their related packages:
+#### openssl/ssl.h: No such file or directory
+```
+sudo apt install libssl-dev
+```
+#### dbus/dbus.h: No such file or directory
+```
+sudo apt install libdbus-1-dev
+```
+#### netlink/netlink.h: No such file or directory
+```
+sudo apt install libnl-3-dev
+```
+#### /usr/bin/ld: cannot find -lnl-genl-3
+```
+sudo apt install libnl-genl-3-dev
+```
+#### /usr/bin/ld: cannot find -lnl-route-3
+```
+sudo apt install libnl-route-3-dev
+```
