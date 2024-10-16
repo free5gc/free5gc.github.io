@@ -187,15 +187,15 @@ Then skip to [this section](#example-output)
 
 * **(Alternatively)** Run manually:
 
-#### Make sure xfrm and greTun0 is not exist
-> If you don't have a successful connection with TNGF before, you can just skip this step.
+#### Make sure xfrm and greTun0 does not exist
+> If you have not successfully connected to TNGF yet, you can skip this step
 
-Delete two interfaces
+Delete both interfaces using:
 ```
 sudo ip l del greTun0
 sudo ip l del xfrm-1
 ```
-#### Set wifi interface IP to the same LAN with free5GC
+#### Set Wi-Fi interface IP to the same LAN as free5GC
 ```
 ip a add 192.168.1.202/24 brd 192.168.1.255 dev <YOUR_WIFI_INTERFACE_NAME>
 ip r add default via 192.168.1.202 dev <YOUR_WIFI_INTERFACE_NAME>
