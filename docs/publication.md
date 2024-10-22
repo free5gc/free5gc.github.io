@@ -1,10 +1,10 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
 # Publications using free5GC
-
+- [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=2007&q=free5gc)
 - [ACM Library](https://dl.acm.org/action/doSearch?AllField=free5GC)
 - [IEEE Xplore](https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=free5GC)
-- [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=free5gc&btnG=)
+
 <!-- ## Not from NYCU
 1. Linh-An Phan,  Dirk Pesch,  Utz Roedig,  Cormac J. Sreenan, Building a 5G Core Network Testbed: Open-Source Solutions, Lessons Learned, and Research Directions, 2024 International Conference on Information Networking (ICOIN)
 2. Siddhesh Pratim Sovitkar, Shwetha Vittal, Antony Franklin A, RECAP 5GC: Resilience and CAP aware 5G Core for Consistent and High Availability Service, NOMS 2024-2024 IEEE Network Operations and Management Symposium
