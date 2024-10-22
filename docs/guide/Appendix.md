@@ -155,20 +155,37 @@ Reference: [MongoDB official website](https://www.mongodb.com/docs/manual/tutori
 
 The script was designed to help reapplying [the configurations](./5-install-ueransim.md#7-testing-ueransim-against-free5gc) after a VM reboot
 
+### Usage
+
 Its usage is fairly simple, just run
 
 ```bash
-./reload_host_config.sh <dn_interface>
+cd ~/free5gc # go back to free5gc's main folder
+sudo reload_host_config.sh <dn_interface>
 ```
 
-For example, if your DN interface (e.g. free5GC's VM LAN interface) is named `enp0s4`, the command above will be
+For example, if your DN interface (e.g. free5GC's VM LAN interface) is called `enp0s4`, the command above will be
 
 ```bash
-./reload_host_config.sh enp0s4
+sudo reload_host_config.sh enp0s4
 ```
 
-If you are unsure regarding the name of the interface, run `ip a` (see the image below) to help to figure it out
+**Note:** In Ubuntu Server 20.04 and 22.04 the dn_interface may be called `enp0s3` or `enp0s4` by default
+
+If you are unsure about the interface name, run `ip a` to help to figure it out (see the image below)
 
 ![](./images/A-reload-config-script-example.png)
 
 An example of the expected output is depicted above
+
+### Reset iptables rules
+
+There is a parameter to completely reset the firewall rules (by default, the script only appends free5gc's required rules)
+
+Just add `-reset-firewall` to the script input
+
+```bash
+sudo reload_host_config.sh enp0s4 -reset-firewall
+```
+
+So it will clear all rules, then apply the required rules
