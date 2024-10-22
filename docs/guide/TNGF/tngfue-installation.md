@@ -63,25 +63,29 @@ cd tngfue
 
 ### TNGFUE Configuration
 
-* Use the `prepare` script:
+#### A. Automated Setup
+
+Use the `prepare` script:
 
 (Optional) Open the script and adjust it with the desired parameters/vars
 ```
 nano prepare.sh
 ```
 
-**Note:** Double check the Wi-Fi interface name (i.e. `IFACE_NAME`). It must match the name on the OS.
+**Note:** Confirm the Wi-Fi interface name (i.e. `IFACE_NAME`) is the same as the OS name
 
 Run the script to begin building TNGFUE
 ```
 ./prepare.sh
 ```
 
-Then skip to the [next section](#5-testing) of this page
+#### B. Advanced Manual Setup
 
-* **(Alternatively)** To configure and build manually:
+**(Alternatively)** To configure and build manually:
 
-#### Build/Compile Configuration
+**Note:** The `prepare` script executed the steps below, you may skip to the [next section](#5-testing)
+
+##### Build/Compile Configuration
 
 Make sure the flag `CONFIG_EAP_VENDOR_TEST` of the `.config` file inside `wpa_supplicant` folder is enabled as shown below:
 ```
@@ -91,7 +95,7 @@ CONFIG_EAP_VENDOR_TEST=y
 ```
 **Tip:** This setting is [already enabled](https://github.com/free5gc/tngfue/blob/main/wpa_supplicant/.config#L152)
 
-#### TNGFUE Settings
+##### TNGFUE Settings
 
 Modify `~/tngfue/wpa_supplicant.conf`
 
@@ -128,7 +132,7 @@ network={
 }
 ```
 
-#### Security Parameters
+##### Security Parameters
 In ```tngfue/wpa_supplicant/sec.conf```:
 
 - `wifiifname:` your wifi interface name 
@@ -161,7 +165,7 @@ AMF:8000
 OPC:8e27b6af0e692e750f32667a3b14605d
 ```
 
-#### Build binary
+##### Build binary
 ```
 cd ~/tngfue/wpa_supplicant/
 make
@@ -179,15 +183,15 @@ cd ~/free5gc
 ### B. Run TNGFUE
 
 On TNGFUE's machine:
-* Use the `run` script:
+#### Run using the `run` script
 ```
 ./run.sh
 ```
-Then skip to [this section](#example-output)
+Then skip to [the next section](#example-output)
 
-* **(Alternatively)** Run manually:
+#### **(Alternatively)** Run manually
 
-#### Make sure xfrm and greTun0 does not exist
+##### Make sure xfrm and greTun0 does not exist
 > If you have not successfully connected to TNGF yet, you can skip this step
 
 Delete both interfaces using:
@@ -195,12 +199,12 @@ Delete both interfaces using:
 sudo ip l del greTun0
 sudo ip l del xfrm-1
 ```
-#### Set Wi-Fi interface IP to the same LAN as free5GC
+##### Set Wi-Fi interface IP to the same LAN as free5GC
 ```
 ip a add 192.168.1.202/24 brd 192.168.1.255 dev <YOUR_WIFI_INTERFACE_NAME>
 ip r add default via 192.168.1.202 dev <YOUR_WIFI_INTERFACE_NAME>
 ```
-#### Run
+##### Run
 ```
 cd ~/tngfue/wpa_supplicant
 sudo ./wpa_supplicant -c ../wpa_supplicant.conf -i <YOUR_WIFI_INTERFACE_NAME>
