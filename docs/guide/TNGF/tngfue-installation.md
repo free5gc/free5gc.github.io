@@ -46,7 +46,7 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 
 **Note:** `RADIUS Authentication Server` is free5GC's IP. `RADIUS Authentication Secret` must match the one from `RadiusSecret` parameter on [tngfcfg.yaml file](https://github.com/free5gc/free5gc/blob/main/config/tngfcfg.yaml)
 
-**Tip:** If WPA2-EAP isn't available on the OpenWrt firmware installed, check [this troubleshooting section](./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-option-in-openwrt-installation).
+**Tip:** If WPA2-EAP isn't available on the OpenWrt firmware installed, check [this troubleshooting section](./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-encryption-option-in-openwrt-installation).
 
 <!-- The next step is not required. For further details, see: https://forum.free5gc.org/t/running-tngfue-on-another-subnet/2571/4
 #### Open Dynamic DHCP
