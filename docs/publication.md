@@ -4,8 +4,8 @@
 
 - [ACM Library](https://dl.acm.org/action/doSearch?AllField=free5GC)
 - [IEEE Xplore](https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=free5GC)
-
-## Not from NYCU
+- [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=free5gc&btnG=)
+<!-- ## Not from NYCU
 1. Linh-An Phan,  Dirk Pesch,  Utz Roedig,  Cormac J. Sreenan, Building a 5G Core Network Testbed: Open-Source Solutions, Lessons Learned, and Research Directions, 2024 International Conference on Information Networking (ICOIN)
 2. Siddhesh Pratim Sovitkar, Shwetha Vittal, Antony Franklin A, RECAP 5GC: Resilience and CAP aware 5G Core for Consistent and High Availability Service, NOMS 2024-2024 IEEE Network Operations and Management Symposium
 3. Maryam Amini,  Catherine Rosenberg, A Comparative Analysis of Open-Source Software in an E2E 5G Standalone Platform, 2024 IEEE Wireless Communications and Networking Conference (WCNC)
@@ -95,4 +95,4 @@
 17. Yi-Bing Lin, Chien-Chao Tseng, and Ming-Hung Wang, "Effects of Transport Network Slicing on 5G Applications," Future Internet, 13(3), p.69, 2021.
 18. Seungjoon Seok, et al, "Towards Service and Networking Intelligence for Humanity: A Report on APNOMS 2020," Network and Systems Management, 29(4), p.1-11, 2021.
 19. Tze-Jie Tan, et al., "A Reliable Intelligent Routing Mechanism in 5G Core Network (5GC)," Annual International Conference on Mobile Computing and Networking, 2020.
-20. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020.
+20. Chia-Wei Liao, Fuchun Joseph Lin, and Yoichi Sato, "Evaluating NFV-enabled Network Slicing for 5G Core," IEEE Asia-Pacific Network Operations and Management Symposium, 2020. -->
