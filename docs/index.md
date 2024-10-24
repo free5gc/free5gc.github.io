@@ -17,6 +17,9 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free.
 
 > [!NOTE]
+> Please check out the [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=2007&q=free5gc) page here for publications using free5GC.
+
+> [!NOTE]
 > Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
 
 ## 2024/9/5: free5GC v3.4.3 released!
