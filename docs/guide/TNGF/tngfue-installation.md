@@ -1,7 +1,7 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
 ## 1. free5GC installation
-(Optional) If you install free5GC in a VM, add a network adapter set to bridged mode, and set the card name to your AP.
+(Optional) If you install free5GC on a VM, add a network adapter set to bridged mode, and set the card name to your AP. Some additional information on how to configure multiple network interfaces on the VM are available on [the docs](../2-config-vm-en.md#4-setting-static-ip-address) and on [Ubuntu docs page](https://documentation.ubuntu.com/server/explanation/networking/configuring-networks/).
 
 #### Follow the tutorial in free5GC official site: 
 - [Installing free5GC and webconsole](https://free5gc.org/guide/3-install-free5gc/)
@@ -19,36 +19,42 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 * Start your webconsole server
     ```sh
     cd ~/free5gc/webconsole/
-    make # If webconsole haven't compile in previous step
+    make # If webconsole was not previously compiled
     ./bin/webconsole
     ```
 * Open your web browser from your host machine, and enter the URL `http://<FREE5GC_IP>:5000`
 * On the login page, enter username `admin` and password `free5gc`
 * Go to `SUBSCRIBERS` and click on `CREATE`
-* Check `SUPI(IMSI)` field is unique and modify other fields whatever you need
+* Check that the `SUPI (IMSI)` field is unique and modify other fields as necessary to ensure data consistency with [sec.conf file](#security-parameters)
 ![subscribe](./subscribe.png)
-* Scroll all the way down and click on `CREATE`.
+* Then, scroll the page all the way down and click on `CREATE`.
 
-## 3. AP setting
+## 3. Access Point Setup
+
+**Note:** The steps of this section were tested using OpenWrt as AP firmware (see screenshot below)
 
 #### AP information
 ![APinformation](./AP_info.png)
 
-#### Setting ESSID
+#### Configuring Wi-Fi Network ESSID
 > **Network → Wireless → Edit → Interface Configuration → General Setup**
 > ![AP1](./AP1.png)
 
-#### Setting as below, RADIUS Authentication Server is free5gc IP
+#### Configuring Wi-Fi Network Security
 > **Interface Configuration → Wireless Security**
 > ![AP2](./AP2.png)
-> 
 
+**Note:** `RADIUS Authentication Server` is free5GC's IP. `RADIUS Authentication Secret` must match the one from `RadiusSecret` parameter on [tngfcfg.yaml file](https://github.com/free5gc/free5gc/blob/main/config/tngfcfg.yaml)
+
+**Tip:** If WPA2-EAP isn't available on the OpenWrt firmware installed, check [this troubleshooting section](./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-encryption-option-in-openwrt-installation).
+
+<!-- The next step is not required. For further details, see: https://forum.free5gc.org/t/running-tngfue-on-another-subnet/2571/4
 #### Open Dynamic DHCP
 > **Network → Interface → Edit lan →  DHCP server → Advance Setting**
-> ![AP3](./AP3.png)
+> ![AP3](./AP3.png) -->
 
 ## 4. TNGFUE Installation
-Install TNGFUE in another device with WIFI connectivity.
+Install TNGFUE in another device with a Wi-Fi interface available
 ### Get Source Code
 ```
 git clone https://github.com/free5gc/tngfue.git
@@ -57,19 +63,39 @@ cd tngfue
 
 ### TNGFUE Configuration
 
-#### Build/Compile Configuration
+#### A. Automated Setup
 
-Go to `wpa_supplicant/`
+Use the `prepare` script:
+
+(Optional) Open the script and adjust it with the desired parameters/vars
 ```
-cd wpa_supplicant
+nano prepare.sh
 ```
 
-Check EAP_VENDOR_TEST option is true *(y)* in `.config` file
+**Note:** Confirm the Wi-Fi interface name (i.e. `IFACE_NAME`) is the same as the OS name
+
+Run the script to begin building TNGFUE
 ```
+./prepare.sh
+```
+
+#### B. Advanced Manual Setup
+
+**(Alternatively)** To configure and build manually:
+
+**Note:** The `prepare` script executed the steps below, you may skip to the [next section](#5-testing)
+
+##### Build/Compile Configuration
+
+Make sure the flag `CONFIG_EAP_VENDOR_TEST` of the `.config` file inside `wpa_supplicant` folder is enabled as shown below:
+```
+...
 CONFIG_EAP_VENDOR_TEST=y
+...
 ```
+**Tip:** This setting is [already enabled](https://github.com/free5gc/tngfue/blob/main/wpa_supplicant/.config#L152)
 
-#### TNGFUE Settings
+##### TNGFUE Settings
 
 Modify `~/tngfue/wpa_supplicant.conf`
 
@@ -106,7 +132,7 @@ network={
 }
 ```
 
-#### Security Parameters
+##### Security Parameters
 In ```tngfue/wpa_supplicant/sec.conf```:
 
 - `wifiifname:` your wifi interface name 
@@ -139,67 +165,52 @@ AMF:8000
 OPC:8e27b6af0e692e750f32667a3b14605d
 ```
 
-#### Build binary
+##### Build binary
 ```
 cd ~/tngfue/wpa_supplicant/
 make
 ```
-
-**Trouble shooting: Missing packages when building binary**
-
-Update Packages source before installing packages!
-```
-sudo apt-get update
-```
-
-openssl/ssl.h: No such file or directory
-```
-sudo apt-get install libssl-dev
-```
-dbus/dbus.h: No such file or directory
-```
-sudo apt-get install libdbus-1-dev
-```
-netlink/netlink.h: No such file or directory
-```
-sudo apt-get install libnl-3-dev
-```
-/usr/bin/ld: cannot find -lnl-genl-3
-```
-sudo apt-get install libnl-genl-3-dev
-```
-/usr/bin/ld: cannot find -lnl-route-3
-```
-sudo apt-get install libnl-route-3-dev
-```
+For more information, see [this troubleshooting section](../Trouble_Shooting.md#14-troubleshooting-missing-packages-when-trying-to-build-tngfue-on-ubuntu)
 
 ## 5. Testing
-### A. Run free5GC with tngf
+### A. Run free5GC with TNGF
+
+On free5GC's machine:
 ```
 cd ~/free5gc
 ./run.sh -tngf
 ```
-### B. Run tngfue
-#### Make sure xfrm and greTun0 is not exist
-> If you don't have a successful connection with TNGF before, you can just skip this step.
+### B. Run TNGFUE
 
-Delete two interfaces
+On TNGFUE's machine:
+#### Run using the `run` script
+```
+./run.sh
+```
+Then skip to [the next section](#example-output)
+
+#### **(Alternatively)** Run manually
+
+##### Make sure xfrm and greTun0 does not exist
+> If you have not successfully connected to TNGF yet, you can skip this step
+
+Delete both interfaces using:
 ```
 sudo ip l del greTun0
 sudo ip l del xfrm-1
 ```
-#### Set wifi interface IP to the same LAN with free5GC
+##### Set Wi-Fi interface IP to the same LAN as free5GC
 ```
 ip a add 192.168.1.202/24 brd 192.168.1.255 dev <YOUR_WIFI_INTERFACE_NAME>
 ip r add default via 192.168.1.202 dev <YOUR_WIFI_INTERFACE_NAME>
 ```
-#### Run
+##### Run
 ```
 cd ~/tngfue/wpa_supplicant
 sudo ./wpa_supplicant -c ../wpa_supplicant.conf -i <YOUR_WIFI_INTERFACE_NAME>
 ```
-
-When the session connects successfully, you will see these five interfaces established. 
+#### Example output
+When the session successfully connects, it will be possible to see these five interfaces established. 
 ![interfaces](./interfaces.png)
 
 And TNGFUE will show that connection is completed.

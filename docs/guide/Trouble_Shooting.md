@@ -208,3 +208,83 @@ Note that SQN is dinamically updated while N3IWUE is running, so this issue migh
 
 Once the parameters are updated, save and close the configuration file. Now N3IWUE should work correctly.
 
+### 13. Unable to find WPA2-EAP encryption option in OpenWrt installation
+
+According to [OpenWrt Wiki](https://openwrt.org/docs/guide-user/network/wifi/freeradius#configure_wireless_access_point), 802.1x authentication is probably missing. This is due `wpad-mini` package not having it. To solve this, install `wpad` instead:
+1. Login to AP as `root` using SSH
+
+```bash
+ssh root@<IP>
+# Example:
+ssh root@192.168.1.1
+```
+**Tip:** The default IP address is 192.168.1.1, change IP in the command above if your setup requires it.
+2. Update package database
+
+```bash
+opkg update
+```
+3. Add WPA-EAP support
+
+**Note:** Executing the steps below will remove the support for WPA3-SAE on your AP (which may be used by other wireless networks), remember to change the affected Wi-Fi networks to WPA2-PSK
+
+**Tip:** To add WPA3 support back, install `wpad-openssl` instead of `wpad`
+
+A. First Method
+
+Remove `wpad-mini` and install `wpad`
+```bash
+opkg remove wpad-mini
+opkg install wpad
+```
+
+If the commands above fail with the messages `No packages removed.` or `[...] Cannot install package wpad.`, try the second method
+
+B. Second Method
+
+Remove `wpad-basic-mbedtls` and install `wpad`
+```bash
+opkg remove wpad-basic-mbedtls
+opkg install wpad
+```
+4. Reboot the AP to make sure the new configuration was applied
+```bash
+reboot
+```
+References: [OpenWrt Wiki](https://openwrt.org/docs/guide-user/network/wifi/freeradius) and [OpenWrt Github Issue #3363](https://github.com/openwrt/luci/issues/3363)
+
+
+### 14. Troubleshooting missing packages when trying to build TNGFUE on Ubuntu
+
+First, remember to update packages source before installing packages
+```
+sudo apt update
+```
+
+To install all prerequisites in one line:
+```
+sudo apt install libssl-dev libdbus-1-dev libnl-3-dev libnl-genl-3-dev libnl-route-3-dev
+```
+
+**(Alternatively)** Error messages and their related packages:
+
+* openssl/ssl.h: No such file or directory
+```
+sudo apt install libssl-dev
+```
+* dbus/dbus.h: No such file or directory
+```
+sudo apt install libdbus-1-dev
+```
+* netlink/netlink.h: No such file or directory
+```
+sudo apt install libnl-3-dev
+```
+* /usr/bin/ld: cannot find -lnl-genl-3
+```
+sudo apt install libnl-genl-3-dev
+```
+* /usr/bin/ld: cannot find -lnl-route-3
+```
+sudo apt install libnl-route-3-dev
+```
