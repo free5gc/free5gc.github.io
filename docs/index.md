@@ -22,24 +22,28 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE]
 > Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
 
-## 2024/9/5: free5GC v3.4.3 released!
-The release of free5GC v3.4.3 includes several new features, such as new network function TNGF, support for an empty SD value in SNSSAI, and the ability to disable CGF in CHF. It also features a refactored Subscriber Modal Page in the Webconsole. Additionally, several bugs have been fixed, including issues with double registration with N3IWF and unauthorized UE context releases, along with other bug fixes reported via GitHub issues and the free5GC forum.
+## 2024/11/12: free5GC v3.4.4 released!
+
+
+The release of free5GC v3.4.4 includes several new features, including default profile values in the Webconsole, a search bar for profiles and subscribers, NEF support for Traffic Influence, and NAT-T support for N3IWUE in N3IWF. The N3IWF configuration file has been refactored. Bug fixes address SMF ULCL charging issues, AMF authentication procedures, UE RAT type determination, and a UDM SUCI profile B decrypt error, along with other issues reported on GitHub and the free5GC forum.
 
 **[Features]**
 
-- Release TNGF & TNGFUE ([TNGFUE Installation](./guide/TNGF/tngfue-installation.md))
-- Support empty SD value (SNSSAI)
-- Support disable CGF in CHF
+- Add Profile(default values) for create subscriber in Webconsole
+- Add Webconsole Search Bar for Profiles and Subscribers
+- Released NEF that supporting Traffic Influence
+- N3IWF support NAT-T with N3IWUE
 
 **[Refactor]**
 
-- Refactor Subscriber Modal Page in Webconsole
+- N3IWF Refactor, including the configuration file
 
 **[Bugs]**
 
-- Fix can't registration with N3IWF twice problems
-- Fix UEs can be context released by a second UE without authentication (src: [Issue](https://github.com/free5gc/free5gc/issues/580))
-- Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
+- SMF ULCL Charging Bugs
+- AMF authentication procedure and UE RAT type determination issues.
+- UDM SUCI profile B decrypt error [#41](https://github.com/free5gc/udm/pull/41)
+- Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
 
 > [!NOTE]
 > The history of the version release can be found on the [history page](./history.md).
