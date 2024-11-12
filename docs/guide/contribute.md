@@ -18,6 +18,10 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 > Our pull request commit messages must comply with the [**Conventional Commit Message**](https://www.conventionalcommits.org/en/v1.0.0/) format.
 > This will be checked by the pull request CI action.
 
+3\. Become a Contributor
+
+Once your pull request is accepted, you will be added to the contributor list in the [free5GC governance](https://github.com/free5gc/governance).
+
 ## Recommended Articles
 
 - [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
