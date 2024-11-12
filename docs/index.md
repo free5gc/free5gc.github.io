@@ -33,10 +33,11 @@ The release of free5GC v3.4.4 includes several new features, including default p
 - Add Webconsole Search Bar for Profiles and Subscribers
 - Released NEF that supporting Traffic Influence
 - N3IWF support NAT-T with N3IWUE
+- Go-UPF with [v0.9.3 GTP5G Version](https://github.com/free5gc/gtp5g/tree/v0.9.3)
 
 **[Refactor]**
 
-- N3IWF Refactor, including the configuration file
+- N3IWF Refactor, including the configuration file [#618](https://github.com/free5gc/free5gc/pull/618)
 
 **[Bugs]**
 
