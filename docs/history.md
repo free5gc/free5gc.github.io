@@ -1,5 +1,29 @@
 # History
 
+## Nov 12, 2024: v3.4.4
+
+The release of free5GC v3.4.4 includes several new features, including default profile values in the Webconsole, a search bar for profiles and subscribers, NEF support for Traffic Influence, and NAT-T support for N3IWUE in N3IWF. The N3IWF configuration file has been refactored. Bug fixes address SMF ULCL charging issues, AMF authentication procedures, UE RAT type determination, and a UDM SUCI profile B decrypt error, along with other issues reported on GitHub and the free5GC forum.
+
+**[Features]**
+
+- Add Profile(default values) for create subscriber in Webconsole
+- Add Webconsole Search Bar for Profiles and Subscribers
+- Released NEF that supporting Traffic Influence
+- N3IWF support NAT-T with N3IWUE
+- Go-UPF with [v0.9.3 GTP5G Version](https://github.com/free5gc/gtp5g/tree/v0.9.3)
+
+**[Refactor]**
+
+- N3IWF Refactor, including the configuration file [#618](https://github.com/free5gc/free5gc/pull/618)
+
+**[Bugs]**
+
+- SMF ULCL Charging Bugs
+- AMF authentication procedure and UE RAT type determination issues.
+- UDM SUCI profile B decrypt error [#41](https://github.com/free5gc/udm/pull/41)
+- Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
+
+
 ## Sep 5, 2024: v3.4.3
 
 The release of free5GC v3.4.3 includes several new features, such as new network function TNGF, support for an empty SD value in SNSSAI, and the ability to disable CGF in CHF. It also features a refactored Subscriber Modal Page in the Webconsole. Additionally, several bugs have been fixed, including issues with double registration with N3IWF and unauthorized UE context releases, along with other bug fixes reported via GitHub issues and the free5GC forum.
