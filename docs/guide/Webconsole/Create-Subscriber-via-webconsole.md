@@ -95,6 +95,7 @@ There are two options to add a new subscriber:
 ![](./images/created_profile.png)
 
 > Click `SUBSCRIBERS` -> `CREATE`
+
 > Click `SELECT PROFILE` -> Select the profile you just created and customize some basic subscriber information -> `CREATE`
 
 ![](./images/create_subscriber_with_profile.png)
