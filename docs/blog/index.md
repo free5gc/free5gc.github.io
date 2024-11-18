@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2024/11/13: Mapping PCC Rules into Session Rules: Policy Application in 5G Networks](./20241113/20241113.md)
 - [2024/11/08: Modeling Digital Twins in 5G Networks: A Glimpse into the Future of Intelligent Network Management](./20241108/20241108.md)
 - [2024/09/18: How L25GC+ achieved the low-latency communication](./20240918/20240918.md)
 - [2024/06/28: Introduction to 5G-QoS](./20240628/20240628.md)
