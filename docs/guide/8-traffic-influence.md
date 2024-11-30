@@ -69,7 +69,7 @@
     - ping `remote server` (UERANSIM <-> I-UPF <-> Server)
         ![ping-server-tied](./images/8-7.png)
 ## Influence traffic routing by NEF
-- An Application Function (AF) may send requests to influence SMF routeing decisions for User Plane traffic of PDU Sessions. 
+- An Application Function (AF) may send requests to influence SMF routing decisions for User Plane traffic of PDU Sessions. 
 - The AF requests may influence UPF (re)selection and allow routing of user traffic to a local access (identified by a DNAI) to a Data Network.
 
 ### AF requests targeting a group of UE
