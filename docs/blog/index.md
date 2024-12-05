@@ -3,7 +3,7 @@
 # Blogs
 
 ## Official
-- [2024/12/03: Loxilb ebpf](./20241203/20241203.md)
+- [2024/12/03: Loxilb eBPF](./20241203/20241203.md)
 - [2024/11/27: NWDAF introduction](./20241127/20241127.md)
 - [2024/11/13: Mapping PCC Rules into Session Rules: Policy Application in 5G Networks](./20241113/20241113.md)
 - [2024/11/08: Modeling Digital Twins in 5G Networks: A Glimpse into the Future of Intelligent Network Management](./20241108/20241108.md)
