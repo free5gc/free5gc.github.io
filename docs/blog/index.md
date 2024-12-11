@@ -43,7 +43,7 @@
 - [free5GC 5GC & UERANSIM UE / RAN Sample Configuration - VPP-UPF with DPDK](https://github.com/s5uishida/free5gc_ueransim_vpp_upf_dpdk_sample_config){target=_blank}
 - [Deploy eBPF-based UPF with free5GC](https://github.com/edgecomllc/eupf/blob/main/docs/install.md#how-to-deploy-eupf-with-free5gc-core){target=_blank}
 - [Introduce to 5GC (written in traditional chinese)](https://ithelp.ithome.com.tw/users/20110850/ironman/4961){target=_blank}
-- [Free5GC v3.4.3 source code study (written in simplified Chinese)](https://www.cnblogs.com/zrq96/p/18400658){targget=_blank}
+- [Free5GC v3.4.3 source code study (written in simplified Chinese)](https://www.cnblogs.com/zrq96/p/18400658){target=_blank}
 - [Deploying 5G core network with Free5GC, Kubernetes and Helm](https://medium.com/rahasak/deploying-5g-core-network-with-free5gc-kubernets-and-helm-charts-29741cea3922){target=_blank}
 - [Running Free5GC on Platform9 Managed Kubernetes](https://platform9.com/blog/running-free5gc-on-platform9-managed-kubernetes/){target=_blank}
 - [Try iPhone connection with free5GC and real gNB(written in japanese)](https://qiita.com/Takashi_Eifuku/items/1b710477dee680f76909){target=_blank}
