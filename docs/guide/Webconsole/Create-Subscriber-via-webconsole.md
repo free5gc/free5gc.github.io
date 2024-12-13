@@ -57,6 +57,7 @@ There are two options to add a new subscriber:
         - **Flow** Configuration
             - IP Filter
                 - Source/destination IP address ranges
+                - CIDR Format (eg: "140.113.0.0/16") 
             - Precedence
                 - Priority of flow rules (lower value means higher priority)
             - 5QI (Flow-specific QoS identifier)
