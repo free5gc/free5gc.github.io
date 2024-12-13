@@ -45,17 +45,28 @@ There are two options to add a new subscriber:
 
 > Edit the Subscriber's data and click `CREATE`, here you can configure the 
 
-- **Network Slicing** configuration
-    - SST/SD
-    - **DNN** configuration
-        - AMBR
-        - Default 5QI
-        - **Flow** configuration
+- **Network Slicing** Configuration
+    - SST/SD (Slice/Service Type and Slice Differentiator)
+    - **DNN** (Data Network Name) Configuration
+        - AMBR (Aggregate Maximum Bit Rate)
+            - Maximum total uplink/downlink bitrate limits
+        - Default 5QI (5G QoS Identifier)
+            - Default Quality of Service identifier
+            - GBR type (5QI values: 1-4, 65-67, 71-76)
+            - Non-GBR type (5QI values: 5-9, 69-70, 79-80)
+        - **Flow** Configuration
             - IP Filter
+                - Source/destination IP address ranges
+                - CIDR Format (eg: "140.113.0.0/16") 
             - Precedence
-            - 5QI
-            - Uplink GBR/MBR
-            - Downlink GBR/MBR
+                - Priority of flow rules (lower value means higher priority)
+            - 5QI (Flow-specific QoS identifier)
+                - Non-GBR flows: Best effort traffic, no bandwidth guarantee
+                - GBR flows: Guaranteed bit rate for specific services
+            - Uplink GBR/MBR (Guaranteed/Maximum Bit Rate)
+                - Applicable for GBR 5QI flows
+            - Downlink GBR/MBR (Guaranteed/Maximum Bit Rate)
+                - Applicable for GBR 5QI flows
             - [Flow-Based Charging Config](../Charging/setting.md)
 
 ![](./images/subscriberData1.png)
