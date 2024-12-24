@@ -10,10 +10,11 @@ free5GC is highly rely on the infrastructures provided by the Linux Kernel, espe
 
 [@andy89923](https://github.com/andy89923) found a reproducible kernel panic issue.
 Follow the actions below can always produce the kernel panic:
+
 - Create online charging PDU Session
 - Ping the Data Network (should match the ip filter of the charging configuration)
 
-Please note that, the case of kernel panic will only happens if the version of gtp5g greater than v0.8.x.
+Please also note that, the case of kernel panic will only happens if the version of gtp5g greater than v0.8.x.
 
 ### Figure out the problem
 
