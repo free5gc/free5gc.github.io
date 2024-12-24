@@ -6,12 +6,12 @@
 
 ## Case Study - kernel panic caused by the online charging PDU Session
 
-free5GC is highly rely to the infrastructures provided by the Linux Kernel, especially the gtp5g kernel module.
+free5GC is highly rely on the infrastructures provided by the Linux Kernel, especially the gtp5g kernel module.
 
 [@andy89923](https://github.com/andy89923) found a reproducible kernel panic issue.
 Follow the actions below can always produce the kernel panic:
 - Create online charging PDU Session
-- Ping the specific Data Network
+- Ping the Data Network (should match the ip filter of the charging configuration)
 
 Please note that, the case of kernel panic will only happens if the version of gtp5g greater than v0.8.x.
 
