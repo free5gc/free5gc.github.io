@@ -30,7 +30,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Installing a UE/RAN Simulator](./5-install-ueransim.md)
 - [Installing a N3IWUE](./n3iwue-installation.md)
 - [Installing a TNGFUE](./TNGF/tngfue-installation.md)
-- [Enable OAuth2 on SBI](./OAuth2/oauth2_enable.md)
+- [Enable OAuth2 on SBI](./../doc/OAuth2/oauth2_enable.md)
 - [free5GC Simple Apps](./6-simple-app.md)
 
 <!-- TODO: should update the tutorial videos -->
