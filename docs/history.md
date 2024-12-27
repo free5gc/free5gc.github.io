@@ -1,5 +1,9 @@
 # History
 
+## 2024 Roadmap 
+
+![Roadmap-2024](./assets/free5gc-roadmap-2024.png)
+
 ## Nov 12, 2024: v3.4.4
 
 The release of free5GC v3.4.4 includes several new features, including default profile values in the Webconsole, a search bar for profiles and subscribers, NEF support for Traffic Influence, and NAT-T support for N3IWUE in N3IWF. The N3IWF configuration file has been refactored. Bug fixes address SMF ULCL charging issues, AMF authentication procedures, UE RAT type determination, and a UDM SUCI profile B decrypt error, along with other issues reported on GitHub and the free5GC forum.
