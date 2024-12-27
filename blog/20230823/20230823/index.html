@@ -1,0 +1,1241 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Web security: CSRF vulnerability in webconsole - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#web-security-csrf-vulnerability-in-webconsole" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Web security: CSRF vulnerability in webconsole
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abstract" class="md-nav__link">
+    Abstract
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#webconsole-overview" class="md-nav__link">
+    Webconsole Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Webconsole Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    Environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-run-webconsole" class="md-nav__link">
+    Install &amp; Run webconsole
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pages" class="md-nav__link">
+    Pages
+  </a>
+  
+    <nav class="md-nav" aria-label="Pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subscribers" class="md-nav__link">
+    SUBSCRIBERS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tenant-and-user" class="md-nav__link">
+    TENANT AND USER
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csrf-cross-site-request-forgery-vulnerability" class="md-nav__link">
+    CSRF (Cross-Site Request Forgery) Vulnerability
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trace-code" class="md-nav__link">
+    Trace Code
+  </a>
+  
+    <nav class="md-nav" aria-label="Trace Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+    Frontend
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    Backend
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#json-web-token-jwt" class="md-nav__link">
+    JSON Web Token (JWT)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trace-code-cont" class="md-nav__link">
+    Trace Code (Cont.)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    Implementation
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-authentication" class="md-nav__link">
+    Check Authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt-verify-signature" class="md-nav__link">
+    JWT Verify Signature
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-initialization" class="md-nav__link">
+    Backend Initialization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-login" class="md-nav__link">
+    Frontend Login
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20230823/20230823.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20230823/20230823.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="web-security-csrf-vulnerability-in-webconsole">Web security: CSRF vulnerability in webconsole</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Brian Chen (陳煜盛)<br />
+Date: 2023/8/23</p>
+</div>
+<h2 id="abstract">Abstract</h2>
+<p>This article is intended for individuals who possess an interest in free5gc/webconsole and hold concerns regarding security matters. It aims to provide a concise introduction to the webconsole, followed by an exposition of a significant security concern along with our corresponding solution. Within webconsole v1.2.0, aligning with the most recent iteration of free5gc v3.3.0, certain vulnerabilities have been identified that could potentially lead to the exposure of subscriber data. It is my responsibility to address and rectify these vulnerabilities, enhancing the webconsole's resilience against cyber attacks.</p>
+<h2 id="webconsole-overview">Webconsole Overview</h2>
+<p>The Webconsole serves as a web-based tool designed to manage User Equipment (UE) subscription data. It plays a crucial role in aiding the free5GC Core Network manager by facilitating the configuration of UEs and providing the ability to monitor the status of activated UEs.</p>
+<h3 id="environment">Environment</h3>
+<ul>
+<li>Frontend<ul>
+<li>React v17.0.2</li>
+<li>node.js v20.2.0</li>
+<li>yarn v1.22.19</li>
+</ul>
+</li>
+<li>Backend<ul>
+<li>Golang v1.17</li>
+<li>Gin v1.9.0</li>
+<li>MongoDB v3.6.8</li>
+</ul>
+</li>
+</ul>
+<h3 id="install-run-webconsole">Install &amp; Run webconsole</h3>
+<p>Prior to building webconsole, install nodejs and yarn package first:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w"> </span>cmdtest
+sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w"> </span>yarn
+curl<span class="w"> </span>-sS<span class="w"> </span>https://dl.yarnpkg.com/debian/pubkey.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb https://dl.yarnpkg.com/debian/ stable main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/yarn.list
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nodejs<span class="w"> </span>yarn
+</code></pre></div>
+<p>To run free5GC webconsole server. The following steps are to be considered.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/free5gc/webconsole.git
+<span class="nb">cd</span><span class="w"> </span>frontend
+yarn<span class="w"> </span>install
+yarn<span class="w"> </span>build
+rm<span class="w"> </span>-rf<span class="w"> </span>../public
+cp<span class="w"> </span>-R<span class="w"> </span>build<span class="w"> </span>../public
+<span class="nb">cd</span><span class="w"> </span>..
+go<span class="w"> </span>run<span class="w"> </span>server.go
+</code></pre></div>
+<p>Default account and password is <code>admin/free5gc</code></p>
+<p><img alt="" src="../img/1.png" /></p>
+<h3 id="pages">Pages</h3>
+<h4 id="subscribers">SUBSCRIBERS</h4>
+<p>Creation/deletion/editing the subscriber's data:</p>
+<p><img alt="" src="../img/2.png" /></p>
+<p>A Subscriber data contains these informations:</p>
+<ul>
+<li>PLMN ID</li>
+<li>SUPI (UE ID)</li>
+<li>AKA parameters</li>
+<li>S-NSSAI Configurations<ul>
+<li>Sst/Sd</li>
+<li>DNN<ul>
+<li>Name</li>
+<li>AMBR</li>
+<li>Flow Rules<ul>
+<li>IP Filter</li>
+<li>Precedence</li>
+<li>5QI</li>
+<li>GBR</li>
+<li>MBR</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="../img/3.png" /></p>
+<h4 id="tenant-and-user">TENANT AND USER</h4>
+<p>The Webconsole also allows for the creation, deletion, and editing of <strong>tenants</strong>. A <strong>tenant</strong> functions as an access control group, delineating specific permissions and boundaries. In this setup, if you do not possess admin privileges, you are unable to access subscriber data generated by other tenants, ensuring data privacy and security.</p>
+<p><img alt="" src="../img/4.png" /></p>
+<p>Furthermore, the capability to incorporate users within a tenant is available. To illustrate, by selecting the <strong>brian1</strong> tenant and clicking on the <strong>New User</strong> option, it becomes possible to introduce a new user. As an example, a user with the email address <strong>aaabbb@gmail.com</strong> can be added through this process.</p>
+<p><img alt="" src="../img/5.png" /></p>
+<p>The data within MongoDB can be accessed and reviewed using the <a href="https://www.mongodb.com/zh-cn/products/compass">MongoDBCompass</a> tool.</p>
+<p><img alt="" src="../img/6.png" /></p>
+<h2 id="csrf-cross-site-request-forgery-vulnerability">CSRF (Cross-Site Request Forgery) Vulnerability</h2>
+<p>The vulnerability was discovered by INCIBE, and they promptly notified the free5GC team via email.<br />
+<img alt="" src="../img/7.png" /></p>
+<p>The <a href="https://github.com/free5gc/free5gc/issues/387">corresponding issue</a> related to this vulnerability is also documented in the free5gc repository. Despite the typical deployment of the webconsole within LAN or Docker environments, it's essential to exercise caution regarding users who operate this service on a public IP or within an insecure network environment.</p>
+<p>In a nutshell, an attacker can gain unauthorized access to the database by merely setting the token to the term <strong>'admin'</strong>.<br />
+<div class="highlight"><pre><span></span><code>$ curl &#39;&lt;webconsole&#39;s IP&gt;:5000/api/subscriber&#39; -H &#39;User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0&#39; -H &#39;Accept: application/json&#39; -H &#39;Accept-Language: en-US,en;q=0.5&#39; -H &#39;Accept-Encoding: gzip, deflate&#39; -H &#39;Referer: http://&lt;webconsole&#39;s IP&gt;:5000/&#39; -H &#39;Connection: keep-alive&#39; -H &#39;X-Requested-With: XMLHttpRequest&#39; -H &#39;Token: admin&#39; -H &#39;Pragma: no-cache&#39; -H &#39;Cache-Control: no-cache&#39;
+</code></pre></div></p>
+<p>Subsequently, they can directly retrieve subscriber information from the server's MongoDB.<br />
+<div class="highlight"><pre><span></span><code>[{&quot;plmnID&quot;:&quot;20893&quot;,&quot;ueId&quot;:&quot;imsi-208930000000003&quot;}]
+</code></pre></div></p>
+<p>Undoubtedly, this vulnerability is of significant concern since the intended safeguard, allowing access solely to <strong>admin</strong>, has been compromised, thereby enabling easy access for anyone.</p>
+<h2 id="trace-code">Trace Code</h2>
+<h3 id="frontend">Frontend</h3>
+<p>In <code>webconsole/frontend/src/util/AuthHelper.js</code></p>
+<ul>
+<li>In scenarios where the default username and password (admin/free5gc) are employed, the <code>ApiHelper.login()</code> function remains untouched. This practice might expedite agile development, but it comes at the cost of compromising security.</li>
+</ul>
+<p><img alt="" src="../img/8.png" /></p>
+<h3 id="backend">Backend</h3>
+<p>In <code>webconsole/frontend/WebUI/api_webui.go</code><br />
+- In situations where a webconsole client configures the <code>tokenStr</code> as <strong>'admin'</strong>, the backend process will omit the execution of <code>ParseJWT()</code>.</p>
+<p><img alt="" src="../img/9.png" /></p>
+<h2 id="json-web-token-jwt">JSON Web Token (JWT)</h2>
+<p>The Webconsole relies on <a href="https://jwt.io/">JSON Web Token (JWT)</a> as its authentication mechanism, a specification outlined in <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a>.</p>
+<blockquote>
+<p>JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties.  The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.</p>
+</blockquote>
+<p>When a client employs a web browser to initiate a login via the HTTP(s) protocol, the Web server is expected to furnish the client with a <strong>JWT token</strong> in response. Subsequently, the client employs this JWT token to interact with resources by sending requests through the <strong>RESTful API</strong> (such as GET, POST, PUT, etc.).</p>
+<p>A JSON Web Token (JWT) consists of three distinct parts. In the context of the webconsole backend, the following fields are relevant:</p>
+<ul>
+<li>Header: This section contains information about the type of token and the signing algorithm used. It often includes the "alg" (algorithm) and "typ" (type) fields.</li>
+<li>Payload: The payload holds the actual claims or data that are being conveyed by the token. For the webconsole backend, specific fields within this section could include:<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4">Claim</a> (JSON object)<ul>
+<li><code>sub</code>: identifies the principal that is the subject of the JWT.</li>
+<li><code>iat</code>: identifies the time at which the JWT was issued.</li>
+<li><code>exp</code>: identifies the expiration time onor after which the JWT MUST NOT be accepted for processing.</li>
+<li><code>email</code></li>
+<li><code>tenantId</code></li>
+<li>...(you can design the attribute yourself)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Signature: This component is created by combining the encoded header and payload with a secret key (or a public/private key pair) to ensure the token's integrity and authenticity. The signature allows the recipient to verify that the token hasn't been tampered with.</li>
+</ul>
+<blockquote>
+<p>The JWT Claims Set represents a JSON object whose members are the claims conveyed by the JWT.  The Claim Names within a JWT Claims Set MUST be unique; JWT parsers MUST either reject JWTs with duplicate Claim Names or use a JSON parser that returns only the lexically last duplicate member name</p>
+</blockquote>
+<p>The image depicted below illustrates the process of using jwt.io to both encode and decode JWT tokens. These tokens are segmented into distinct sections denoted by the <font color="red">red</font>, <font color="#FF00FF">purple</font> and <font color=" #2894FF">blue</font> divisions, separated by periods dots.</p>
+<p><img alt="" src="../img/10.png" /></p>
+<p>Given that the Payload can be decoded using the algorithm specified in the Header, it's essential to refrain from including sensitive details like passwords or credit card numbers within it. Instead, the Payload typically holds claims and application-specific metadata.</p>
+<p>To maintain the security of the process, the server retains a confidential key used to validate the signature. In situations where a client endeavors to access a resource using a JWT token that possesses an incorrect Verify Signature, an error response will be generated. This stringent signature verification mechanism ensures that the authenticity and integrity of both the token and its enclosed data are upheld.</p>
+<h2 id="trace-code-cont">Trace Code (Cont.)</h2>
+<p>In <code>webconsole/frontend/WebUI/api_webui.go</code>, we can find the implementation of JWT.</p>
+<ul>
+<li><code>JWT()</code> is for encoding:<br />
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">JWT</span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">userId</span><span class="p">,</span><span class="w"> </span><span class="nx">tenantId</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">SigningMethodHS256</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">claims</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">token</span><span class="p">.</span><span class="nx">Claims</span><span class="p">.(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">claims</span><span class="p">[</span><span class="s">&quot;sub&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">userId</span>
+<span class="w">    </span><span class="nx">claims</span><span class="p">[</span><span class="s">&quot;iat&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">claims</span><span class="p">[</span><span class="s">&quot;exp&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Add</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Hour</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">24</span><span class="p">).</span><span class="nx">Unix</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">claims</span><span class="p">[</span><span class="s">&quot;email&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">email</span>
+<span class="w">    </span><span class="nx">claims</span><span class="p">[</span><span class="s">&quot;tenantId&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">tenantId</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">jwtKey</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">tokenString</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">token</span><span class="p">.</span><span class="nx">SignedString</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">jwtKey</span><span class="p">))</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">ProcLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;JWT err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tokenString</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li><code>ParseJWT()</code> is for decoding:<br />
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ParseJWT</span><span class="p">(</span><span class="nx">tokenStr</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Parse</span><span class="p">(</span><span class="nx">tokenStr</span><span class="p">,</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Token</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kd">interface</span><span class="p">{},</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">jwtKey</span><span class="p">),</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ParseJWT error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">claims</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">token</span><span class="p">.</span><span class="nx">Claims</span><span class="p">.(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">claims</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>The function <code>CheckAuth()</code> serves the purpose of determining whether a user possesses the authorization to access a particular resource.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">CheckAuth</span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">tokenStr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">GetHeader</span><span class="p">(</span><span class="s">&quot;Token&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">tokenStr</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul>
+<li>
+<p>The secret key utilized for signature verification is obtained through <code>os.Getenv("SIGNINGKEY")</code>. However, there's a possibility that <code>SIGNINGKEY</code> might not be exported as an environment variable, leading to a potential return of an empty value. Under such circumstances, an implication arises: an admin in Webconsole A could potentially gain access to subscriber data within Webconsole B.</p>
+</li>
+<li>
+<p>Within the <code>CheckAuth()</code> function, if the client sets the JWT token to <strong>'admin'</strong>, the function will evaluate to true, effectively allowing the check to be passed.</p>
+</li>
+</ul>
+</div>
+<h2 id="implementation">Implementation</h2>
+<h3 id="check-authentication">Check Authentication</h3>
+<p>Initially, I have revised the design of the <code>CheckAuth()</code> function to ensure the mandatory execution of <code>ParseJWT()</code>.<br />
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">CheckAuth</span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">tokenStr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">GetHeader</span><span class="p">(</span><span class="s">&quot;Token&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">claims</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ParseJWT</span><span class="p">(</span><span class="nx">tokenStr</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">claims</span><span class="p">[</span><span class="s">&quot;email&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><br />
+Furthermore, I've implemented a second change where, considering that the webconsole v1.2.0 doesn't inherently establish a tenant named <strong>'admin'</strong> or a user named <strong>'admin'</strong>, I propose a more effective approach. During the initialization of the webconsole backend, it is recommended to generate an <strong>'admin'</strong> tenant and user. This means that executing <code>go run server.go</code> within the <code>webconsole/</code> directory should consistently generate an admin user, thereby fulfilling the initial login requirement.</p>
+<p><img alt="" src="../img/11.png" /></p>
+<p>Certainly, in the <code>backend/WebUI/api_webui.go</code> file, I propose the addition of a function named <code>SetAdmin()</code>. To streamline the process and maintain consistency with the rest of the free5GC project, it is recommended to leverage the <code>mongoapi</code> module established within the <code>free5gc/util</code> repository. Given the project's heavy reliance on MongoDB, employing <code>mongoapi</code> over frequent calls to <code>mongo-driver</code> is essential to ensure efficiency and coherence.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">SetAdmin</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">mongoapi</span><span class="p">.</span><span class="nx">RestfulAPIDeleteOne</span><span class="p">(</span><span class="s">&quot;tenantData&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span><span class="s">&quot;tenantName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="p">})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;RestfulAPIDeleteOne err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">mongoapi</span><span class="p">.</span><span class="nx">RestfulAPIDeleteOne</span><span class="p">(</span><span class="s">&quot;userData&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span><span class="s">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="p">})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;RestfulAPIDeleteOne err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Create Admin tenant</span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Infoln</span><span class="p">(</span><span class="s">&quot;Create tenant: admin&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">adminTenantData</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;tenantId&quot;</span><span class="p">:</span><span class="w">   </span><span class="nx">uuid</span><span class="p">.</span><span class="nx">Must</span><span class="p">(</span><span class="nx">uuid</span><span class="p">.</span><span class="nx">NewRandom</span><span class="p">()).</span><span class="nx">String</span><span class="p">(),</span>
+<span class="w">        </span><span class="s">&quot;tenantName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">mongoapi</span><span class="p">.</span><span class="nx">RestfulAPIPutOne</span><span class="p">(</span><span class="s">&quot;tenantData&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span><span class="s">&quot;tenantName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="p">},</span><span class="w"> </span><span class="nx">adminTenantData</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;RestfulAPIPutOne err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">AmdinTenant</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">mongoapi</span><span class="p">.</span><span class="nx">RestfulAPIGetOne</span><span class="p">(</span><span class="s">&quot;tenantData&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span><span class="s">&quot;tenantName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="p">})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;RestfulAPIGetOne err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Create Admin user</span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Infoln</span><span class="p">(</span><span class="s">&quot;Create user: admin&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">hash</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bcrypt</span><span class="p">.</span><span class="nx">GenerateFromPassword</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;free5gc&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;GenerateFromPassword err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">adminUserData</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;userId&quot;</span><span class="p">:</span><span class="w">            </span><span class="nx">uuid</span><span class="p">.</span><span class="nx">Must</span><span class="p">(</span><span class="nx">uuid</span><span class="p">.</span><span class="nx">NewRandom</span><span class="p">()).</span><span class="nx">String</span><span class="p">(),</span>
+<span class="w">        </span><span class="s">&quot;tenantId&quot;</span><span class="p">:</span><span class="w">          </span><span class="nx">AmdinTenant</span><span class="p">[</span><span class="s">&quot;tenantId&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="s">&quot;email&quot;</span><span class="p">:</span><span class="w">             </span><span class="s">&quot;admin&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;encryptedPassword&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">hash</span><span class="p">),</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">mongoapi</span><span class="p">.</span><span class="nx">RestfulAPIPutOne</span><span class="p">(</span><span class="s">&quot;userData&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">M</span><span class="p">{</span><span class="s">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span><span class="p">},</span><span class="w"> </span><span class="nx">adminUserData</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;RestfulAPIPutOne err: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="jwt-verify-signature">JWT Verify Signature</h3>
+<p>Certainly, within the <code>backend/WebUI/api_webui.go</code> file, I recommend introducing a string variable named <code>jwtKey</code> to serve as the private key for JWT Verify Signature. Although the length of jwtKey is specified as <strong>256 bytes</strong>, it's worth noting that the distinction between <strong>256 bytes</strong> and <strong>256 bits</strong> is inconsequential in this context. The jwt module will adeptly transform the key to a 256-bit form. For further insights, you can refer to <a href="https://github.com/free5gc/free5gc/issues/28#issuecomment-1667491567">issue 28</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">jwtKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1">// for generating JWT</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">InitJwtKey</span><span class="p">()</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">randomBytes</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">256</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">rand</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">randomBytes</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Init JWT key error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">jwtKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">randomBytes</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="backend-initialization">Backend Initialization</h3>
+<p>In <code>backend/webui_service/webui_init.go</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="o">*</span><span class="nx">WebuiApp</span><span class="p">)</span><span class="w"> </span><span class="nx">Start</span><span class="p">(</span><span class="nx">tlsKeyLogPath</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* ... */</span>
+<span class="w">    </span><span class="nx">WebUI</span><span class="p">.</span><span class="nx">SetAdmin</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">WebUI</span><span class="p">.</span><span class="nx">InitJwtKey</span><span class="p">();</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">InitLog</span><span class="p">.</span><span class="nx">Errorln</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="cm">/* ... */</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="frontend-login">Frontend Login</h3>
+<p>Certainly, in the <code>frontend/src/util/AuthHelper.js</code> file, it is advised to remove the section of code that could be considered a "cheating snippet." To ensure a robust authentication process, all users should be required to successfully pass through the <code>ApiHelper.login</code> function and receive a response code of 200. This approach ensures a consistent and legitimate authentication mechanism.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">login</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">ApiHelper</span><span class="p">.</span><span class="nx">login</span><span class="p">({</span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nx">username</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nx">password</span><span class="p">});</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">username</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;System Administrator&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">access_token</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;User&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">access_token</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="nx">LocalStorageHelper</span><span class="p">.</span><span class="nx">setUserInfo</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="nx">authActions</span><span class="p">.</span><span class="nx">setUser</span><span class="p">(</span><span class="nx">user</span><span class="p">));</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this endeavor, we've successfully addressed the CSRF vulnerability issue, as highlighted in <a href="https://github.com/free5gc/free5gc/issues/387">issue #387</a> and acknowledged by INCIBE. Furthermore, I've introduced the concept of JWT tokens in this article, detailing their implementation and the corresponding adjustments made within the webconsole. You can locate the detailed implementation in the <a href="https://github.com/free5gc/webconsole/pull/44">merged PR #44</a> of the webconsole repository. I'd like to extend my gratitude to the contributors kishiguro and LaumiH for their significant role in refactoring the webconsole. As a result of their efforts, the webconsole UI has been notably enhanced. Our upcoming focus involves the integration of the charging function, which we are actively pursuing.</p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://github.com/free5gc/webconsole">free5gc/webconsole</a><br />
+<a href="https://github.com/free5gc/webconsole/pull/44">merged PR #44</a><br />
+<a href="https://github.com/free5gc/free5gc/issues/387">free5gc issue #387</a><br />
+<a href="https://github.com/free5gc/free5gc/issues/28#issuecomment-1667491567">free5gc issue #28</a><br />
+<a href="https://jwt.io/">JSON Token</a><br />
+<a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a><br />
+<a href="https://www.mongodb.com/zh-cn/products/compass">MongoDBCompass</a></p>
+<h2 id="about">About</h2>
+<p>Hello everyone,</p>
+<p>I'm Brian Chen (陳煜盛), and I've been immersed in the realm of 5G Core Network technologies. Over the course of seven months, I've had the privilege of serving as an intern at Saviah. In this role, my responsibilities encompass a spectrum of tasks including maintenance, development, and rigorous testing of the free5GC project.</p>
+<p>Should any inquiries, questions, or bug reports regarding free5GC arise, I encourage you to reach out by creating an issue in the <a href="https://github.com/free5gc/free5gc/issues">free5gc repository</a> or by participating in discussions on the <a href="https://forum.free5gc.org/top/yearly">forum</a>. I'm here to assist and collaborate with the community as we navigate the intricacies of this project.</p>
+<p>Warm regards,<br />
+Brian Chen (陳煜盛)</p>
+<ul>
+<li><a href="https://github.com/brianchennn">Github</a></li>
+<li><a href="https://www.linkedin.com/in/brianchennn/">LinkedIn</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
