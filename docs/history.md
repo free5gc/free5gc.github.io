@@ -46,7 +46,7 @@ The release of free5GC v3.4.3 includes several new features, such as new network
 - Fix UEs can be context released by a second UE without authentication (src: [Issue](https://github.com/free5gc/free5gc/issues/580))
 - Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
 
-### July 3, 2024: v3.4.2
+## July 3, 2024: v3.4.2
 
 The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring all Network Functions. New features include setting static IPs for UEs and OAuth2 authentication for the webconsole, plus a ULCL example in free5gc-compose. Bug fixes and a new commit message check are also included.
 
@@ -75,7 +75,7 @@ The free5GC v3.4.2 includes a Go version update to 1.21 and refactoring all Netw
 - Apply [Conventional Commit Message](https://www.conventionalcommits.org/en/v1.0.0/) check in Pull Request
 
 
-### March 28, 2024: v3.4.1
+## March 28, 2024: v3.4.1
 
 In free5GC v3.4.1, Convergent Charging on PDU Session will be fully supported!
 Users will see the data usage on the webconsole after the PDU Session is created (please note that: The charging method (Online/Offline) needs to be determined during the subscription creation).
@@ -84,7 +84,7 @@ Users will see the data usage on the webconsole after the PDU Session is created
 
 If you're interested in the implementation details, please visit the [CHF design document](https://free5gc.org/guide/Chf/design/).
 
-### Feb 16, 2024: v3.4.0
+## Feb 16, 2024: v3.4.0
 
 We are delighted to unveil the release of free5GC v3.4.0! In this latest version, free5GC now boasts support for [OAuth](https://oauth.net/2/) within the Service-Based Architecture (SBA), marking a significant advancement in its capabilities. Furthermore, we have diligently addressed several issues and bugs that were reported by the Open-Source community, ensuring a smoother and more reliable user experience.
 
