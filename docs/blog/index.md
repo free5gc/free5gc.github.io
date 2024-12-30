@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2024/12/30: 5G Network Slicing](./20241230/20241230.md)
 - [2024/12/24: Debug gtp5g kernel module using stacktrace and eBPF](./20241224/index.md)
 - [2024/12/04: Paging in 5G Network](./20241204/20241204.md)
 - [2024/12/03: Loxilb eBPF](./20241203/20241203.md)
