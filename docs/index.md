@@ -53,13 +53,13 @@ The release of free5GC v3.4.4 includes several new features, including default p
 
 ### Next Step(s)
 
-![](./assets/roadmap-0924.png)
+![](./assets/roadmap-1124.png)
 
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
 - Kubernetes deployment (quick installation)
-- Release NEF
-- SBI R17 support (Will be released in 2024 Q3 or Q4)
+- SBI R17 support
 - Packet Rusher CI integration
-- Time Sensitive Network (TSN)
+- NR-DC
+- Roaming
 - 5G LAN
