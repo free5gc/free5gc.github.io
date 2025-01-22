@@ -1,10 +1,11 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
 # free5GC Specification
-- 3GPP TS 23.501/23.502-Rel-15
+- 3GPP TS 23.501/23.502-Rel-15 (`main` branch)
+- 3GPP TS 23.501/23.502-Rel-17 (`next` branch)
 - 5G Standalone (SA) supported
 - Serviced-Based Interface (SBI) supported
-    - Namf, Nsmf, Nausf, Nudm, Nudr, Nnssf, Nnrf, Npcf
+    - Namf, Nsmf, Nausf, Nudm, Nudr, Nnssf, Nnrf, Npcf, Nchf, Nnef
 - N1, N2, N3, N4, N6, N9, interfaces supported
 - 5G SA Network Functions supported:
     - AMF: Access and Mobility Management Function
@@ -15,7 +16,7 @@
         - Support multiple UPF and ULCL (uplink classifier)
         - Session and Service Continuity (SSC) mode 1
         - Packet Routing/Forwarding
-    - CHF: Charging Function (will be supported in release v3.3.1)
+    - CHF: Charging Function
         - Online/Offline Charging
         - Webconsole acts as BD (Billing Domain)
         - Flow-Based Charging on PDU Session
@@ -29,6 +30,7 @@
     - N3IWUE: Non-3GPP Interworking User Equipment
     - TNGF: Trusted Non-3GPP Gateway Function
     - TNGFUE: Trusted Non-3GPP Gateway Function User Equipment
+    - NEF: Network Exposure Function (v3.4.4)
 
 ## Supported features
 - Registration
@@ -71,3 +73,4 @@
 - Dynamic/Static IPv4 address allocation
 - OAuth2 on SBI 
     - [Design Document](./OAuth2/OAuth2Design.md)
+- Traffic Influence (v3.4.4)
