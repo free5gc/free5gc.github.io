@@ -1,0 +1,1300 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Loxilb eBPF - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#loxilb-ebpf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Loxilb eBPF
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    Core Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#object-files" class="md-nav__link">
+    Object Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hook-points" class="md-nav__link">
+    Hook Points
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb-ebpf-maps" class="md-nav__link">
+    loxilb eBPF Maps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loxilb-ebpf-pipeline" class="md-nav__link">
+    loxilb eBPF pipeline
+  </a>
+  
+    <nav class="md-nav" aria-label="loxilb eBPF pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-ebpf-tail-call" class="md-nav__link">
+    What is eBPF Tail Call?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-selection" class="md-nav__link">
+    Pipeline Selection
+  </a>
+  
+    <nav class="md-nav" aria-label="Pipeline Selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tcp-and-udp-example" class="md-nav__link">
+    TCP and UDP example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-initial-packet-reception-and-parsing" class="md-nav__link">
+    1. Initial Packet Reception and Parsing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-qos-processing" class="md-nav__link">
+    2. QoS Processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-layer-2-forwarding" class="md-nav__link">
+    3. Layer 2 Forwarding
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Layer 2 Forwarding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    Key Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maps-used" class="md-nav__link">
+    Maps Used:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l2fwd-mac-based-forwarding" class="md-nav__link">
+    l2fwd (MAC-based forwarding)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l2tunfwd-tunneling-at-layer-2" class="md-nav__link">
+    l2tunfwd (tunneling at Layer 2)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-layer-3-forwarding" class="md-nav__link">
+    4. Layer 3 Forwarding
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Layer 3 Forwarding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-functions" class="md-nav__link">
+    Key Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maps-used_1" class="md-nav__link">
+    Maps Used:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-load-balancer-layer-4-forwarding" class="md-nav__link">
+    5. Load Balancer / Layer 4 Forwarding
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Load Balancer / Layer 4 Forwarding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernelllb_kern_ctc" class="md-nav__link">
+    kernel/llb_kern_ct.c
+  </a>
+  
+    <nav class="md-nav" aria-label="kernel/llb_kern_ct.c">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components_1" class="md-nav__link">
+    Key Components
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kernelllb_kern_natlbfwdc" class="md-nav__link">
+    kernel/llb_kern_natlbfwd.c:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-load-balancing-algorithms" class="md-nav__link">
+    Multiple load balancing algorithms:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion-about-loxilbs-effective-use-of-ebpf" class="md-nav__link">
+    Conclusion about loxilb's effective use of eBPF
+  </a>
+  
+    <nav class="md-nav" aria-label="Conclusion about loxilb's effective use of eBPF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smart-pipeline-design" class="md-nav__link">
+    Smart Pipeline Design
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effective-use-of-ebpf-features" class="md-nav__link">
+    Effective Use of eBPF Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb-particularly-suitable-for" class="md-nav__link">
+    loxilb particularly suitable for
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    references
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20241203/20241203.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20241203/20241203.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="loxilb-ebpf">Loxilb eBPF</h1>
+<p>In the evolving landscape of networking, the demand for high-performance, flexible, and efficient solutions has never been greater. Traditional approaches to packet processing often struggle to keep up with the scale and complexity of modern cloud-native environments and 5G networks. Enter Loxilb, an innovative networking solution leveraging the power of eBPF (Extended Berkeley Packet Filter). eBPF, a game-changing technology in the Linux kernel, allows developers to customize packet processing directly in the kernel with unparalleled speed and flexibility, all while maintaining safety and stability.</p>
+<p>A practical application of LoxiLB's capabilities is demonstrated in the 5G core networks, where effectively managing signaling traffic is crucial for performance and reliability. For example, deploying a load balancer to distribute traffic across multiple Access and Mobility Management Function (AMF) instances enhances both scalability and fault tolerance. This approach is detailed in the article "5G SCTP LoadBalancer Using LoxiLB Applying on free5GC", which illustrates how LoxiLB can distribute SCTP traffic among multiple AMF instances within a free5GC environment.</p>
+<p>In this document, I will provide a comprehensive exploration of Loxilb's architecture, its efficient use of eBPF, and the dual-pipeline design that makes it a robust choice for scenarios requiring high-performance networking and advanced load balancing. Whether you're an enthusiast, developer, or systems architect, this guide will equip you with a deep understanding of how Loxilb utilizes eBPF to revolutionize packet processing and load balancing in modern networks.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Loxilb is a networking solution that utilizes eBPF, leverage eBPF to modify the packet processing rules as they traverse the network stack in the Linux kernel. This can be particularly useful for network behavior without altering existing applications or the operating system itself.</p>
+<h2 id="core-components">Core Components</h2>
+<h3 id="object-files">Object Files</h3>
+<p>loxilb generates two primary object files during build:<br />
+<div class="highlight"><pre><span></span><code>/opt/loxilb/llb_ebpf_main.o  # TC layer processing (305KB)
+/opt/loxilb/llb_xdp_main.o   # XDP layer processing (95KB)
+</code></pre></div></p>
+<h3 id="hook-points">Hook Points</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TC eBPF</th>
+<th>XDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packet Format</td>
+<td>Socket Buffer (skb)</td>
+<td>XDP Frame Format</td>
+</tr>
+<tr>
+<td>Processing Level</td>
+<td>L2-L7</td>
+<td>Primarily L2</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>TC eBPF Layer</li>
+<li>Handles majority of L4+ processing</li>
+<li>Optimized for complex operations</li>
+<li>Supports TCP checksum offload</li>
+<li>Handles connection tracking</li>
+<li>XDP Layer</li>
+<li>Performs quick L2 operations</li>
+<li>Handles packet mirroring</li>
+<li>Used for operations requiring multiple packet copies</li>
+</ol>
+<h3 id="loxilb-ebpf-maps">loxilb eBPF Maps</h3>
+<p>eBPF (extended Berkeley Packet Filter) maps are essential data structures within the Linux kernel that facilitate efficient storage and sharing of data between eBPF programs and user-space applications.</p>
+<p>They function as key-value stores, enabling eBPF programs to maintain state across multiple invocations and allowing communication between the kernel and user space.<br />
+* State Preservation<br />
+* Kernel-User Space Communication<br />
+* Data Sharing Among eBPF Programs</p>
+<p>LoxiLB utilizes eBPF maps to store and manage various data structures essential for packet processing. These maps are pinned to the filesystem, allowing for persistent storage and easy access. Commonly used maps include:<br />
+* Interface Maps: Store information about network interfaces.</p>
+<ul>
+<li>
+<p>Connection Tracking Maps: Maintain state information for active connections.</p>
+</li>
+<li>
+<p>NAT Maps: Handle Network Address Translation entries.</p>
+</li>
+<li>
+<p>Policy Maps: Store security and routing policies.</p>
+</li>
+</ul>
+<h2 id="loxilb-ebpf-pipeline">loxilb eBPF pipeline</h2>
+<p><img alt="pipeline" src="../image.png" /></p>
+<p>Then I will detail analysis of loxilb's end-to-end packet processing pipeline and Load Balancer based on this architecture diagram.</p>
+<h3 id="what-is-ebpf-tail-call">What is eBPF Tail Call?</h3>
+<p>An eBPF tail call is a mechanism that allows one eBPF program to call another eBPF program without returning to the original program. It's like a "jump" instruction that transfers control completely to another program and have benefit in:<br />
+* Modular code structure<br />
+* Efficient processing pipeline<br />
+* Compliance with eBPF verifier limits<br />
+* The Linux kernel limits the number of consecutive tail calls allowed to 32</p>
+<h3 id="pipeline-selection">Pipeline Selection</h3>
+<p>Fast Path (pipe1)and Slow Path (pipe2), these two pipelines address the need for optimizing different types of packet processing tasks based on their complexity and requirements.<br />
+<div class="highlight"><pre><span></span><code>[Incoming Packet]
+      ↓
+[Parse Packet Headers]
+      ↓
+[Connection Lookup]─────Yes──┐
+      ↓                      ↓
+[Is Established?]     [Process &amp; Forward (Fast Path)]
+      ↓                      │
+      No                     │
+      ↓                      │
+[Tail Call to Slow Path]     │
+      │                      │
+      └──────────────────────┘
+</code></pre></div></p>
+<h4 id="tcp-and-udp-example">TCP and UDP example</h4>
+<div class="highlight"><pre><span></span><code>### TCP Example:
+CLOSED → SYN_SENT → SYN_RECEIVED → ESTABLISHED
+   │                                    │
+   │                                    ▼
+[Slow Path Processing]            [Move to Fast Path]
+
+
+### UDP Example:
+NEW → SEEN → ESTABLISHED
+ │              │
+ │              ▼
+[Slow Path] [Move to Fast Path]
+</code></pre></div>
+<h3 id="1-initial-packet-reception-and-parsing">1. Initial Packet Reception and Parsing</h3>
+<p><code>kernel/llb_kern_entry.c</code><br />
+<div class="highlight"><pre><span></span><code>[Incoming Packet] → [packet parsing]
+  ↓
+[intf map] - Interface configuration lookup
+  - Interface index
+  - VLAN information
+  - Zone information
+  - Policy parameters
+</code></pre></div><br />
+* When a packet arrives(parsing happens in <code>dp_parse_d0</code>), the packet parsing module extracts key metadata such as:<br />
+    * Source/destination MAC addresses<br />
+    * IP addresses<br />
+    * Layer 4 ports (if applicable)<br />
+* Metadata is stored in the <code>xfi</code> structure, which guides further processing.<br />
+* Interface-specific rules and properties are checked using <code>intf_map</code>.</p>
+<h3 id="2-qos-processing">2. QoS Processing</h3>
+<p><code>kernel/llb_kern_policer.c</code><br />
+<div class="highlight"><pre><span></span><code>[QoS Stage]
+  ↓
+[pol map] - Policy lookup
+  - Traffic policing rules
+  - Rate limiting
+  - Traffic shaping
+  ↓
+[qos map] - QoS parameters
+  - Priority queues
+  - Bandwidth allocation
+</code></pre></div><br />
+* Traffic policies (e.g., rate-limiting, prioritization) are applied based on:<br />
+    * Policy map <code>pol_map</code>: Defines access control and prioritization policies.<br />
+    * QoS map <code>qos_map</code>: Ensures compliance with Quality of Service requirements (e.g., rate shaping).<br />
+* Packets violating policies may be dropped or delayed.</p>
+<h3 id="3-layer-2-forwarding">3. Layer 2 Forwarding</h3>
+<p><code>kernel/llb_kern_l2fwd.c</code></p>
+<h4 id="key-components">Key Components</h4>
+<ul>
+<li><code>l2fwd</code> (Layer 2 forwarding)</li>
+<li><code>l2tunfwd</code> (Layer 2 tunneling forwarding)</li>
+</ul>
+<h4 id="maps-used">Maps Used:</h4>
+<ul>
+<li><code>smac_map</code>: Source MAC address</li>
+<li><code>dmac_map</code>: Destination MAC address</li>
+<li><code>rmac_map</code>: Router MAC address</li>
+</ul>
+<h4 id="l2fwd-mac-based-forwarding"><code>l2fwd</code> (MAC-based forwarding)</h4>
+<div class="highlight"><pre><span></span><code>[l2fwd Stage]
+  ↓
+[smac map] - Source MAC processing
+  - MAC learning
+  - Source validation
+  ↓
+[dmac map] - Destination MAC processing
+  - MAC lookup
+  - L2 forwarding decision
+</code></pre></div>
+<h4 id="l2tunfwd-tunneling-at-layer-2"><code>l2tunfwd</code> (tunneling at Layer 2)</h4>
+<div class="highlight"><pre><span></span><code>[l2tunfwd Stage]
+  - VXLAN processing
+  - NVGRE processing
+  - Other L2 tunnel protocols
+</code></pre></div>
+<h3 id="4-layer-3-forwarding">4. Layer 3 Forwarding</h3>
+<p><code>kernel/llb_kern_l3fwd.c</code></p>
+<h4 id="key-functions">Key Functions</h4>
+<ul>
+<li><code>dp_ing_l3()</code>: Entry point for L3 ingress processing.</li>
+<li><code>dp_l3_fwd()</code>: Main function for Layer 3 forwarding.</li>
+<li><code>dp_do_rtv4()</code> and <code>dp_do_rtv6()</code>: Handle IPv4 and IPv6 route lookups and apply forwarding actions.</li>
+<li><code>dp_do_ctops()</code>: Handles connection tracking and NAT for packets.</li>
+</ul>
+<h4 id="maps-used_1">Maps Used:</h4>
+<ul>
+<li><code>ct_map</code>: Connection tracking table for stateful flow handling.</li>
+<li><code>rt_v4_map</code>: IPv4 routing table.</li>
+<li><code>rt_v6_map</code>: IPv6 routing table.</li>
+<li><code>LL_DP_RTV4_STATS_MAP</code> and <code>LL_DP_RTV6_STATS_MAP</code>: Statistics for routes.</li>
+</ul>
+<h3 id="5-load-balancer-layer-4-forwarding">5. Load Balancer / Layer 4 Forwarding</h3>
+<h4 id="kernelllb_kern_ctc"><code>kernel/llb_kern_ct.c</code></h4>
+<p>Provides connection tracking infrastructure</p>
+<h5 id="key-components_1">Key Components</h5>
+<ul>
+<li>Connection State Tracking:</li>
+<li>Maintains connection states for all protocols (TCP/UDP/SCTP/ICMP)</li>
+<li>
+<p>Required for stateful operation in both load balancing and L4 forwarding</p>
+</li>
+<li>
+<p>NAT Support Infrastructure:</p>
+</li>
+<li>Tracks NAT translations</li>
+<li>Maintains original and translated addresses/ports</li>
+<li>Essential for load balancer backend selection</li>
+</ul>
+<h4 id="kernelllb_kern_natlbfwdc"><code>kernel/llb_kern_natlbfwd.c</code>:</h4>
+<p>Network Address Translation (NAT) and Load Balancer forwarding implementation</p>
+<h4 id="multiple-load-balancing-algorithms">Multiple load balancing algorithms:</h4>
+<ul>
+<li>Round Robin<br />
+    <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="o">-&gt;</span><span class="n">sel_type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NAT_LB_SEL_RR</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">bpf_spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">act</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">act</span><span class="o">-&gt;</span><span class="n">sel_hint</span><span class="p">;</span><span class="w"> </span>
+
+<span class="w">    </span><span class="c1">// Iterate through endpoints</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">LLB_MAX_NXFRMS</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nxfrm_act</span><span class="o">-&gt;</span><span class="n">inactive</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Select next backend in rotation</span>
+<span class="w">            </span><span class="n">act</span><span class="o">-&gt;</span><span class="n">sel_hint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">LLB_MAX_NXFRMS</span><span class="p">;</span>
+<span class="w">            </span><span class="n">sel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>Hash-based<br />
+    <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="o">-&gt;</span><span class="n">sel_type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NAT_LB_SEL_HASH</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Hash packet for backend selection</span>
+<span class="w">    </span><span class="n">sel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dp_get_pkt_hash</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">act</span><span class="o">-&gt;</span><span class="n">nxfrm</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Fallback if selected backend is inactive</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="o">-&gt;</span><span class="n">nxfrms</span><span class="p">[</span><span class="n">sel</span><span class="p">].</span><span class="n">inactive</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">LLB_MAX_NXFRMS</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="o">-&gt;</span><span class="n">nxfrms</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">inactive</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">sel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>Least Connections<br />
+    <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="o">-&gt;</span><span class="n">sel_type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NAT_LB_SEL_LC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">dp_nat_epacts</span><span class="w"> </span><span class="o">*</span><span class="n">epa</span><span class="p">;</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">lc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Find backend with least active connections</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">LLB_MAX_NXFRMS</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nxfrm_act</span><span class="o">-&gt;</span><span class="n">inactive</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">__u32</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">epa</span><span class="o">-&gt;</span><span class="n">active_sess</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lc</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">sel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">sel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">                </span><span class="n">lc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>Persistent RR</li>
+<li>N3 (GTP tunnel) based</li>
+</ul>
+<h2 id="conclusion-about-loxilbs-effective-use-of-ebpf">Conclusion about loxilb's effective use of eBPF</h2>
+<h3 id="smart-pipeline-design">Smart Pipeline Design</h3>
+<ul>
+<li>Dual pipeline architecture (Fast/Slow) optimizes performance</li>
+<li>Fast path for established connections</li>
+<li>Slow path for new connections and complex processing</li>
+</ul>
+<h3 id="effective-use-of-ebpf-features">Effective Use of eBPF Features</h3>
+<ul>
+<li>Tail calls to overcome program size limits</li>
+<li>Maps for state management</li>
+<li>TC and XDP hooks for different processing needs</li>
+</ul>
+<h3 id="loxilb-particularly-suitable-for">loxilb particularly suitable for</h3>
+<ul>
+<li>Modern cloud-native environments</li>
+<li>High-performance networking</li>
+<li>Complex load balancing scenarios</li>
+<li>Situations requiring efficient packet processing</li>
+</ul>
+<h2 id="references">references</h2>
+<ul>
+<li><a href="https://docs.loxilb.io/main/ebpf/">What is eBPF ??</a></li>
+<li><a href="https://docs.loxilb.io/latest/loxilbebpf/#loading-of-loxilb-ebpf-program">loxilb eBPF implementation details</a></li>
+<li><a href="https://www.loxilb.io/post/state-synchronization-of-ebpf-maps-using-go-a-tale-of-two-frameworks">State synchronization of eBPF Maps using Go - A tale of two frameworks !</a></li>
+<li><a href="https://fuchencong.com/2024/06/27/loxilb-01/">学习 loxilb（1）：本地构建与测试</a></li>
+<li><a href="https://medium.com/@ben0978327139/5g-sctp-loadbalancer-using-loxilb-applying-on-free5gc-b5c05bb723f0">5G SCTP LoadBalancer Using LoxiLB Applying on free5GC</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello, I'm William Lin. I'd like to share my excitement about being a member of the free5gc project, which is a part of the Linux Foundation. I'm always eager to discuss any aspects of core network development or related technologies.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/williamlin0518">williamlin0518</a></li>
+<li>Linkedin: <a href="https://www.linkedin.com/in/cheng-wei-lin-b36b7b235/">Cheng Wei Lin</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
