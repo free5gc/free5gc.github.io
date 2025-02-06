@@ -14,6 +14,9 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 - Please refer to our roadmap for the features of each release.
 
 > [!NOTE]
+> The Linux Foundation announced that free5GC officially joined the Linux Foundation on September 16, 2024, during the Open Source Summit Europe in Vienna, Austria. Check out the press release [here](https://www.linuxfoundation.org/press/worlds-leading-open-source-mobile-packet-core-free5gc-moves-under-linux-foundation-to-provide-open-source-alternatives-across-5g-deployments).
+
+> [!NOTE]
 > Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free.
 
 > [!NOTE]
