@@ -5,6 +5,7 @@
 ## Feb 26, 2025: v3.4.5
 
 The release v3.4.5 of free5GC fixed a series of bugs, which including:
+
 - Online Charging feature with ULCL deployment
 - [SMF #71: SM contexts collection Response not compliant to standard](https://github.com/free5gc/smf/issues/71)
 - [free5GC #627: There is an error in the information listed for QoS-related parameters](https://github.com/free5gc/free5gc/issues/627)
