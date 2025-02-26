@@ -1,5 +1,19 @@
 # History
 
+## 2025 Roadmap
+
+## Feb 26, 2025: v3.4.5
+
+The release v3.4.5 of free5GC fixed a series of bugs, which including:
+- Online Charging feature with ULCL deployment
+- [SMF #71: SM contexts collection Response not compliant to standard](https://github.com/free5gc/smf/issues/71)
+- [free5GC #627: There is an error in the information listed for QoS-related parameters](https://github.com/free5gc/free5gc/issues/627)
+- [free5GC #630: Regarding the PDU session release process during IDLE state](https://github.com/free5gc/free5gc/issues/630)
+- free5GC Issue #617 - #620, #635 - #638
+
+Besides, the version v3.4.5 is the final release for 3GPP R15.
+We're no longer maintain the 3GPP R15 branch, any technical issue/vulnerability/feature will be added in the 3GPP R17 branch only.
+
 ## 2024 Roadmap 
 
 ![Roadmap-2024](./assets/free5gc-roadmap-2024.png)

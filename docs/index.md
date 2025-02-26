@@ -25,31 +25,18 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE]
 > Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
 
-## 2024/11/12: free5GC v3.4.4 released!
+## 2025/02/26: free5GC v3.4.5 released!
 
 
-The release of free5GC v3.4.4 includes several new features, including default profile values in the Webconsole, a search bar for profiles and subscribers, NEF support for Traffic Influence, and NAT-T support for N3IWUE in N3IWF. The N3IWF configuration file has been refactored. Bug fixes address SMF ULCL charging issues, AMF authentication procedures, UE RAT type determination, and a UDM SUCI profile B decrypt error, along with other issues reported on GitHub and the free5GC forum.
+The release v3.4.5 of free5GC fixed a series of bugs, which including:
+- Online Charging feature with ULCL deployment
+- [SMF #71: SM contexts collection Response not compliant to standard](https://github.com/free5gc/smf/issues/71)
+- [free5GC #627: There is an error in the information listed for QoS-related parameters](https://github.com/free5gc/free5gc/issues/627)
+- [free5GC #630: Regarding the PDU session release process during IDLE state](https://github.com/free5gc/free5gc/issues/630)
+- free5GC Issue #617 - #620, #635 - #638
 
-**[Features]**
-
-- Add Profile(default values) for create subscriber in Webconsole
-- Add Webconsole Search Bar for Profiles and Subscribers
-- Released NEF that supporting Traffic Influence
-- N3IWF support NAT-T with N3IWUE
-- Go-UPF with [v0.9.3 GTP5G Version](https://github.com/free5gc/gtp5g/tree/v0.9.3)
-- SMF support SDM Subscription and Unsubscription for UE Session [#123](https://github.com/free5gc/smf/pull/123)
-
-**[Refactor]**
-
-- N3IWF Refactor, including the configuration file [#618](https://github.com/free5gc/free5gc/pull/618)
-- SMF Refactor, using Go context to track UPF association state [#122](https://github.com/free5gc/smf/pull/122)
-
-**[Bugs]**
-
-- SMF ULCL Charging Bugs
-- AMF authentication procedure and UE RAT type determination issues.
-- UDM SUCI profile B decrypt error [#41](https://github.com/free5gc/udm/pull/41)
-- Fix some bug reports from [Issues](https://github.com/free5gc/free5gc/issues) or [Forum](https://forum.free5gc.org/)
+Besides, the version v3.4.5 is the final release for 3GPP R15.
+We're no longer maintain the 3GPP R15 branch, any technical issue/vulnerability/feature will be added in the [3GPP R17 branch](https://github.com/free5gc/free5gc/tree/next) only.
 
 > [!NOTE]
 > The history of the version release can be found on the [history page](./history.md).
