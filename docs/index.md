@@ -25,19 +25,11 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE]
 > Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
 
-## 2025/02/26: free5GC v3.4.5 released!
+## 2025/03/03: free5GC v4.0.0 released!
 
 
-The release v3.4.5 of free5GC fixed a series of bugs, which including:
-
-- Online Charging feature with ULCL deployment
-- [SMF #71: SM contexts collection Response not compliant to standard](https://github.com/free5gc/smf/issues/71)
-- [free5GC #627: There is an error in the information listed for QoS-related parameters](https://github.com/free5gc/free5gc/issues/627)
-- [free5GC #630: Regarding the PDU session release process during IDLE state](https://github.com/free5gc/free5gc/issues/630)
-- free5GC Issue #617 - #620, #635 - #638
-
-Besides, the version v3.4.5 is the final release for 3GPP R15.
-We're no longer maintain the 3GPP R15 branch, any technical issue/vulnerability/feature will be added in the [3GPP R17 branch](https://github.com/free5gc/free5gc/tree/next) only.
+The release v4.0.0 of free5GC upgrade the SBI server/consumer implementaions for All of NFs (except for NEF) to 3GPP R17 standards.
+The NEF upgrade is ongoing, and the R17 support will be released in v4.0.1.
 
 > [!NOTE]
 > The history of the version release can be found on the [history page](./history.md).
@@ -48,9 +40,5 @@ We're no longer maintain the 3GPP R15 branch, any technical issue/vulnerability/
 
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
-- Kubernetes deployment (quick installation)
-- SBI R17 support
-- Packet Rusher CI integration
 - NR-DC
 - Roaming
-- 5G LAN

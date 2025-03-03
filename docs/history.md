@@ -2,6 +2,11 @@
 
 ## 2025 Roadmap
 
+## March 3, 2025: v4.0.0
+
+The release v4.0.0 of free5GC upgrade the SBI server/consumer implementaions for All of NFs (except for NEF) to 3GPP R17 standards.
+The NEF upgrade is ongoing, and the R17 support will be released in v4.0.1.
+
 ## Feb 26, 2025: v3.4.5
 
 The release v3.4.5 of free5GC fixed a series of bugs, which including:
