@@ -66,12 +66,8 @@ For Container deployment:
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
-- Kubernetes deployment (quick installation)
-- SBI R17 support
-- Packet Rusher CI integration
 - NR-DC
 - Roaming
-- 5G LAN
 
 If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
 

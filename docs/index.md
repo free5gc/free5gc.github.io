@@ -36,7 +36,7 @@ The NEF upgrade is ongoing, and the R17 support will be released in v4.0.1.
 
 ### Next Step(s)
 
-![](./assets/roadmap-1124.png)
+![](./assets/roadmap-202503.png)
 
 We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:
 
