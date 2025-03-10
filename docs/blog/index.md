@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2025/03/12: SCP introduction](./20250312/20250312.md)
 - [2025/03/05: Exploring sched_ext: BPF-Powered CPU Schedulers in the Linux Kernel](./20250305/20250305.md)
 - [2025/02/19: Introducing NR-DC: Dual Connectivity for Next-Gen 5G Capabilities](./20250219/20250219.md)
 - [2025/01/23: Network Devices in Linux](./20250123/20250123.md)
