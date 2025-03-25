@@ -57,7 +57,7 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
   <a href="./history" class="announcement-link">View Version History →</a>
 </div>
 
-### Next Step(s)
+### Connecting to the Future!
 
 <div class="roadmap-container">
   <img src="./assets/roadmap-202503.png" alt="free5GC Roadmap" class="roadmap-image"/>
@@ -88,8 +88,8 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
   .hero-title {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    font-weight: bold;
-    color: white;
+    font-weight: bold !important;
+    color: white !important;
   }
   
   .hero-description {
@@ -218,7 +218,7 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
   .roadmap-button {
     display: inline-block;
     background-color: #0b5394;
-    color: white;
+    color: white !important;
     padding: 0.7rem 1.2rem;
     border-radius: 4px;
     text-decoration: none;
