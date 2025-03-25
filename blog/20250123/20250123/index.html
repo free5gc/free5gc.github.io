@@ -1,0 +1,1354 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Network Devices in Linux - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#network-devices-in-linux" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network Devices in Linux
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-veth" class="md-nav__link">
+    1. Veth
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Veth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-use-cases-for-veth" class="md-nav__link">
+    Common Use Cases for veth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespace" class="md-nav__link">
+    Namespace
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vlanvirtual-local-area-network" class="md-nav__link">
+    2. VLAN(Virtual Local Area Network)
+  </a>
+  
+    <nav class="md-nav" aria-label="2. VLAN(Virtual Local Area Network)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-vlan" class="md-nav__link">
+    What is VLAN?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-underlay-network" class="md-nav__link">
+    What is underlay network?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-overlay-network" class="md-nav__link">
+    What is overlay network?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step" class="md-nav__link">
+    Step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    Result
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-vxlanvirtual-extensible-lan" class="md-nav__link">
+    3. VXLan(Virtual Extensible LAN)
+  </a>
+  
+    <nav class="md-nav" aria-label="3. VXLan(Virtual Extensible LAN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-vxlan" class="md-nav__link">
+    What is VXLAN?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step_1" class="md-nav__link">
+    Step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#result_1" class="md-nav__link">
+    Result
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ipvlan" class="md-nav__link">
+    4. IPVLAN
+  </a>
+  
+    <nav class="md-nav" aria-label="4. IPVLAN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-ipvlan" class="md-nav__link">
+    What is IPvlan?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step_2" class="md-nav__link">
+    Step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#result_2" class="md-nav__link">
+    Result
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-vlan-vxlan-ipvlan" class="md-nav__link">
+    Comparing VLAN, VXLAN, IPVLAN
+  </a>
+  
+    <nav class="md-nav" aria-label="Comparing VLAN, VXLAN, IPVLAN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    1. Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-addressing" class="md-nav__link">
+    2. Addressing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-scalability" class="md-nav__link">
+    3. Scalability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-network-isolation" class="md-nav__link">
+    4. Network Isolation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-performance" class="md-nav__link">
+    5. Performance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-use-cases" class="md-nav__link">
+    6. Use Cases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250123/20250123.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250123/20250123.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="network-devices-in-linux">Network Devices in Linux</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Fang-Kai Ting<br />
+Date: 2025/01/23</p>
+</div>
+<hr />
+<p>Linux offers a diverse array of network devices, enabling the construction of intricate virtual and physical network topologies. Key examples include veth (virtual Ethernet), VLAN (Virtual LAN), VXLAN (Virtual eXtensible LAN), and IPVLAN. These devices are crucial for establishing scalable and adaptable network environments. In containerized environments such as Docker, network devices play a pivotal role in connecting containers, hosts, and routers, facilitating seamless communication across various network layers. Tools like <code>ip</code> and <code>bridge-utils</code> provide the necessary means for configuring these devices. This article will demonstrate the practical application of veth, VLAN, VXLAN, and IPVLAN by creating a sample network topology involving Docker containers and routers.</p>
+<h2 id="1-veth">1. Veth</h2>
+<p>A <code>veth</code> (virtual Ethernet) pair is a Layer 2 (Data Link Layer) virtual network device that simulates a direct Ethernet cable connection between two interfaces. Creating a veth pair results in the creation of two virtual interfaces, where traffic transmitted through one interface is seamlessly transferred to the other.</p>
+<p>For instance, consider two Docker containers, h1 and h2, connected by a veth pair. One end of the veth pair is placed within the h1 namespace, while the other end resides within the h2 namespace. As illustrated below, this configuration enables direct Layer 2 communication between the two hosts.</p>
+<p><img alt="image.png" src="../image.png" /></p>
+<h3 id="common-use-cases-for-veth">Common Use Cases for veth</h3>
+<ul>
+<li><strong>Container Networking (e.g., Docker or Kubernetes):</strong><ul>
+<li><strong>Scenario:</strong> In Docker, each container operates within its own isolated network namespace. To enable communication between the container and the host or other containers, a veth pair is established.</li>
+</ul>
+</li>
+</ul>
+<p>In the following example, the host image is readily accessible from Docker Hub.</p>
+<p>How to use docker-compose.yaml can refer to <a href="https://docs.docker.com/reference/cli/docker/compose/">docker compose | Docker Docs</a></p>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">h1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu:22.04</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h1</span>
+<span class="w">    </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host.Dockerfile</span>
+<span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_ADMIN</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_BROADCAST</span>
+<span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;none&quot;</span>
+<span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;/bin/sh&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-c&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">sleep 365d</span>
+</code></pre></div>
+<h3 id="namespace">Namespace</h3>
+<p>In Docker, a <strong>namespace</strong> is a fundamental concept that provides isolation for containers, ensuring they operate independently from the host system and other containers. By moving the veth into the container’s namespace, the interface becomes <strong>invisible</strong> to the host and other containers. The container believes it has its own private network interface, adhering to the principle of namespace isolation.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># List of container names (replace with actual container names)</span>
+<span class="nv">CONTAINERS</span><span class="o">=(</span><span class="s2">&quot;h1&quot;</span><span class="w"> </span><span class="s2">&quot;h2&quot;</span><span class="o">)</span>
+<span class="c1"># Create the /var/run/netns directory if it doesn&#39;t exist</span>
+sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/var/run/netns
+<span class="c1"># Loop through each container and link its network namespace</span>
+<span class="k">for</span><span class="w"> </span>cname<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CONTAINERS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="c1"># Get the PID of the container</span>
+<span class="w">    </span><span class="nv">pid</span><span class="o">=</span><span class="k">$(</span>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;{{.State.Pid}}&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$cname</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="w">    </span><span class="c1"># Link the container&#39;s network namespace to /var/run/netns</span>
+<span class="w">    </span>sudo<span class="w"> </span>ln<span class="w"> </span>-sfT<span class="w"> </span>/proc/<span class="s2">&quot;</span><span class="nv">$pid</span><span class="s2">&quot;</span>/ns/net<span class="w"> </span>/var/run/netns/<span class="s2">&quot;</span><span class="nv">$cname</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># create veth pair, veth always have two pair simulated physical cable</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>h1h2<span class="w"> </span><span class="nb">type</span><span class="w"> </span>veth<span class="w"> </span>peer<span class="w"> </span>name<span class="w"> </span>h2h1
+<span class="c1"># move veth end to docker namespace</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>h1h2<span class="w"> </span>netns<span class="w"> </span>h1
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>h2h1<span class="w"> </span>netns<span class="w"> </span>h2
+<span class="c1"># bring up device inside h1, h2</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>h1<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>h1h2<span class="w"> </span>up
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>h2<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>h2h1<span class="w"> </span>up
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>h1<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.1.1/24<span class="w"> </span>dev<span class="w"> </span>h1h2
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>h2<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.1.2/24<span class="w"> </span>dev<span class="w"> </span>h2h1
+</code></pre></div>
+<p>As shown below, h1 can ping h2 and arp have been resolved.</p>
+<p><img alt="image.png" src="../image%201.png" /></p>
+<h2 id="2-vlanvirtual-local-area-network">2. VLAN(Virtual Local Area Network)</h2>
+<h3 id="what-is-vlan">What is VLAN?</h3>
+<p>A <strong>VLAN (Virtual Local Area Network)</strong> is a technology used to create separate, isolated networks within the same physical network. It allows devices to be grouped logically, even if they are not physically connected to the same network switch. VLANs are implemented at Layer 2 (Data Link Layer) and use VLAN IDs to segregate network traffic.</p>
+<p>In the following example, we create two virtual machines (VMs) using VirtualBox. These VMs utilize a host-only adapter as the <strong>underlay network</strong>. On top of this underlay network, we configure VLANs (Virtual LANs) to function as the <strong>overlay network</strong>.</p>
+<p><img alt="image.png" src="../image%202.png" /></p>
+<h3 id="what-is-underlay-network">What is underlay network?</h3>
+<p>An underlay network is the physical or virtual infrastructure that forms the foundation for network communication. It consists of the actual hardware devices, such as routers, switches, and physical links, or virtual adapters in a virtualized environment. The underlay network is responsible for routing and delivering data packets across the network using traditional networking protocols.</p>
+<h3 id="what-is-overlay-network">What is overlay network?</h3>
+<p>An overlay network is a virtualized network built on top of an underlay network. It creates a logical network that operates independently of the physical topology. Techniques like encapsulation, tunneling (e.g., VXLAN, GRE), or VLAN tagging enable the overlay network to logically segment traffic and isolate communication between devices, even if they share the same underlay.</p>
+<h3 id="step">Step</h3>
+<ol>
+<li>install vlan<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>vlan
+</code></pre></div></li>
+<li>Load the 8021q kernel module using the “modprobe” command:<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>modprobe<span class="w"> </span>8021q
+</code></pre></div></li>
+<li>Verify that the module is loaded by running:<br />
+<div class="highlight"><pre><span></span><code>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>8021q
+</code></pre></div></li>
+<li>Create a VLAN subinterface for “enp0s8” with VLAN ID 10<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>link<span class="w"> </span>enp0s8<span class="w"> </span>name<span class="w"> </span>enp0s8.10<span class="w"> </span><span class="nb">type</span><span class="w"> </span>vlan<span class="w"> </span>id<span class="w"> </span><span class="m">10</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.10.1/24<span class="w"> </span>dev<span class="w"> </span>enp0s8.10
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dev<span class="w"> </span>enp0s8.10<span class="w"> </span>up
+</code></pre></div></li>
+<li>Repeat above in vm2</li>
+</ol>
+<h3 id="result">Result</h3>
+<p>We create a subinterface as overlay network</p>
+<p><img alt="image.png" src="../image%203.png" /></p>
+<p>vm1 routing info</p>
+<p><img alt="image.png" src="../image%204.png" /></p>
+<p>vm1 can reach vm2</p>
+<p><img alt="image.png" src="../image%205.png" /></p>
+<p>Moreover, by tcpdump, we can see the icmp packet flow</p>
+<p><img alt="image.png" src="../image%206.png" /></p>
+<h2 id="3-vxlanvirtual-extensible-lan">3. VXLan(Virtual Extensible LAN)</h2>
+<h3 id="what-is-vxlan">What is VXLAN?</h3>
+<p>VXLAN (Virtual Extensible LAN) is a network virtualization technology designed to address the limitations of VLANs in large-scale cloud and data center networks. It encapsulates Layer 2 Ethernet frames in a Layer 3 UDP packet, enabling Layer 2 segments to extend across Layer 3 networks.</p>
+<p>Key features of VXLAN:</p>
+<ul>
+<li><strong>Encapsulation</strong>: Uses UDP for encapsulation, which allows Ethernet frames to traverse IP networks.</li>
+<li><strong>VXLAN Network Identifier (VNI)</strong>: A 24-bit identifier used to distinguish virtual networks, supporting up to <strong>16 million logical networks</strong>, compared to the 12-bit VLAN ID that supports only 4096.</li>
+<li><strong>Distributed Gateway</strong>: VXLAN works well with distributed routing architectures, enabling better scalability and performance in modern networks.</li>
+</ul>
+<p>In following example, we create a Docker container named 'h1' within a VirtualBox virtual machine (VM) named 'vm1'. Similarly, another Docker container named 'h2' is created within a separate VirtualBox VM named 'vm2'. Both VMs utilize a host-only adapter as their underlying network. On top of this <strong>underlay network</strong>, we configure VXLAN (Virtual Extensible LAN) to establish an <strong>overlay network</strong> that enables communication between the two containers across the different VMs.</p>
+<p><img alt="image.png" src="../image%207.png" /></p>
+<h3 id="step_1">Step</h3>
+<ol>
+<li>create h1 container with subnet 171.19.0.0/16, then assign h1 to 172.19.0.10<br />
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">h1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h1</span>
+<span class="w">    </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host.Dockerfile</span>
+<span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_ADMIN</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_BROADCAST</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">vxlan-net</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ipv4_address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">172.19.0.10</span>
+<span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;/bin/sh&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-c&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">sleep 365d</span>
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vxlan-net</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bridge</span>
+<span class="w">    </span><span class="nt">driver_opts</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">com.docker.network.bridge.name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">br19</span>
+<span class="w">    </span><span class="nt">ipam</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">subnet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">172.19.0.0/16</span>
+</code></pre></div></li>
+<li>create vxlan device, 'vxlan-demo' is the name of the interface, type should be vxlan.<ol>
+<li>VNI(Vxlan Network identifier) ID is 100 (It is only necessary to ensure that the VNI ID inside the tunnel is the same.)</li>
+<li>dstport should be 4789 which a udp standard port for vxlan communication</li>
+<li>vxlan have multicast and unicast usage, here demonstrate unicast</li>
+<li><code>remote 192.168.56.108</code>  is the ip of another underlay interface.<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>vxlan-demo<span class="w"> </span><span class="nb">type</span><span class="w"> </span>vxlan<span class="w"> </span>id<span class="w"> </span><span class="m">100</span><span class="w"> </span>remote<span class="w"> </span><span class="m">192</span>.168.56.108<span class="w"> </span>dstport<span class="w"> </span><span class="m">4789</span><span class="w"> </span>dev<span class="w"> </span>enp0s8
+</code></pre></div></li>
+</ol>
+</li>
+<li>Set vxlan-demo device interface on br19<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>vxlan-demo<span class="w"> </span>up
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>vxlan-demo<span class="w"> </span>master<span class="w"> </span>br19
+</code></pre></div></li>
+</ol>
+<h3 id="result_1">Result</h3>
+<ol>
+<li>h1 can ping h2<br />
+<img alt="image.png" src="../image%208.png" /></li>
+<li>Through tcpdump can see VXLAN encapsulates Layer 2 Ethernet frames in a Layer 3 UDP packet<br />
+<div class="highlight"><pre><span></span><code>tcpdump<span class="w"> </span>-i<span class="w"> </span>any<span class="w"> </span>udp<span class="w"> </span>port<span class="w"> </span><span class="m">4789</span>
+</code></pre></div><br />
+<img alt="image.png" src="../image%209.png" /></li>
+<li>Routing info<br />
+<img alt="image.png" src="../image%2010.png" /></li>
+</ol>
+<h2 id="4-ipvlan">4. IPVLAN</h2>
+<h3 id="what-is-ipvlan">What is IPvlan?</h3>
+<p><strong>IPvlan</strong> is a Linux kernel networking feature that enables the creation of virtual network interfaces on top of a physical network interface. It allows for multiple virtual interfaces to share a single physical network interface (<code>eth0</code>, for example), with each virtual interface appearing as a separate device with its own IP address at the network layer.</p>
+<p>IPvlan interfaces share the same MAC address as the parent interface. This makes IPvlan particularly useful in environments where network policies or switch configurations limit the number of MAC addresses that can be assigned to a single port (e.g., in certain cloud or data center environments).</p>
+<p><img alt="image.png" src="../image%2011.png" /></p>
+<p>In below example, we create h1 container in virtualbox vm1. h2 container in vm2. both with host-only adapter as <strong>underlay network</strong> and configure IPVLAN on top of the host-only adapter network, <strong>IPVLAN</strong> is <strong>not an overlay network.</strong></p>
+<h3 id="step_2">Step</h3>
+<ol>
+<li>Use docker supported ipvlan network driver.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">h1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h1</span>
+<span class="w">    </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host.Dockerfile</span>
+<span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_ADMIN</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_BROADCAST</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ipvlan-net</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ipv4_address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">172.19.0.10</span>
+<span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;/bin/sh&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-c&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">sleep 365d</span>
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vxlan-net</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bridge</span>
+<span class="w">    </span><span class="nt">driver_opts</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">com.docker.network.bridge.name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">br19</span>
+<span class="w">    </span><span class="nt">ipam</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">subnet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">172.19.0.0/16</span>
+<span class="w">  </span><span class="nt">ipvlan-net</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipvlan</span>
+<span class="w">    </span><span class="nt">driver_opts</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enp0s8</span>
+<span class="w">      </span><span class="nt">vlan_tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">ipam</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">subnet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">172.19.0.0/24</span>
+</code></pre></div>
+<h3 id="result_2">Result</h3>
+<ol>
+<li>h1 can ping h2<br />
+<img alt="image.png" src="../image%2012.png" /></li>
+<li>Using <code>sudo ip netns exec h1 tcpdump -i any icmp</code> and <code>sudo tcpdump -i any icmp</code> can verify the following packet flow<ol>
+<li>(h1)eth0 → enp0s8 → (h2)enp0s8 → eth0<br />
+<img alt="image.png" src="../image%2013.png" /><br />
+<img alt="image.png" src="../image%2014.png" /></li>
+</ol>
+</li>
+<li>h1 routing info<br />
+<img alt="image.png" src="../image%2015.png" /></li>
+</ol>
+<h2 id="comparing-vlan-vxlan-ipvlan">Comparing VLAN, VXLAN, IPVLAN</h2>
+<p>Below show VLAN, VXLAN, IPVLAN compared table with overview, MAC address, Scalability, Network Isolation, Performance, and Use Cases.</p>
+<h3 id="1-overview"><strong>1. Overview</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>IPVLAN</strong></th>
+<th><strong>VLAN</strong></th>
+<th><strong>VXLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>Lightweight network virtualization at Layer 2/3.</td>
+<td>Segregates a physical network into logical networks.</td>
+<td>Extends Layer 2 networks across Layer 3 boundaries.</td>
+</tr>
+<tr>
+<td><strong>Focus</strong></td>
+<td>Simplifying container or VM networking.</td>
+<td>Network segmentation within a local Layer 2 domain.</td>
+<td>Large-scale network virtualization for multi-tenant clouds.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-addressing"><strong>2. Addressing</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>IPVLAN</strong></th>
+<th><strong>VLAN</strong></th>
+<th><strong>VXLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MAC Address</strong></td>
+<td>Shares the same MAC address as the parent interface in L2 mode.</td>
+<td>Unique MAC address per device per VLAN.</td>
+<td>Unique MAC address per device, as in traditional L2.</td>
+</tr>
+<tr>
+<td><strong>IP Address</strong></td>
+<td>Each virtual interface has a unique IP address.</td>
+<td>Devices can share the same IP scheme per VLAN.</td>
+<td>Each network can share the same IP scheme (tenant isolation).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-scalability"><strong>3. Scalability</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>IPVLAN</strong></th>
+<th><strong>VLAN</strong></th>
+<th><strong>VXLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Limitations</strong></td>
+<td>Limited to one subnet per IPVLAN interface.</td>
+<td>VLAN IDs limited to 4096 (12-bit tag).</td>
+<td>Scales up to 16 million segments (24-bit tag).</td>
+</tr>
+<tr>
+<td><strong>Use Case Scale</strong></td>
+<td>Suitable for small-to-medium setups.</td>
+<td>Suitable for moderate-sized enterprise networks.</td>
+<td>Ideal for large-scale multi-tenant environments.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-network-isolation"><strong>4. Network Isolation</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>IPVLAN</strong></th>
+<th><strong>VLAN</strong></th>
+<th><strong>VXLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Isolation</strong></td>
+<td>Provides IP-based isolation (Layer 3 mode) or MAC address-based isolation (Layer 2 mode).</td>
+<td>Segregates traffic using VLAN IDs.</td>
+<td>Provides tenant isolation using VXLAN IDs.</td>
+</tr>
+<tr>
+<td><strong>Cross-Subnet Communication</strong></td>
+<td>Requires routing or bridging.</td>
+<td>Requires routing between VLANs.</td>
+<td>Built-in capability to bridge between subnets.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-performance"><strong>5. Performance</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>IPVLAN</strong></th>
+<th><strong>VLAN</strong></th>
+<th><strong>VXLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Overhead</strong></td>
+<td>Very lightweight, as it avoids encapsulation.</td>
+<td>Minimal overhead for VLAN tagging (4 bytes).</td>
+<td>Higher overhead due to UDP encapsulation (50 bytes).</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Low latency.</td>
+<td>Low latency.</td>
+<td>Higher latency due to encapsulation and decapsulation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-use-cases"><strong>6. Use Cases</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>IPVLAN</strong></th>
+<th><strong>VLAN</strong></th>
+<th><strong>VXLAN</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Best Use Case</strong></td>
+<td>Container/VM networking with minimal overhead.</td>
+<td>Network segmentation within a single data center.</td>
+<td>Multi-tenant data centers, hybrid cloud environments.</td>
+</tr>
+<tr>
+<td><strong>Example</strong></td>
+<td>Assigning multiple containers unique IPs on a host's subnet.</td>
+<td>Separating voice and data traffic on the same switch.</td>
+<td>Connecting virtual machines across multiple data centers.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conclusion">Conclusion</h3>
+<p>This article offers a introduction to veth, VLAN, VXLAN, and IPVLAN, exploring their functionalities and applications. It further illustrates the concepts through hands-on experiments, providing a practical understanding of these network technologies.</p>
+<h3 id="reference">Reference</h3>
+<p><a href="https://docs.docker.com/engine/network/drivers/ipvlan/">IPvlan network driver | Docker Docs</a></p>
+<p><a href="https://vincent.bernat.ch/en/blog/2017-vxlan-linux">VXLAN &amp; Linux</a></p>
+<p><a href="https://dev.to/tanvirrahman/supercharge-your-container-networking-seamless-host-communication-with-vxlan-and-docker-39o">Supercharge Your Container Networking: Seamless Host Communication with VxLAN and Docker - DEV Community</a></p>
+<p><a href="https://docs.kernel.org/networking/vxlan.html">Virtual eXtensible Local Area Networking documentation — The Linux Kernel documentation</a></p>
+<p><a href="https://syslinuxos.com/how-to-create-vlan-in-linux-using-the-ip-command/">How to create VLAN in Linux using the ip command - SysLinuxOS</a></p>
+<h3 id="about-me">About me</h3>
+<p>Hi, I’m Fang-Kai Ting, a newcomer to 5G and free5GC, and currently conducting research on Network Slicing. Let me know without hesitation if there is any mistake in the article.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<p>Github: <a href="https://github.com/qawl987">qawl987</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
