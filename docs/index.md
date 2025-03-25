@@ -30,6 +30,11 @@
     <h3>Containerized Deployment</h3>
     <p>Supports Kubernetes and Docker deployments, easily integrating with modern cloud-native environments</p>
   </div>
+  <div class="feature-card highlighted">
+    <div class="feature-icon">🔓</div>
+    <h3>Open Source</h3>
+    <p>Licensed under Apache 2.0, free for both commercial and non-commercial use with no restrictions</p>
+  </div>
 </div>
 
 The free5GC (a Linux Foundation project) is an open-source project for 5th generation (5G) mobile core networks. The ultimate goal of this project is to implement the 5G core network (5GC) defined in 3GPP Release 15 (R15) and beyond.
@@ -42,22 +47,14 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 - Please refer to our roadmap for the features of each release.
 
 > [!NOTE]
-> The Linux Foundation announced that free5GC officially joined the Linux Foundation on September 16, 2024, during the Open Source Summit Europe in Vienna, Austria. Check out the press release [here](https://www.linuxfoundation.org/press/worlds-leading-open-source-mobile-packet-core-free5gc-moves-under-linux-foundation-to-provide-open-source-alternatives-across-5g-deployments).
-
-> [!NOTE]
-> Thank you very much for your interest in free5GC. The license of free5GC follows Apache 2.0. That is, anyone can use free5GC for commercial purposes for free.
-
-> [!NOTE]
-> Please check out the [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=2007&q=free5gc) page here for publications using free5GC.
-
-> [!NOTE]
-> Want to contribute to free5GC? Check out our [How to contribute](https://free5gc.org/guide/contribute/) page for more information.
+> - The Linux Foundation announced that free5GC officially joined the Linux Foundation on September 16, 2024, during the Open Source Summit Europe in Vienna, Austria. Check out the press release [here](https://www.linuxfoundation.org/press/worlds-leading-open-source-mobile-packet-core-free5gc-moves-under-linux-foundation-to-provide-open-source-alternatives-across-5g-deployments).
+> - Please check out the [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=2007&q=free5gc) page here for publications using free5GC.
 
 <div class="announcement-box">
   <h2>Latest News: free5GC v4.0.0 Released!</h2>
   <p>Version 4.0.0 upgrades the SBI server/consumer implementations for all Network Functions (except NEF) to 3GPP R17 standards.</p>
   <p>NEF upgrades are in progress, with R17 support coming in v4.0.1.</p>
-  <a href="./history.md" class="announcement-link">View Version History →</a>
+  <a href="./history" class="announcement-link">View Version History →</a>
 </div>
 
 ### Next Step(s)
@@ -91,6 +88,8 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
   .hero-title {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    font-weight: bold;
+    color: white;
   }
   
   .hero-description {
@@ -161,6 +160,11 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
   .feature-icon {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+  }
+  
+  .feature-card.highlighted {
+    background-color: #f0f7ff;
+    border: 1px solid #b3d7ff;
   }
   
   .announcement-box {
