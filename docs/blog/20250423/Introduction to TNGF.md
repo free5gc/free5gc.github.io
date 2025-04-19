@@ -1,8 +1,3 @@
----
-title: Introduction to TNGF
-
----
-
 # Introduction to TNGF
 >[!NOTE]
 > Author: Pei-Chi, Cheng
