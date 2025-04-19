@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2025/04/19: Go test with free5GC](./20250419/20250419.md)
 - [2025/03/19: Introduction of 5G Roaming](./20250319/20250319.md)
 - [2025/03/12: SCP introduction](./20250312/20250312.md)
 - [2025/03/06: Install Free5GC with LoxiLB NGAP load-balancing](./20250306/20250306.md)
