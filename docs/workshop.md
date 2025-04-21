@@ -14,7 +14,7 @@
   position: relative;
   width: 100%;
   height: 300px;
-  background-image: url('./assets/background.jpg');
+  background-image: url('https://free5gc.org/assets/background.jpg');
   background-size: cover;
   background-position: center;
   margin-bottom: 2rem;
