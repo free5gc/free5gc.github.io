@@ -14,7 +14,7 @@
   position: relative;
   width: 100%;
   height: 300px;
-  background-image: url('assets/images/taipei-skyline.jpg');
+  background-image: url('./assets/background.jpg');
   background-size: cover;
   background-position: center;
   margin-bottom: 2rem;
@@ -26,7 +26,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 80, 1.0) !important;
+  background-color: rgba(0, 0, 80, 0.7) !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
