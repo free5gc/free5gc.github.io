@@ -26,7 +26,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 50, 0.6);
+  background-color: rgba(0, 0, 50, 0.6) !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,8 +48,8 @@
 .banner-button {
   margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
-  background-color: #e74c3c;
-  color: white;
+  background-color: #e74c3c !important;
+  color: white !important;
   text-decoration: none;
   border-radius: 4px;
   font-weight: bold;
@@ -57,7 +57,7 @@
 }
 
 .banner-button:hover {
-  background-color: #c0392b;
+  background-color: #c0392b !important;
 }
 
 .grid-container {
@@ -419,6 +419,5 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
 </div>
 
 <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
-  <img src="./assets/logo.png" alt="free5GC Logo" width="200px">
   <p>&copy; 2025 free5GC World Forum. All rights reserved.</p>
 </div>
