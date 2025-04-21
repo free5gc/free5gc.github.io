@@ -419,6 +419,6 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
 </div>
 
 <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
-  <img src="assets/logo.png" alt="free5GC Logo" width="200px">
+  <img src="./assets/logo.png" alt="free5GC Logo" width="200px">
   <p>&copy; 2025 free5GC World Forum. All rights reserved.</p>
 </div>
