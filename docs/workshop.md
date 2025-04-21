@@ -26,7 +26,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 50, 0.6) !important;
+  background-color: rgba(0, 0, 80, 1.0) !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,6 +38,7 @@
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  color: white;
 }
 
 .banner-overlay p {
