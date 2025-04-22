@@ -202,6 +202,20 @@
 
 
 @media screen and (max-width: 768px) {
+  .banner-overlay h1 {
+    font-size: 1.8rem;
+  }
+
+  .banner-overlay p {
+    font-size: 1rem;
+  }
+
+  .banner-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #e74c3c !important;
+  }
+
   .timeline::after {
     left: 31px;
   }
@@ -226,9 +240,9 @@
 
 ## About the Forum
 
-We are pleased to announce the 1st free5GC World Forum, to be held in conjunction with ACM Conference on Computer and Communications Security (CCS) 2025 ([https://www.sigsac.org/ccs/CCS2025/](https://www.sigsac.org/ccs/CCS2025/)), one of the premier conferences in cybersecurity. This forum will bring together researchers, industry professionals, and open-source contributors to explore the challenges and recent advancements in 5G core networks, with a particular focus on security and the transformative role of free5GC, the leading open-source 5G Standalone (SA) core network.
+We are pleased to announce the 1st free5GC World Forum, to be held in conjunction with ACM Conference on Computer and Communications Security (CCS) 2025 ([https://www.sigsac.org/ccs/CCS2025/](https://www.sigsac.org/ccs/CCS2025/)), one of the premier conferences in cybersecurity. This forum will bring together researchers, industry professionals, and open-source contributors to explore the challenges and recent advancements in 5G core networks, with a particular focus on security and the transformative role of free5GC, the leading open-source 5G Standalone (SA) core network. 
 
-free5GC ([https://free5gc.org/](https://free5gc.org/)), a project hosted by the Linux Foundation, is a fully 3GPP-compliant open-source 5G core network platform. It empowers researchers, developers, and businesses to drive innovation in 5G systems, providing a robust prototyping environment for next-generation connectivity solutions. Recent notable architectures such as L25GC and L25GC+, which aim to significantly reduce control plane latency while maintaining 3GPP compliance, exemplify how free5GC facilitates the development and testing of cutting-edge ideas on a production-grade 5G core.
+free5GC ([https://free5gc.org/](https://free5gc.org/)), a project hosted by the Linux Foundation, is a fully 3GPP-compliant open-source 5G core network platform. It empowers researchers, developers, and businesses to drive innovation in 5G systems, providing a robust prototyping environment for next-generation connectivity solutions. Recent notable architectures such as L25GC and L25GC+ ([https://github.com/nycu-ucr/L25GC-plus](https://github.com/nycu-ucr/L25GC-plus)), which aim to significantly reduce control plane latency while maintaining 3GPP compliance, exemplify how free5GC facilitates the development and testing of cutting-edge ideas on a production-grade 5G core.
 
 The forum will provide a unique opportunity for participants to share insights, present innovations, and shape the future direction of free5GC and next-generation mobile networks.
 
@@ -279,11 +293,14 @@ Submissions will be evaluated based on technical rigor, novelty, and relevance t
 
 ## Submission Guidelines
 
-Submitted papers must not substantially overlap papers that have been published or that are simultaneously submitted to a journal or a conference with proceedings. Submissions should be no more than 12 pages in the ACM double-column format, excluding the bibliography and well-marked appendix. Committee members are not required to read the appendices, and so the paper should be intelligible without them. Submissions should not be anonymized.
-
-The workshop will also consider short submissions of up to 4 pages for results that are preliminary or that simply require few pages to describe. Authors of regular submitted papers will indicate at the time of submission whether they would like their paper to also be considered for publication as a short paper (4 proceedings pages).
-
-Submissions are to be made to the submission web site at HotCRP ([TBD](http://xxx.xxx)). Only PDF files will be accepted. Submissions not meeting these guidelines risk rejection without consideration of their merits.
+- Submitted papers must not substantially overlap papers that have been published or that are simultaneously submitted to a journal or a conference with proceedings.
+- Submissions should be no more than 12 pages in the ACM double-column format, excluding the bibliography and well-marked appendix. Committee members are not required to read the appendices, so the paper should be understandable without them.
+- The forum will also consider short submissions of up to 4 pages for preliminary results or concise contributions that can be clearly described in a few pages. Authors of regular submissions may indicate at the time of submission whether they would also like their paper to be considered for publication as a short paper (4 pages in the proceedings).
+- Submissions must be PDF files in the ACM double-column format ([https://www.acm.org/publications/proceedings-template](https://www.acm.org/publications/proceedings-template)) using the “sigconf” template. Authors should not modify the font or margins of the ACM format. The CCS information such as concepts, keywords, or rights management data (e.g., DOI, ISBN) must be included. A teaser figure is optional. Please refer to sample-sigconf.tex and sample-sigconf.pdf in the ACM LaTeX package ([https://www.overleaf.com/latex/templates/association-for-computing-machinery-acm-sig-proceedings-template/bmvfhcdnxfty](https://www.overleaf.com/latex/templates/association-for-computing-machinery-acm-sig-proceedings-template/bmvfhcdnxfty)) for formatting examples. Submissions not following the required format may be rejected without review.
+- For accepted papers, the final camera-ready version may have a different format and may be limited to 9 pages, including the bibliography, appendix, and all content.
+- Submissions should not be anonymized.
+- Submissions are to be made to the submission website at HotCRP ([https://free5gc-2025.hotcrp.com/](https://free5gc-2025.hotcrp.com/)). Only PDF files will be accepted. Submissions not meeting these guidelines risk rejection without consideration of their merits.
+- Authors of accepted papers must ensure that their paper will be presented at the forum by at least one of the authors.
 
 > [!NOTE]
 > Authors of accepted papers must guarantee that their paper will be presented at the workshop.
@@ -349,8 +366,16 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
   <h3>International Advisory Committee</h3>
   <div class="committee-members">
     <div class="committee-member">
+      <h4>Falko Dressler</h4>
+      <p>TU Berlin</p>
+    </div>
+    <div class="committee-member">
       <h4>Tommaso Melodia</h4>
       <p>Northeastern University</p>
+    </div>
+    <div class="committee-member">
+      <h4>Shivendra Panwar</h4>
+      <p>Tandon School of Engineering of New York University</p>
     </div>
     <div class="committee-member">
       <h4>Ashutosh Sabharwal</h4>
@@ -411,6 +436,7 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Chunyi Peng, Purdue University</p>
       <p>Shixiong Qi, University of Kentucky</p>
       <p>Zhaowei Tan, University of California, Riverside</p>
+      <p>Chien-Chao Tseng,  National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Guan-Hua Tu, Michigan State University</p>
       <p>Tian Xie, Utah State University</p>
       <p>Lou Yang, National Yang Ming Chiao Tung University (NYCU)</p>
