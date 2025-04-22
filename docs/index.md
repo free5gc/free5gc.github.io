@@ -51,9 +51,9 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > - Please check out the [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=2007&q=free5gc) page here for publications using free5GC.
 
 <div class="announcement-box">
-  <h2>Latest News: free5GC v4.0.0 Released!</h2>
-  <p>Version 4.0.0 upgrades the SBI server/consumer implementations for all Network Functions (except NEF) to 3GPP R17 standards.</p>
-  <p>NEF upgrades are in progress, with R17 support coming in v4.0.1.</p>
+  <h2>Latest News: free5GC v4.0.1 Released!</h2>
+  <p>We have fixed a series of bugs in version 4.0.1 to improve stability.</p>
+  <p>For more details, please see the hisory page.</p>
   <a href="./history" class="announcement-link">View Version History →</a>
 </div>
 

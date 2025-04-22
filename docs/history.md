@@ -2,10 +2,20 @@
 
 ## 2025 Roadmap
 
+## April 22, 2025: v4.0.1
+
+In the release v4.0.1 of free5GC, we have fixed a series of bugs, which including:
+- [Kernel panic issue in GTP5G](https://github.com/free5gc/gtp5g/pull/143)
+- [CGF Passive port range should be configurable](https://github.com/free5gc/chf/issues/41)
+- [Registration is possible even if the IMSI (first part) and PLMN (MCC/MNC) do not match.](https://github.com/free5gc/free5gc/issues/669)
+- [fix: race condition in OpenCDR()](https://github.com/free5gc/chf/pull/44)
+
+Moreover, we also enhanced our integration test framework, which now supports the [TNGF registration](https://github.com/free5gc/free5gc/pull/659).
+
 ## March 3, 2025: v4.0.0
 
 The release v4.0.0 of free5GC upgrade the SBI server/consumer implementaions for All of NFs (except for NEF) to 3GPP R17 standards.
-The NEF upgrade is ongoing, and the R17 support will be released in v4.0.1.
+The NEF upgrade is ongoing, and the R17 support will be released in v4.0.2.
 
 ## Feb 26, 2025: v3.4.5
 
