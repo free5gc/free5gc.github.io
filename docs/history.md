@@ -5,6 +5,7 @@
 ## April 22, 2025: v4.0.1
 
 In the release v4.0.1 of free5GC, we have fixed a series of bugs, which including:
+
 - [Kernel panic issue in GTP5G](https://github.com/free5gc/gtp5g/pull/143)
 - [CGF Passive port range should be configurable](https://github.com/free5gc/chf/issues/41)
 - [Registration is possible even if the IMSI (first part) and PLMN (MCC/MNC) do not match.](https://github.com/free5gc/free5gc/issues/669)
