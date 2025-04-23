@@ -311,29 +311,25 @@ Submissions will be evaluated based on technical rigor, novelty, and relevance t
   <div class="timeline-item">
     <div class="timeline-content">
       <h3>Paper Submission Deadline</h3>
-        <p>TBD</p>
-      <!-- <p>June 20, 2025</p> -->
+        <p>June 20, 2025</p>
     </div>
   </div>
   <div class="timeline-item">
     <div class="timeline-content">
       <h3>Notification of Acceptance</h3>
-      <p>TBD</p>
-      <!-- <p>August 8, 2025</p> -->
+      <p>August 8, 2025</p>
     </div>
   </div>
   <div class="timeline-item">
     <div class="timeline-content">
       <h3>Camera-Ready Papers Due</h3>
-      <p>TBD</p>
-      <!-- <p>August 22, 2025</p> -->
+      <p>August 22, 2025</p>
     </div>
   </div>
   <div class="timeline-item">
     <div class="timeline-content">
       <h3>Forum Date</h3>
-      <p>TBD</p>
-      <!-- <p>October 13, 2025</p> -->
+      <p>October 13, 2025</p>
     </div>
   </div>
 </div>
@@ -344,7 +340,7 @@ The 1st free5GC World Forum will take place in conjunction with ACM CCS 2025 in 
 
 ## Visa
 
-Before traveling to Taiwan, please review the visa requirements and ensure that you have a valid visa. Depending on your nationality, the visa application process may need to be initiated as early as April 27 to avoid last-minute travel disruptions. For detailed information, please visit: [https://www.sigsac.org/ccs/CCS2025/visa/](https://www.sigsac.org/ccs/CCS2025/visa/)
+Before traveling to Taiwan, please review the visa requirements and ensure that you have a valid visa. For detailed information, please visit: [https://www.sigsac.org/ccs/CCS2025/visa/](https://www.sigsac.org/ccs/CCS2025/visa/).
 
 ## Organizing Committee
 
