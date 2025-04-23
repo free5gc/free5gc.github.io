@@ -13,7 +13,7 @@
 .cta-button {
   display: inline-block;
   background-color: #e74c3c;
-  color: white;
+  color: white !important;
   text-decoration: none;
   padding: 0.8rem 1.5rem;
   border-radius: 4px;
@@ -46,7 +46,8 @@
 }
 
 .cta-section h2 {
-  color: #2c3e50;
+  color: #2c3e50 !important;
+  font-weight: bold !important;
   margin-top: 0;
 }
 
