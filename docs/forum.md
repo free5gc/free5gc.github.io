@@ -10,6 +10,51 @@
 </div>
 
 <style>
+.cta-button {
+  display: inline-block;
+  background-color: #e74c3c;
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cta-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.cta-button svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cta-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  text-align: center;
+  border-left: 4px solid #3498db;
+}
+
+.cta-section h2 {
+  color: #2c3e50;
+  margin-top: 0;
+}
+
+.cta-section p {
+  max-width: 800px;
+  margin: 1rem auto;
+}
+
 .banner {
   position: relative;
   width: 100%;
@@ -239,6 +284,18 @@
 
 
 ## About the Forum
+
+<div class="cta-section">
+  <h2>Call for Papers</h2>
+  <p>We invite submissions for the 1st free5GC World Forum. The forum seeks original, unpublished papers focusing on security, architecture, innovation, and real-world applications of 5G core networks, particularly those leveraging the free5GC platform.</p>
+  <p>Submission deadline: <strong>June 20, 2025</strong></p>
+  <a href="https://github.com/free5gc/free5gc.github.io/blob/forum-cfp/free5GC-forum-cfp.pdf" class="cta-button" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+    </svg>
+    Download CFP PDF
+  </a>
+</div>
 
 We are pleased to announce the 1st free5GC World Forum, to be held in conjunction with ACM Conference on Computer and Communications Security (CCS) 2025 ([https://www.sigsac.org/ccs/CCS2025/](https://www.sigsac.org/ccs/CCS2025/)), one of the premier conferences in cybersecurity. This forum will bring together researchers, industry professionals, and open-source contributors to explore the challenges and recent advancements in 5G core networks, with a particular focus on security and the transformative role of free5GC, the leading open-source 5G Standalone (SA) core network. 
 
