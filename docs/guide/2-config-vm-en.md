@@ -38,7 +38,7 @@ After the new VM is created:
 ## 3. Change hostname
 
 The cloned free5gc VM still has host name `ubuntu` (or the name you gave it in the original VM). Let’s rename the VM to `free5gc`. You can do this by editing the file `/etc/hostname` (using `vi` or `nano`):
-```
+```bash
 sudo nano /etc/hostname
 # or 
 sudo vi /etc/hostname
@@ -46,12 +46,12 @@ sudo vi /etc/hostname
 In the file, change ubuntu into `free5gc`. If you are using nano ，you can press `Ctrl-O` to save the file, then `Ctrl-X` to exit.
 
 Let’s also change the file `/etc/hosts` by replacing the ubuntu inside into `free5gc`:
-```
+```bash
 sudo nano /etc/hosts
 ```
 
 New content of the file `/etc/hosts` looks like this:
-```
+```bash
 127.0.0.1 localhost
 127.0.1.1 free5gc
 ...
@@ -63,14 +63,14 @@ The changes will take effect after next reboot.
 The Host-only network interface, by default, gets its IP address through DHCP. The cloned free5gc VM seems to have trouble obtaining new IP address. We can change the host-only interface to use static IP address instead, which can save a lot of trouble later.
 
 Here let’s fix the static IP address as `192.168.56.101`:
-```
-$ cd /etc/netplan
-$ ls
+```bash
+cd /etc/netplan
+ls
 00-installer-config.yaml
-$ cat 00-installer-config.yaml
+cat 00-installer-config.yaml
 ```
 The original content of the file `00-installer-config.yaml` looks like:
-```
+```yaml
 # This is the network config written by 'subiquity'
 network:
   ethernets:
@@ -81,11 +81,11 @@ network:
   version: 2
 ```
 meaning the VM has two network interfaces. Using `ifconfig` we know that `enp0s8` is the name of the Host-only network interface. We can edit the file:
-```
+```bash
 sudo nano 00-installer-config.yaml
 ```
 and change it into:
-```
+```yaml
 # This is the network config written by 'subiquity'
 network:
   ethernets:
@@ -97,15 +97,15 @@ network:
   version: 2
 ```
 First check if the new content is correct:
-```
+```bash
 sudo netplan try
 ```
 Press enter to exit, if successful. The apply tne new interface setting:
-```
+```bash
 sudo netplan apply
 ```
 Run `ifconfig` to see if the network setting has been changed correctly:
-```
+```bash
 enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
         inet6 fe80::a00:27ff:fec4:254f  prefixlen 64  scopeid 0x20<link>
@@ -134,8 +134,8 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 We can also check the routing table, just to have a grasp of what is going on regarding the network setting:
-```
-$ route -n
+```bash
+route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         10.0.2.2        0.0.0.0         UG    100    0        0 enp0s3
@@ -146,7 +146,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 For the display above, we learn that the Host-only network `192.168.56.0/24` does not have internet access by itself (even though we can access it using SSH from the host machine). Internet access is through the NAT network `10.0.2.0/24`, with the gateway being `10.0.2.2` (provided by VirtualBox).
 Now we can SSH into free5gc VM using `192.168.56.101`:
-```
+```bash
 ssh 192.168.56.101 -l ubuntu
 ```
 This is also how we interact with free5gc VM from now on.
