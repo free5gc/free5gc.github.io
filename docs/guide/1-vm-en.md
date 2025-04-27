@@ -51,7 +51,7 @@ Reboot after Ubuntu installation is finished then wait a little bit for some ini
 ![](./images/1-5.png)
 
 First try the `ifconfig` command：
-```
+```bash
 ubuntu@ubuntu:~$ ifconfig
 Command 'ifconfig' not found, but can be installed with:
 sudo apt install net-tools
@@ -61,7 +61,7 @@ ubuntu@ubuntu:~$
 If some messages like above show, it means `ifconfig` has not been installed yet. (`ifconfig` is no longer installed by defaults in newer Ubuntu, and is replaced by more versatile ip command, but we will use it here for simplicity).
 
 Follow its suggestion and install `ifconfig`:
-```
+```bash
 ubuntu@ubuntu:~$ sudo apt install net-tools
 ```
 The image below shows the installation result:
@@ -73,7 +73,7 @@ Run `ifconfig` again to check the network interfaces:
 Your display may look different, but take notes about the IP address of the Host-only interface card. The example above shows `192.168.56.101`. You can SSH from your host machine into this Ubuntu VM using the IP later. (The other IP address, `10.0.2.15` is the IP address of the NAT interface card, which means that the apps in your host machine cannot access it).
 
 Finally, check if the VM has internet access using:
-```
+```bash
 ubuntu@ubuntu:~$ ping google.com
 ```
 
@@ -87,7 +87,7 @@ Launch your favorite SSH client from the host machine. Some operational systems 
 The benefit of using SSH is that you can easily copy and paste commands from your machine to Ubuntu VM for execution, and vice versa. You can also create multiple SSH connections with the Ubuntu VM for control and monitoring at the same time.
 
 Below it's possible to see some examples on a Mac host machine. Suppose the Host-only network IP is `192.168.56.101`, and the username is `ubuntu`:
-```
+```bash
 ssh 192.168.56.101 -l ubuntu
 ```
 The first time you connect to the VM, your SSH client may show some message asking you for confirmation. Enter **yes**:
@@ -107,7 +107,7 @@ Repeat the basic commands such as `ping`, `ifconfig` to see if the VM is working
 ## 5. Update and Upgrade your Ubuntu
 
 Let also update and upgrade the Ubuntu VM right now to make sure it is up-to-date with proper security updates.
-```
+```bash
 sudo apt update
 sudo apt upgrade
 ```
