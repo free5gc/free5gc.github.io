@@ -83,8 +83,8 @@ The screen shows the port number `:5000` at the end. Open your web browser from 
 - Once the data shows up on the "Subscribers" table, you can press `Ctrl-C` on the terminal to kill the WebConsole process on the free5gc VM
 - You can view more tutorials through this [link](./Webconsole/Create-Subscriber-via-webconsole.md). 
 >[!NOTE]
-   >
-   >You have to make sure that the parameters on the webconsole are consistent with the UE.
+>
+>You have to make sure that the parameters on the webconsole are consistent with the UE.
 
 ## 5. Setting free5GC and UERANSIM Parameters
 
