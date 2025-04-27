@@ -2,32 +2,32 @@
 ## Prerequirements
 ### MicroK8s Installation
 - Install MicroK8s
-    ```
+    ```bash
     sudo snap install microk8s --classic --channel=1.28/stable
     ```
     - Join the group
-        ```
+        ```bash
         sudo usermod -a -G microk8s $USER
         mkdir -p ~/.kube
         chmod 0700 ~/.kube
         ```
     - Re-enter the session
-        ```
+        ```bash
         su - $USER
         ```
     - Verify the Installation 
-        ```
+        ```bash
         microk8s status --wait-ready
         ```
 - To [work with local kubectl](https://microk8s.io/docs/working-with-kubectl)
-    ```
+    ```bash
     sudo snap install kubectl --classic
     sudo snap install helm --classic
     microk8s config > ~/.kube/config
     su - $USER
     ```
 - Create namespace for free5GC
-    ```
+    ```bash
     kubectl create ns free5gc
     ```
 
@@ -91,20 +91,20 @@
         - Refer to the [Calico CNI Docs](https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings)
     2. `/var/snap/microk8s/current/args/kubelet`
         - append the following line
-            ```
+            ```bash
             --allowed-unsafe-sysctls "net.ipv4.ip_forward"
             ```
     3. Apply settings
-        ```
+        ```bash
         kubectl apply -f /var/snap/microk8s/current/args/cni-network/cni.yaml
         ```
     4. Restart MicroK8s
-        ```
+        ```bash
         microk8s stop
         microk8s start
         ```
 - **Otherwise,** Use `kube-ovn` CNI plugin
-    ```
+    ```bash
     sudo microk8s enable kube-ovn --force
     ```
     - [Official doc](https://microk8s.io/docs/addon-kube-ovn)
@@ -113,7 +113,7 @@
 - Enables attaching multiple network interfaces to pods
     - [Github link](https://github.com/k8snetworkplumbingwg/multus-cni)
 - [MicroK8s multus addons](https://microk8s.io/docs/addon-multus)
-    ```
+    ```bash
     microk8s enable community
     microk8s enable multus
     ```
@@ -183,42 +183,42 @@
         ```
         - directory on `/path/to/storage` should be created previously
 - Check persistent volume
-    ```
+    ```bash
     kubectl get persistentvolume
     ```
     
 ### Helm Chart
 - Clone the repository
-    ```
+    ```bash
     git clone https://github.com/free5gc/free5gc-helm.git
     ```
 - Enter the directory: `free5gc-helm/charts/`
 - free5GC
-    ```
+    ```bash
     helm install -n free5gc free5gc-helm ./free5gc/ 
     ```
     - Install with customized interface settings
-        ```
+        ```bash
         helm install -n free5gc free5gc-helm ./free5gc/ \
         --set global.n6network.subnetIP="192.168.50.0" \
         --set global.n6network.gatewayIP="192.168.50.1" \
         --set free5gc-upf.upf.n6if.ipAddress="192.168.50.66"
         ```
 - UERANSIM
-    ```
+    ```bash
     helm install -n free5gc ueransim ./ueransim/ 
     ```
 - Verification
     - List installed charts
-        ```
+        ```bash
         helm ls -A
         ```
     - Check services, pods, repicaets, and deployments 
-        ```
+        ```bash
         kubectl get all -n free5gc 
         ```
 - Check IP forwarding is avalible in upf
-    ```
+    ```bash
     kubectl exec -it -n free5gc deployment/free5gc-helm-free5gc-upf-upf \
     -- cat /proc/sys/net/ipv4/ip_forward
     ```
@@ -230,13 +230,13 @@
 ## Test
 - Add subscribors via webui
     1. Port forwarding 
-        ```
+        ```bash
         kubectl port-forward svc/webui-service 5000:5000  --address 0.0.0.0
         ```
     2. access `<externel_ip>:5000`
         ![](./images/7-2.png)
 - Ping externel network with tunnel 
-    ```
+    ```bash
     kubectl exec -it -n free5gc deployment/ueransim-ue \
     -- ping -I uesimtun0 8.8.8.8
     ```

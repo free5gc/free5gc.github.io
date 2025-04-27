@@ -25,7 +25,7 @@ Search “ueransim” on the web, and get the [web site](https://github.com/alig
 On the web site, check what the UERANSIM open-source project is about. Then navigate to the [installation page](https://github.com/aligungr/UERANSIM/wiki/Installation) or follow the instructions below.
 
 To download UERANSIM:
-```
+```bash
 cd ~
 git clone https://github.com/aligungr/UERANSIM
 cd UERANSIM
@@ -38,13 +38,13 @@ git checkout 85a0fbf
 ```
 
 Update and upgrade UERANSIM VM first:
-```
+```bash
 sudo apt update
 sudo apt upgrade
 ```
 
 Install required tools:
-```
+```bash
 sudo apt install make
 sudo apt install g++
 sudo apt install libsctp-dev lksctp-tools
@@ -53,7 +53,7 @@ sudo snap install cmake --classic
 ```
 
 Build UERANSIM:
-```
+```bash
 cd ~/UERANSIM
 make
 ```
@@ -67,7 +67,7 @@ If WebConsole isn't installed yet, please, SSH into free5gc's VM (`192.168.56.10
 ## 4. Use WebConsole to Add an UE
 
 First start up the WebConsole server:
-```
+```bash
 cd ~/free5gc/webconsole
 ./bin/webconsole
 ```
@@ -83,8 +83,8 @@ The screen shows the port number `:5000` at the end. Open your web browser from 
 - Once the data shows up on the "Subscribers" table, you can press `Ctrl-C` on the terminal to kill the WebConsole process on the free5gc VM
 - You can view more tutorials through this [link](./Webconsole/Create-Subscriber-via-webconsole.md). 
 >[!NOTE]
-   >
-   >You have to make sure that the parameters on the webconsole are consistent with the UE.
+>
+>You have to make sure that the parameters on the webconsole are consistent with the UE.
 
 ## 5. Setting free5GC and UERANSIM Parameters
 
@@ -95,30 +95,30 @@ In free5gc VM, we need to edit three files:
 - `~/free5gc/config/upfcfg.yaml`
 
 First SSH into free5gc VM, and change `~/free5gc/config/amfcfg.yaml`:
-```
+```bash
 cd ~/free5gc
 nano config/amfcfg.yaml
 ```
 
 Replace ngapIpList IP from `127.0.0.1` to `192.168.56.101`, namely from:
-```
+```yaml
 ...
   ngapIpList:  # the IP list of N2 interfaces on this AMF
   - 127.0.0.1
 ```
 into:
-```
+```yaml
 ...
   ngapIpList:  # the IP list of N2 interfaces on this AMF
   - 192.168.56.101  # 127.0.0.1
 ```
 
 Next edit `~/free5gc/config/smfcfg.yaml`:
-```
+```bash
 nano config/smfcfg.yaml
 ```
 and in the entry inside `userplaneInformation / upNodes / UPF / interfaces / endpoints`, change the IP from `127.0.0.8` to `192.168.56.101`, namely from:
-```
+```yaml
 ...
   interfaces: # Interface list for this UPF
    - interfaceType: N3 # the type of the interface (N3 or N9)
@@ -126,7 +126,7 @@ and in the entry inside `userplaneInformation / upNodes / UPF / interfaces / end
        - 127.0.0.8
 ```
 into:
-```
+```yaml
 ...
   interfaces: # Interface list for this UPF
    - interfaceType: N3 # the type of the interface (N3 or N9)
@@ -134,7 +134,7 @@ into:
        - 192.168.56.101  # 127.0.0.8
 ```
 Finally, edit `~/free5gc/config/upfcfg.yaml`，and chage gtpu IP from `127.0.0.8` into `192.168.56.101`, namely from:
-```
+```yaml
 ...
   gtpu:
     forwarder: gtp5g
@@ -145,7 +145,7 @@ Finally, edit `~/free5gc/config/upfcfg.yaml`，and chage gtpu IP from `127.0.0.8
         type: N3
 ```
 into:
-```
+```yaml
 ...
   gtpu:
     forwarder: gtp5g
@@ -165,7 +165,7 @@ In the ueransim VM, there are two files related to free5GC：
 The second file is for UE, which we don’t have to change if the data inside is consistent with the (default) registration data we set using WebConsole previously.
 
 First SSH into ueransim, and edit the file `~/UERANSIM/config/free5gc-gnb.yaml`, and change the ngapIp IP, as well as the gtpIp IP, from `127.0.0.1` to `192.168.56.102`，and also change the IP in amfConfigs into `192.168.56.101`, that is, from:
-```
+```yaml
 ...
   ngapIp: 127.0.0.1   # gNB's local IP address for N2 Interface (Usually same with local IP)
   gtpIp: 127.0.0.1    # gNB's local IP address for N3 Interface (Usually same with local IP)
@@ -175,7 +175,7 @@ First SSH into ueransim, and edit the file `~/UERANSIM/config/free5gc-gnb.yaml`,
     - address: 127.0.0.1
 ```
 into:
-```
+```yaml
 ...
   ngapIp: 192.168.56.102  # 127.0.0.1   # gNB's local IP address for N2 Interface (Usually same with local IP)
   gtpIp: 192.168.56.102  # 127.0.0.1    # gNB's local IP address for N3 Interface (Usually same with local IP)
@@ -185,7 +185,7 @@ into:
     - address: 192.168.56.101  # 127.0.0.1
 ```
 Next we examine the file `~/UERANSIM/config/free5gc-ue.yaml`，and see if the settings is consistent with those in free5GC (via WebConsole), for example:
-```
+```yaml
 # IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 or 16 digits)
 supi: 'imsi-208930000000003'
 # Mobile Country Code value
@@ -222,7 +222,7 @@ The data appear to be the same as what we set in WebConsole.
 ## 7. Testing UERANSIM against free5GC
 
 SSH into free5gc. If you have rebooted free5gc, remember to run:
-```
+```bash
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo iptables -t nat -A POSTROUTING -o <dn_interface> -j MASQUERADE
 sudo systemctl stop ufw
@@ -231,14 +231,14 @@ sudo systemctl stop ufw
 **Note:** In Ubuntu Server 20.04 and 22.04 the dn_interface may be called `enp0s3` or `enp0s4` by default. Use the command `ip a` to help to figure it out
 
 In addition, execute the following command:
-```
+```bash
 sudo iptables -I FORWARD 1 -j ACCEPT
 ```
 
 **Tip:** As per the information on the [appendix page](./Appendix.md#appendix-h-using-the-reload_host_configsh-script), it's possible to use a script to reload the config above automatically after reboot
 
 Also, make sure you have make proper changes to the free5GC configuration files, then run `./run.sh`:
-```
+```bash
 cd ~/free5gc
 ./run.sh
 ```
@@ -248,20 +248,20 @@ At this time free5GC has been started.
 Next, prepare three additional SSH terminals from your host machine (if you know how to use `tmux`, you can use just one).
 
 In terminal 1: SSH into ueransim, make sure UERANSIM is built, and configuration files have been changed correctly, then execute `nr-gnb`:
-```
+```bash
 cd ~/UERANSIM
 build/nr-gnb -c config/free5gc-gnb.yaml
 ```
 
 In terminal 2, SSH into ueransim, and execute `nr-ue` with admin right:
-```
+```bash
 cd ~/UERANSIM
 sudo build/nr-ue -c config/free5gc-ue.yaml # for multiple-UEs, use -n and -t for number and delay
 ```
 
 In terminal 3, SSH into ueransim, and ping `192.168.56.101` to see free5gc is alive. Then, use ifconfig to see if the tunnel `uesimtun0` has been created (by nr-ue):
-```
-$ ifconfig
+```bash
+ifconfig
 
 enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
@@ -301,7 +301,7 @@ uesimtun0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
 ```
 
 Now use `ping`:
-```
+```bash
 ping -I uesimtun0 google.com
 ```
 If `ping` gets replies, then free5GC is running properly. Congratulations!
@@ -309,18 +309,18 @@ If `ping` gets replies, then free5GC is running properly. Congratulations!
 ## 8. Testing UERANSIM deregister via nr-cli
 
 Create new terminal, use nr-cli to show the running device
-```
+```bash
 ./build/nr-cli --dump
 UERANSIM-gnb-208-93-1
 imsi-208930000000001
 ```
 
 Control `imsi-208930000000001` to send dereg normal to the free5GC
-```
+```bash
 sudo ./build/nr-cli imsi-208930000000001 --exec "deregister normal"
 ```
 And you would see the De-registration signal/logs in UE:
-```
+```bash
 [2024-05-21 08:01:57.175] [nas] [debug] De-registration required due to [NORMAL]
 [2024-05-21 08:01:57.185] [nas] [debug] Starting de-registration procedure due to [NORMAL]
 [2024-05-21 08:01:57.185] [nas] [debug] Performing local release of PDU session[1]

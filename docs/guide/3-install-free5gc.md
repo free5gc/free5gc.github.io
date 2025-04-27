@@ -8,8 +8,8 @@
 
 * In order to use the UPF element, you must use the `5.0.0-23-generic` or `5.4.x` version of the Linux kernel.  free5gc uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g), which has been tested and compiled against that kernel versions only. If you installed Ubuntu 20.04, the version should be like 5.4.x. To determine the version of the Linux kernel you are using:
 
-```
-$ uname -r
+```bash
+uname -r
 5.4.0-65-generic
 ```
 
@@ -19,7 +19,7 @@ You will not be able to run most of the tests in [Test](./4-test-free5gc.md) pag
 
 * As noted above, free5gc is built and tested with Go 1.21.8
 * To check the version of Go on your system, from a command prompt:
-```
+```bash
 go version
 ```
 
@@ -50,24 +50,24 @@ source ~/.bashrc
 
 3\. Control-plane Supporting Packages
 
-```
+```bash
 sudo apt -y update
 sudo apt -y install wget git
 ```
 
 * To check whether AVX is supported by the CPU, you can use the command:
-        ```
-        lscpu | grep avx
-        ```
+```bash
+lscpu | grep avx
+```
 * Install MongoDB Community Edition (check [this appendix section](./Appendix.md#appendix-g-install-mongodb-70x-on-ubuntu-server-220403) for more information)
     1. Import the public key used by the package management system
-        ```
+        ```bash
         sudo apt install -y gnupg curl
         curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
         sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
         ```
     2. Create a list file for MongoDB
-        ```
+        ```bash
         # Ubuntu 22.04 (Jammy)
         echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
         # Ubuntu 20.04 (Focal)
@@ -75,12 +75,12 @@ sudo apt -y install wget git
         ```
         - you can determine the release by running `cat /etc/lsb-release`
     3. Reload local package database & Install the MongoDB packages
-        ```
+        ```bash
         sudo apt update
         sudo apt install -y mongodb-org
         ```
     4. Run MongoDB Community Edition
-        ```
+        ```bash
         # using systemd
         sudo systemctl start mongod
         sudo systemctl status mongod
@@ -93,20 +93,20 @@ sudo apt -y install wget git
     * see [this post on MongoDB's official forum](https://www.mongodb.com/community/forums/t/mongodb-5-0-cpu-intel-g4650-compatibility/116610/2)
     * see also [docker-library/mongo#485 (comment)](https://github.com/docker-library/mongo/issues/485#issuecomment-891991814)
     * When you are using `Ubuntu 20.04` and a CPU without AVX support, you can use the `mongodb` package provided by Ubuntu. 
-        ```
+        ```bash
         sudo apt install mongodb # MongoDB Server v3.6.8
         ```
 
 4\. User-plane Supporting Packages
 
-```
+```bash
 sudo apt -y update
 sudo apt -y install git gcc g++ cmake autoconf libtool pkg-config libmnl-dev libyaml-dev
 ```
 
 5\. Linux Host Network Settings
 
-```
+```bash
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo iptables -t nat -A POSTROUTING -o <dn_interface> -j MASQUERADE
 sudo iptables -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400
@@ -115,7 +115,7 @@ sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
 ```
 
 Or use `reload_host_config.sh` from free5GC
-```
+```bash
 sudo ./<PATH-TO-free5GC>/reload_host_config.sh <dn_interface>
 # Example
 sudo ./free5gc/reload_host_config.sh enp0s3
@@ -128,7 +128,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 1. Clone the free5GC repository
     * To install the latest stable build (v4.0.1):
 
-        ```
+        ```bash
         cd ~
         git clone --recursive -b v4.0.1 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
@@ -136,7 +136,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
     * **(Alternatively)** to install the latest nightly build:
 
-        ```
+        ```bash
         cd ~/free5gc
         git checkout main
         git submodule sync
@@ -148,14 +148,14 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 2. Compile network function services in `free5gc`
     * To do so individually (e.g., AMF only):
 
-        ```
+        ```bash
         cd ~/free5gc
         make amf
         ```
 
     * To build all network functions:
 
-        ```
+        ```bash
         cd ~/free5gc
         make
         ```
@@ -164,13 +164,13 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
 1. As noted above, the GTP kernel module used by the UPF requires that you use Linux kernel version `5.0.0-23-generic` or `5.4.x`.  To verify your version:
 
-    ```
+    ```bash
     uname -r
     ```
 
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
-    ```
+    ```bash
     git clone -b v0.9.14 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make
@@ -181,7 +181,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
     * to build using make:
 
-        ```
+        ```bash
         cd ~/free5gc
         make upf
         ```
@@ -192,7 +192,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
 1. Before building WebConsole, install nodejs first:
 
-    ```
+    ```bash
     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
     sudo apt update
     sudo apt install -y nodejs
@@ -203,14 +203,14 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
     * to build using make:
 
-        ```
+        ```bash
         cd ~/free5gc
         make webconsole
         ```
 
     * **(Alternatively)** to build manually:
 
-        ```
+        ```bash
         cd ~/free5gc/webconsole/frontend
         yarn install
         yarn build

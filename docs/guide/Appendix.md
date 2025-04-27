@@ -3,12 +3,12 @@
 # Appendix
 ## Appendix A: OAM 
 1. Run the OAM server
-```
+```bash
 cd webconsole
 go run server.go
 ```
 2. Access the OAM by
-```
+```bash
 URL: http://localhost:5000
 Username: admin
 Password: free5gc

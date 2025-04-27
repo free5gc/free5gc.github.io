@@ -1,7 +1,7 @@
 # Influence Traffic Routing
 - The SMF may control the data path of a PDU Session so that the PDU Session may simultaneously correspond to multiple N6 interfaces.
 - We have provided some smaple scripts under the free5gc-compose, you can test the content in this note with
-    ```sh
+    ```bash
     sudo docker run --rm --network <free5gc-nw-name> \
         -v "$(pwd):/mnt" -w /mnt curlimages/curl <script.sh>
     ```
@@ -41,17 +41,17 @@
         }
         ```
     - Use curl to put the data to the UDR.
-        ```sh
+        ```bash
         curl -X PUT -H "Content-Type: application/json" --data @./ti_data.json \
             http://<udr-interface>:8000/nudr-dr/v1/application-data/influenceData/1
         ```
     - To check the created influence data, use the following command.
-        ```sh
+        ```bash
         curl -X GET -H "Content-Type: application/json" \
 	        http://<udr-interface>:8000/nudr-dr/v1/application-data/influenceData?dnns=internet
         ```
     - You can also remove the traffic influence data by the following command.
-        ```sh
+        ```bash
         curl -X DELETE -H "Content-Type: application/json" \
 	        http://<udr-interface>:8000/nudr-dr/v1/application-data/influenceData/1
         ```
@@ -102,7 +102,7 @@
         }
         ```
     - Use curl to POST the data to NEF.
-        ```sh
+        ```bash
         curl -X POST -H "Content-Type: application/json" --data @./af_ti_anyUE.json \
             http://<nef-interface>:8000/3gpp-traffic-influence/v1/af001/subscriptions
         ```
@@ -143,7 +143,7 @@
         }
         ```
     - Use curl to POST the data to NEF.
-        ```sh
+        ```bash
         curl -X POST -H "Content-Type: application/json" --data @./af_ti_singleUE.json \
             http://<nef-interface>:8000/3gpp-traffic-influence/v1/af001/subscriptions
         ```
