@@ -505,7 +505,8 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Guan-Hua Tu, Michigan State University</p>
       <p>Yang Xiao, University of Kentucky</p>
       <p>Tian Xie, Utah State University</p>
-      <p>Lou Yang, National Yang Ming Chiao Tung University (NYCU)</p>
+      <p>Yang Lou, National Yang Ming Chiao Tung University (NYCU)</p>
+      <p>Li-Hsing Yen, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Antonia Zhai, University of Minnesota</p>
       <p>Zhi-Li Zhang, University of Minnesota</p>
     </div>
