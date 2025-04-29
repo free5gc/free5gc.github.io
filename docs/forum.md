@@ -355,7 +355,7 @@ Submissions will be evaluated based on technical rigor, novelty, and relevance t
 
 - Submitted papers must not substantially overlap papers that have been published or that are simultaneously submitted to a journal or a conference with proceedings.
 - Long papers: Maximum 12 pages for review, with the final camera-ready version limited to 9 pages. Submissions should be no more than 12 pages in the ACM double-column format, excluding the bibliography and well-marked appendix. Committee members are not required to read the appendices, so the paper should be understandable without them. For accepted papers, the final camera-ready version may be limited to 9 pages, including the bibliography, appendix, and all content.
-- Short papers: 4 pages for both review and final camera-ready submission. The forum will also consider short submissions of up to 4 pages for preliminary results or concise contributions that can be clearly described in a few pages.
+- Short papers: 4 pages for both review and final camera-ready submission. The forum also welcomes short submissions of up to 4 pages for preliminary results or concise contributions that can be clearly described in a few pages.
 - Authors of long-paper submissions may indicate in a footnote on the first page if they would like their paper to also be considered for publication as a short paper (4 pages in the proceedings).
 - Submissions must be PDF files in the ACM double-column format ([https://www.acm.org/publications/proceedings-template](https://www.acm.org/publications/proceedings-template)) using the “sigconf” template. Authors should not modify the font or margins of the ACM format. The CCS information such as concepts, keywords, or rights management data (e.g., DOI, ISBN) must be included. A teaser figure is optional. Please refer to sample-sigconf.tex and sample-sigconf.pdf in the ACM LaTeX package ([https://www.overleaf.com/latex/templates/association-for-computing-machinery-acm-sig-proceedings-template/bmvfhcdnxfty](https://www.overleaf.com/latex/templates/association-for-computing-machinery-acm-sig-proceedings-template/bmvfhcdnxfty)) for formatting examples. Submissions not following the required format may be rejected without review.
 - Submissions should not be anonymized.
@@ -430,6 +430,10 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Northeastern University</p>
     </div>
     <div class="committee-member">
+      <h4>Akihiro Nakao</h4>
+      <p>The University of Tokyo</p>
+    </div>
+    <div class="committee-member">
       <h4>Shivendra Panwar</h4>
       <p>Tandon School of Engineering of New York University</p>
     </div>
@@ -484,6 +488,7 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
     <div class="committee-member">
       <p>Chien Chen, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Yi Chen, National Yang Ming Chiao Tung University (NYCU)</p>
+      <p>Nakjung Choi, Nokia Bell Labs</p>
       <p>Rahman Doost-Mohammady, Rice University</p>
       <p>Ashutosh Dutta, Johns Hopkins University</p>
       <p>Xinyu Lei, Michigan Technological University</p>
@@ -491,6 +496,8 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Fuchun Joseph Lin, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Chunyi Peng, Purdue University</p>
       <p>Shixiong Qi, University of Kentucky</p>
+      <p>Yuji Sekiya, The University of Tokyo</p>
+      <p>Ivan Seskar, Rutgers University</p>
       <p>Zhaowei Tan, University of California, Riverside</p>
       <p>Chien-Chao Tseng,  National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Guan-Hua Tu, Michigan State University</p>
@@ -498,6 +505,7 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Tian Xie, Utah State University</p>
       <p>Lou Yang, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Antonia Zhai, University of Minnesota</p>
+      <p>Zhi-Li Zhang, University of Minnesota</p>
     </div>
   </div>
 </div>
