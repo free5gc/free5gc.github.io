@@ -308,6 +308,8 @@ Submissions will be evaluated based on technical rigor, novelty, and relevance t
 
 ## Topics of Interest
 
+We invite original research papers, technical reports, and case studies in, but not limited to, the following areas:
+
 <div class="grid-container">
   <div class="card">
     <h3>5G Security</h3>
