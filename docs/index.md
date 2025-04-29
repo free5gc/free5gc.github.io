@@ -14,6 +14,16 @@
   </div>
 </div>
 
+<div class="announcement-box">
+  <h2>The 1st free5GC World Forum 2025 Call For Papers</h2>
+  <p>We are excited to announce the 1st free5GC World Forum 2025, which will be held in Taipei, Taiwan, October 13, 2025. This event aims to bring together researchers, developers, and industry professionals to share their insights and advancements in the field of 5G core networks.</p>
+  <p>For more details, please visit the <a href="https://www.free5gc.org/forum/" target="_blank">forum website</a>.</p>
+  <h2>Latest News: free5GC v4.0.1 Released!</h2>
+  <p>We have fixed a series of bugs in version 4.0.1 to improve stability.</p>
+  <p>For more details, please see the hisory page.</p>
+  <a href="./history" class="announcement-link">View Version History →</a>
+</div>
+
 <div class="features-container">
   <div class="feature-card">
     <div class="feature-icon">📱</div>
@@ -49,16 +59,6 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 > [!NOTE]
 > - The Linux Foundation announced that free5GC officially joined the Linux Foundation on September 16, 2024, during the Open Source Summit Europe in Vienna, Austria. Check out the press release [here](https://www.linuxfoundation.org/press/worlds-leading-open-source-mobile-packet-core-free5gc-moves-under-linux-foundation-to-provide-open-source-alternatives-across-5g-deployments).
 > - Please check out the [Google Scholar](https://scholar.google.com/scholar?hl=en&as_sdt=2007&q=free5gc) page here for publications using free5GC.
-
-<div class="announcement-box">
-  <h2>The 1st free5GC World Forum 2025 Call For Papers</h2>
-  <p>We are excited to announce the 1st free5GC World Forum 2025, which will be held in Taipei, Taiwan, October 13, 2025. This event aims to bring together researchers, developers, and industry professionals to share their insights and advancements in the field of 5G core networks.</p>
-  <p>For more details, please visit the <a href="https://www.free5gc.org/forum/" target="_blank">forum website</a>.</p>
-  <h2>Latest News: free5GC v4.0.1 Released!</h2>
-  <p>We have fixed a series of bugs in version 4.0.1 to improve stability.</p>
-  <p>For more details, please see the hisory page.</p>
-  <a href="./history" class="announcement-link">View Version History →</a>
-</div>
 
 ### Connecting to the Future!
 
