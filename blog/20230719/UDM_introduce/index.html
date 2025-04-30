@@ -1,0 +1,1200 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Network function UDM introduction - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#network-function-udm-introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network function UDM introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#udm" class="md-nav__link">
+    UDM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nudm_ueauthentication-service" class="md-nav__link">
+    Nudm_UEAuthentication Service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nudm_uecontextmanagement-service" class="md-nav__link">
+    Nudm_UEContextManagement Service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nudm_subscriberdatamanagement-sdm-service" class="md-nav__link">
+    Nudm_SubscriberDataManagement (SDM) Service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20230719/UDM_introduce.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20230719/UDM_introduce.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="network-function-udm-introduction">Network function UDM introduction</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: 張哲睿<br />
+Date: 2023/7/19</p>
+</div>
+<h3 id="overview">Overview</h3>
+<p>In this article, I will introduce UDM and its three services that will be used in the general UE registration procedure (Nudm_UECM service, Nudm_SubscriberDataManagement Service, and Nudm_UEAuthentication service) to let everyone understand UDM more clearly.</p>
+<h3 id="udm">UDM</h3>
+<p>Unified Data Management is responsible for managing information related to UE. When other NFs need to use the UE subscription information, they will obtain it from UDM through the SBI of UDM.</p>
+<h3 id="nudm_ueauthentication-service">Nudm_UEAuthentication Service</h3>
+<p>This service is used by AUSF to retrieve authentication-related information and, after authentication, confirm the result.</p>
+<p><img alt="upload_dde9cead3e40f645128a006d5bc56681" src="../1.png" /></p>
+<blockquote>
+<p><a href="https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/15.02.00_60/ts_133501v150200p.pdf">3GPP TS33.501 v15.2.0</a></p>
+</blockquote>
+<p>In Authentication, AUSF uses the GET operation to retrieve authentication information for the UE. The request contains the UE’s identity (supi or suci) and the serving network name. The serving network name is used in the derivation of the anchor key, which is used by subsensual authentication. UE’s identity will be contained in the URI, and the serving network name will be contained in the request body.</p>
+<p>Upon reception of the Nudm_UEAuthentication_Get Request, the UDM shall de-conceal SUCI to gain SUPI if SUCI is received. At this time, UDM will query the authentication subscription data from UDR. Then, UDM shall select the authentication method based on SUPI, and if required (e.g., 5G-AKA), UDM will calculate the authentication vector and pass it to AUSF.</p>
+<ul>
+<li>SUPI: A globally unique 5G Subscription Permanent Identifier, used to identify UE.</li>
+<li>SUCI: Subscription concealed identifier, obtained by encrypting supi through the Home Network Public Key so that supi will not be obtained by a third party on the network.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nx">logger</span><span class="p">.</span><span class="nx">UeauLog</span><span class="p">.</span><span class="nx">Traceln</span><span class="p">(</span><span class="s">&quot;In GenerateAuthDataProcedure&quot;</span><span class="p">)</span>
+
+<span class="nx">response</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">AuthenticationInfoResult</span><span class="p">{}</span>
+<span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">UnixNano</span><span class="p">())</span>
+<span class="nx">supi</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">suci</span><span class="p">.</span><span class="nx">ToSupi</span><span class="p">(</span><span class="nx">supiOrSuci</span><span class="p">,</span><span class="w"> </span><span class="nx">udm_context</span><span class="p">.</span><span class="nx">Getself</span><span class="p">().</span><span class="nx">SuciProfiles</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">problemDetails</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">ProblemDetails</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Status</span><span class="p">:</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusForbidden</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Cause</span><span class="p">:</span><span class="w">  </span><span class="nx">authenticationRejected</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Detail</span><span class="p">:</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">(),</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">UeauLog</span><span class="p">.</span><span class="nx">Errorln</span><span class="p">(</span><span class="s">&quot;suciToSupi error: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">problemDetails</span>
+<span class="p">}</span>
+
+<span class="nx">logger</span><span class="p">.</span><span class="nx">UeauLog</span><span class="p">.</span><span class="nx">Tracef</span><span class="p">(</span><span class="s">&quot;supi conversion =&gt; [%s]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">supi</span><span class="p">)</span>
+
+<span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">createUDMClientToUDR</span><span class="p">(</span><span class="nx">supi</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">openapi</span><span class="p">.</span><span class="nx">ProblemDetailsSystemFailure</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+<span class="p">}</span>
+<span class="nx">authSubs</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">AuthenticationDataDocumentApi</span><span class="p">.</span><span class="nx">QueryAuthSubsData</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">Background</span><span class="p">(),</span><span class="w"> </span><span class="nx">supi</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="c1">//in the udm/internal/sbi/producer/generate_auth_data.go, GenerateAuthDataProcedure function.</span>
+</code></pre></div>
+<p>From the code, we can see UDM first de-conceal SUCI (line 5), then use QueryAuthSubsData to get authSub from UDR. After that, UDM uses this information to create the authentication vector.</p>
+<p>Then we record the packet sent in the registration process and find the packet according to the URI specified by the specification. We can find the packet corresponding to this service.</p>
+<p><img alt="upload_3b177b07a98719c89de8d2cce9594c36" src="../2.png" /></p>
+<p>Open the response packet, and we can see the response body matches the AuthenticationInfoResult data type.</p>
+<p><img alt="upload_3acf4b96a27e13f8b35712d5efc402da" src="../3.png" /></p>
+<p><img alt="upload_f24e1640d05c1614d277517d35b6520f" src="../4.png" /></p>
+<blockquote>
+<p><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129503/15.02.01_60/ts_129503v150201p.pdf">3GPP TS29.503 v15.2.1</a></p>
+</blockquote>
+<p>After AUSF authenticates the UE, it will confirm the result with UDM. These details will be used in linking authentication confirmation to the Nudm_UECM_Registration procedure from AMF.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">communicateWithUDM</span><span class="p">(</span><span class="nx">ue</span><span class="w"> </span><span class="o">*</span><span class="nx">context</span><span class="p">.</span><span class="nx">AmfUe</span><span class="p">,</span><span class="w"> </span><span class="nx">accessType</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GmmLog</span><span class="p">.</span><span class="nx">Debugln</span><span class="p">(</span><span class="s">&quot;communicateWithUDM&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">amfSelf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">GetSelf</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// UDM selection described in TS 23.501 6.3.8</span>
+<span class="w">    </span><span class="c1">// TODO: consider udm group id, Routing ID part of SUCI, GPSI or External Group ID (e.g., by the NEF)</span>
+<span class="w">    </span><span class="nx">param</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Nnrf_NFDiscovery</span><span class="p">.</span><span class="nx">SearchNFInstancesParamOpts</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Supi</span><span class="p">:</span><span class="w"> </span><span class="nx">optional</span><span class="p">.</span><span class="nx">NewString</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">Supi</span><span class="p">),</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">resp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">SendSearchNFInstances</span><span class="p">(</span><span class="nx">amfSelf</span><span class="p">.</span><span class="nx">NrfUri</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NfType_UDM</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NfType_AMF</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">param</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;AMF can not select an UDM by NRF: SendSearchNFInstances failed&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">uecmUri</span><span class="p">,</span><span class="w"> </span><span class="nx">sdmUri</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">nfProfile</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">resp</span><span class="p">.</span><span class="nx">NfInstances</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">ue</span><span class="p">.</span><span class="nx">UdmId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nfProfile</span><span class="p">.</span><span class="nx">NfInstanceId</span>
+<span class="w">        </span><span class="nx">uecmUri</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">util</span><span class="p">.</span><span class="nx">SearchNFServiceUri</span><span class="p">(</span><span class="nx">nfProfile</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">ServiceName_NUDM_UECM</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NfServiceStatus_REGISTERED</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">sdmUri</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">util</span><span class="p">.</span><span class="nx">SearchNFServiceUri</span><span class="p">(</span><span class="nx">nfProfile</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">ServiceName_NUDM_SDM</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NfServiceStatus_REGISTERED</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">uecmUri</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">sdmUri</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">NudmUECMUri</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">uecmUri</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">NudmSDMUri</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">sdmUri</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">NudmUECMUri</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">NudmSDMUri</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;AMF can not select an UDM by NRF: SearchNFServiceUri failed&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">problemDetails</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">UeCmRegistration</span><span class="p">(</span><span class="nx">ue</span><span class="p">,</span><span class="w"> </span><span class="nx">accessType</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="nx">problemDetails</span><span class="p">.</span><span class="nx">Cause</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UECM_Registration Error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// TS 23.502 4.2.2.2.1 14a-c.</span>
+<span class="w">    </span><span class="c1">// &quot;After a successful response is received, the AMF subscribes to be notified</span>
+<span class="w">    </span><span class="c1">//      using Nudm_SDM_Subscribe when the data requested is modified&quot;</span>
+<span class="w">    </span><span class="nx">problemDetails</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">SDMGetAmData</span><span class="p">(</span><span class="nx">ue</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="nx">problemDetails</span><span class="p">.</span><span class="nx">Cause</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SDM_Get AmData Error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">problemDetails</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">SDMGetSmfSelectData</span><span class="p">(</span><span class="nx">ue</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="nx">problemDetails</span><span class="p">.</span><span class="nx">Cause</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SDM_Get SmfSelectData Error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">problemDetails</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">SDMGetUeContextInSmfData</span><span class="p">(</span><span class="nx">ue</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="nx">problemDetails</span><span class="p">.</span><span class="nx">Cause</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SDM_Get UeContextInSmfData Error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">problemDetails</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">SDMSubscribe</span><span class="p">(</span><span class="nx">ue</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="nx">problemDetails</span><span class="p">.</span><span class="nx">Cause</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SDM Subscribe Error&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">ContextValid</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+
+<span class="c1">//in the amf/internal/gmm/handler.go.</span>
+</code></pre></div>
+<p>Next, let's take a look at this function. It is called in HandleInitialRegistration, which handles UE's initial registration. UeCmRegistration will use the Nudm_UECM (UECM) service to store related UE Context Management information in UDM. In lines 40, 47, and 54, AMF uses the Nudm_SubscriberDataManagement (SDM) Service to get some subscribe data.</p>
+<h3 id="nudm_uecontextmanagement-service">Nudm_UEContextManagement Service</h3>
+<p>In the UeCmRegistration function, AMF registers as UE's serving NF on UDM and stores related UE Context Management information in UDM. Looking at the packet, you can see that the request body contains <code>amfInstanceId</code> and <code>guami</code>, representing the amf identity, and <code>ratType</code>, representing the radio access technology type used by UE.</p>
+<p><img alt="upload_c3e5e7c63f1bb7a934877e7fa29b82ec" src="../5.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// TS 29.503 5.3.2.2.2</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">RegistrationAmf3gppAccessProcedure</span><span class="p">(</span><span class="nx">registerRequest</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">Amf3GppAccessRegistration</span><span class="p">,</span><span class="w"> </span><span class="nx">ueID</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">header</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">Header</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">*</span><span class="nx">models</span><span class="p">.</span><span class="nx">Amf3GppAccessRegistration</span><span class="p">,</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">*</span><span class="nx">models</span><span class="p">.</span><span class="nx">ProblemDetails</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// TODO: EPS interworking with N26 is not supported yet in this stage</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">oldAmf3GppAccessRegContext</span><span class="w"> </span><span class="o">*</span><span class="nx">models</span><span class="p">.</span><span class="nx">Amf3GppAccessRegistration</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">udm_context</span><span class="p">.</span><span class="nx">Getself</span><span class="p">().</span><span class="nx">UdmAmf3gppRegContextExists</span><span class="p">(</span><span class="nx">ueID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">ue</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">udm_context</span><span class="p">.</span><span class="nx">Getself</span><span class="p">().</span><span class="nx">UdmUeFindBySupi</span><span class="p">(</span><span class="nx">ueID</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">oldAmf3GppAccessRegContext</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">Amf3GppAccessRegistration</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">udm_context</span><span class="p">.</span><span class="nx">Getself</span><span class="p">().</span><span class="nx">CreateAmf3gppRegContext</span><span class="p">(</span><span class="nx">ueID</span><span class="p">,</span><span class="w"> </span><span class="nx">registerRequest</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">clientAPI</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">createUDMClientToUDR</span><span class="p">(</span><span class="nx">ueID</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">openapi</span><span class="p">.</span><span class="nx">ProblemDetailsSystemFailure</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">createAmfContext3gppParamOpts</span><span class="w"> </span><span class="nx">Nudr_DataRepository</span><span class="p">.</span><span class="nx">CreateAmfContext3gppParamOpts</span>
+<span class="w">    </span><span class="nx">optInterface</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">optional</span><span class="p">.</span><span class="nx">NewInterface</span><span class="p">(</span><span class="nx">registerRequest</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">createAmfContext3gppParamOpts</span><span class="p">.</span><span class="nx">Amf3GppAccessRegistration</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">optInterface</span>
+<span class="w">    </span><span class="nx">resp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">clientAPI</span><span class="p">.</span><span class="nx">AMF3GPPAccessRegistrationDocumentApi</span><span class="p">.</span><span class="nx">CreateAmfContext3gpp</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">Background</span><span class="p">(),</span>
+<span class="w">        </span><span class="nx">ueID</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">createAmfContext3gppParamOpts</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">UecmLog</span><span class="p">.</span><span class="nx">Errorln</span><span class="p">(</span><span class="s">&quot;CreateAmfContext3gpp error : &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">problemDetails</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">ProblemDetails</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">Status</span><span class="p">:</span><span class="w"> </span><span class="nb">int32</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">StatusCode</span><span class="p">),</span>
+<span class="w">            </span><span class="nx">Cause</span><span class="p">:</span><span class="w">  </span><span class="nx">err</span><span class="p">.(</span><span class="nx">openapi</span><span class="p">.</span><span class="nx">GenericOpenAPIError</span><span class="p">).</span><span class="nx">Model</span><span class="p">().(</span><span class="nx">models</span><span class="p">.</span><span class="nx">ProblemDetails</span><span class="p">).</span><span class="nx">Cause</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">Detail</span><span class="p">:</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">(),</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">problemDetails</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">rspCloseErr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nx">Close</span><span class="p">();</span><span class="w"> </span><span class="nx">rspCloseErr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">logger</span><span class="p">.</span><span class="nx">UecmLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;CreateAmfContext3gpp response body cannot close: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">rspCloseErr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}()</span>
+
+<span class="w">    </span><span class="c1">// TS 23.502 4.2.2.2.2 14d: UDM initiate a Nudm_UECM_DeregistrationNotification to the old AMF</span>
+<span class="w">    </span><span class="c1">// corresponding to the same (e.g. 3GPP) access, if one exists</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">oldAmf3GppAccessRegContext</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">deregistData</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">DeregistrationData</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">DeregReason</span><span class="p">:</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">DeregistrationReason_SUBSCRIPTION_WITHDRAWN</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">AccessType</span><span class="p">:</span><span class="w">  </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType__3_GPP_ACCESS</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">callback</span><span class="p">.</span><span class="nx">SendOnDeregistrationNotification</span><span class="p">(</span><span class="nx">ueID</span><span class="p">,</span><span class="w"> </span><span class="nx">oldAmf3GppAccessRegContext</span><span class="p">.</span><span class="nx">DeregCallbackUri</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">deregistData</span><span class="p">)</span><span class="w"> </span><span class="c1">// Deregistration Notify Triggered</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">header</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">Header</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">udmUe</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">udm_context</span><span class="p">.</span><span class="nx">Getself</span><span class="p">().</span><span class="nx">UdmUeFindBySupi</span><span class="p">(</span><span class="nx">ueID</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">header</span><span class="p">.</span><span class="nx">Set</span><span class="p">(</span><span class="s">&quot;Location&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">udmUe</span><span class="p">.</span><span class="nx">GetLocationURI</span><span class="p">(</span><span class="nx">udm_context</span><span class="p">.</span><span class="nx">LocationUriAmf3GppAccessRegistration</span><span class="p">))</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">header</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">registerRequest</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//in the udm/internal/sbi/producer/ue_context_management.go</span>
+</code></pre></div>
+<p>In the RegistrationAmf3gppAccessProcedure function, UDM first checks whether the context has been established for that UE; if UDM has such a context, it initiates a Nudm_UECM_DeregistrationNotification to the old AMF later. UDM used the received information to create context and stored it in UDR.</p>
+<h3 id="nudm_subscriberdatamanagement-sdm-service">Nudm_SubscriberDataManagement (SDM) Service</h3>
+<p>The SDM service is used to retrieve the UE's individual subscription data relevant to the consumer's NF from the UDM. In the SDMGetAmData function, AMF gets subscription data used in registration and mobility management. In the response packet, AMF got <code>gpsis</code>, <code>subscribedUeAmbr</code>, and <code>nssai</code>.</p>
+<p><img alt="upload_6793e16d2435baf3f235d61178245873" src="../6.png" /></p>
+<p>The GPSI (Generic Public Subscription Identifier) is used to address a 3GPP subscription in data networks outside the realms of a 3GPP system. It contains either an External ID or an <a href="https://en.wikipedia.org/wiki/MSISDN">MSISDN</a> （Mobile Subscriber ISDN Number）.The <code>subscribedUeAmbr</code> is The Maximum Aggregated uplink and downlink MBRs (max. bit rate) to be shared across all Non-GBR (non-guaranteed Bit Rate) QoS Flows according to the subscription of the user.</p>
+<p><img alt="upload_e45012750cc609c51d59437c24f8fc4f" src="../7.png" /></p>
+<p>In the SDMGetSmfSelectData function, AMF gets subscribed S-NSSAIs (Single Network Slice Selection Assistance Information) and Data Network Names for these S-NSSAIs. AMF will use this information to select an SMF that manages the PDU Session.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">HandleInitialRegistration</span><span class="p">(</span><span class="nx">ue</span><span class="w"> </span><span class="o">*</span><span class="nx">context</span><span class="p">.</span><span class="nx">AmfUe</span><span class="p">,</span><span class="w"> </span><span class="nx">anType</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GmmLog</span><span class="p">.</span><span class="nx">Infoln</span><span class="p">(</span><span class="s">&quot;Handle InitialRegistration&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">amfSelf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">GetSelf</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// update Kgnb/Kn3iwf</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">UpdateSecurityContext</span><span class="p">(</span><span class="nx">anType</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// Registration with AMF re-allocation (TS 23.502 4.2.2.2.3)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">SubscribedNssai</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">getSubscribedNssai</span><span class="p">(</span><span class="nx">ue</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">handleRequestedNssai</span><span class="p">(</span><span class="nx">ue</span><span class="p">,</span><span class="w"> </span><span class="nx">anType</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="c1">//in the amf/internal/gmm/handler.go.</span>
+</code></pre></div>
+<p>In the initialization of HandleInitialRegistration, AMF sends a request to the UDM to receive the UE's NSSAI (Network Slice Selection Assistance Information). After receiving subscribed NSSAI, AMF will compare it to UE's requested NSSAI. If there is a S-NSSAI that has not been subscribed before, AMF will request NSSF for Allowed NSSAI.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">handleRequestedNssai</span><span class="p">(</span><span class="nx">ue</span><span class="w"> </span><span class="o">*</span><span class="nx">context</span><span class="p">.</span><span class="nx">AmfUe</span><span class="p">,</span><span class="w"> </span><span class="nx">anType</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">amfSelf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">GetSelf</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">RegistrationRequest</span><span class="p">.</span><span class="nx">RequestedNSSAI</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">requestedNssai</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nasConvert</span><span class="p">.</span><span class="nx">RequestedNssaiToModels</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">RegistrationRequest</span><span class="p">.</span><span class="nx">RequestedNSSAI</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Decode failed at RequestedNSSAI[%s]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nx">needSliceSelection</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">requestedSnssai</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">requestedNssai</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GmmLog</span><span class="p">.</span><span class="nx">Infof</span><span class="p">(</span><span class="s">&quot;RequestedNssai - ServingSnssai: %+v, HomeSnssai: %+v&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">requestedSnssai</span><span class="p">.</span><span class="nx">ServingSnssai</span><span class="p">,</span><span class="w"> </span><span class="nx">requestedSnssai</span><span class="p">.</span><span class="nx">HomeSnssai</span><span class="p">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">InSubscribedNssai</span><span class="p">(</span><span class="o">*</span><span class="nx">requestedSnssai</span><span class="p">.</span><span class="nx">ServingSnssai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">allowedSnssai</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AllowedSnssai</span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">AllowedSnssai</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Snssai</span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">Sst</span><span class="p">:</span><span class="w"> </span><span class="nx">requestedSnssai</span><span class="p">.</span><span class="nx">ServingSnssai</span><span class="p">.</span><span class="nx">Sst</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">Sd</span><span class="p">:</span><span class="w">  </span><span class="nx">requestedSnssai</span><span class="p">.</span><span class="nx">ServingSnssai</span><span class="p">.</span><span class="nx">Sd</span><span class="p">,</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nx">MappedHomeSnssai</span><span class="p">:</span><span class="w"> </span><span class="nx">requestedSnssai</span><span class="p">.</span><span class="nx">HomeSnssai</span><span class="p">,</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">ue</span><span class="p">.</span><span class="nx">InAllowedNssai</span><span class="p">(</span><span class="o">*</span><span class="nx">allowedSnssai</span><span class="p">.</span><span class="nx">AllowedSnssai</span><span class="p">,</span><span class="w"> </span><span class="nx">anType</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">AllowedNssai</span><span class="p">[</span><span class="nx">anType</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">AllowedNssai</span><span class="p">[</span><span class="nx">anType</span><span class="p">],</span><span class="w"> </span><span class="nx">allowedSnssai</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">needSliceSelection</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="k">break</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">needSliceSelection</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">NssfUri</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">SearchNssfNSSelectionInstance</span><span class="p">(</span><span class="nx">ue</span><span class="p">,</span><span class="w"> </span><span class="nx">amfSelf</span><span class="p">.</span><span class="nx">NrfUri</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NfType_NSSF</span><span class="p">,</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NfType_AMF</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GmmLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;AMF can not select an NSSF Instance by NRF[Error: %+v]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="k">break</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// Step 4</span>
+<span class="w">            </span><span class="nx">problemDetails</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">NSSelectionGetForRegistration</span><span class="p">(</span><span class="nx">ue</span><span class="p">,</span><span class="w"> </span><span class="nx">requestedNssai</span><span class="p">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GmmLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;NSSelection Get Failed Problem[%+v]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">problemDetails</span><span class="p">)</span>
+<span class="w">                </span><span class="nx">gmm_message</span><span class="p">.</span><span class="nx">SendRegistrationReject</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">RanUe</span><span class="p">[</span><span class="nx">anType</span><span class="p">],</span><span class="w"> </span><span class="nx">nasMessage</span><span class="p">.</span><span class="nx">Cause5GMMProtocolErrorUnspecified</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Handle Requested Nssai of UE failed&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GmmLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;NSSelection Get Error[%+v]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">                </span><span class="nx">gmm_message</span><span class="p">.</span><span class="nx">SendRegistrationReject</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">RanUe</span><span class="p">[</span><span class="nx">anType</span><span class="p">],</span><span class="w"> </span><span class="nx">nasMessage</span><span class="p">.</span><span class="nx">Cause5GMMProtocolErrorUnspecified</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Handle Requested Nssai of UE failed&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="c1">//in the amf/internal/gmm/handler.go.</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">RequestedNssai</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nb">len</span><span class="p">(</span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">RequestedNssai</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Requested NSSAI is provided</span>
+<span class="w">    </span><span class="c1">// Verify which S-NSSAI(s) in the Requested NSSAI are permitted based on comparing the Subscribed S-NSSAI(s)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">        </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckSupportedNssaiInPlmn</span><span class="p">(</span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">RequestedNssai</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="p">.</span><span class="nx">PlmnId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Return ProblemDetails indicating S-NSSAI is not supported</span>
+<span class="w">        </span><span class="c1">// TODO: Based on TS 23.501 V15.2.0, if the Requested NSSAI includes an S-NSSAI that is not valid in the</span>
+<span class="w">        </span><span class="c1">//       Serving PLMN, the NSSF may derive the Configured NSSAI for Serving PLMN</span>
+<span class="w">        </span><span class="o">*</span><span class="nx">problemDetails</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">ProblemDetails</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">Title</span><span class="p">:</span><span class="w">  </span><span class="nx">util</span><span class="p">.</span><span class="nx">UNSUPPORTED_RESOURCE</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">Status</span><span class="p">:</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusForbidden</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">Detail</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;S-NSSAI in Requested NSSAI is not supported in PLMN&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">Cause</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;SNSSAI_NOT_SUPPORTED&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusForbidden</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">status</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Check if any Requested S-NSSAIs is present in Subscribed S-NSSAIs</span>
+<span class="w">    </span><span class="nx">checkIfRequestAllowed</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kc">false</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">requestedSnssai</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">RequestedNssai</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckSupportedSnssaiInTa</span><span class="p">(</span><span class="nx">requestedSnssai</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Requested S-NSSAI does not supported in UE&#39;s current TA</span>
+<span class="w">            </span><span class="c1">// Add it to Rejected NSSAI in TA</span>
+<span class="w">            </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInTa</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInTa</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">requestedSnssai</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">mappingOfRequestedSnssai</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">Snssai</span>
+<span class="w">        </span><span class="c1">// TODO: Compared with Restricted S-NSSAI list in configuration under roaming scenario</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">HomePlmnId</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckStandardSnssai</span><span class="p">(</span><span class="nx">requestedSnssai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Standard S-NSSAIs are supported to be commonly decided by all roaming partners</span>
+<span class="w">            </span><span class="c1">// Only non-standard S-NSSAIs are required to find mappings</span>
+<span class="w">            </span><span class="nx">targetMapping</span><span class="p">,</span><span class="w"> </span><span class="nx">found</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">util</span><span class="p">.</span><span class="nx">FindMappingWithServingSnssai</span><span class="p">(</span><span class="nx">requestedSnssai</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">MappingOfNssai</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">found</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// No mapping of Requested S-NSSAI to HPLMN S-NSSAI is provided by UE</span>
+<span class="w">                </span><span class="c1">// TODO: Search for local configuration if there is no provided mapping from UE, and update UE&#39;s</span>
+<span class="w">                </span><span class="c1">//       Configured NSSAI</span>
+<span class="w">                </span><span class="nx">checkInvalidRequestedNssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInPlmn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span>
+<span class="w">                    </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInPlmn</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">requestedSnssai</span><span class="p">)</span>
+<span class="w">                </span><span class="k">continue</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// TODO: Check if mappings of S-NSSAIs are correct</span>
+<span class="w">                </span><span class="c1">//       If not, update UE&#39;s Configured NSSAI</span>
+<span class="w">                </span><span class="nx">mappingOfRequestedSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">*</span><span class="nx">targetMapping</span><span class="p">.</span><span class="nx">HomeSnssai</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">mappingOfRequestedSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">requestedSnssai</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nx">hitSubscription</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">subscribedSnssai</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">SubscribedNssai</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">mappingOfRequestedSnssai</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="nx">subscribedSnssai</span><span class="p">.</span><span class="nx">SubscribedSnssai</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Requested S-NSSAI matches one of Subscribed S-NSSAI</span>
+<span class="w">                </span><span class="c1">// Add it to Allowed NSSAI list</span>
+<span class="w">                </span><span class="nx">hitSubscription</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="w">                </span><span class="kd">var</span><span class="w"> </span><span class="nx">allowedSnssaiElement</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AllowedSnssai</span>
+<span class="w">                </span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">AllowedSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">models</span><span class="p">.</span><span class="nx">Snssai</span><span class="p">)</span>
+<span class="w">                </span><span class="o">*</span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">AllowedSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">requestedSnssai</span>
+<span class="w">                </span><span class="nx">nsiInformationList</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">util</span><span class="p">.</span><span class="nx">GetNsiInformationListFromConfig</span><span class="p">(</span><span class="nx">requestedSnssai</span><span class="p">)</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="nx">nsiInformationList</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="c1">// TODO: `NsiInformationList` should be slice in `AllowedSnssai` instead of pointer of slice</span>
+<span class="w">                    </span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">NsiInformationList</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span>
+<span class="w">                        </span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">NsiInformationList</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">nsiInformationList</span><span class="o">...</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">HomePlmnId</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckStandardSnssai</span><span class="p">(</span><span class="nx">requestedSnssai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">MappedHomeSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">models</span><span class="p">.</span><span class="nx">Snssai</span><span class="p">)</span>
+<span class="w">                    </span><span class="o">*</span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">MappedHomeSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">*</span><span class="nx">subscribedSnssai</span><span class="p">.</span><span class="nx">SubscribedSnssai</span>
+<span class="w">                </span><span class="p">}</span>
+
+<span class="w">                </span><span class="c1">// Default Access Type is set to 3GPP Access if no TAI is provided</span>
+<span class="w">                </span><span class="c1">// TODO: Depend on operator implementation, it may also return S-NSSAIs in all valid Access Type if</span>
+<span class="w">                </span><span class="c1">//       UE&#39;s Access Type could not be identified</span>
+<span class="w">                </span><span class="kd">var</span><span class="w"> </span><span class="nx">accessType</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType__3_GPP_ACCESS</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">accessType</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">util</span><span class="p">.</span><span class="nx">GetAccessTypeFromConfig</span><span class="p">(</span><span class="o">*</span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+
+<span class="w">                </span><span class="nx">util</span><span class="p">.</span><span class="nx">AddAllowedSnssai</span><span class="p">(</span><span class="nx">allowedSnssaiElement</span><span class="p">,</span><span class="w"> </span><span class="nx">accessType</span><span class="p">,</span><span class="w"> </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">)</span>
+
+<span class="w">                </span><span class="nx">checkIfRequestAllowed</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="k">break</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">hitSubscription</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Requested S-NSSAI does not match any Subscribed S-NSSAI</span>
+<span class="w">            </span><span class="c1">// Add it to Rejected NSSAI in PLMN</span>
+<span class="w">            </span><span class="nx">checkInvalidRequestedNssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInPlmn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInPlmn</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">requestedSnssai</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">checkIfRequestAllowed</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// No S-NSSAI from Requested NSSAI is present in Subscribed S-NSSAIs</span>
+<span class="w">        </span><span class="c1">// Subscribed S-NSSAIs marked as default are used</span>
+<span class="w">        </span><span class="nx">useDefaultSubscribedSnssai</span><span class="p">(</span><span class="nx">param</span><span class="p">,</span><span class="w"> </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// No Requested NSSAI is provided</span>
+<span class="w">    </span><span class="c1">// Subscribed S-NSSAIs marked as default are used</span>
+<span class="w">    </span><span class="nx">checkInvalidRequestedNssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="nx">useDefaultSubscribedSnssai</span><span class="p">(</span><span class="nx">param</span><span class="p">,</span><span class="w"> </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//in the nssf/internal/sbi/producer/nsselection_for_registration.go, nsselectionForRegistration funcion.</span>
+</code></pre></div>
+<p>If NSSF needs to select S-NSSAI, it first finds the mapping of requested NSSAI to configured NSSAI for the HPLMN and converts requested S-NSSAI to S-NSSAI in configured NSSAI for the HPLMN. Then compare these S-NSSAIs with Subscribed S-NSSAIs; if NSSF find one match, set it as <code>AllowedSnssai</code>. If NSSF can't find such a mapping or no S-NSSAI in the mapping matches subscribed S-NSSAIs, it will use default subscribed S-NSSAIs.</p>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129503/15.02.01_60/ts_129503v150201p.pdf">3GPP TS29.503 v15.2.1</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/123500_123599/123502/15.02.00_60/ts_123502v150200p.pdf">3GPP TS23.502 v15.2.0</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/123500_123599/123501/15.02.00_60/ts_123501v150200p.pdf">3GPP TS23.501 v15.2.0</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/15.02.00_60/ts_133501v150200p.pdf">3GPP TS33.501 v15.2.0</a></li>
+<li><a href="https://github.com/free5gc/free5gc">free5GC v3.3.0</a></li>
+</ul>
+<h3 id="about">About</h3>
+<p>Hello! My name is 張哲睿, and my current research topic is ATSSS (Access Traffic Steering, Switching and Splitting), I will continue to write articles related to 5G networks in the future. If you find any mistakes in my articles or have any topics you want to know about, please contact me.</p>
+<ul>
+<li><a href="https://www.linkedin.com/in/%E5%93%B2%E7%9D%BF-%E5%BC%B5-77096621a/">Linkedln</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

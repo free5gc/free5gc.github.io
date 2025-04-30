@@ -1,0 +1,922 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Article Sharing: Evaluating Dedicated Slices of Different Configurations in 5G Core - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#article-sharing-evaluating-dedicated-slices-of-different-configurations-in-5g-core" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Article Sharing: Evaluating Dedicated Slices of Different Configurations in 5G Core
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfv-mano" class="md-nav__link">
+    NFV MANO
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free5gc" class="md-nav__link">
+    free5GC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-different-types-of-slice" class="md-nav__link">
+    Three different types of slice
+  </a>
+  
+    <nav class="md-nav" aria-label="Three different types of slice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free5gc-stage-3-with-upf-dedicated-slices" class="md-nav__link">
+    free5GC Stage 3 with UPF Dedicated Slices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free5gc-stage-3-with-smfupf-dedicated-slices" class="md-nav__link">
+    free5GC Stage 3 with SMF/UPF Dedicated Slices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free5gc-stage-2-with-upf-dedicated-slice" class="md-nav__link">
+    free5GC Stage 2 with UPF Dedicated Slice
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment" class="md-nav__link">
+    Experiment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result-and-conclusion" class="md-nav__link">
+    Result and conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20231213/20231213.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20231213/20231213.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="article-sharing-evaluating-dedicated-slices-of-different-configurations-in-5g-core">Article Sharing: Evaluating Dedicated Slices of Different Configurations in 5G Core</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author:Leon Sawada(澤田博久)<br />
+Date: 2023/12/13</p>
+</div>
+<h2 id="overview">Overview</h2>
+<p>Network slicing is a new concept born after the emergence of 5G. Network slicing and edge computing (Multi-access Edge) are both key technologies in 5G networks. Network slicing uses virtualization technology to cut the network into multiple virtual end-to-end networks, and the equipment, access, transmission, and core network between each virtual network are all independent. Dynamic demand, resource adjustment, and improved network flexibility can also reduce the construction cost of hardware resources and network construction time, and achieve hardware resource sharing.<br />
+Since one of the characteristics of network slicing is its flexibility, this article verifies this very well. In this article, the author uses free5GC, ETSI NFV MANO framework, and other tools, and designs three different slices to show how different configurations of dedicated slices will affect the performance of the 5G core. Finally, discussed which slice should be used in different situations to provide the best service to users.</p>
+<h3 id="nfv-mano">NFV MANO</h3>
+<p>The management and scheduling of the core network mainly uses NFV MANO (Management and Orchestration) technology, which is an architecture proposed by the European Telecom Standards Institute (ETSI) and later adopted by 3GPP to manage 5G core network virtualization. Network function (Virtual Network Function, VNF) specification, NFV MANO allows the core network to adopt a fully virtualized VNF design and better schedule various network slicing functions. MANO of the 5G core network has the ability to manage and schedule VNFs belonging to different slices for different slice services. As shown in the figure, NFV MANO can manage and schedule VNFs of the 5G core network such as AMF, NSSF, NRF, AUSF, and PCF, SMF, UDM, UPF, etc. This will also be paired with the core network in free5GC that we will only use. As you can see: NFV Orchestrator (NFVO), VNF Management (VNFM), and Virtualized Infrastructure Managers (VIM) are three major components in the MANO architecture framework.</p>
+<p>*NFV Orchestrator: Responsible for supporting new network services (NS) suites and virtual network functions (VNF). Nuclear submarine life cycle management. Global resource management. Review and approve requests for Network Functions Virtualization Infrastructure (NFVI) resources.</p>
+<p>*VNF Manager: Controls the life cycle management of VNF instances. Performs the function of coordinating and coordinating configuration and event reporting between the NFV infrastructure (NFVI) and network element/network management systems.</p>
+<p>*Virtualization Infrastructure Manager (VIM): Monitors and manages NFVI compute, storage, and network resources.</p>
+<p><img alt="image" src="../p1.png" /><br />
+<br/><strong>Figure 1. NFV MANO architecture</strong></p>
+<p>According to the definition of 3GPP, network slices are composed of multiple network slice sub-networks such as core network, access network, and transport network. NFV MANO plays an important role in mapping each network slice network to network services.</p>
+<h3 id="free5gc">free5GC</h3>
+<p>free5GC is an open-source project for fifth-generation (5G) mobile networks. The ultimate goal of this project is to implement the 5G Core Network (5GC) defined in 3GPP Release 15 (R15) and later.</p>
+<p>As shown in the figure, NYCU free5GC provides all the functions of a 5G network and is divided into the control plane and the user plane. The control plan includes NSSF, NRF, UDM, PCF, NEF, AUSF, AMF, SMF, UDR, and AF. In the user plane, there is only one network function called UPF. The separation of the user plane and the control plane allows each aircraft to be deployed and evolved independently. NYCU free5GC has also modulated its functional design to make the deployment of network functions in an NFV environment more flexible and efficient.</p>
+<p><img alt="" src="../p2.JPG" /><br />
+<br/><strong>Figure 2. free5GC architecture</strong></p>
+<p>In addition to free5GC, use MANO open source including OpenStack and Tacker. OpenStack is an open-source cloud operating system that virtualizes resources such as storage, computing, and networking. Most of these virtualized resources are deployed in the cloud as Infrastructure-as-a-service (IaaS). OpenStack provides a web-based interface dashboard. This dashboard allows us to efficiently configure, manage and monitor our virtualization resources. Tacker is an OpenStack project that provides NFVO and VNFM functionality to configure, deploy, manage, and schedule NS and VNFs on NFV infrastructure platforms such as OpenStack. The Tacker API can be used not only by NFV Orchestrator but also by OSS/BSS to deploy VNFs.</p>
+<h2 id="three-different-types-of-slice">Three different types of slice</h2>
+<h3 id="free5gc-stage-3-with-upf-dedicated-slices">free5GC Stage 3 with UPF Dedicated Slices</h3>
+<p>The image below shows the architecture of free5GC Stage 3, each dedicated slice consisting of only UPF. It uses three dedicated slices to handle three different types of test traffic. Each dedicated slice is connected to a specific data network (DN) server. These UPFs in different dedicated slices share the same SMF in the common slice.</p>
+<p><img alt="" src="../slice_graph3.JPG" /><br />
+<br/><strong>Figure 3. free5GC with different configurations of dedicated slices</strong></p>
+<p>Three traffic generators are provided to simulate the packets that will be sent to the 5GC by the 5G UEs and RAN. Each traffic generator will transmit two types of packets: UDP and ICMP (Internet Control Message Protocol). Each traffic generator Each traffic generator sends UDP packets at different rates: high, medium, and low. All traffic generators send both UDP packets and ICMP packets. This can estimate the throughput of UDP traffic and calculate the response time of ICMP packets. Each network cutter routes packets to a different data network (DN) server. (DN) servers so that can verify successful transmission through the selected UPF.</p>
+<p>Firstly, the UE will be connected to the RAN within the traffic generator. Secondly, the traffic generator transmits the NGAP Initial UE message to the AMF. This message carries the registration request and the UE information (including UE address IP, SST (Slice/Service Type), and SD (Slice Differentiator)). Thirdly, AMF requests UE authentication from AUSF. If the UE is a valid user, the AUSF accepts the request and transmits the response to the AMF. After that, the AMF transmits the UE information to the NSSF, which then provides a list of available SMFs to the AMF based on the information received. Next, AMF will select a suitable SMF for UE and create a smContext for SMF to establish a new session. Finally, the SMF will select a suitable UPF and establish a PDU (Protocol Data Unit) session between the UE and the selected UPF.</p>
+<p><img alt="" src="../g4.JPG" /><br />
+<br/><strong>Figure 4. Registration workflow of free5GC Stage 3</strong></p>
+<p>After the registration is complete, the UE can start transmitting packets to its DN server. The transmission workflow is shown in the following figure. First, the UE sends UDP packets and ICMP packets to the UPF through its PDU session. Second, the UPF will forward these packets to a specific DN. Third, the DN will calculate the throughput of the UDP packets received from the UPF. Fourth, when the DN receives an ICMP packet, it will send the ICMP response back to the UPF. Finally, the UPF will forward this ICMP response to the UE; this will allow the UE to calculate the ICMP response time.</p>
+<p><img alt="" src="../g5.JPG" /><br />
+<br/><strong>Figure 5. Transmission workflow</strong></p>
+<h3 id="free5gc-stage-3-with-smfupf-dedicated-slices">free5GC Stage 3 with SMF/UPF Dedicated Slices</h3>
+<p>The architecture of this slice is similar to the previous one, as shown in part b of the figure. Each dedicated slice is composed of SMF and UPF It also uses three dedicated slices to handle different data rate requirements, each connected to a specific DN server. All VNFs use the same resources as the previous VNF. Unlike the previous one, we move the SMF from the common slice to the dedicated slice. Each UPF connects to an SMF in the same dedicated slice and both need to share resources. The traffic generators and DN servers are the same as those used in the previous architecture. The registration workflow is also similar to Fig. 4; the only difference is that in the last step, the SMFs do not need to select the UPFs because the UPFs have already been assigned to each SMF. The SMFs only need to set up PDU sessions between the UEs and the UPFs. After the registration is completed, the transmission workflow is also the same as the previous architecture, as shown in the above figure.</p>
+<p><img alt="" src="../slice_graph3.JPG" /><br />
+<br/><strong>Figure 3.free5GC with different configurations of dedicated slices</strong></p>
+<h3 id="free5gc-stage-2-with-upf-dedicated-slice">free5GC Stage 2 with UPF Dedicated Slice</h3>
+<p>The architecture of this slice, with each dedicated shard consisting only of UPFs, is the same as that shown in Figure 3 part(a). The only difference is that the VNF version in this architecture is free5GC Stage 2. VNFs in Stage 2 are less optimized than in Stage 3<br />
+The traffic generator and DN server are also the same as in free5GC Stage 3. However, the registration workflow is very different from Stage 3. This is because, in free5GC Stage 2, the NSSF is not utilized to select a dedicated and exclusive slice to serve the requesting UE. It is assumed that the UE will deliver the traffic directly to the allocated slice as shown in Fig. 6. First, the UE will connect to the RAN within the traffic generator. Second, the traffic generator will send a registration request and assign the UPF. Third, the AMF requests the UE authentication from the AUSF. If the UE is a valid user, the AUSF accepts the request and transmits the response to the AMF. Next, the AMF transmits the UE message to the SMF. Finally, the SMF locates the UPF specified by the UE and establishes a PDU session between the UE and the UPF. The transmission workflow in Stage 2 is the same as that in Stage 3, as shown in Fig. 5.</p>
+<p><img alt="" src="../g6.JPG" /><br />
+<br/><strong>Figure 6. Registration workflow of free5GC Stage 2</strong></p>
+<h2 id="experiment">Experiment</h2>
+<p>There are two sumptions: 1st, all the dedicated slices are allocated with the same amount of resources, i.e., to use the same number of vCPU and the same amount of memory and storage. 2nd, all three systems under evaluation are allocated the same amount of resources. We use two identical rack servers, one for OpenStack and one for Tacker. Follow the ETSI MANO framework to build this slicing environment.</p>
+<p>For the first assumption, the specification of VNFs is divided into two parts:  common slice and dedicated slice. For the common slice, the specifications of all VNFs in the common slice are the same for different systems. As shown in Table 2. For the dedicated slices, we show the VNFs with different specifications in Table 3. Three traffic generators and three DN servers are configured with 2 vCPUs, 1 GB RAM, and 10 GB disks, and mirrored with Ubuntu 18.04.</p>
+<p><img alt="" src="../c1.JPG" /><br />
+<br/><strong>Table 1. Specification of implementation environment</strong></p>
+<p><img alt="" src="../c2.JPG" /><br />
+<br/><strong>Table 2. Specification of VNF in a common slice for the first assumption</strong></p>
+<p><img alt="" src="../c3.JPG" /><br />
+<br/><strong>Table 3. Specification of VNF in the dedicated slice for the first assumption</strong></p>
+<p>For the second assumption, the specification of VNFs is also divided into two parts: common slices and dedicated slices. For common slices, the resource specifications of VNFs other than SMFs are the same as in Table 2. On the other hand, the resource specifications of SMFs in different configurations are shown in Table 4. Correspondingly, the resource specifications of UPFs in different configurations are shown in Table 5.</p>
+<p><img alt="" src="../c4.JPG" /><br />
+<br/><strong>Table 4. Specification of SMF for second assumption</strong></p>
+<p><img alt="" src="../c5.JPG" /><br />
+<br/><strong>Table 5. Specification of UPF for second assumption</strong></p>
+<h2 id="result-and-conclusion">Result and conclusion</h2>
+<p>Figures 7 and 8 show the average throughput results for three different systems at three UDP packet data rates: low (80 Mbps), medium (200 Mbps), and high (400 Mbps).</p>
+<p><img alt="" src="../p7.JPG" /><br />
+<br/><strong>Figure 7. Average throughput under the first assumption</strong></p>
+<p><img alt="" src="../p8.JPG" /><br />
+<br/><strong>Figure 8. Average throughput under the second assumption</strong></p>
+<p>Based on the graph, we can see that under the first assumption, free5GC Stage 3 with UPF-specific cuts provides higher throughput than free5GC Stage 3 with SMF/UPF-specific cuts because the former has more vCPU resources than the latter. Compared with free5GC Stage 2, the free5GC Stage 3 system is more optimized.</p>
+<p>Figures 9 and 10 show the average response time of the three different systems under the two assumptions. As the design of our proposed system is more complicated than that of the comparator system, the average response time becomes more modest. Under the second assumption, both systems have similar response times. However, under the first assumption, the response time of free5GC Stage 3 with UPF-specific slice is shorter because UPF has more vCPU resources.</p>
+<p><img alt="" src="../p9.JPG" /><br />
+<br/><strong>Figure 9. Average response time under the first assumption</strong></p>
+<p><img alt="" src="../p10.JPG" /><br />
+<br/><strong>Figure 10. Average response time under the second assumption</strong></p>
+<p>Figures 11 and 12 show the average CPU utilization of the two free5GC Stage 3 systems at the three data rates. Under the second assumption, there is no difference in CPU usage between the two free5GC Stage 3 systems. However, under the first assumption, the CPU usage rate is almost the same even if the number of vCPUs used in the UPF is different. However, in both assumptions, if we send more packets from the traffic generator, the CPU usage rate will be higher. This is because CPU usage depends only on the number of packets transmitted. On the other hand, the CPU usage of free5GC Stage 3 with the UPF dedicated cutter is slightly higher than that of free5GC Stage 3 with the SMF/UPF dedicated cutter, because the use of more vCPU resources results in more competitive conditions among CPUs.</p>
+<p><img alt="" src="../p11.JPG" /><br />
+<br/><strong>Figure 11. Average response time under the second assumption</strong></p>
+<p><img alt="" src="../p12.JPG" /><br />
+<br/><strong>Figure 12. Average CPU utilization under the first assumption</strong></p>
+<p>Figures 13 and Figures 14 show the average registration time in our proposed system. In free5GC Stage 3 with SMF/UPF dedicated slices, SMF does not require the choice of UPF, and thus the registration time is lower under both assumptions. Even though we provide more powerful SMF and UPF dedicated slices in free5GC Stage 3 under the second assumption, the registration process still takes longer. This is because SMF takes extra time to select UPF.</p>
+<p><img alt="" src="../p13.JPG" /><br />
+<br/><strong>Figure 13. Average registration time under the first assumption</strong></p>
+<p><img alt="" src="../p14.JPG" /><br />
+<br/><strong>Figure 14. Average registration time under the second assumption</strong></p>
+<p>Based on these results lead to the following conclusions: Under the first assumption, moving the SMF from the common slice to the dedicated slice will shorten the registration time, but it will deteriorate the performance of the UPF because fewer resources are allocated to the UPF than before. However, under the second assumption, only the registration time is affected; the performance of the UPF is not affected. This is because the functions in the control plane are no longer involved in the operation when the transfer starts. Therefore, if a large number of connections are required in a short period, moving the SMF from the common slice to the dedicated slice will be a better choice because the registration time of the system is shorter; it can handle a large number of registrations more efficiently. In addition, if users want to get better throughput and shorter response time under the first assumption, it is recommended to keep the SMF in the common slice so that more resources can be allocated to the UPF for better performance. Therefore we know we need to use different network slices based on different scenarios, which is the best proof of the convenience of network slicing.</p>
+<p>Network slicing is a crucial concept in 5G networks, allowing virtual network functions to form interconnected network services, with dedicated slices being evaluated to determine the best-performing configuration based on various factors.<br />
+Fuchun Joseph Lin and Yu-Herng Chai described evaluating dedicated slices of different configurations in the 5G core. The text discusses the creation of a common slice and three dedicated slices in a network architecture. The performance of these systems is evaluated based on throughput, response time, CPU utilization, and registration time. The deployment of dedicated slices is experimented with using open-source projects. Moving the SMF from the common slice to the dedicated slice is recommended for handling a large number of connections efficiently. Different resource allocations to dedicated slices are also considered. The performance of the three systems is compared based on registration time, response time, throughput, resource cost, and CPU utilization. The testbed is built using the ETSI NFV MANO framework, free5GC, OpenStack, and Tacker. The goal is to evaluate the performance of different configurations of 5G core dedicated slices. The response time of free5GC Stage 3 with UPF dedicated slice is shorter under the first assumption, while a more powerful SMF in free5GC Stage 3 still takes longer during registration under the second assumption.</p>
+<h2 id="about">About</h2>
+<p>Leon Sawada</p>
+<p>NYCU CS Graduate student, today I introduce an article written by my professor Fuchun Joseph Lin. I hope this article could help you understand more about the attributes of different network slices.</p>
+<h2 id="reference">Reference</h2>
+<p>What Is NFV MANO -SDxCentral Studios</p>
+<p>free5GC Offical website</p>
+<p>Li, X., et al. (2017) Network Slicing for 5G: Challenges and Opportunities. IEEE Internet Computing, 21, 20-27</p>
+<p>V. K. Choyi, A. Abdel-Hamid, Y. Shah, S. Ferdi, and A. Brusilovsky, "Network slice selection, assignment and routing within 5G Networks," 2016 IEEE Conference on Standards for Communications and Networking (CSCN), Berlin, Germany, 2016, pp. 1-7, doi: 10.1109/CSCN.2016.7784887.</p>
+<p>Liao, C.W., Lin, F.J. and Sato, Y. (2020) Evaluating NFV-enabled Network Slicing<br />
+for 5G Core. 2020 21st Asia-Pacific Network Operations and Management Symposium (APNOMS), Daegu, Korea (South), 22-25 September 2020, 401-404.</p>
+<p>Chai, Y.-H. and Lin, F.J. (2021) Evaluating Dedicated Slices of Different Configurations in 5G Core. Journal of Computer and Communications, 9, 55-72</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

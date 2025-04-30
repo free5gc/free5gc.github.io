@@ -1,0 +1,1148 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Introduction to TNGF - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-to-tngf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to TNGF
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registration-via-trusted-non-3gpp-access" class="md-nav__link">
+    Registration via Trusted non-3GPP Access
+  </a>
+  
+    <nav class="md-nav" aria-label="Registration via Trusted non-3GPP Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-access-selection-and-initial-connection" class="md-nav__link">
+    1. Access Selection and Initial Connection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-authentication-and-slice-aware-registration" class="md-nav__link">
+    2. Authentication and Slice-Aware Registration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-secure-channel-setup-and-ip-configuration" class="md-nav__link">
+    3. Secure Channel Setup and IP Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-slice-compatibility-check-and-policy-update" class="md-nav__link">
+    4. Slice Compatibility Check and Policy Update
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pdu-session-establishment" class="md-nav__link">
+    PDU Session Establishment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-roles-and-configuration-of-tngf-ue-tnap-tngf-and-free5gc-core" class="md-nav__link">
+    Understanding the Roles and Configuration of TNGF UE, TNAP, TNGF, and free5GC Core
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the Roles and Configuration of TNGF UE, TNAP, TNGF, and free5GC Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-architecture-overview" class="md-nav__link">
+    System Architecture Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-configuration" class="md-nav__link">
+    Component Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip-assignment" class="md-nav__link">
+    IP Assignment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-parameters-and-functions" class="md-nav__link">
+    Security Parameters and Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-flow" class="md-nav__link">
+    Communication Flow
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#difference-between-n3iwf-and-tngf" class="md-nav__link">
+    Difference between N3IWF and TNGF
+  </a>
+  
+    <nav class="md-nav" aria-label="Difference between N3IWF and TNGF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-n3iwf" class="md-nav__link">
+    What Is N3IWF?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    Comparison
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-determine-if-a-non-3gpp-network-is-trusted" class="md-nav__link">
+    How to Determine If a Non-3GPP Network Is Trusted?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About me
+  </a>
+  
+    <nav class="md-nav" aria-label="About me">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250423/20250423.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250423/20250423.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="introduction-to-tngf">Introduction to TNGF</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Pei-Chi, Cheng<br />
+Date: 2025/04/23</p>
+</div>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p><img alt="TNGF_diagram" src="../TNGF_diagram.png" /></p>
+<p>TNGF (Trusted Non-3GPP Gateway Function) is a network function defined in the 5G System Architecture. It acts as a gateway between trusted non-3GPP access networks (like Wi-Fi, etc.) and the 5G Core (5GC).</p>
+<p>TNGF enables UEs using trusted non-3GPP access to connect to the 5G Core, enabling them to access services such as mobility, session continuity, and policy enforcement just like on 3GPP access.</p>
+<h2 id="registration-via-trusted-non-3gpp-access">Registration via Trusted non-3GPP Access</h2>
+<h3 id="summary">Summary</h3>
+<p>When a UE connects to the 5G Core via trusted Wi-Fi (such as an operator-provided home Wi-Fi), the registration procedure is very similar with the 5GC registration procedure over untrusted non-3GPP access. </p>
+<p>The UE uses a special method called EAP-5G to encapsulate its NAS messages. These encapsulated messages are sent to the TNGF, which simply forwards them to the AMF. Even though the messages pass through TNGF, the actual communication always happens between the UE and the AMF. </p>
+<h3 id="1-access-selection-and-initial-connection">1. Access Selection and Initial Connection</h3>
+<p>In the Trusted non-3GPP access registration procedure, the UE first selects a compatible Trusted non-3GPP Access Network (TNAN), such as a WLAN, based on its subscription information (e.g., PLMN or SNPN). This selection process allows the UE to discover access networks that offer "5G connectivity." After selecting a TNAN, the UE establishes a Layer-2 connection with the Trusted Non-3GPP Access Point (TNAP), such as through 802.11 Association in Wi-Fi networks.</p>
+<p><img alt="Registration_1" src="../Registration_1.png" /></p>
+<h3 id="2-authentication-and-slice-aware-registration">2. Authentication and Slice-Aware Registration</h3>
+<p>After establishing a Layer-2 connection with the TNAP, the UE initiates authentication to prove its identity and connect to the 5G Core Network (5GC). The UE sends a Network Access Identifier (NAI) via the TNAP, indicating its desired 5G connectivity (e.g., a specific PLMN or SNPN) and subscription context. The TNAP encapsulates the NAI in AAA messages (typically RADIUS) and forwards it to the TNGF. Acting as an AAA proxy, TNGF processes the TNAP’s EAP-5G messages and forwards the encapsulated NAS messages to the AMF via the N2 interface, initiating the authentication process.</p>
+<p>Authentication is performed using the EAP-5G protocol directly between the UE and AMF, with TNGF relaying EAP-5G messages. Upon successful authentication, the UE and AMF each generate a TNGF Key, used for subsequent secure channel setup. The AMF sends the TNGF Key to TNGF via the N2 interface, and TNGF derives a TNAP Key from it. The TNAP Key secures the Layer-2 connection between the UE and TNAP (e.g., Wi-Fi WPA2/WPA3 security). This process ensures the UE’s secure access to the 5GC and prepares for slice-based services (e.g., dedicated channels for different applications).</p>
+<p><img alt="Registration_2" src="../Registration_2.png" /></p>
+<h3 id="3-secure-channel-setup-and-ip-configuration">3. Secure Channel Setup and IP Configuration</h3>
+<p>With authentication complete and security keys generated, the UE and TNAP perform a 4-way handshake (e.g., WPA2/WPA3) to establish a secure Layer-2 connection, protecting Wi-Fi wireless data. The UE then obtains an IP address from the TNAN, typically via DHCP or IPv6 Stateless Address Autoconfiguration.</p>
+<p>Using the TNGF IP address obtained from EAP-5G authentication, the UE establishes a secure channel (NWt) with TNGF via the IKEv2 protocol. This involves IKE_INIT and IKE_AUTH exchanges, with authentication based on the TNGF Key generated during authentication, using shared key authentication. TNGF verifies the UE’s identity without involving a backend RADIUS server. Upon success, a signaling IPsec Security Association (SA) is established in tunnel mode, using null encryption to provide only integrity and authentication for NAS messages. NAS message confidentiality is ensured by the NAS protocol layer’s encryption, transmitted over the NWt channel via TCP/IP/ESP.</p>
+<p>TNGF provides the UE with:<br />
+- <strong>Inner IP address:</strong> For communication within the secure channel.<br />
+- <strong>NAS_IP_ADDRESS and TCP port:</strong> For transmitting NAS messages.<br />
+- <strong>DSCP value:</strong> To mark packet priority, which the UE and TNAP may map to Wi-Fi QoS prioritie.</p>
+<p>After establishing the signaling IPsec SA, the UE sets up a TCP connection using the NAS_IP_ADDRESS and TCP port. NAS messages are securely transmitted via TCP/IP/ESP in the NWt channel. With the NWt channel complete, the UE can securely access 5GC services, such as establishing PDU Sessions for data transfer.</p>
+<p><img alt="Registration_3" src="../Registration_3.png" /></p>
+<h3 id="4-slice-compatibility-check-and-policy-update">4. Slice Compatibility Check and Policy Update</h3>
+<p>After the secure NWt connection is established, the TNGF notifies the AMF. The AMF then evaluates whether the UE’s Requested NSSAI (network slice selections) is compatible with the TNGF's supported slice configuration. If compatible, the AMF sends a NAS Registration Accept message, allowing the UE to proceed with PDU session establishment and enabling further policy interactions via the PCF.</p>
+<p>If the TNGF is not compatible with the requested slices, the AMF may update the UE’s access policies via the PCF. The AMF then sends a Registration Reject message, possibly including new TNAP/TNGF target information. The UE can then re-select a new TNAN and repeat the registration procedure with updated preferences.</p>
+<p><img alt="Registration_4" src="../Registration_4.png" /></p>
+<h2 id="pdu-session-establishment">PDU Session Establishment</h2>
+<p>After registering to 5GC via trusted non-3GPP access, UE can establish a PDU Session using a procedure similar to N3IWF, with N3IWF replaced by TNGF and untrusted access point by TNAP. </p>
+<p><img alt="PDU_session" src="../PDU_session.png" /></p>
+<p>TNGF sends TNGF Identities (N3 termination identifiers, such as FQDNs or IP addresses) and User Location Information (ULI) (e.g., cell ID) via N2. This enables the SMF to select a suitable UPF and allows the PCF to apply location-based policy control. The IKEv2 Create Child SA Request includes Additional QoS Information containing QoS Characteristics (linked to 5QI) and, for GBR flows, also GBR QoS Flow Information (MFBR, GFBR), guiding the UE's QoS resource reservation.</p>
+<p>For L4S QoS flows, the TNGF may establish dedicated IPsec Child SAs with DSCP marking. If the UE fails to reserve the requested QoS resources over the trusted non-3GPP access, it may reject the Child SA. Based on operator policy, the network may retry without including Additional QoS Information.</p>
+<h2 id="understanding-the-roles-and-configuration-of-tngf-ue-tnap-tngf-and-free5gc-core">Understanding the Roles and Configuration of TNGF UE, TNAP, TNGF, and free5GC Core</h2>
+<h3 id="system-architecture-overview">System Architecture Overview</h3>
+<p>In a Trusted Non-3GPP Access scenario, the overall architecture is as follows:</p>
+<p><code>TNGF UE  &lt;---&gt;  TNAP  &lt;---&gt;  TNGF  &lt;---&gt;  free5GC Core</code></p>
+<p>This architecture leverages protocols such as EAP-5G for authentication, RADIUS for relaying authentication messages, and IKEv2 for establishing secure channels. The roles of each component are summarized below:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+<th>Brief Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TNGF UE</td>
+<td>Simulated User Equipment (UE)</td>
+<td>Connects to Wi-Fi via TNAP and initiates 5G core network registration.</td>
+</tr>
+<tr>
+<td>TNAP</td>
+<td>Simulated Trusted Wi-Fi AP</td>
+<td>Provides Wi-Fi access and forwards authentication messages to TNGF.</td>
+</tr>
+<tr>
+<td>TNGF</td>
+<td>Trusted Gateway</td>
+<td>Bridges TNAP and free5GC Core, handling authentication and NAS signaling.</td>
+</tr>
+<tr>
+<td>free5GC Core</td>
+<td>5G Core Network</td>
+<td>Executes core functions like AMF, SMF, UPF, and AUSF for network management.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="component-configuration">Component Configuration</h3>
+<p>Each component requires specific IP assignments and security parameters to ensure seamless and secure operation. The configuration details are divided into IP assignments and security parameters and functions.</p>
+<h4 id="ip-assignment">IP Assignment</h4>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>IP Assignment</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>free5GC Core</td>
+<td>Host or container IP</td>
+<td>Configured via Docker or host network settings.</td>
+</tr>
+<tr>
+<td>TNGF</td>
+<td>Dedicated IP</td>
+<td>Can share the same host as free5GC Core or run independently.</td>
+</tr>
+<tr>
+<td>TNAP</td>
+<td>Dedicated IP</td>
+<td>Simulated Wi-Fi AP, typically configured on an OpenWrt router.</td>
+</tr>
+<tr>
+<td>TNGF UE</td>
+<td>DHCP or static configuration</td>
+<td>Must be in the same subnet as TNAP for Wi-Fi connectivity.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="security-parameters-and-functions">Security Parameters and Functions</h4>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Main Functions</th>
+<th>Required Security Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>free5GC Core</strong></td>
+<td>1. Executes AMF, SMF, UPF, AUSF.<br>2. Receives NAS signaling from TNGF.</td>
+<td>No RADIUS parameters required. Ensure network policies allow NAS signaling from TNGF (N2 interface towards AMF).</td>
+</tr>
+<tr>
+<td><strong>TNGF</strong></td>
+<td>1. Provides RADIUS Server functionality for TNAP.<br>2. Acts as NAS Signaling Gateway between TNAP and free5GC Core.</td>
+<td>In <code>tngfcfg.yaml</code>: <br>1. <code>RadiusSecret</code>: Shared RADIUS secret with TNAP.  <br>2. <code>RadiusBindAddress</code>:  IP address and port where TNGF listens for RADIUS messages.  <br>3. <code>IKEBindAddress</code>:  IP address for establishing IKEv2 (NWt interface) with UE.</td>
+</tr>
+<tr>
+<td><strong>TNAP</strong></td>
+<td>1. Provides Wi-Fi access for UEs.<br> 2.  Encapsulates and forwards EAP-5G messages to TNGF via RADIUS.</td>
+<td>1. Set <code>RADIUS</code> Server IP to the <code>RadiusBindAddress</code> configured on TNGF.<br>2. Configure <code>RadiusSecret</code> identical to the RadiusSecret set in TNGF.<br>3. Enable WPA2-Enterprise (EAP) authentication mode for Wi-Fi security.</td>
+</tr>
+<tr>
+<td><strong>TNGF UE</strong></td>
+<td>1. Connects to TNAP via Wi-Fi.<br>2. Initiates 5G core network registration through EAP-5G.</td>
+<td>In <code>wpa_supplicant.conf</code>: <br>1. <code>ssid</code>: Wi-Fi SSID broadcasted by TNAP.  <br>2.<code>identity</code>: UE’s EAP identity.  <br>3. <code>password</code>: UE’s EAP password (depending on authentication method).  <br></td>
+</tr>
+</tbody>
+</table>
+<h3 id="communication-flow">Communication Flow</h3>
+<p>The typical communication flow is as follows:</p>
+<ol>
+<li><strong>Wi-Fi Connection and EAP-5G Initiation</strong>: TNGF UE initiates a Wi-Fi connection to TNAP, which leads TNAP to initiate an EAP-5G Identity Request towards UE.</li>
+<li><strong>RADIUS Forwarding</strong>: TNAP encapsulates the EAP-5G message into a RADIUS Access-Request and forwards it to TNGF’s RADIUS Server.</li>
+<li><strong>NAS Signaling to AMF</strong>: TNGF extracts the NAS signaling message from the EAP-5G payload and forwards it to the AMF via the N2 interface.</li>
+<li><strong>Authentication</strong>: AMF coordinates with AUSF (if needed) to authenticate the UE using EAP-5G credentials.</li>
+<li><strong>Secure Channel</strong>: Upon successful authentication, TNGF establishes a secure NWt channel with TNGF UE using IKEv2.</li>
+<li><strong>Secure NAS Signaling</strong>: Subsequent NAS signaling between TNGF UE and free5GC Core is transmitted securely over the NWt channel.</li>
+</ol>
+<h2 id="difference-between-n3iwf-and-tngf">Difference between N3IWF and TNGF</h2>
+<h3 id="what-is-n3iwf">What Is N3IWF?</h3>
+<p><img alt="N3IWF_diagram" src="../N3IWF_diagram.png" /></p>
+<p>The N3IWF (Non-3GPP Interworking Function) is a critical network function in the 5G system architecture, serving as a gateway between untrusted non-3GPP access networks (e.g., public Wi-Fi) and the 5G Core Network. When a UE connects to the 5GC via an untrusted network, the N3IWF establishes a secure IPsec tunnel using IKEv2 and EAP-5G protocols for authentication, protecting both control and user plane data. <br />
+The UE first selects an N3IWF (based on PLMN or SNPN) and sends NAS messages encapsulated in EAP-5G, which the N3IWF forwards to the AMF via the N2 interface. After authentication, the N3IWF and UE establish a signaling IPsec SA for NAS message transmission (TCP/IP/ESP) and support network slice selection. Acting like a VPN gateway, the N3IWF ensures security and service continuity, including mobility, QoS, and policy enforcement, in untrusted environments.</p>
+<p><img alt="N3IWF_Registration" src="../N3IWF_Registration.png" /></p>
+<h3 id="comparison">Comparison</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Item</strong></th>
+<th><strong>TNGF</strong></th>
+<th><strong>N3IWF</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Access Type</strong></td>
+<td>Trusted non-3GPP Access (e.g., operator-managed Wi-Fi)</td>
+<td>Untrusted non-3GPP Access (e.g., public Wi-Fi)</td>
+</tr>
+<tr>
+<td><strong>Trust Level</strong></td>
+<td>The 5GC trusts the access network</td>
+<td>The 5GC does not trust the access network, requiring additional security mechanisms</td>
+</tr>
+<tr>
+<td><strong>UE-Access Node Connectivity</strong></td>
+<td>EAP-5G used for authentication, encapsulating NAS messages between UE and AMF via TNAP</td>
+<td>IKEv2 used to establish an IPsec tunnel; EAP-5G used inside the tunnel for NAS signaling</td>
+</tr>
+<tr>
+<td><strong>IPsec Tunnel usage</strong></td>
+<td>For control plane via NWt interface (null encryption, protects NAS message integrity and authentication)</td>
+<td>For control and user planes via NWu interface (full encryption, protects confidentiality, integrity, and authentication)</td>
+</tr>
+<tr>
+<td><strong>NAS Communication</strong></td>
+<td>NAS messages encapsulated in EAP-5G (during authentication) or TCP/IP/ESP (post-NWt setup), sent via N2/NGAP, similar to gNB</td>
+<td>NAS messages encapsulated in EAP-5G during authentication, then in TCP/IP/ESP over a fully encrypted IPsec tunnel post-NWu setup</td>
+</tr>
+<tr>
+<td><strong>Typical Use Case</strong></td>
+<td>Trusted Wi-Fi deployed by operators or partners, e.g., home or enterprise Wi-Fi</td>
+<td>Public or open Wi-Fi, e.g., in cafes, airports, or other unsecured networks</td>
+</tr>
+<tr>
+<td><strong>Functional Role</strong></td>
+<td>Acts like a gNB, supporting N2/NGAP for signaling and trusted access integration</td>
+<td>Acts like a VPN gateway, handling IPsec, EAP, and translation between non-3GPP access and 5GC</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-determine-if-a-non-3gpp-network-is-trusted">How to Determine If a Non-3GPP Network Is Trusted?</h2>
+<ul>
+<li>Wi-Fi deployed by a telecom operator or with a trust agreement with the 5GC is considered trusted.</li>
+<li>Trusted networks register as a TNAP in the 5GC, connect via a TNGF, and support 3GPP authentication (e.g., EAP-5G).</li>
+<li>Trusted networks may offer special SSIDs or onboarding flows for mobile subscribers.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Trusted non-3GPP access extends the 5G Core over operator-managed Wi-Fi, enabling secure, seamless connectivity and consistent mobile services beyond traditional RAN coverage.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.tech-invite.com/3m23/toc/tinv-3gpp-23-502_zp.html#e-4-12a-5">TS 23.502</a></li>
+<li><a href="https://www.tech-invite.com/3m23/toc/tinv-3gpp-23-501_zb.html#e-5-7-3">TS 23.501</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/16.17.00_60/ts_133501v161700p.pdf">TS 133 501 - V16.17.0 - 5G</a></li>
+<li><a href="https://romars.tech/en/pubblications/n3iwf/">5G: focus on N3IWF, TNGF, TWIF and W-5GAN</a></li>
+<li><a href="https://free5gc.org/guide/TNGF/tngfue-installation/">Tngfue installation - free5GC</a></li>
+</ul>
+<h2 id="about-me">About me</h2>
+<p>Hi, I'm Peggy Cheng, a newcomer to 5G and the free5GC community. Feel free to tell me if there's any mistake in the article.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<p>GitHub: <a href="https://github.com/HiImPeggy">HiImPeggy</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
