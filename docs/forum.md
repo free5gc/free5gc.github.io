@@ -496,6 +496,7 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Xinyu Lei, Michigan Technological University</p>
       <p>Chi-Yu Li, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Fuchun Joseph Lin, National Yang Ming Chiao Tung University (NYCU)</p>
+      <p>Yang Lou, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Chunyi Peng, Purdue University</p>
       <p>Shixiong Qi, University of Kentucky</p>
       <p>Yuji Sekiya, The University of Tokyo</p>
@@ -505,7 +506,6 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Guan-Hua Tu, Michigan State University</p>
       <p>Yang Xiao, University of Kentucky</p>
       <p>Tian Xie, Utah State University</p>
-      <p>Yang Lou, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Li-Hsing Yen, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Antonia Zhai, University of Minnesota</p>
       <p>Zhi-Li Zhang, University of Minnesota</p>
