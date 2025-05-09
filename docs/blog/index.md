@@ -4,6 +4,7 @@
 
 ## Official
 
+- [2025/05/09: Hands-On with sched_ext: Building Custom eBPF CPU Schedulers](./20250509/20250509.md)
 - [2025/04/30: Namespace-Based GTP5G Conflict Resolution for free5GC and PacketRusher](./20250430/20250430.md)
 - [2025/04/29: Introduction to TNGF](./20250423/20250423.md)
 - [2025/04/24: Multi-node And Local UE free5GC Helm Installation](./20250416/20250416.md)
