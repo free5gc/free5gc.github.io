@@ -160,26 +160,26 @@
         apiVersion: v1
         kind: PersistentVolume
         metadata:
-        name: free5gc-pv-cert
-        labels:
+          name: free5gc-pv-cert
+          labels:
             project: free5gc
         spec:
-        capacity:
+          capacity:
             storage: 2Mi
-        accessModes:
-        - ReadOnlyMany
-        persistentVolumeReclaimPolicy: Retain
-        storageClassName: microk8s-hostpath
-        local:
+          accessModes:
+          - ReadOnlyMany
+          persistentVolumeReclaimPolicy: Retain
+          storageClassName: microk8s-hostpath
+          local:
             path: </path/to/storage>
-        nodeAffinity:
+          nodeAffinity:
             required:
-            nodeSelectorTerms:
-            - matchExpressions:
+              nodeSelectorTerms:
+              - matchExpressions:
                 - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - <work-node-name>
+                  operator: In
+                  values:
+                  - <work-node-name>
         ```
         - directory on `/path/to/storage` should be created previously
 - Check persistent volume
