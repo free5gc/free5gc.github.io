@@ -499,11 +499,13 @@ Before traveling to Taiwan, please review the visa requirements and ensure that 
       <p>Yang Lou, National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Chunyi Peng, Purdue University</p>
       <p>Shixiong Qi, University of Kentucky</p>
+      <p>Edwin Ren, University of East Anglia</p>
       <p>Yuji Sekiya, The University of Tokyo</p>
       <p>Ivan Seskar, Rutgers University</p>
       <p>Zhaowei Tan, University of California, Riverside</p>
       <p>Chien-Chao Tseng,  National Yang Ming Chiao Tung University (NYCU)</p>
       <p>Guan-Hua Tu, Michigan State University</p>
+      <p>Hiroki Watanabe, SoftBank Corp.</p>
       <p>Yang Xiao, University of Kentucky</p>
       <p>Tian Xie, Utah State University</p>
       <p>Li-Hsing Yen, National Yang Ming Chiao Tung University (NYCU)</p>
