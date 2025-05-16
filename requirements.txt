@@ -12,7 +12,7 @@ editables==0.3
 exceptiongroup==1.1.1
 filelock==3.12.2
 ghp-import==2.1.0
-h11==0.14.0
+h11==0.16.0
 hatch==1.7.0
 hatchling==1.17.1
 httpcore==0.17.2
