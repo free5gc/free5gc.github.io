@@ -1,0 +1,1358 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Optimizing free5GC Through Local UE Traffic and Dedicated UPF: A Multi-Node Helm Deployment Approach - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#optimizing-free5gc-through-local-ue-traffic-and-dedicated-upf-a-multi-node-helm-deployment-approach" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Optimizing free5GC Through Local UE Traffic and Dedicated UPF: A Multi-Node Helm Deployment Approach
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250416/20250416.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250416/20250416.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="optimizing-free5gc-through-local-ue-traffic-and-dedicated-upf-a-multi-node-helm-deployment-approach">Optimizing free5GC Through Local UE Traffic and Dedicated UPF: A Multi-Node Helm Deployment Approach</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Fang-Kai Ting<br />
+Date: 2025/04/16</p>
+</div>
+<hr />
+<p>This guide walks through the steps for deploying and end-to-end testing the <a href="https://github.com/free5gc/free5gc-helm">free5GC-Helm</a> project. It demonstrates the deployment of two nodes (Core and UPF) within a single Kubernetes cluster, along with a locally deployed UE used for ping-based connectivity testing.</p>
+<h1 id="architecture">Architecture</h1>
+<p>Using a local UE, as opposed to deploying the UE and RAN together with the UPF on the same node via Helm, offers greater stability and consistency when establishing PDU sessions.</p>
+<p>The architecture is as follows:</p>
+<ol>
+<li>The control plane of the 5G core and the MongoDB database are deployed on the <strong>vm1</strong> node.</li>
+<li>The user plane (UPF) is deployed on the <strong>vm2</strong> node within the same Kubernetes cluster.</li>
+<li>
+<p>The UE (User Equipment) and gNodeB simulator, <strong>UERANSIM</strong>, are deployed locally on a separate <strong>vm3</strong> node.</p>
+<p><img alt="image.png" src="../image.png" /></p>
+</li>
+</ol>
+<p>The specifications for each virtualbox VM shown below:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>vm name</th>
+<th>CPU</th>
+<th>RAM</th>
+<th>Network Adapter 1 (enp0s3)</th>
+<th>Network Adapter 2 (enp0s8)</th>
+<th>OS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vm1(free5GC control plane)</td>
+<td>ns</td>
+<td>8</td>
+<td>16G</td>
+<td>NAT(10.0.2.15)</td>
+<td>Host-only(192.168.56.119)</td>
+<td>Ubuntu 20.04 LTS</td>
+</tr>
+<tr>
+<td>vm2(free5GC UPF pod)</td>
+<td>ns2</td>
+<td>8</td>
+<td>16G</td>
+<td>NAT(10.0.2.15)</td>
+<td>Host-only(192.168.56.120)</td>
+<td>Ubuntu 20.04 LTS</td>
+</tr>
+<tr>
+<td>vm3(UE + gNB)</td>
+<td>ns3</td>
+<td>8</td>
+<td>16G</td>
+<td>NAT(10.0.2.15)</td>
+<td>Host-only(192.168.56.118)</td>
+<td>Ubuntu 20.04 LTS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cluster-nodes-setupvm1-vm2">Cluster nodes setup(VM1, VM2)</h2>
+<h3 id="gtp5g-install">gtp5g install</h3>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/free5gc/gtp5g.git
+<span class="nb">cd</span><span class="w"> </span>gtp5g
+bash<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">sudo apt -y update</span>
+<span class="s">sudo apt -y install gcc g++ cmake autoconf libtool pkg-config libmnl-dev libyaml-dev</span>
+<span class="s">make clean &amp;&amp; make</span>
+<span class="s">sudo make install</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<h3 id="microk8s-install-setup">Microk8s install &amp; setup</h3>
+<p>MicroK8s is used with containerd as the container runtime. MicroK8s automatically installs containerd during its setup. For installation instructions, refer to <a href="https://microk8s.io/docs/getting-started">MicroK8s - Get started</a></p>
+<p>All VMs are configured within the CIDR range <strong>192.168.56.0/24</strong>, using the <strong>enp0s3</strong> network adapter for internet access.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>snap<span class="w"> </span>install<span class="w"> </span>microk8s<span class="w"> </span>--classic<span class="w"> </span>--channel<span class="o">=</span><span class="m">1</span>.32
+sudo<span class="w"> </span>vim<span class="w"> </span>~/.bash_aliases
+<span class="nb">alias</span><span class="w"> </span><span class="nv">kubectl</span><span class="o">=</span><span class="s1">&#39;microk8s kubectl&#39;</span>
+sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>microk8s<span class="w"> </span><span class="nv">$USER</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/.kube
+chmod<span class="w"> </span><span class="m">0700</span><span class="w"> </span>~/.kube
+su<span class="w"> </span>-<span class="w"> </span><span class="nv">$USER</span>
+
+bash<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">microk8s config &gt; .kube/config</span>
+<span class="s">microk8s status --wait-ready</span>
+<span class="s">microk8s kubectl get nodes</span>
+<span class="s">microk8s enable dns</span>
+<span class="s">microk8s enable hostpath-storage</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<h3 id="k8s-configuration">k8s configuration</h3>
+<ul>
+<li>
+<p>VM ipv4 forwarding</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf</span>
+<span class="s">net.bridge.bridge-nf-call-iptables  = 1</span>
+<span class="s">net.bridge.bridge-nf-call-ip6tables = 1</span>
+<span class="s">net.ipv4.ip_forward                 = 1</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</li>
+</ul>
+<p>Add below in <code>/var/snap/microk8s/current/args/kubelet</code></p>
+<ol>
+<li>
+<p>The default internal IP for each node is <strong>10.0.2.15</strong>, which can hinder inter-node communication. To ensure proper connectivity, update the internal IPs accordingly—for example: <strong>vm1 = 192.168.56.119</strong>, <strong>vm2 = 192.168.56.120</strong>.</p>
+<div class="highlight"><pre><span></span><code>--node-ip<span class="o">=</span>&lt;host-only<span class="w"> </span>ip&gt;
+</code></pre></div>
+</li>
+<li>
+<p>Ipv4 forwarding</p>
+<div class="highlight"><pre><span></span><code>--allowed-unsafe-sysctls<span class="w"> </span><span class="s2">&quot;net.ipv4.ip_forward&quot;</span>
+</code></pre></div>
+</li>
+</ol>
+<h3 id="cni-plugin-configuration">CNI Plugin Configuration</h3>
+<p>MicroK8s clusters use the <strong>Calico CNI</strong> by default</p>
+<ul>
+<li>To enable IP forwarding on UPF, Calico CNI needs some necessary configurations.</li>
+<li>Some CNI plugin, like Flannel, kube-ovn, allow this funtionality by default</li>
+<li>
+<p>Setup Calico CNI for IP Forwarding</p>
+<ol>
+<li>
+<p><code>/var/snap/microk8s/current/args/cni-network/cni.yaml</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cni_network_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">        </span><span class="no">{</span>
+<span class="w">            </span><span class="no"># ...</span>
+<span class="w">            </span><span class="no">&quot;plugins&quot;: [</span>
+<span class="w">                </span><span class="no">{</span>
+<span class="w">                    </span><span class="no"># Append IP forwarding settings</span>
+<span class="w">                    </span><span class="no">&quot;container_settings&quot;: {</span>
+<span class="w">                        </span><span class="no">&quot;allow_ip_forwarding&quot;: true</span>
+<span class="w">                    </span><span class="no">},</span>
+<span class="w">                </span><span class="no">}</span>
+<span class="w">            </span><span class="no">]</span>
+<span class="w">        </span><span class="no">}</span>
+</code></pre></div>
+<ul>
+<li>Refer to the <a href="https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings">Calico CNI Docs</a><ol>
+<li>Apply settings</li>
+</ol>
+</li>
+</ul>
+<p><code>kubectl apply -f /var/snap/microk8s/current/args/cni-network/cni.yaml</code></p>
+</li>
+<li>
+<p>Restart MicroK8s</p>
+<p><code>sudo microk8s stop &amp;&amp; sudo microk8s start</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="multus"><strong>Multus</strong></h3>
+<p>Multus is a <strong>CNI (Container Network Interface) plugin</strong> for Kubernetes that enables <strong>pods to have multiple network interfaces</strong>. A clear example of this is the UPF, which has the N3, N4, N6 interfaces and optionally the N9. Multus has the capability to “call” other CNI plugins for this purpose.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="o">[</span>https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset.yml<span class="o">](</span>https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset.yml<span class="o">)</span>
+</code></pre></div>
+<h3 id="multi-node-microk8s-setup">Multi-node microk8s setup</h3>
+<p>After completing the above MicroK8s configuration, the two nodes can be joined into a single cluster using the following command: <a href="https://microk8s.io/docs/clustering">MicroK8s - Create a MicroK8s cluster</a></p>
+<ul>
+<li>vm1: <br />
+<code>microk8s add-node</code><ul>
+<li>output example:<br />
+<code>microk8s join 192.168.56.119:25000/92b2db236428470dc4fcfc4ebbd9dc81/2c0cb5284b05</code></li>
+</ul>
+</li>
+<li>vm2:<ul>
+<li>paste output(—worker is optional)</li>
+</ul>
+</li>
+</ul>
+<p>Result:</p>
+<p><img alt="image.png" src="../image%201.png" /></p>
+<h2 id="helm">Helm</h2>
+<p><strong>Helm</strong> is a package manager for Kubernetes that simplifies the deployment and management of applications. It uses <strong>Helm charts</strong>, which are pre-configured templates that define Kubernetes resources like pods, services, and deployments. Helm enables developers and operators to install, upgrade, or roll back applications with a single command, making Kubernetes workflows more efficient and reproducible. It supports versioning and configuration overrides, allowing teams to maintain consistency across environments. Helm is often compared to tools like apt or yum, but for Kubernetes, making it an essential tool for managing complex, cloud-native applications at scale.</p>
+<h3 id="install">Install</h3>
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3</span>
+<span class="s">chmod 700 get_helm.sh</span>
+<span class="s">./get_helm.sh</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<h3 id="configuration">Configuration</h3>
+<p>For a multi-cluster deployment with the UE/gNB hosted on a separate VM, the following modifications should be applied to the <code>values.yaml</code> files of each chart:</p>
+<ul>
+<li>Ref: <a href="https://github.com/Orange-OpenSource/towards5gs-helm/tree/main/charts/free5gc#networks-configuration">towards5gs-helm/charts/free5gc at main · Orange-OpenSource/towards5gs-helm</a></li>
+<li>To check where modifications were made in my Git commit<ul>
+<li>https://github.com/qawl987/free5gc-helm/commit/d40101d58e51a26e1c0acef3883d598528e718f1</li>
+</ul>
+</li>
+</ul>
+<p>Each NF has its own <code>values.yaml</code> file along with a shared global values.yaml; ensure that changes are applied to both configuration files.</p>
+<ul>
+<li>Ex: <code>free5gc-helm/charts/free5gc/values.yaml</code> and <code>free5gc-helm/charts/free5gc/charts/free5gc-amf/values.yaml</code> …</li>
+</ul>
+<p><strong>Notice:</strong></p>
+<ol>
+<li>The UPF N3 interface is the most challenging aspect. Since the UE sends packets only to port 2152, the NodePort method is not suitable, and LoadBalancer is designed for HTTP, not UDP traffic. The simplest solution is to configure the UPF's N3 interface to use the host-only subnet, allowing the UE to send packets directly to the N3 interface via that subnet. Alternatively, you can modify only the SMF to advertise the gNB N3 interface as the VM2 host-only IP and use a kube-proxy service to forward packets to the pod IP. This can also be addressed using MACVLAN or IPVLAN CNI plugins to bridge the UPF pod directly onto the host network.For detailed configuration and result, refer to the appendix.</li>
+<li>We demonstrate the UPF ULCL configuration here; for a single UPF setup, refer to the section above.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>NF</th>
+<th>parameter</th>
+<th>current value</th>
+<th>new value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AMF</td>
+<td>global.n2network.masterIf</td>
+<td>eth0</td>
+<td>enp0s8</td>
+</tr>
+<tr>
+<td>AMF</td>
+<td>global.amf.service.ngap.enabled</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>SMF</td>
+<td>global.n4network.masterIf</td>
+<td>eth0</td>
+<td>enp0s8</td>
+</tr>
+<tr>
+<td>SMF</td>
+<td>interfaceType: N3 endpoints</td>
+<td>10.100.50.233</td>
+<td>192.168.56.19</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n4network.masterIf</td>
+<td>eth0</td>
+<td>enp0s8</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n3network.masterIf</td>
+<td>eth0</td>
+<td>enp0s8</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n3network.subnetIP</td>
+<td>10.100.50.232</td>
+<td>192.168.56.0</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n3network.cidr</td>
+<td>29</td>
+<td>24</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n3network.gatewayIP</td>
+<td>10.100.50.238</td>
+<td>empty</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n3network.excludeIP</td>
+<td>10.100.50.238</td>
+<td>192.168.56.254</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n6network.masterIf</td>
+<td>eth1</td>
+<td>enp0s3</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n6network.subnetIP</td>
+<td>10.100.100.0</td>
+<td>10.0.2.0</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n6network.gatewayIP</td>
+<td>10.100.100.1</td>
+<td>10.0.2.2</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n6network.excludeIP</td>
+<td>10.100.100.254</td>
+<td>10.0.2.254</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>global.n9network.masterIf</td>
+<td>eth0</td>
+<td>enp0s8</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>upf1.n6if.ipAddress</td>
+<td>10.100.100.13</td>
+<td>10.0.2.13</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>upf2.n6if.ipAddress</td>
+<td>10.100.100.14</td>
+<td>10.0.2.14</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>upfb.n3if.ipAddress</td>
+<td>10.100.50.233</td>
+<td>192.168.56.19</td>
+</tr>
+<tr>
+<td>UPF</td>
+<td>upfb.n6if.ipAddress</td>
+<td>10.100.100.12</td>
+<td>10.0.2.15</td>
+</tr>
+<tr>
+<td>ulcl-enabled-values.yaml</td>
+<td>N3 endpoints</td>
+<td>10.100.50.233</td>
+<td>192.168.56.19</td>
+</tr>
+</tbody>
+</table>
+<h3 id="persistent-volume-for-mongodb">Persistent Volume for mongoDB</h3>
+<p>A Persistent Volume (PV) in Kubernetes is a storage resource provisioned independently of pods, enabling data persistence across pod restarts. It decouples storage from containers for stable, reusable storage.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolume</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc-pv-mongo</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">capacity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span>
+<span class="w">  </span><span class="nt">local</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/vagrant/kubedata</span>
+<span class="w">  </span><span class="nt">nodeAffinity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">nodeSelectorTerms</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/hostname</span>
+<span class="w">          </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
+<span class="w">          </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">          </span><span class="c1"># modify value to your hostname</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ns</span>
+</code></pre></div>
+<h3 id="persistent-volume-claim-for-mongodb">Persistent Volume Claim for mongoDB</h3>
+<p>A Persistent Volume Claim (PVC) in Kubernetes is a user’s request for storage, specifying size and access mode. It binds to a Persistent Volume, enabling pods to use persistent storage seamlessly.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolume</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc-pv-cert</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc</span><span class="w">  </span><span class="c1"># Must match the selector in PVC</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">capacity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Mi</span><span class="w">  </span><span class="c1"># Must match the PVC request exactly</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadOnlyMany</span><span class="w">  </span><span class="c1"># Must match the PVC access mode</span>
+<span class="w">  </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span>
+<span class="w">  </span><span class="nt">local</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/vagrant/certdata</span><span class="w">  </span><span class="c1"># Ensure this directory exists on the correct node</span>
+<span class="w">  </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
+<span class="w">  </span><span class="nt">nodeAffinity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">nodeSelectorTerms</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/hostname</span>
+<span class="w">              </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
+<span class="w">              </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ns</span><span class="w">  </span><span class="c1"># Ensure this is the correct node name</span>
+</code></pre></div>
+<h3 id="multi-node-configuration">Multi-node configuration</h3>
+<p>Change the nodeSelector field in each NF's values.yaml file. For example, update the UPF nodeSelector to correspond to ns2, and set the nodeSelector for other NFs to ns</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">Before</span>
+<span class="l l-Scalar l-Scalar-Plain">nodeSelecotr</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="l l-Scalar l-Scalar-Plain">After</span>
+<span class="nt">nodeSelector</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># your desired node&#39;s host name</span>
+<span class="w">  </span><span class="nt">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ns</span>
+</code></pre></div>
+<h1 id="run">Run</h1>
+<p>After above configuration, we can build core and upf now.</p>
+<ol>
+<li>
+<p>Run Core &amp; UPF</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>free5gc
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>persistent-vol-for-mongodb.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>persistent-vol-for-cert.yaml
+helm<span class="w"> </span>-n<span class="w"> </span>free5gc<span class="w"> </span>install<span class="w"> </span>free5gc-v1<span class="w"> </span>./free5gc/
+</code></pre></div>
+<p><img alt="image.png" src="../image%202.png" /></p>
+</li>
+<li>
+<p>Check NF deployment node</p>
+<ol>
+<li>
+<p>UPF in ns2</p>
+<p><img alt="image.png" src="../image%203.png" /></p>
+</li>
+<li>
+<p>Other NF in ns</p>
+<p><img alt="image.png" src="../image%204.png" /></p>
+</li>
+</ol>
+</li>
+<li>
+<p>Test the UPF forwarding by checking the output, which should be "1". If the output is different, ensure that the CNI and OS <code>ipv4_forwarding</code> configurations are correctly set.You can also refer to the appendix, under the Security Pod section, for more details.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>-n<span class="w"> </span>free5gc<span class="w"> </span>&lt;upf-pod-name-above&gt;<span class="w"> </span><span class="se">\</span>
+--<span class="w"> </span>cat<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+</code></pre></div>
+</li>
+<li>
+<p>Check UPF N4 connection</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;upf-pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>free5gc
+</code></pre></div>
+<p><img alt="image.png" src="../image%205.png" /></p>
+</li>
+</ol>
+<h1 id="local-ue-vm3-deployment">Local UE VM3 deployment</h1>
+<h3 id="install-ueransim">Install UERANSIM</h3>
+<p>https://github.com/aligungr/UERANSIM</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>UERANSIM
+bash<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">sudo apt install make -y</span>
+<span class="s">sudo apt install gcc -y</span>
+<span class="s">sudo apt install g++ -y </span>
+<span class="s">sudo apt install libsctp-dev lksctp-tools -y</span>
+<span class="s">sudo apt install iproute2 -y</span>
+<span class="s">sudo snap install cmake --classic</span>
+<span class="s">EOF</span>
+<span class="c1"># Be sure to use snap install cmake --classic for suitable cmake version</span>
+make
+</code></pre></div>
+<h3 id="amf-service-expose">AMF service expose</h3>
+<p>free5GC has the AMF N2 service configured as a <code>ClusterIP</code> by default, which prevents direct access to the pod on port 38412. To allow the local UE to connect, you need to change the service type to <code>NodePort</code>.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>svc<span class="w"> </span>free5gc-v1-free5gc-amf-amf-n2<span class="w"> </span>-n<span class="w"> </span>free5gc<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;: {&quot;type&quot;: &quot;NodePort&quot;}}&#39;</span>
+</code></pre></div>
+<p>You can see 31412 is the port exposed.</p>
+<p><img alt="image.png" src="../image%206.png" /></p>
+<h3 id="configuration_1">Configuration</h3>
+<p><code>UERANSIM/config/free5gc-gnb.yaml</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>current value</th>
+<th>new value</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ngapIp</td>
+<td>127.0.0.1</td>
+<td>192.168.56.118</td>
+<td>VM3 host-only ip</td>
+</tr>
+<tr>
+<td>gtpIP</td>
+<td>127.0.0.1</td>
+<td>192.168.56.118</td>
+<td>VM3 host-only ip</td>
+</tr>
+<tr>
+<td>amfConfig.address</td>
+<td>127.0.0.1</td>
+<td>192.168.56.119</td>
+<td>VM1 host-only ip</td>
+</tr>
+<tr>
+<td>amfConfig.port</td>
+<td>38412</td>
+<td>31412</td>
+<td>above exposed port</td>
+</tr>
+</tbody>
+</table>
+<h3 id="end-to-end-test">End-to-end test</h3>
+<ol>
+<li>
+<p>Subscribe UE in webconsole</p>
+<ol>
+<li>
+<p>In VM1, expose the service for subscription</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--address<span class="w"> </span><span class="m">192</span>.168.56.119<span class="w"> </span>--namespace<span class="w"> </span>free5gc<span class="w"> </span>svc/webui-service<span class="w"> </span><span class="m">5000</span>:5000
+</code></pre></div>
+</li>
+<li>
+<p>Login to <strong>192.168.56.119:5000</strong> using the credentials (<strong>admin</strong>, <strong>free5gc</strong>), and create a subscriber using the default settings.</p>
+<p><img alt="image.png" src="../image%207.png" /></p>
+</li>
+</ol>
+</li>
+<li>
+<p>You need three terminal</p>
+<ol>
+<li>
+<p>terminal 1: create gNB</p>
+<div class="highlight"><pre><span></span><code>./build/nr-gnb<span class="w"> </span>-c<span class="w"> </span>config/free5gc-gnb.yaml
+</code></pre></div>
+<p><img alt="image.png" src="../image%208.png" /></p>
+</li>
+<li>
+<p>terminal 2: create UE</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>./build/nr-ue<span class="w"> </span>-c<span class="w"> </span>config/free5gc-ue.yaml
+</code></pre></div>
+<p><img alt="image.png" src="../image%209.png" /></p>
+</li>
+<li>
+<p>terminal 3: ping test</p>
+<p><img alt="image.png" src="../image%2010.png" /></p>
+</li>
+</ol>
+</li>
+<li>
+<p>Check</p>
+<ol>
+<li>
+<p>In the UPF pod, install <code>tcpdump</code> (ensure a nameserver is configured, as the current UPF pod lacks DNS resolution).</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;nameserver 8.8.8.8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/resolv.conf<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>tcpdump<span class="w"> </span>-y
+</code></pre></div>
+<ol>
+<li>
+<p>N3 if</p>
+<p><img alt="image.png" src="../image%2011.png" /></p>
+</li>
+<li>
+<p>N9 if</p>
+<p><img alt="image.png" src="../image%2012.png" /></p>
+</li>
+</ol>
+</li>
+<li>
+<p>In upf1, install tcpdump too</p>
+<ol>
+<li>
+<p>N6 if</p>
+<p><img alt="image.png" src="../image%2013.png" /></p>
+</li>
+<li>
+<p>upfgtp</p>
+<p><img alt="image.png" src="../image%2014.png" /></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="appendix">Appendix</h1>
+<h3 id="clusterip-service-kube-proxy">ClusterIP service &amp; kube-proxy</h3>
+<p>I attempted to use a <code>ClusterIP</code> service with kube-proxy to forward UE packets from the VM2 host-only IP to the UPF pod IP, but the packets are being lost after being forwarded to the pod IP. This issue remains unresolved.</p>
+<ol>
+<li>
+<p>kube-proxy service</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc-upf-n3-externalip-service</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app.kubernetes.io/instance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc-v1</span>
+<span class="w">    </span><span class="nt">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc-upf</span>
+<span class="w">    </span><span class="nt">nf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">upfb</span>
+<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">free5gc</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">n3-gtpu</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UDP</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2152</span><span class="w">          </span><span class="c1"># Service 在叢集內部以及外部監聽的埠</span>
+<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2152</span><span class="w">    </span><span class="c1"># UPF Pod 容器實際監聽的 GTP-U 埠</span>
+<span class="w">  </span><span class="nt">externalIPs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.56.120</span><span class="w">     </span><span class="c1"># 指定 Service 監聽 vm2 的 IP 地址</span>
+</code></pre></div>
+</li>
+<li>
+<p>add --masquerade-all=true in <code>/var/snap/microk8s/current/args/kube-proxy</code></p>
+</li>
+</ol>
+<p>Can see src=10.1.4.159, mean flow-in DNAT success, but something went wrong after packet go inside upfb pod.</p>
+<p><img alt="image.png" src="../image%2015.png" /></p>
+<h3 id="local-registry">Local registry</h3>
+<p>Docker Hub may throttle the UPF pod due to excessive image pull requests (affecting only the UPF pod, for reasons unclear). To avoid this, set up a local registry and use a locally built UPF image.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>microk8s<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>registry
+docker<span class="w"> </span>pull<span class="w"> </span>free5gc/upf:v4.0.0
+docker<span class="w"> </span>tag<span class="w"> </span>free5gc/upf:v4.0.0<span class="w"> </span>localhost:32000/free5gc/upf:v4.0.0
+docker<span class="w"> </span>push<span class="w"> </span>localhost:32000/free5gc/upf:v4.0.0
+</code></pre></div>
+<p>Update all UPF image names from <code>name: localhost:32000/free5gc/upf</code> to <code>name: free5gc/upf</code>.<br />
+You can also refer to my Git commit for further details. <br />
+- https://github.com/qawl987/free5gc-helm/commit/7d82f68060596954cc0139f5a5a160f235e53f3a</p>
+<h3 id="security-pod">Security pod</h3>
+<p>Some VMs require the following additional setting for UPF. If you've already configured all <code>ipv4_forwarding</code> options, add the configuration below to all UPF pods as well.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">free5gc-upf</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">upf1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">podSecurityContext</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">sysctls</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">net.ipv4.ip_forward</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+</code></pre></div>
+<h1 id="conclusion">Conclusion</h1>
+<p>This guide walks through the steps for deploying and end-to-end testing the <a href="https://github.com/free5gc/free5gc-helm">free5GC-Helm</a> project. It demonstrates the deployment of two nodes (Core and UPF) within a single Kubernetes cluster, along with a locally deployed UE used for ping-based connectivity testing.</p>
+<h3 id="reference">Reference</h3>
+<p><a href="https://medium.com/@danilo.j.granados/from-theory-to-practice-implementing-a-5g-core-network-using-open-source-tools-4a6afe1f708b">From Theory to Practice: Implementing a 5G Core Network Using Open Source Tools | by Danilo Granados | Medium</a></p>
+<p><a href="https://free5gc.org/guide/7-free5gc-helm/#installation">free5GC Helm Installation - free5GC</a></p>
+<p><a href="https://github.com/Orange-OpenSource/towards5gs-helm/tree/main/charts/free5gc#networks-configuration">https://github.com/Orange-OpenSource/towards5gs-helm/tree/main/charts/free5gc#networks-configuration</a></p>
+<h3 id="about-me"><strong>About me</strong></h3>
+<p>Hi, I’m Fang-Kai Ting, a newcomer to 5G and free5GC, and currently conducting research on Network Slicing. Let me know without hesitation if there is any mistake in the article.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<p>Github: <a href="https://github.com/qawl987">qawl987</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
