@@ -2,7 +2,7 @@
 
 In this demo, we will practice:
 
-- Set Slice-level and Flow-level **Offline charging** in webconsole.
+- Set Slice-level and Flow-level **Online charging** in webconsole.
 - Set Slice-level and Flow-level **Offline charging** in webconsole.
 - Test with UERANSIM 
 
