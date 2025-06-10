@@ -49,7 +49,7 @@ python-markdown-math==0.8
 PyYAML==6.0.1
 pyyaml_env_tag==0.1
 regex==2023.6.3
-requests==2.32.0
+requests==2.32.4
 rich==13.4.1
 SecretStorage==3.3.3
 shellingham==1.5.0.post1
