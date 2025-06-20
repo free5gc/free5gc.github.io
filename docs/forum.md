@@ -289,7 +289,7 @@
 <div class="cta-section">
   <h2>Call for Papers</h2>
   <p>We invite submissions for the 1st free5GC World Forum. The forum seeks original, unpublished papers focusing on security, architecture, innovation, and real-world applications of 5G core networks, particularly those leveraging the free5GC platform.</p>
-  <p>Submission deadline: <strong>July 5, 2025</strong></p>
+  <p>Submission deadline: <strong><del>June 20</del> July 5, 2025</strong></p>
   <a href="https://github.com/free5gc/free5gc.github.io/blob/forum-cfp/free5GC-forum-cfp.pdf" class="cta-button" target="_blank">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
@@ -373,7 +373,7 @@ We invite original research papers, technical reports, and case studies in, but 
   <div class="timeline-item">
     <div class="timeline-content">
       <h3>Paper Submission Deadline</h3>
-        <p>July 5, 2025</p>
+        <p><del>June 20</del> July 5, 2025</p>
     </div>
   </div>
   <div class="timeline-item">
