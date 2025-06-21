@@ -51,6 +51,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [ULCL](https://github.com/s5uishida/free5gc_ueransim_ulcl_sample_config)
 - [Netns5g - A free5gc and UERANSIM deployment using Linux network namespaces](https://github.com/konradkar2/netns5g)
 - [Traffic Influence](./8-traffic-influence.md)
+- [NR-DC](./9-nr-dc.md)
 
 ## Deployment
 

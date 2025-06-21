@@ -16,6 +16,7 @@ We maintain the design documents to help people started contributing to the free
 - [PCF (Charging)](./PCF/charging.md)
 - [OAuth2 on SBI](./OAuth2/OAuth2Design.md)
 - [N3IWUE](./N3IWUE/n3iwue.md)
+- [NR-DC](./NR-DC/nrdc.md)
 - [Problem Details](https://github.com/free5gc/free5gc.github.io/tree/main/docs/guide/ProblemDetails)
 
 ## 5GC Docs/Specs
