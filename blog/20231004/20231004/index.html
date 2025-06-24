@@ -1,0 +1,902 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Introduction of MPTCP - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-of-mptcp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction of MPTCP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initiating-an-mptcp-connection" class="md-nav__link">
+    Initiating an MPTCP Connection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#starting-a-new-subflow" class="md-nav__link">
+    Starting a New Subflow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mptcp-operation-and-data-transfer" class="md-nav__link">
+    MPTCP Operation and Data Transfer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coupled-congestion-control-algorithm" class="md-nav__link">
+    Coupled Congestion Control Algorithm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-mptcp" class="md-nav__link">
+    How to use MPTCP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20231004/20231004.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20231004/20231004.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="introduction-of-mptcp">Introduction of MPTCP</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: 張哲睿 (Jerry)<br />
+Date: 2023/10/04</p>
+</div>
+<p>MPTCP (multipath TCP) is a set of extensions to regular TCP that allows a connection to use many paths to transport data simultaneously. The simultaneous use of these multiple paths for a TCP/IP session would improve resource usage within the network, and if one path is blocked, it can use another path to transport data, improving resilience to network failure. A common use of mptcp is: Most mobile phones today have the ability to connect to wifi or mobile networks (4G/5G), but regular TCP can't use two network resources simultaneously, and if the network we were originally using (for example, wifi) is disconnected, it cannot automatically switch to using the mobile network. Therefore, the connection at the application layer will also be disconnected.<br />
+In this article, I will introduce MPTCP, including how to establish an MPTCP connection, how to start a new subflow, the ack mechanism, and the congestion control algorithm it uses.</p>
+<h3 id="initiating-an-mptcp-connection">Initiating an MPTCP Connection</h3>
+<p>MPTCP implements multi-path transmission by creating multiple subflows; each subflow is similar to a general TCP connection. Use the 3-way handshaking to establish the connection. But instead of a separate connection, the subflow is bound into an existing MPTCP session. MPTCP uses SYN, SYN/ACK, and ACK packets to establish connections. But these sockets also carry the MP_CAPABLE option (in the optional field of the tcp header), which is used to verify whether the remote host supports MPTCP and exchange some information to authenticate the establishment of additional subflows.</p>
+<p><img alt="" src="../figure1.png" /></p>
+<blockquote>
+<p><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC8684 3.1</a></p>
+</blockquote>
+<p>The above figure shows the structure of MP_CAPABLE. First, the initiator sends only 4 octets. If the listener also supports MPTCP v1, it will respond SYN/ACK, and the listener's key will be included in MP_CAPABLE. Then the initiator replies ACK, which contains the sender's key and the receiver's key. These keys are used to authenticate the addition of future subflows to this connection; all future subflows will identify the connection using a 32-bit "token". This token is a cryptographic hash of this key.<br />
+The use of flags in the fourth octets are as follow:</p>
+<ul>
+<li>A: Indicate "Checksum required".</li>
+<li>B: It is an extensibility flag, must be set to 0.</li>
+<li>C: Indicate that the sender of this option will not accept additional MPTCP subflows to the source address and port.</li>
+<li>D through H: The flags D through H, are used for crypto algorithm negotiation. In MPTCP v1, only the rightmost bit, labeled H, is assigned. Bit H indicates the use of HMAC-SHA256.</li>
+</ul>
+<h3 id="starting-a-new-subflow">Starting a New Subflow</h3>
+<p>Once an MPTCP connection has begun with the MP_CAPABLE exchange, further subflows can be added to the connection. A new subflow is started as a normal TCP SYN/ACK exchange. But these packets contain the Join Connection option.</p>
+<p><img alt="" src="../figure2.png" /></p>
+<blockquote>
+<p><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC8684 3.2</a></p>
+</blockquote>
+<p>This is the first Join Connection (MP_join) Option for the initial SYN. The token is a cryptographic hash of the receiver's key. The MP_join also contains an "Address ID", which is used to identify the source address of this packet. This mechanism allows addresses to be removed even if they are changed by NAT.<br />
+The last bit of the third byte (flag B) indicates that the sender (1) wishes this subflow to be used as a backup path (B=1) in the event of failure of other paths or (2) wants the subflow to be used as part of the connection immediately. MP_JOIN also contains a random number to prevent replay attacks.<br />
+If MP_JOIN contains a valid token, the recipient will respond with a SYN/ACK also containing an MP_JOIN option containing a random number and a truncated (leftmost 64-bit) HMAC. Transport HMAC is to have previously exchanged random data (in the first two SYN packets) that is used as the "message".</p>
+<p><img alt="" src="../figure3.png" /></p>
+<blockquote>
+<p><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC8684 3.2</a></p>
+</blockquote>
+<p>If the HMAC in SYN/ACK is valid, then the initiator will send its authentication in the third packet (ACK). This data needs to be sent reliably since it is the only time this HMAC is sent. Therefore, receipt of this packet triggers a regular TCP ACK in response, and the packet will be retransmitted if this ACK is not received.</p>
+<p><img alt="" src="../figure6.png" /></p>
+<blockquote>
+<p><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC8684 3.2</a></p>
+</blockquote>
+<p><img alt="" src="../figure4.png" /></p>
+<blockquote>
+<p><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC8684 3.2</a></p>
+</blockquote>
+<p>This is total handshake procedure.</p>
+<h3 id="mptcp-operation-and-data-transfer">MPTCP Operation and Data Transfer</h3>
+<p>MPTCP takes one input data stream and splits it into subflows. It then uses a 64-bit data sequence number to number all the data and let the data be reassembled at the receiver. Each subflow has its own 32-bit sequence number space, utilizing the regular TCP sequence number header, and an MPTCP option (Data Sequence Signal optional) maps the subflow sequence space to the data sequence space.<br />
+MPTCP uses the Data Sequence Signal optional to carry the Data Sequence Mapping, which consists of the subflow sequence number, data sequence number, and length for which this mapping is valid. The Data Sequence Number is the starting sequence number for the subflow, and the Subflow Sequence Number is the sequence number only relevant to the subflow. The Data Ack in the Data Sequence Signal optional is used to ACK for the connection, indicating how much data has been successfully received.</p>
+<p><img alt="" src="../figure5.png" /></p>
+<blockquote>
+<p><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC8684 3.3</a></p>
+</blockquote>
+<h3 id="coupled-congestion-control-algorithm">Coupled Congestion Control Algorithm</h3>
+<p>There are two goals that MPTCP congestion control needs to meet:<br />
+1.   A multipath flow should perform at least as well as a single-path flow would on the best of the paths available to it.<br />
+2.   A multipath flow should take no more capacity on any path or collection of paths than if it were a single-path TCP flow using the best of those paths.</p>
+<p>The second goal is to prevent MPTCP traffic from occupying too many resources and harming other TCP flows on the bottleneck link. So if we combine the first goal and the second goal, it means that the total capacity that MPTCP occupies should equal the capacity that the best path can transport. (In the situation where there is some competitive TCP flow, if there is no other competitive flow, then MPTCP will occupy all the capacity it can use.)</p>
+<p>The algorithm rule:<br />
+* Each ACK on subflow r, increase the window <script type="math/tex">w_r</script> by <script type="math/tex">min(\dfrac{\alpha}{\omega_{total}}, \dfrac{1}{\omega_r})</script>.<br />
+* Each loss on subflow r, decrease the window <script type="math/tex">w_r</script> by <script type="math/tex">\dfrac{w_r}{2}</script>.</p>
+<p>
+<script type="math/tex; mode=display">\alpha = \hat{\omega}_{total}*\dfrac{max_r(\hat{\omega_r}/RTT_r^2)}{(\Sigma_r(\hat{\omega_r}/RTT_r))^2}</script>
+</p>
+<p>
+<script type="math/tex">w_r</script> is the current window size on path r, <script type="math/tex">\hat{w_r}</script> is equilibrium window size on path r, and similarly for the total window size.</p>
+<p>And how <script type="math/tex">\alpha</script> derived? Here I write down some of my thoughts after reading the paper. There may be errors. If you find any, please tell me directly.<br />
+First, we assume that <script type="math/tex; mode=display">\dfrac{\alpha}{\omega_{total}}<\dfrac{1}{\omega_r}</script>, so if the transmission speed of subflow r is slower than tcp, then the increments of the window size r is <script type="math/tex">\dfrac{\alpha}{\omega_{total}}</script>. Because the increase and decrease of the window in the equilibrium state are equal to each other, so we have the fallowing equation.</p>
+<p>
+<script type="math/tex; mode=display">\dfrac{\omega_r}{RTT_r}(1-p_r)\dfrac{\alpha}{\omega_{total}}=(\dfrac{\omega_r}{RTT_r}*p_r)\dfrac{\omega_r}{2}</script>
+</p>
+<p>
+<script type="math/tex">p_r</script> is the loss rate of subflow r.Then we assume loss rate is small.</p>
+<p>
+<script type="math/tex; mode=display">\dfrac{\alpha}{\omega_{total}}=p_r\dfrac{\omega_r}{2}, p_r=\dfrac{2\alpha}{\omega_{total}\omega_r}</script>
+</p>
+<p>Now assume that there is tcp on this subflow, then we have:</p>
+<p>
+<script type="math/tex; mode=display">(1-p)\dfrac{1}{\omega^{TCP}_r} = p * \dfrac{\omega^{TCP}_r}{2}, (\omega^{TCP}_r)^2 = \dfrac{2}{p}</script>
+</p>
+<p>p is the loss rate. Here, assume p is equal to <script type="math/tex">p_r</script>.(But actually, they would not be equal if there was no other competitive flow. <script type="math/tex">p_r</script> is smaller, so we measure a better tcp performence.) Substitute <script type="math/tex">p_r</script> with p, then we have:</p>
+<p>
+<script type="math/tex; mode=display"> \dfrac{\omega_{total}\omega_r}{\alpha}=(\omega^{TCP}_r)^2</script>
+</p>
+<p>And we want the total capacity MPTCP occupies to equal the capacity that the best path can transport using TCP. So we have the equation:</p>
+<p>
+<script type="math/tex; mode=display">\Sigma_r\dfrac{\omega_r}{RTT_r} = max_r\dfrac{\omega^{TCP}_r}{RTT_r}</script>
+</p>
+<p>Window size divide by RTT is the traffic send on path per second.</p>
+<p>
+<script type="math/tex; mode=display">(\Sigma_r\dfrac{\omega_r}{RTT_r})^2 = (max_r\dfrac{\omega^{TCP}_r}{RTT_r})^2 </script>
+</p>
+<p>
+<script type="math/tex; mode=display">= max_r(\dfrac{\omega_{total}}{\alpha})\dfrac{\omega_r}{RTT^2_r} = \dfrac{1}{\alpha}max_r\dfrac{\omega_{total}\omega_r}{RTT^2_r}</script>
+</p>
+<p>Finally, we can derive <script type="math/tex">\alpha</script>.</p>
+<p>
+<script type="math/tex; mode=display">\alpha = \hat{\omega}_{total}*\dfrac{max_r(\hat{\omega_r}/RTT_r^2)}{(\Sigma_r(\hat{\omega_r}/RTT_r))^2}</script>
+</p>
+<p>Because tcp performance on path r is measured by loss rate <script type="math/tex">p_r</script>, if there is no competitive flow, mptcp can use more resources, and the increments of the window finally bounded by <script type="math/tex">\dfrac{1}{\omega_r}</script>. So if we only run mptcp on many paths, it's like we have many TCP connecion, the total traffic is sum of every subflow's max transmission capability.</p>
+<h3 id="how-to-use-mptcp">How to use MPTCP</h3>
+<p>As for how to use mptcp under Linux system, you can refer to this <a href="https://hpnpl.net/posts/mptcp-ubuntu/">article</a>. It describes how to use mptcpize to change the original tcp connection to mptcp.</p>
+<h3 id="about">About</h3>
+<p>Hello! My name is 張哲睿, and my current research topic is ATSSS (Access Traffic Steering, Switching and Splitting).  If you find any mistakes in my articles, please contact me.</p>
+<ul>
+<li><a href="https://www.linkedin.com/in/%E5%93%B2%E7%9D%BF-%E5%BC%B5-77096621a/">Linkedln</a></li>
+</ul>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6824.txt.pdf">RFC 8684</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc6356.txt.pdf">RFC 6356</a></li>
+<li><a href="https://www.usenix.org/legacy/events/nsdi11/tech/full_papers/Wischik.pdf">Coupled Congestion Control Algorithm</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/421877742">MPTCP congestion control</a></li>
+<li><a href="https://hpnpl.net/posts/mptcp-ubuntu/">How to use MPTCP</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
