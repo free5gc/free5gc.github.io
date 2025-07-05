@@ -4,6 +4,7 @@
 
 ## Official
 
+- [2025/07/03: A Practical Guide to Network Slicing and Traffic Steering with free5GC and OAI-MEC](./20250625/20250625.md)
 - [2025/05/21: Go context in free5GC](./20250521/20250521.md)
 - [2025/05/09: Hands-On with sched_ext: Building Custom eBPF CPU Schedulers](./20250509/20250509.md)
 - [2025/04/30: Namespace-Based GTP5G Conflict Resolution for free5GC and PacketRusher](./20250430/20250430.md)
