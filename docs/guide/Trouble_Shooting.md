@@ -1,6 +1,6 @@
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
 
-# Trouble Shooting
+# Troubleshooting
 
 ### 1. `ERROR: [SCTP] Failed to connect given AMF    N3IWF=NGAP`
 
