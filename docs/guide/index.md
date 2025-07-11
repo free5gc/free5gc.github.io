@@ -74,5 +74,5 @@ If you're interested in more details, please visit the [GitHub Dashboard](https:
 
 ## Others
 - [Release Note](https://github.com/free5gc/free5gc/releases)
-- [Trouble Shooting](./Trouble_Shooting.md)
+- [Troubleshooting](./Troubleshooting.md)
 - [Appendix](./Appendix.md)
