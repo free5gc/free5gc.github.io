@@ -1,0 +1,999 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Article Sharing: eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond) - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#article-sharing-ebpf-a-new-approach-to-cloud-native-observability-networking-and-security-for-current-5g-and-future-mobile-networks-6g-and-beyond" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Article Sharing: eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layout-of-ebpf" class="md-nav__link">
+    Layout of eBPF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ebpfs-for-kubernetes" class="md-nav__link">
+    eBPF's for Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="eBPF's for Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-networking" class="md-nav__link">
+    Container Networking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-mesh" class="md-nav__link">
+    Service Mesh
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sauron-concept-and-architecture" class="md-nav__link">
+    Sauron concept and architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Sauron concept and architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sauron-ebpf-module-for-transport" class="md-nav__link">
+    Sauron eBPF module for transport
+  </a>
+  
+    <nav class="md-nav" aria-label="Sauron eBPF module for transport">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ebpf-solutions-for-latency-calculation" class="md-nav__link">
+    eBPF solutions for latency calculation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sauron-module-for-network-observability" class="md-nav__link">
+    Sauron module for network observability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sauron-ebpf-module-for-security" class="md-nav__link">
+    Sauron eBPF module for security
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ebpf-for-performance-monitoring-of-5g-protocols" class="md-nav__link">
+    eBPF for performance monitoring of 5G protocols
+  </a>
+  
+    <nav class="md-nav" aria-label="eBPF for performance monitoring of 5G protocols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ngap-and-nas-performance-monitoring" class="md-nav__link">
+    NGAP and NAS performance monitoring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packet-capturing-and-forwarding" class="md-nav__link">
+    Packet capturing and forwarding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ebpf-for-estimating-energy-consumption" class="md-nav__link">
+    eBPF for estimating energy consumption
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20230830/20230830.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20230830/20230830.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="article-sharing-ebpf-a-new-approach-to-cloud-native-observability-networking-and-security-for-current-5g-and-future-mobile-networks-6g-and-beyond">Article Sharing: eBPF: A New Approach to Cloud-Native Observability, Networking and Security for Current (5G) and Future Mobile Networks (6G and Beyond)</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Lin Poyi<br />
+Date: 2023/8/30</p>
+</div>
+<p>Original Paper: <a href="https://ieeexplore.ieee.org/document/10138542">eBPF: A New Approach to Cloud-Native<br />
+Observability, Networking and Security for<br />
+Current (5G) and Future Mobile Networks (6G<br />
+and Beyond)</a></p>
+<h2 id="overview">Overview</h2>
+<p>This article shows why extended Berkeley Packet Filter (eBPF) is a powerful tool to use on cloud-native platforms. Using specific eBPF programs to improve network observability and runtime security. Also, present a platform named Sauron to demonstrate how eBPF allows us to write custom code and dynamically load eBPF programs into the kernel. These programs can be used to derive performance counters and gauges for transport networks, 5G applications, and non-access stratum protocols.</p>
+<h2 id="layout-of-ebpf">Layout of eBPF</h2>
+<ul>
+<li>eBPF programs: run in the kernel to react to events.</li>
+<li>User space programs: load eBPF programs to the kernel and interact with them.</li>
+<li>eBPF Maps: allow data storage and information sharing between eBPF/User space programs.<ul>
+<li>There are different types of eBPF Maps, for example: Hash, Array, etc. A special type of eBPF Maps is called per-CPU map, since it is only accessed by one CPU and the eBPF process cannot be preempted, there's no lock needed. As a result, the performance is better.</li>
+</ul>
+</li>
+</ul>
+<p><img alt="Figure 1" src="../1-1.png" /></p>
+<p>Development phase:</p>
+<ol>
+<li>A program is compiled into an object Executable and Linkable Format (ELF) file. Using compiler suites like clang/LLVM to compile it into eBPF bytecode.</li>
+<li>The ELF file is loaded into the kernel using a monolithic approach enabled by bpf system calls.</li>
+<li>Maps are created in the kernel space. The eBPF programs can utilize eBPF maps to share data and preserve the state.</li>
+</ol>
+<p>Runtime phase:</p>
+<ol>
+<li>The eBPF program is loaded into the kernel to be verified by eBPF verifier and to be compiled by JIT Compiler into native instructions.</li>
+<li>The eBPF program is attached to selected events (injected in the desired kernel hooks). The eBPF program is executed once the event has occurred.</li>
+</ol>
+<p>Higher-level networking constructs can be created by combining the hooks below:</p>
+<ul>
+<li>Express Data Path (XDP): XDP BPF hook can be attached to the networking driver. The eBPF program is triggered when a packet arrives in the driver.</li>
+<li>Traffic Control ingress/egress: hooking eBPF programs to the traffic control ingress/egress. The eBPF program is triggered after the initial packet processing.</li>
+<li>Socket operations</li>
+</ul>
+<h2 id="ebpfs-for-kubernetes">eBPF's for Kubernetes</h2>
+<h3 id="container-networking">Container Networking</h3>
+<p><img alt="Figure 2" src="../2-1.png" /></p>
+<p>In K8s, the kernel typically runs a networking stack for each pod. The data path is convoluted, as shown in a).<br />
+eBPF can simplify the networking stack in the kernel, and connect pods as endpoints.</p>
+<p><img alt="Figure 3" src="../2-2.png" /></p>
+<p>This is an example of load balancing between four replicated pods on two worker nodes. Using eBPF service (svc) Map to replace the iptables rules. This allows operators to transport data directly from inbound sockets to outbound sockets, which enables super-fast service load balancing with eBPF.</p>
+<h3 id="service-mesh">Service Mesh</h3>
+<p>A Service Mesh is a dedicated infrastructure layer that can be added to applications or Cloud-Native Network Function (CNF) micro-services. Provides connectivity between applications at the service level, and offers features such as observability, security, and traffic management.</p>
+<p><img alt="Figure 4" src="../2-3.png" /></p>
+<p>The traditional approach (left) was to use a Service Mesh Library. It requires the Service Mesh Library to be written in the application's language framework.</p>
+<p>Then Service Mesh was achieved by implementing a cloud-native Sidecar Model (middle). With the Service Mesh Sidecar run as a proxy outside of the application, there's no limit to the language being used. And there's no modification needed to be done in the application code.</p>
+<p>Service Mesh which utilizes eBPF (right) has fewer resources used since duplicate copies of state configuration information within each pod are no longer needed. Also, there's no pod configuration to be modified. In addition, eBPF is aware of all activities carried out on that node, which can provide extra security.</p>
+<h2 id="sauron-concept-and-architecture">Sauron concept and architecture</h2>
+<p><img alt="Figure 5" src="../3-1.png" /></p>
+<p>The proposed eBPF platform, named Sauron, includes a Node Agent, a Controller to handle the Node Agents (NAs) deployed in the clusters, and three eBPF modules for <strong>observability</strong>, <strong>security</strong>, and <strong>networking</strong> use cases. There's no installation of any specific K8s plug-in needed.</p>
+<h3 id="sauron-ebpf-module-for-transport">Sauron eBPF module for transport</h3>
+<h4 id="ebpf-solutions-for-latency-calculation">eBPF solutions for latency calculation</h4>
+<p>By leveraging the XDP hook, the programs can inspect or modify the content of the packets, but they can also decide whether to redirect or drop them. Moreover, through eBPF helpers, they can perform more advanced actions such as timestamping.</p>
+<p><img alt="Figure 6" src="../3-3.png" /></p>
+<p>The eBPF program utilizes an XDP feature that allows it to redirect the synthetic packet through the same interface at which it was received. The program also adds a timestamp of each action (send or receive) to the packet payload. The packet will bounce between the receiving device and the original sender for a fixed number of times. After the final iteration, the original sender passes the packet to the Sauron Agent through the socket interface. The Sauron Agent then uses the collected timestamps to calculate both One-way and Two-way latency. Once the calculation is done, the data can be exported to a remote collector for processing and visualization.</p>
+<h3 id="sauron-module-for-network-observability">Sauron module for network observability</h3>
+<p><img alt="Figure 7" src="../3-4.png" /></p>
+<p>The Sauron Agent configures the necessary eBPF programs and collects the messages using a Ring buffer or throughout eBPF Maps. It also detects containers and pods of the 5GC network by querying the API server.<br />
+The Agent can be configured to collect information from all parts of the network (radio access and core domains) with minimal overhead.</p>
+<h3 id="sauron-ebpf-module-for-security">Sauron eBPF module for security</h3>
+<p><img alt="Figure 8" src="../3-5.png" /></p>
+<p>eBPF Traffic Control Programs are used to implement network security. The primary job is to detect policy violations and enforce configured rules on unwanted traffic.<br />
+Unwanted traffic could be:</p>
+<ol>
+<li>Traffic directed to or coming from entities that are not allowed to communicate with the object pod.</li>
+<li>Malicious traffic directed to or coming from sources that are allowed to communicate with the object pod but not authorized to perform certain tasks.</li>
+<li>Malicious traffic that insists on a disallowed communication path.</li>
+</ol>
+<p>eBPF tracepoints programs are attached to static markers defined by kernel developers in the kernel code. Tracepoints can be used to track events related to multiple subsystems, including sched, netlink, and system call (only syscall is shown in the graph). Static markers implementing the hook points guarantee the Application Binary Interface for tracepoints to be more stable than the one available for kprobes.</p>
+<p>Even though kprobes are not as effective or stable as tracepoints, they allow the implementation of an additional layer of defense. By tapping deeper into the system calls implementation, it is possible to solve the well-known Time-Of-Check Time-Of-Use vulnerability of tracepoints.</p>
+<p>eBPF Linux Security Module (LSM) programs also add an additional layer of security to the kernel. They can detect malicious behaviors and deny the access and permission directly in the kernel. By doing this, they provide faster response than tracepoint and kprobe programs.</p>
+<p>The agent in user space provides all rules for detecting malicious behavior to eBPF programs via eBPF maps. The eBPF programs in kernel space sent three kinds of data to the Agent: samples of normal events, suspicious events, and malicious events. Suspicious events will be classified in the agent. Then all collected data will be sent to a cluster-wide events collector, which can build an AI/ML model using the collected events to enforce rules in each agent or provide a plugin-based interface to a third-party system.</p>
+<h2 id="ebpf-for-performance-monitoring-of-5g-protocols">eBPF for performance monitoring of 5G protocols</h2>
+<p><img alt="Figure 10" src="../4-2.png" /></p>
+<h3 id="ngap-and-nas-performance-monitoring">NGAP and NAS performance monitoring</h3>
+<p>NAS messages are encapsulated into NGAP messages and NGAP relies on the SCTP of the 5G transport network layer. To extract information from NGAP messages, we need to parse SCTP packets containing multiple data chunks that can be fragmented.<br />
+Since XDP and TC hooks are at the packet level, they're not suitable for handling NGAP messages. To have direct access to messages, using tracepoint hooks is the way to go.</p>
+<p>Examples of NGAP and NAS metrics:</p>
+<ul>
+<li>NGAP Initial Context Setup Counters</li>
+<li>NGAP Setup Success Ratio</li>
+<li>NGAP Setup Time (ms)</li>
+<li>NGAP Procedure Duration (ms)</li>
+<li>NGAP Failed Procedures Cause Code</li>
+<li>PDU Session Establishment Attempts</li>
+</ul>
+<h3 id="packet-capturing-and-forwarding">Packet capturing and forwarding</h3>
+<p><img alt="Figure 9" src="../4-1.png" /></p>
+<ol>
+<li>A libpcap probe is installed on the interface.</li>
+<li>Packets pass through the BPF filter installed on the interface.</li>
+<li>Matching packets flow to the agent.</li>
+<li>The agent encodes incoming packets in PCAPNG format.</li>
+<li>Send them to the processing probe.</li>
+</ol>
+<h3 id="ebpf-for-estimating-energy-consumption">eBPF for estimating energy consumption</h3>
+<p><img alt="Figure 11" src="../4-3.png" /></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Using eBPF is hard. The way of implementation also changes based on what version of kernel is used. There's no easy packaging solution. Developers need to be familiar with not only the eBPF library but also the kernel they're working with.</p>
+<p>Although the development of eBPF might be challenging, it can be used to provide great observability, security, and networking in a cloud-native environment. Allow developers to dynamically program the kernel in a safe, performant, and scalable way. By leveraging the benefit of low overhead monitoring and close-to-source data processing, eBPF will be handy for real-time monitoring 5GC, or even boost the performance of K8s deployments.</p>
+<h2 id="about">About</h2>
+<p>Poyi Lin</p>
+<ul>
+<li>Graduate student majoring in 5GC Research</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/10138542">eBPF: A New Approach to Cloud-Native<br />
+Observability, Networking and Security for<br />
+Current (5G) and Future Mobile Networks (6G<br />
+and Beyond)</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

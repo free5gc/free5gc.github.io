@@ -1,0 +1,1251 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Fuzz Testing in Go: Discovering Vulnerabilities and Analyzing a Real Case (CVE-2022-43677) - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fuzz-testing-in-go-discovering-vulnerabilities-and-analyzing-a-real-case-cve-2022-43677" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fuzz Testing in Go: Discovering Vulnerabilities and Analyzing a Real Case (CVE-2022-43677)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fuzz-testing" class="md-nav__link">
+    Fuzz Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="Fuzz Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-fuzz-testing-fuzzing" class="md-nav__link">
+    What is Fuzz Testing (Fuzzing)?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-fuzz-testing-works" class="md-nav__link">
+    How Fuzz Testing Works
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#types-of-fuzz-testing" class="md-nav__link">
+    Types of Fuzz Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages-of-fuzz-testing" class="md-nav__link">
+    Advantages of Fuzz Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusion-for-fuzz-testing" class="md-nav__link">
+    Conclusion for fuzz testing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#go-fuzzing" class="md-nav__link">
+    Go Fuzzing
+  </a>
+  
+    <nav class="md-nav" aria-label="Go Fuzzing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-example-division" class="md-nav__link">
+    Simple Example - Division
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusion-for-go-fuzzing" class="md-nav__link">
+    Conclusion for Go Fuzzing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cve-2022-43677" class="md-nav__link">
+    CVE-2022-43677
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20230809/main.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20230809/main.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="fuzz-testing-in-go-discovering-vulnerabilities-and-analyzing-a-real-case-cve-2022-43677">Fuzz Testing in Go: Discovering Vulnerabilities and Analyzing a Real Case (CVE-2022-43677)</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Yu-Sheng Liu<br />
+Date: 2023/8/9</p>
+</div>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>In this article, we begin by introducing the concept of fuzz testing and its significance in software testing. Subsequently, we present Go Fuzzing as an illustrative example to demonstrate how to implement fuzz testing in Go. Lastly, we showcase a practical case, CVE-2022-43677, to exemplify how we conduct fuzz testing on the free5GC system.</p>
+<hr />
+<h2 id="fuzz-testing">Fuzz Testing</h2>
+<h3 id="what-is-fuzz-testing-fuzzing">What is Fuzz Testing (Fuzzing)?</h3>
+<p>Fuzz testing, commonly known as fuzzing, is an automated software testing technique used to uncover vulnerabilities, defects, and unexpected behavior in computer systems, applications, and networks.<br />
+The primary objective of fuzzing is to identify security flaws, crashes, or abnormal program behavior caused by invalid or unexpected inputs.</p>
+<h3 id="how-fuzz-testing-works">How Fuzz Testing Works</h3>
+<p>Fuzz testing involves subjecting the target software or system to a large number of inputs, including random or malformed data, to see how it handles them.<br />
+The idea is to explore edge cases and input combinations that may not have been adequately tested during traditional software testing.<br />
+Here's how the fuzzing process typically works:</p>
+<ol>
+<li>
+<p><strong>Test Input Generation</strong>:</p>
+<ul>
+<li>Fuzzing tools generate test inputs based on various techniques, which can be broadly categorized as:<ul>
+<li><strong>Random Fuzzing</strong>: The simplest approach where random data is generated as input.</li>
+<li><strong>Mutation-Based Fuzzing</strong>: Starting with valid inputs, the tool applies mutations to create variations of the original data.</li>
+<li><strong>Grammar-Based Fuzzing</strong>: Using a predefined grammar or structure to generate valid and invalid inputs.</li>
+<li><strong>Seed Corpus</strong>: Using existing inputs (e.g., files, network packets) as the starting set for mutation.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Test Execution</strong>:</p>
+<ul>
+<li>The generated inputs are provided as input to the target application, component, or system.</li>
+<li>The application is executed with each input, and its behavior is monitored during runtime.</li>
+</ul>
+</li>
+<li>
+<p><strong>Monitoring and Analysis</strong>:</p>
+<ul>
+<li>The fuzzer observes the application's behavior, including any crashes, exceptions, hangs, or memory-related issues.</li>
+<li>Code coverage analysis is often performed to determine which parts of the code were exercised during the testing.</li>
+</ul>
+</li>
+<li>
+<p><strong>Feedback and Iteration</strong>:</p>
+<ul>
+<li>Fuzzing tools use feedback mechanisms to prioritize and select inputs that lead to new code paths or unique behavior.</li>
+<li>The process is iterated with refined inputs to continue exploring deeper into the application.</li>
+</ul>
+</li>
+</ol>
+<h3 id="types-of-fuzz-testing">Types of Fuzz Testing</h3>
+<ol>
+<li>
+<p><strong>Black Box Fuzzing</strong>:</p>
+<ul>
+<li>The tester has no access to the application's internal code or design.</li>
+<li>Random or mutated inputs are provided to the application to observe its behavior.</li>
+<li>Suitable for testing closed-source software or systems where the tester has limited knowledge.</li>
+</ul>
+</li>
+<li>
+<p><strong>White Box Fuzzing</strong>:</p>
+<ul>
+<li>The tester has access to the application's source code and can leverage this knowledge for targeted testing.</li>
+<li>Inputs can be intelligently crafted to explore specific code paths and functions.</li>
+<li>Provides more in-depth coverage but requires access to the application's code.</li>
+</ul>
+</li>
+<li>
+<p><strong>Grey Box Fuzzing</strong>:</p>
+<ul>
+<li>A combination of black box and white box approaches.</li>
+<li>The tester has partial knowledge of the application, such as certain APIs or protocols, but not complete access to the source code.</li>
+<li>Offers a balance between targeted testing and exploration of unknown behaviors.</li>
+</ul>
+</li>
+</ol>
+<h3 id="advantages-of-fuzz-testing">Advantages of Fuzz Testing</h3>
+<ol>
+<li>
+<p><strong>Bug and Vulnerability Discovery</strong>:</p>
+<ul>
+<li>Fuzzing can uncover previously unknown security vulnerabilities and software defects, including memory corruption errors and input validation issues.</li>
+</ul>
+</li>
+<li>
+<p><strong>Automation and Efficiency</strong>:</p>
+<ul>
+<li>Fuzzing is an automated testing process, which allows it to scale and test large codebases quickly and efficiently.</li>
+</ul>
+</li>
+<li>
+<p><strong>Diverse Test Inputs</strong>:</p>
+<ul>
+<li>Fuzzing generates a wide range of test inputs, exploring various edge cases that might not be covered by manual testing.</li>
+</ul>
+</li>
+<li>
+<p><strong>Early Vulnerability Detection</strong>:</p>
+<ul>
+<li>Fuzzing can be integrated into the development process, enabling early detection and mitigation of vulnerabilities before deployment.</li>
+</ul>
+</li>
+</ol>
+<h3 id="conclusion-for-fuzz-testing">Conclusion for fuzz testing</h3>
+<p>Fuzz testing, or fuzzing, is a powerful and essential technique in the realm of software security testing.<br />
+By providing a diverse set of inputs and exploring uncharted code paths, fuzz testing uncovers vulnerabilities and defects that might otherwise remain hidden.</p>
+<p>Next, we will use Go fuzzing as an example to introduce how to develop a fuzzing in Go.</p>
+<hr />
+<h2 id="go-fuzzing">Go Fuzzing</h2>
+<p>Go officially supports fuzzing starting from Go 1.18, and its official figure provides a brief and clear summary of the fuzzing function components.<br />
+<img alt="" src="../go-fuzzing-1.png" /></p>
+<p>Similar to Go's unit test functions, the fuzzing function in Go must follow the naming convention <code>FuzzXxx</code> and take an argument of type <code>*testing.F</code>. This argument has two main functions, <code>Add</code> and <code>Fuzz</code>.</p>
+<ol>
+<li>
+<p><code>Add</code> <strong>Function</strong>:</p>
+<ul>
+<li>You can use the <code>Add</code> function to add your own test data to the seed corpus for fuzz testing. The seed corpus is the initial set of inputs that <code>go-fuzz</code> will use to start the fuzzing process.</li>
+</ul>
+</li>
+<li>
+<p><code>Fuzz</code> <strong>Function</strong>:</p>
+<ul>
+<li>The <code>Fuzz</code> function will be the target function that you want to test using fuzzing. It must have <code>*testing.T</code> as its first argument, similar to regular unit tests.</li>
+<li>Additionally, the <code>Fuzz</code> function supports variadic arguments with the following basic data types:<ul>
+<li><code>string</code>, <code>[]byte</code></li>
+<li><code>int</code>, <code>int8</code>, <code>int16</code>, <code>int32/rune</code>, <code>int64</code></li>
+<li><code>uint</code>, <code>uint8/byte</code>, <code>uint16</code>, <code>uint32</code>, <code>uint64</code></li>
+<li><code>float32</code>, <code>float64</code></li>
+<li><code>bool</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>These data types represent the different kinds of input data that can be passed to the <code>Fuzz</code> function during the fuzzing process. The fuzzer will generate and mutate inputs of these types to explore different code paths and uncover bugs or unexpected behavior in the target function.</p>
+<p>In summary, when writing fuzzing functions in Go, remember to use the <code>FuzzXxx</code> naming pattern, accept <code>*testing.F</code> as an argument, utilize the <code>Add</code> function to customize the seed corpus, and use the <code>Fuzz</code> function with supported basic data types to perform fuzz testing on your target functions.</p>
+<p>You can use the command to execute the fuzz testing:<br />
+<div class="highlight"><pre><span></span><code>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-fuzz<span class="o">=</span>&lt;regex&gt;<span class="w"> </span>-fuzztime<span class="o">=</span>&lt;duration<span class="w"> </span>or<span class="w"> </span>times&gt;
+
+<span class="c1"># Execute the fuzz testing until it crashs or finding some errors</span>
+go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-fuzz<span class="o">=</span>Fuzz
+
+<span class="c1"># Execute the fuzz testing ten iterations</span>
+go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-fuzz<span class="o">=</span>Fuzz<span class="w"> </span>-fuzztime<span class="o">=</span>10x
+
+<span class="c1"># Execute the fuzz testing twenty seconds</span>
+go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-fuzz<span class="o">=</span>Fuzz<span class="w"> </span>-fuzztime<span class="o">=</span>20s
+</code></pre></div></p>
+<h3 id="simple-example-division">Simple Example - Division</h3>
+<p>We have developed a very simple function called <code>Division</code> that accepts two arguments, <code>dividend</code> and <code>divisor</code>, and then returns two results: <code>quotient</code> and <code>remainder</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">Division</span><span class="p">(</span><span class="nx">dividend</span><span class="p">,</span><span class="w"> </span><span class="nx">divisor</span><span class="w"> </span><span class="kt">int32</span><span class="p">)</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">quotient</span><span class="p">,</span><span class="w"> </span><span class="nx">remainder</span><span class="w"> </span><span class="kt">int32</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">quotient</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">dividend</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">divisor</span>
+<span class="w">    </span><span class="nx">remainder</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">dividend</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nx">divisor</span>
+
+<span class="w">    </span><span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In the <code>FuzzDivision</code> function, we utilize the data generated by the Go fuzzer to test our <code>Division</code> function.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">FuzzDivision</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">F</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">f</span><span class="p">.</span><span class="nx">Fuzz</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">n1</span><span class="p">,</span><span class="w"> </span><span class="nx">n2</span><span class="w"> </span><span class="kt">int32</span><span class="p">,</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">q</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Division</span><span class="p">(</span><span class="nx">n1</span><span class="p">,</span><span class="w"> </span><span class="nx">n2</span><span class="p">)</span>
+
+<span class="w">        </span><span class="nx">require</span><span class="p">.</span><span class="nx">Equal</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">n1</span><span class="p">,</span><span class="w"> </span><span class="nx">n2</span><span class="o">*</span><span class="nx">q</span><span class="o">+</span><span class="nx">r</span><span class="p">)</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>We expected to see:<br />
+<div class="highlight"><pre><span></span><code>n1 / n2 = q ... r
+n1 = n2 * q + r
+</code></pre></div></p>
+<p>There should not be any problems with this implementation.</p>
+<p>Then we can use the following command to start the fuzz testing.</p>
+<div class="highlight"><pre><span></span><code>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-fuzz<span class="o">=</span>^FuzzDivision$
+</code></pre></div>
+<p>The fuzz testing reports the error "integer divide by zero".</p>
+<p><img alt="" src="../go-fuzzing-2.png" /></p>
+<p>As a normal user, we understand that the divisor cannot be zero. However, the input data may not always be as expected. This is precisely why we use fuzz testing—to help us find edge cases and uncover unexpected behavior.</p>
+<p>Go stores the data that caused the fuzz testing to fail. You can check them using the following command.<br />
+    * <strong>Note</strong>: The file name, <code>29bf8459dc5d452f64d41eb8a253f6a672939b146b07fcced0b17e99729e9b91</code>, may not be the same.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>testdata/fuzz/FuzzDivision/29bf8459dc5d452f64d41eb8a253f6a672939b146b07fcced0b17e99729e9b91
+</code></pre></div>
+<p>The content of the file is as follows:<br />
+<div class="highlight"><pre><span></span><code>go test fuzz v1
+int32(-7)
+rune(&#39;\x00&#39;)
+</code></pre></div></p>
+<p>The first line indicates the encoding version, and the subsequent lines represent the argument values that triggered the error during the fuzz testing.</p>
+<p>Now we can modify our <code>Division</code> function to check the <code>divisor</code> if it is zero.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">ErrorDivideByZero</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;integer divide by zero&quot;</span><span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">Division</span><span class="p">(</span><span class="nx">dividend</span><span class="p">,</span><span class="w"> </span><span class="nx">divisor</span><span class="w"> </span><span class="kt">int32</span><span class="p">)</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">quotient</span><span class="p">,</span><span class="w"> </span><span class="nx">remainder</span><span class="w"> </span><span class="kt">int32</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">divisor</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ErrorDivideByZero</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">quotient</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">dividend</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">divisor</span>
+<span class="w">    </span><span class="nx">remainder</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">dividend</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nx">divisor</span>
+
+<span class="w">    </span><span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Similarly, the <code>FuzzDivision</code> fuzzing function now checks for the presence of the <code>ErrorDivideByZero</code> error.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">FuzzDivision</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">F</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">f</span><span class="p">.</span><span class="nx">Add</span><span class="p">(</span><span class="nb">int32</span><span class="p">(</span><span class="mi">67</span><span class="p">),</span><span class="w"> </span><span class="nb">int32</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="w">    </span><span class="nx">f</span><span class="p">.</span><span class="nx">Fuzz</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">n1</span><span class="p">,</span><span class="w"> </span><span class="nx">n2</span><span class="w"> </span><span class="kt">int32</span><span class="p">,</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">q</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Division</span><span class="p">(</span><span class="nx">n1</span><span class="p">,</span><span class="w"> </span><span class="nx">n2</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">ErrorDivideByZero</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">require</span><span class="p">.</span><span class="nx">Equal</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">n1</span><span class="p">,</span><span class="w"> </span><span class="nx">n2</span><span class="o">*</span><span class="nx">q</span><span class="o">+</span><span class="nx">r</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Now, we can use the following command to re-test the failing case.</p>
+<div class="highlight"><pre><span></span><code>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-run<span class="o">=</span>FuzzDivision/29bf8459dc5d452f64d41eb8a253f6a672939b146b07fcced0b17e99729e9b91
+</code></pre></div>
+<h3 id="conclusion-for-go-fuzzing">Conclusion for Go Fuzzing</h3>
+<p>We have used a simple example to describe how to develop a fuzzing function in Go and how to leverage the Go command-line tool to execute fuzz testing.</p>
+<p>Next, we will examine a real case, CVE-2022-43677, and demonstrate the process of developing a fuzzing function to identify edge cases.</p>
+<hr />
+<h2 id="cve-2022-43677">CVE-2022-43677</h2>
+<p>Accroding to the descriptoin:</p>
+<blockquote>
+<p>In free5GC 3.2.1, a malformed NGAP message can crash the AMF and NGAP decoders via an index-out-of-range panic in aper.GetBitString.</p>
+</blockquote>
+<p>In response to this vulnerability, we have developed a fuzzing function to test the NGAP decoder.<br />
+The function utilizes two approaches: modifying the NGAP message's content under a valid template or adjusting its format by changing the Information Elements (IEs) with variable lengths.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Put the code under the free5gc/test</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">FuzzNgapDecode</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">F</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">f</span><span class="p">.</span><span class="nx">Fuzz</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">modifyWhat</span><span class="w"> </span><span class="kt">uint8</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">changeIe0</span><span class="p">,</span><span class="w"> </span><span class="nx">changeIe1</span><span class="p">,</span><span class="w"> </span><span class="nx">changeIe2</span><span class="p">,</span><span class="w"> </span><span class="nx">changeIe3</span><span class="p">,</span><span class="w"> </span><span class="nx">changeIe4</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">valueIe0A</span><span class="w"> </span><span class="kt">uint32</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">valueIe2ACellId</span><span class="w"> </span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="nx">valueIe2ATac</span><span class="w"> </span><span class="kt">uint32</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">valueIe3A</span><span class="w"> </span><span class="kt">uint64</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">valueIe4A</span><span class="w"> </span><span class="kt">uint64</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">valueIePlmn</span><span class="w"> </span><span class="kt">uint32</span><span class="p">,</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">idx</span><span class="p">,</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">sendMsg</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">registrationRequest</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">bs</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">ngapPdu</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">NGAPPDU</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">mobileIdentity5GS</span><span class="w"> </span><span class="nx">nasType</span><span class="p">.</span><span class="nx">MobileIdentity5GS</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">ue</span><span class="w"> </span><span class="o">*</span><span class="nx">test</span><span class="p">.</span><span class="nx">RanUeContext</span>
+
+<span class="w">        </span><span class="c1">// New UE</span>
+<span class="w">        </span><span class="nx">ue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">NewRanUeContext</span><span class="p">(</span><span class="s">&quot;imsi-2089300007487&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">security</span><span class="p">.</span><span class="nx">AlgCiphering128NEA0</span><span class="p">,</span><span class="w"> </span><span class="nx">security</span><span class="p">.</span><span class="nx">AlgIntegrity128NIA2</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">models</span><span class="p">.</span><span class="nx">AccessType__3_GPP_ACCESS</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">ue</span><span class="p">.</span><span class="nx">AmfUeNgapId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="nx">ue</span><span class="p">.</span><span class="nx">AuthenticationSubs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">GetAuthSubscription</span><span class="p">(</span><span class="nx">TestGenAuthData</span><span class="p">.</span><span class="nx">MilenageTestSet19</span><span class="p">.</span><span class="nx">K</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TestGenAuthData</span><span class="p">.</span><span class="nx">MilenageTestSet19</span><span class="p">.</span><span class="nx">OPC</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TestGenAuthData</span><span class="p">.</span><span class="nx">MilenageTestSet19</span><span class="p">.</span><span class="nx">OP</span><span class="p">)</span>
+
+<span class="w">        </span><span class="nx">mobileIdentity5GS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nasType</span><span class="p">.</span><span class="nx">MobileIdentity5GS</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">Len</span><span class="p">:</span><span class="w">    </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="c1">// suci</span>
+<span class="w">            </span><span class="nx">Buffer</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">uint8</span><span class="p">{</span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x02</span><span class="p">,</span><span class="w"> </span><span class="mh">0xf8</span><span class="p">,</span><span class="w"> </span><span class="mh">0x39</span><span class="p">,</span><span class="w"> </span><span class="mh">0xf0</span><span class="p">,</span><span class="w"> </span><span class="mh">0xff</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x47</span><span class="p">,</span><span class="w"> </span><span class="mh">0x78</span><span class="p">},</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">modifyWhat</span><span class="o">%</span><span class="mi">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">DoModifyContent</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">changeIe0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// RAN UE NGAP ID</span>
+<span class="w">                </span><span class="nx">ue</span><span class="p">.</span><span class="nx">RanUeNgapId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">int64</span><span class="p">(</span><span class="nx">valueIe0A</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="nx">registrationRequest</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nasTestpacket</span><span class="p">.</span><span class="nx">GetRegistrationRequest</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">nasMessage</span><span class="p">.</span><span class="nx">RegistrationType5GSInitialRegistration</span><span class="p">,</span><span class="w"> </span><span class="nx">mobileIdentity5GS</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GetUESecurityCapability</span><span class="p">(),</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">            </span><span class="nx">ngapPdu</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ngapTestpacket</span><span class="p">.</span><span class="nx">BuildInitialUEMessage</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">RanUeNgapId</span><span class="p">,</span><span class="w"> </span><span class="nx">registrationRequest</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">changeIe2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// User Location Information</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ie</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">ngapPdu</span><span class="p">.</span><span class="nx">InitiatingMessage</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">InitialUEMessage</span><span class="p">.</span><span class="nx">ProtocolIEs</span><span class="p">.</span><span class="nx">List</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="nx">ie</span><span class="p">.</span><span class="nx">Id</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">ProtocolIEIDUserLocationInformation</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">valueIePlmn</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="nb">uint32</span><span class="p">(</span><span class="nx">PlmnMask</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">binary</span><span class="p">.</span><span class="nx">LittleEndian</span><span class="p">.</span><span class="nx">PutUint32</span><span class="p">(</span><span class="nx">bs</span><span class="p">,</span><span class="w"> </span><span class="nx">valueIePlmn</span><span class="p">)</span>
+
+<span class="w">                        </span><span class="nx">NgRan</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ie</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">UserLocationInformation</span><span class="p">.</span><span class="nx">UserLocationInformationNR</span>
+<span class="w">                        </span><span class="nx">NgRan</span><span class="p">.</span><span class="nx">NRCGI</span><span class="p">.</span><span class="nx">PLMNIdentity</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bs</span><span class="p">[:</span><span class="nx">PlmnByteLen</span><span class="p">]</span>
+<span class="w">                        </span><span class="nx">NgRan</span><span class="p">.</span><span class="nx">TAI</span><span class="p">.</span><span class="nx">PLMNIdentity</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bs</span><span class="p">[:</span><span class="nx">PlmnByteLen</span><span class="p">]</span>
+
+<span class="w">                        </span><span class="nx">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">valueIe2ACellId</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="nb">uint64</span><span class="p">(</span><span class="nx">CellIdMask</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">binary</span><span class="p">.</span><span class="nx">LittleEndian</span><span class="p">.</span><span class="nx">PutUint64</span><span class="p">(</span><span class="nx">bs</span><span class="p">,</span><span class="w"> </span><span class="nx">valueIe2ACellId</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">NgRan</span><span class="p">.</span><span class="nx">NRCGI</span><span class="p">.</span><span class="nx">NRCellIdentity</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">Bytes</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bs</span><span class="p">[:</span><span class="nx">CellIdByteLen</span><span class="p">]</span>
+
+<span class="w">                        </span><span class="nx">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">valueIe2ATac</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="nb">uint32</span><span class="p">(</span><span class="nx">TacMask</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">binary</span><span class="p">.</span><span class="nx">LittleEndian</span><span class="p">.</span><span class="nx">PutUint32</span><span class="p">(</span><span class="nx">bs</span><span class="p">,</span><span class="w"> </span><span class="nx">valueIe2ATac</span><span class="p">)</span>
+<span class="w">                        </span><span class="nx">NgRan</span><span class="p">.</span><span class="nx">TAI</span><span class="p">.</span><span class="nx">TAC</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bs</span><span class="p">[:</span><span class="nx">TacByteLen</span><span class="p">]</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">changeIe3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// RRC Establishment Cause</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ie</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">ngapPdu</span><span class="p">.</span><span class="nx">InitiatingMessage</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">InitialUEMessage</span><span class="p">.</span><span class="nx">ProtocolIEs</span><span class="p">.</span><span class="nx">List</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="nx">ie</span><span class="p">.</span><span class="nx">Id</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">ProtocolIEIDRRCEstablishmentCause</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">ie</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">RRCEstablishmentCause</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">aper</span><span class="p">.</span><span class="nx">Enumerated</span><span class="p">(</span><span class="nx">valueIe3A</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">changeIe4</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// UE Context Request</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ie</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">ngapPdu</span><span class="p">.</span><span class="nx">InitiatingMessage</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">InitialUEMessage</span><span class="p">.</span><span class="nx">ProtocolIEs</span><span class="p">.</span><span class="nx">List</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="nx">ie</span><span class="p">.</span><span class="nx">Id</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">ProtocolIEIDUEContextRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">ie</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nx">UEContextRequest</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">aper</span><span class="p">.</span><span class="nx">Enumerated</span><span class="p">(</span><span class="nx">valueIe4A</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="nx">sendMsg</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ngap</span><span class="p">.</span><span class="nx">Encoder</span><span class="p">(</span><span class="nx">ngapPdu</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">modifyWhat</span><span class="o">%</span><span class="mi">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">DoModifyFormat</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">registrationRequest</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nasTestpacket</span><span class="p">.</span><span class="nx">GetRegistrationRequest</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">nasMessage</span><span class="p">.</span><span class="nx">RegistrationType5GSInitialRegistration</span><span class="p">,</span><span class="w"> </span><span class="nx">mobileIdentity5GS</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">GetUESecurityCapability</span><span class="p">(),</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">changeIe1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">registrationRequest</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                </span><span class="nx">registrationRequest</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">registrationRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">registrationRequest</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">registrationRequest</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">registrationRequest</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                </span><span class="nx">registrationRequest</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">registrationRequest</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">registrationRequest</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="nx">ngapPdu</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ngapTestpacket</span><span class="p">.</span><span class="nx">BuildInitialUEMessage</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">RanUeNgapId</span><span class="p">,</span><span class="w"> </span><span class="nx">registrationRequest</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="nx">sendMsg</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ngap</span><span class="p">.</span><span class="nx">Encoder</span><span class="p">(</span><span class="nx">ngapPdu</span><span class="p">)</span>
+<span class="w">            </span><span class="nx">require</span><span class="p">.</span><span class="nx">Nil</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Error: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="nx">require</span><span class="p">.</span><span class="nx">Equal</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">[</span><span class="mi">4</span><span class="p">:]),</span><span class="w"> </span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">sendMsg</span><span class="p">)</span>
+
+<span class="w">            </span><span class="nx">idx</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Index</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">,</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;\x00\x70\x40&quot;</span><span class="p">))</span>
+<span class="w">            </span><span class="nx">assert</span><span class="p">.</span><span class="nx">NotEqual</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">idx</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Can not find UE context Request&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">idx</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="nx">valueIe4A</span><span class="o">%</span><span class="mi">8</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">valueIe4A</span><span class="o">%</span><span class="mi">8</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">n</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">n</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">valueIe4A</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="nx">sendMsg</span><span class="p">[</span><span class="nx">idx</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">uint8</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+<span class="w">                </span><span class="nx">sendMsg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">sendMsg</span><span class="p">[:</span><span class="nx">idx</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+<span class="w">                </span><span class="nx">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="w">                </span><span class="nx">binary</span><span class="p">.</span><span class="nx">LittleEndian</span><span class="p">.</span><span class="nx">PutUint64</span><span class="p">(</span><span class="nx">bs</span><span class="p">,</span><span class="w"> </span><span class="nx">valueIe4A</span><span class="p">)</span>
+
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">n</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">sendMsg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">,</span><span class="w"> </span><span class="nx">bs</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+<span class="w">                </span><span class="p">}</span>
+
+<span class="w">                </span><span class="nx">sendMsg</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nb">uint8</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="c1">// total length</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">require</span><span class="p">.</span><span class="nx">Equal</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">[</span><span class="mi">4</span><span class="p">:]),</span><span class="w"> </span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">sendMsg</span><span class="p">)</span>
+
+<span class="w">        </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ngap</span><span class="p">.</span><span class="nx">Decoder</span><span class="p">(</span><span class="nx">sendMsg</span><span class="p">)</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>We can use the following command to execute the fuzz testing.</p>
+<div class="highlight"><pre><span></span><code><span class="k">go</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="o">-</span><span class="nx">fuzz</span><span class="p">=^</span><span class="nx">FuzzNgapDecode</span><span class="err">$</span><span class="w"> </span><span class="o">-</span><span class="nx">run</span><span class="p">=^</span><span class="nx">FuzzNgapDecode</span><span class="err">$</span>
+</code></pre></div>
+<p>The test resulted in a crash, which confirms the presence of the vulnerability as described in CVE-2022-43677.</p>
+<p><img alt="" src="../cve-1.png" /></p>
+<p>The bug was found in the package <a href="https://github.com/free5gc/aper/tree/v1.0.4">aper at version v1.0.4</a>. Fortunately, the <a href="https://github.com/free5gc/aper/tree/a2b93630a4ee1c13247970b417f9c868db127100">latest version</a> of the package has already fixed this issue. To verify the fix, we can update the aper package to the latest commit using the following commands:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Update package aper to the latest commit</span>
+go<span class="w"> </span>get<span class="w"> </span>github.com/free5gc/aper@main
+</code></pre></div>
+<p>After updating the aper package, we can test it again with the fuzzing function:</p>
+<p><div class="highlight"><pre><span></span><code>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-fuzz<span class="o">=</span>^FuzzNgapDecode$<span class="w"> </span>-run<span class="o">=</span>^FuzzNgapDecode$
+</code></pre></div><br />
+<img alt="" src="../cve-2.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Alternatively, re-testing the failing case</span>
+go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-run<span class="o">=</span>FuzzNgapDecode/87af855bbc381c8d510af5ce897fcdd7f9154574e61c0413223f7e31769c2767
+</code></pre></div>
+<p><img alt="" src="../cve-3.png" /></p>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>Fuzz testing is a powerful technique for improving the security and reliability of software systems. By subjecting programs to a wide range of inputs, fuzzing can uncover vulnerabilities and defects that might not be found through traditional testing methods. It automates the testing process, making it efficient and scalable for large codebases.</p>
+<p>In the context of Go programming, Go fuzzing is well-supported and integrates seamlessly with the standard testing framework. Developers can create fuzzing functions to target specific functions and uncover potential issues using random or mutated inputs.</p>
+<p>To demonstrate the effectiveness of fuzz testing, we presented a real case, CVE-2022-43677, which affected free5GC version 3.2.1. By developing a fuzzing function for the NGAP decoder, we were able to identify a vulnerability that caused a crash.</p>
+<p>In conclusion, fuzz testing is a critical practice in software development, enabling developers to proactively discover and resolve bugs and vulnerabilities. It empowers them to deliver more secure and robust software systems, providing users with a higher level of confidence in the applications they use. By incorporating fuzz testing as part of the software development lifecycle, developers can significantly enhance the quality and security of their software products.</p>
+<hr />
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://go.dev/security/fuzz/">Go Fuzzing</a></li>
+<li><a href="https://www.cvedetails.com/cve/CVE-2022-43677/">CVE-2022-43677</a></li>
+</ul>
+<hr />
+<h2 id="about">About</h2>
+<p>I'm Yu-Sheng Liu, a master's student at National Yang Ming Chiao Tung University. My research topic focuses on improving the performance of the 5G core network, such as reducing the latency of message propagation in SBI.<br />
+If you have any questions, please don't hesitate to contact me!</p>
+<ul>
+<li><a href="https://www.linkedin.com/in/yu-sheng-liu-41a45a24a/">LinkedIn</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
