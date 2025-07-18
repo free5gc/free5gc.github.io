@@ -4,6 +4,7 @@
 
 ## Official
 
+- [2025/07/23: Flexible GTP-U Handling: A Userspace Implementation](./20250723/20250723.md)
 - [2025/07/09: Time Synchronization with Linux Precision Time Protocol](./20250709/20250709.md)
 - [2025/07/03: A Practical Guide to Network Slicing and Traffic Steering with free5GC and OAI-MEC](./20250625/20250625.md)
 - [2025/05/21: Go context in free5GC](./20250521/20250521.md)
