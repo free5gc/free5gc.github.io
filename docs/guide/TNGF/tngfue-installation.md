@@ -30,7 +30,8 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 * Then, scroll the page all the way down and click on `CREATE`.
 
 ## 3. Access Point Setup
-
+Follow Section 3.1 to set up an Access Point using OpenWRT firmware or, alternatively,  Section 3.2 to build an AP on Ubuntu 22.04 using the hostapd daemon.
+### 3.1 OpenWRT
 **Note:** The steps of this section were tested using OpenWrt as AP firmware (see screenshot below)
 
 #### AP information
@@ -52,6 +53,50 @@ RadiusBindAddress: <YOUR_FREE5GC_IP> # IP address of Nwu interface (IKE) on this
 #### Open Dynamic DHCP
 > **Network → Interface → Edit lan →  DHCP server → Advance Setting**
 > ![AP3](./AP3.png) -->
+
+### 3.2 Hostapd (CLI)
+**Note:** This section explains how to use hostapd to set up an access point. Hostapd is an open-source daemon that can be used on Linux systems (like Ubuntu) to build a DIY alternative to OpenWRT.
+
+To install hostapd on Ubuntu 22.04 (it requires a Wi-Fi interface available):
+```
+sudo apt install hostapd
+```
+
+Write a new config file for hostapd:
+```
+sudo nano /etc/hostapd/hostapd.conf
+```
+
+Paste the following content into it: 
+```
+interface=wlan0
+driver=nl80211
+ssid=free5gc-ap
+hw_mode=g
+channel=6
+ieee8021x=1
+auth_algs=1
+wpa=2
+wpa_key_mgmt=WPA-EAP
+rsn_pairwise=CCMP
+
+# RADIUS config
+auth_server_addr=192.168.1.102
+auth_server_port=1812
+auth_server_shared_secret=free5gctngf
+
+nas_identifier=myhostapd
+```
+**Note 1:** Ensure that `auth_server_addr` and `auth_server_shared_secret` must match `RadiusBindAddress` and `RadiusSecret` parameters on [tngfcfg.yaml file](https://github.com/free5gc/free5gc/blob/main/config/tngfcfg.yaml).
+
+**Note 2:** Ensure that `interface` matches the name of the WiFi interface of your device.
+
+Start the hostapd service:
+```
+sudo systemctl unmask hostapd
+sudo systemctl enable --now hostapd
+```
+
 
 ## 4. TNGFUE Installation
 Install TNGFUE in another device with a Wi-Fi interface available
