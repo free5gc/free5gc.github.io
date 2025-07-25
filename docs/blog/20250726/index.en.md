@@ -26,6 +26,7 @@ We can set scheduling strategies through Restful API to the Gthulhu API server, 
 In this experiment, my machine was running Ubuntu 24.04 LTS with Linux Kernel 6.12. The purpose was to observe the impact of Gthulhu on data layer performance after loading.
 
 The test environment was as follows:
+
 - VM1 (Ubuntu 24.04 LTS, Linux Kernel 6.12)
     - Deployed free5GC v4.0.1
 - VM2 (Ubuntu 20.04 LTS, Linux Kernel 5.4.0)
@@ -38,12 +39,14 @@ After establishing the PDU Session, I used the `ping` tool to test the UPF N6 in
 ![alt text](fig3.png)
 
 Before loading, Linux's default scheduler was EEVDF, with RTT parameters as follows:
+
 - rtt min = 1.263 ms
 - rtt avg = 1.907 ms
 - rtt max = 6.405 ms
 - rtt mdev = 0.657 ms
 
 After loading Gthulhu, the RTT parameters changed to:
+
 - rtt min = 1.222 ms
 - rtt avg = 1.864 ms
 - rtt max = 3.771 ms

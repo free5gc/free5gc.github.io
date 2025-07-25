@@ -26,6 +26,7 @@ Linux Kernel 自 v6.12 開始支援 sched_ext，它允許使用者藉由 eBPF �
 在本次實驗中，筆者的機器運作 在 Ubuntu 24.04 LTS 上，使用 Linux Kernel 6.12。實驗的目的是觀察 Gthulhu 在載入後對資料層效能的影響。
 
 試驗環境如下：
+
 - VM1 (Ubuntu 24.04 LTS, Linux Kernel 6.12)
     - 部署 free5GC v4.0.1
 - VM2 (Ubuntu 20.04 LTS, Linux Kernel 5.4.0)
@@ -38,6 +39,7 @@ Linux Kernel 自 v6.12 開始支援 sched_ext，它允許使用者藉由 eBPF �
 ![alt text](fig3.png)
 
 載入前，Linux 預設的排程器為 EEVDF，RTT 相關參數如下：
+
 - rtt min = 1.263 ms
 - rtt avg = 1.907 ms
 - rtt max = 6.405 ms
@@ -45,6 +47,7 @@ Linux Kernel 自 v6.12 開始支援 sched_ext，它允許使用者藉由 eBPF �
 
 rtt min/avg/max/mdev = 1.222/1.864/3.771/0.433 ms
 載入 Gthulhu 後，RTT 參數變化如下：
+
 - rtt min = 1.222 ms
 - rtt avg = 1.864 ms
 - rtt max = 3.771 ms

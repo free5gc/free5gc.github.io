@@ -4,7 +4,7 @@
 
 ## Official
 
-- [2025/07/26: Improving Network Performance with Custom eBPF-based Schedulers](./20250726/index.en.md) [zh-tw](./20250726/index.md)
+- [2025/07/26: Improving Network Performance with Custom eBPF-based Schedulers](./20250726/index.en.md), [[zh-tw]](./20250726/index.md)
 - [2025/07/23: Flexible GTP-U Handling: A Userspace Implementation](./20250723/20250723.md)
 - [2025/07/09: Time Synchronization with Linux Precision Time Protocol](./20250709/20250709.md)
 - [2025/07/03: A Practical Guide to Network Slicing and Traffic Steering with free5GC and OAI-MEC](./20250625/20250625.md)
