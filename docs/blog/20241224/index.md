@@ -315,9 +315,10 @@ $ sudo bpftool btf list | grep gtp5g
 410: name [gtp5g]  size 243774B
 ```
 
-use the command below to dump gtp5g BTF to C file:
+use the command below to dump vmlinux and gtp5g BTF to C file:
 ```sh
-$ sudo bpftool btf dump file /sys/kernel/btf/gtp5g format c
+$ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux/vmlinux.h
+$ bpftool btf dump file /sys/kernel/btf/gtp5g format c > vmlinux/vmlinux.h
 ```
 
 ## Trace the function calls in GTP5G
@@ -351,24 +352,26 @@ If we want to trace the function entry of gtp5g_encap_recv, we can write a progr
 #include <bpf_tracing.h>
 #include <bpf_helpers.h>
 
-SEC("fentry/gtp5g_encap_recv")
-int BPF_PROG(gtp5g_recv, struct sock *sk, struct sk_buff *skb)
+SEC("fentry/gtp5g_xmit_skb_ipv4")
+int BPF_PROG(gtp5g_uplink, struct sk_buff *skb, struct gtp5g_pktinfo *pktinfo)
 {
-    if (!skb->dev) {
-        bpf_printk("device doesn't exist");
-    }
-    bpf_printk("device name: %s", skb->dev->name);
+    __u64 pid_tgid = bpf_get_current_pid_tgid();
+    __u32 pid = pid_tgid & 0xFFFFFFFF;
+    __u32 tgid = pid_tgid >> 32;
+    __u32 cpu = bpf_get_smp_processor_id();
+    
+    bpf_printk("gtp5g_xmit_skb_ipv4: PID=%u, TGID=%u, CPU=%u", pid, tgid, cpu);
     return 0;
 }
 
 char _license[] SEC("license") = "GPL";
 ```
 
-- Any program with the `fentry` prefix will be executed before the execution of target function (in this case is `gtp5g_encap_recv()`), and can be identified as the `BPF_PROG_TYPE_TRACING` type by the kernel.
+- Any program with the `fentry` prefix will be executed before the execution of target function (in this case is `gtp5g_xmit_skb_ipv4()`), and can be identified as the `BPF_PROG_TYPE_TRACING` type by the kernel.
 - The arguments of the `BPF_PROG` follows the kernel function you want to trace. for example:
 ```c
 // The definition in the gtp5g, the BPF_PROG's args should be same with the target function
-static int gtp5g_encap_recv(struct sock *, struct sk_buff *);
+static int gtp5g_xmit_skb_ipv4(struct sk_buff *, struct gtp5g_pktinfo *);
 ```
 
 ### Load and attach eBPF program
@@ -397,7 +400,7 @@ func main() {
 		panic(err)
 	}
 
-	prog, err := bpfModule.GetProgram("gtp5g_recv")
+	prog, err := bpfModule.GetProgram("gtp5g_uplink")
 	if err != nil {
 		panic(err)
 	}
@@ -423,6 +426,21 @@ func main() {
 To see the output of the attached eBPF program:
 ```sh
 sudo cat /sys/kernel/debug/tracing/trace_pipe
+           <...>-236797  [009] b.s21 6141919.013036: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=236797, TGID=236797, CPU=9
+          <idle>-0       [009] b.s31 6141920.013210: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141921.014070: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141922.013615: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141923.013975: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141924.014871: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141925.013730: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+        kubelite-3377186 [009] b.s21 6141926.013908: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=3377186, TGID=3376931, CPU=9
+          <idle>-0       [009] b.s31 6141927.014084: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141928.015013: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141929.014465: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141930.014600: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141931.013976: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141932.014142: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
+          <idle>-0       [009] b.s31 6141933.014331: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=9
 ```
 
 ## Conclusion
