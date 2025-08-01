@@ -228,6 +228,7 @@ round-trip min/avg/max = 20.349/55.638/96.299 ms
 ```
 
 Next, let's try the following approach to see if we can reduce round-trip-time:
+
 - Assign a specific CPU (using CPU 5 here) to UERANSIM and the `icmp` tool
 - If other tasks are assigned to CPU 5, randomly assign them to other CPUs
 

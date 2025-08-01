@@ -82,7 +82,7 @@ $ cat /proc/irq/159/smp_affinity_list
 
 在筆者先前撰寫的 [Debug gtp5g kernel module using stacktrace and eBPF](https://free5gc.org/blog/20241224/) 一文中已經探討過使用 eBPF 追蹤 kernel module 的可能性，只要追蹤一下 gtp5g 的 source code 便可以得知 downlink 封包最後會進入 `gtp5g_xmit_skb_ipv4`，使用 `sudo cat /sys/kernel/tracing/available_filter_functions | grep gtp5g` 也可得知該函式在 available_filter_functions 清單內。
 
-```c=
+```c
 SEC("fentry/gtp5g_xmit_skb_ipv4")
 int BPF_PROG(capture_skb, struct sk_buff *skb, struct gtp5g_pktinfo *pktinfo)
 {
@@ -97,6 +97,7 @@ int BPF_PROG(capture_skb, struct sk_buff *skb, struct gtp5g_pktinfo *pktinfo)
 ```
 
 將上述的 eBPF 程式載入到核心後，利用 UERANSIM 建立 PDU Session 向 `8.8.8.8` 發送 ICMP 封包時，我們即可觀察 eBPF 程式的輸出：
+
 ```
 gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
           <idle>-0       [011] b.s31 6156182.987076: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
@@ -116,6 +117,7 @@ gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
 
 從 eBPF 程式的輸出可得知，gtp5g 的 downlink 流量確實由 CPU 11 負責處理，與先前的猜測相同。
 當我使用 `echo "12" | sudo tee /proc/irq/159/smp_affinity_list` 修改 IRQ 159 綁定的 CPU 後，eBPF 程式的輸出也會馬上改變：
+
 ```
 gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
           <idle>-0       [012] b.s31 6156445.013125: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
@@ -132,6 +134,7 @@ gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
 
 話說回來，即使將 irqbalance 關閉，eBPF 程式的輸出仍有可能出現非預期情況。
 當我將 ICMP 的目標從外部 IP 改為 UPF container 本身 N6 網卡的 IP 時，eBPF 程式的輸出如下：
+
 ```
           nr-gnb-168420  [016] b.s41 6158463.012636: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=16
           nr-gnb-168420  [016] b.s41 6158464.012282: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=16
@@ -144,6 +147,7 @@ gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
           nr-gnb-168420  [006] b.s41 6158471.012763: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
           nr-gnb-168420  [006] b.s41 6158472.012862: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
 ```
+
 基本上執行 `gtp5g_xmit_skb_ipv4` 的 CPU 一定會是 scheduler 為 `nr-gnb` process 分配的 CPU。原因也很簡單，因為送往 N6 網卡的封包會在 Container 內處理完畢，不會經過 enp7s0 網卡，所以封包從 UERANSIM 傳出一路到 N6 返回都會在同一個上下文內處理完畢。
 
 了解 Linux 核心處理封包的行為後，我們可以實驗看看當系統滿載的情況下，UERANSIM 透過 uesimtun0 向 UPF N6 IP 發送 ICMP echo request 的表現。
@@ -180,6 +184,7 @@ $ stress-ng -c 20 --timeout 60s --metrics-brief
 ### 使用 `ping` 進行測試
 
 Gthulhu scheduler 借鑑了 scx_rustland 的設計，因此，在本實驗中我們使用 scx_rustland 作為對照組：
+
 ```shell
 /UERANSIM # taskset -c 5 ping 10.10.2.60 -I uesimtun0 -c 10
 PING 10.10.2.60 (10.10.2.60): 56 data bytes
@@ -200,6 +205,7 @@ round-trip min/avg/max = 59.987/73.186/100.525 ms
 ```
 
 我們可以觀察出：當系統的每個 CPU 滿載時，scx_rustland 在處理封包的效率上非常糟糕。這個問題在 Gthulhu 排程器上亦然：
+
 ```shell
 /UERANSIM # taskset -c 5 ping 10.10.2.60 -I uesimtun0 -c 10
 PING 10.10.2.60 (10.10.2.60): 56 data bytes
@@ -220,6 +226,7 @@ round-trip min/avg/max = 20.349/55.638/96.299 ms
 ```
 
 接著，讓我們嘗試以下做法，看能不能降低 round-trip-time：
+
 - 將某個 CPU（這裡使用 CPU 5）給 UERANSIM、`icmp` 工具
 - 若其他任務被分配到 CPU 5，則隨機為它分配其他 CPU
 
@@ -275,6 +282,7 @@ round-trip min/avg/max = 20.349/55.638/96.299 ms
 ```
 
 Special pid `168420` 是透過 eBPF 程式觀察出負責執行 `gtp5g_xmit_skb_ipv4()` 的 process id：
+
 ```
           nr-gnb-770208  [005] b.s41 6233538.456200: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
           nr-gnb-770208  [005] bNs41 6233711.301750: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
@@ -290,6 +298,7 @@ Special pid `168420` 是透過 eBPF 程式觀察出負責執行 `gtp5g_xmit_skb_
 ```
 
 完成修改後，讓我們嘗試重新執行 Gthulhu 並再次測試：
+
 ```shell
 /UERANSIM # taskset -c 5 ping 10.10.2.60 -I uesimtun0 -c 10
 PING 10.10.2.60 (10.10.2.60): 56 data bytes
