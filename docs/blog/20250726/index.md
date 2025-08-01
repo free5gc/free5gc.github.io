@@ -156,7 +156,7 @@ gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
 
 在本次實驗中，組態的設定固定如下：
 
-```yaml=
+```yaml
 # Gthulhu Scheduler Configuration
 # This configuration file allows you to adjust scheduler parameters before eBPF program loading
 
