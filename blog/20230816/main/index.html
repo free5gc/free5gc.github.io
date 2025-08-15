@@ -1,0 +1,1202 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Introduce Kubernetes and Deploy free5GC on Kubernetes with helm - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduce-kubernetes-and-deploy-free5gc-on-kubernetes-with-helm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduce Kubernetes and Deploy free5GC on Kubernetes with helm
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abstract" class="md-nav__link">
+    Abstract
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduce-kubernetes" class="md-nav__link">
+    Introduce Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduce Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pods" class="md-nav__link">
+    Pods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodes" class="md-nav__link">
+    Nodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#master-nodes" class="md-nav__link">
+    Master Nodes
+  </a>
+  
+    <nav class="md-nav" aria-label="Master Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-server" class="md-nav__link">
+    API server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduler" class="md-nav__link">
+    Scheduler
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controller-manager" class="md-nav__link">
+    Controller Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd" class="md-nav__link">
+    Etcd
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service" class="md-nav__link">
+    Service
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-5g-core-network-with-free5gc" class="md-nav__link">
+    Deploying 5G core network with free5GC
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying 5G core network with free5GC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-require-packages" class="md-nav__link">
+    Install require packages
+  </a>
+  
+    <nav class="md-nav" aria-label="Install require packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-apt-transport-https" class="md-nav__link">
+    Install apt-transport-https
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-gtp5g" class="md-nav__link">
+    Install gtp5g
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-docker" class="md-nav__link">
+    Install docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-minikube" class="md-nav__link">
+    Install minikube
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-kubectl" class="md-nav__link">
+    Install kubectl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-helm" class="md-nav__link">
+    Install helm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-multus-cni" class="md-nav__link">
+    Install multus-cni
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-free5gc" class="md-nav__link">
+    Deploy free5GC
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy free5GC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useful-kubectl-command" class="md-nav__link">
+    Useful kubectl command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-minikube" class="md-nav__link">
+    Start minikube
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-multus-cni-plugin" class="md-nav__link">
+    Enable Multus-CNI Plugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-free5gc-and-ueransim" class="md-nav__link">
+    Install free5GC and UERANSIM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-webconsole" class="md-nav__link">
+    Start WebConsole
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-monitoring" class="md-nav__link">
+    Service Monitoring
+  </a>
+  
+    <nav class="md-nav" aria-label="Service Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-prometheusgrafana-services" class="md-nav__link">
+    install Prometheus/Grafana services
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20230816/main.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20230816/main.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="introduce-kubernetes-and-deploy-free5gc-on-kubernetes-with-helm">Introduce Kubernetes and Deploy free5GC on Kubernetes with helm</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Elisa Lee<br />
+Date: 2023/8/16</p>
+</div>
+<h2 id="abstract">Abstract</h2>
+<p>In the initial section of the article, I will provide an introduction to Kubernetes. Moving on to the subsequent part, I will delve into the utilization of Kubernetes for facilitating the deployment of free5GC. Lastly, in the final segment of the article, I will elaborate on the effective utilization of Kubernetes for monitoring services.</p>
+<h2 id="introduce-kubernetes">Introduce Kubernetes</h2>
+<p>Do you know why Kubernetes is called k8s?</p>
+<p>It's due to a shorthand notation that uses the first letter "k," followed by the number "8," and ending with the last letter "s" to represent the full name.<br />
+Kubernetes,stands as an open-source container orchestration platform that bestows organizations with the capacity to adeptly govern, deploy, and expand containerized applications. Initially conceived by Google and presently overseen by the Cloud Native Computing Foundation (CNCF), Kubernetes has ascended to become a pivotal technological underpinning within the realm of contemporary cloud-native computing.</p>
+<p>For those who find themselves unacquainted with the intricacies of Kubernetes, let us embark on an exploration of its architectural framework.</p>
+<p><img alt="" src="../kubernetes_architecture.jpg" /><br />
+I understand that the image presented above might appear intricate at first glance. However, there's no need for concern. Allow me to guide you through each component step by step.</p>
+<h3 id="pods">Pods</h3>
+<p>A "Pod" stands as the most diminutive executable entity within the Kubernetes ecosystem. It possesses the capability to encompass either an individual container or a collective assembly of containers. The subsequent enumeration outlines several salient distinctions that set it apart from the act of directly launching a standalone container.</p>
+<p>Notably, a Pod possesses its dedicated network interface, affording all enclosed containers the ability to intercommunicate seamlessly by interfacing with the "localhost." Furthermore, connectivity to other Pods is conveniently established through direct usage of their respective IP addresses within the Kubernetes environment.</p>
+<p>The Pod's inherent duplicability and capacity for effortless restarts, even from the point of its most recent execution, distinguish it. Additionally, the versatility of including a functioning container within its initial state further characterizes its nature.</p>
+<p>Collectively, these attributes contribute to the refinement and streamlined nature of networking within the Kubernetes ecosystem. Such qualities not only facilitate smoother scalability but also offer enhanced capabilities for restarting services with utmost ease.</p>
+<h3 id="nodes">Nodes</h3>
+<p>Consider a "node" as a tangible computing entity akin to a physical machine. Analogous to our personal machines, these nodes possess the capacity to concurrently execute multiple tasks, akin to the pods referenced earlier. The orchestration of nodes is overseen by a pivotal component known as the Kubernetes control plane, which, in an automated fashion, allocates pods across the available nodes. Within each node, a minimum of two services operate in tandem.</p>
+<ol>
+<li>
+<p><strong>Kubelet</strong>: This crucial service undertakes the responsibility of facilitating seamless communication between the Kubernetes control plane and the individual node. It serves as the intermediary that relays instructions and status updates, ensuring synchronization and cooperation.</p>
+</li>
+<li>
+<p><strong>Container Runtime</strong>: Operating in tandem with Kubelet, the container runtime undertakes pivotal functions. These encompass retrieving container images from registries, the unpacking of containers, and the actual execution of applications. A prime example of such a container runtime is Docker, renowned for its role in enabling containerization.</p>
+</li>
+</ol>
+<p>In essence, this intricate interplay of nodes, services, and orchestration elements underscores the dynamism and efficiency inherent to the Kubernetes ecosystem. Through these interlocking mechanisms, the platform optimizes resource utilization, ensures effective communication, and enables the seamless execution of applications across a distributed infrastructure.</p>
+<h3 id="master-nodes">Master Nodes</h3>
+<p>We've now explored all the scalable components and the task runner. Undoubtedly, to orchestrate and oversee everything, a central command hub is necessary – this is referred to as the master node. Although direct intervention within these nodes isn't typically required to ensure the seamless operation of the entire system, it's still beneficial for you to grasp a basic understanding of its functionality.</p>
+<h4 id="api-server">API server</h4>
+<p>It determines which interface among all nodes can be externally accessed. Any subsequent commands you execute will be channeled through this service to the designated node or pod. Furthermore, essential cluster information can also be obtained from this service.</p>
+<h4 id="scheduler">Scheduler</h4>
+<p>Similar to an airport's control tower, its function is akin to orchestrating the deployment of pods on specific nodes based on the rules you've established and the data obtained from the API server. The effectiveness of these rules is pivotal, as they often determine the system's overall efficiency.</p>
+<h4 id="controller-manager">Controller Manager</h4>
+<p>When the need arises to enact concrete modifications on a pod, such as terminating or pausing its operation, a fundamental prerequisite is pinpointing the pod's process location and establishing the means to interact with it. This is precisely the role fulfilled by the controller manager. Additionally, this manager oversees vital components, including accounts, services, and more.</p>
+<h4 id="etcd">Etcd</h4>
+<p>For a simplified understanding, we can view this as essentially a comprehensive backup of the entire cluster.</p>
+<h3 id="service">Service</h3>
+<p>In Kubernetes, a "service" is an abstraction that enables communication between different sets of pods, usually to provide a stable network endpoint for accessing a specific group of pods. Pods in Kubernetes are ephemeral and can be created, terminated, or scaled dynamically, which makes their IP addresses and lifecycles unpredictable. Services provide a way to decouple the frontend of an application from the backend pods, making it easier for other components or users to access the application without having to know the exact locations or IP addresses of the pods.</p>
+<p>A service can be defined in Kubernetes using a YAML or JSON configuration file, and it is associated with a set of pods based on a label selector. The service acts as a load balancer, distributing incoming network traffic among the pods that match the specified selector. This distribution ensures that even if pods are scaled up or down, the service remains available and reachable.</p>
+<p>There are different types of services in Kubernetes:</p>
+<ol>
+<li>
+<p>ClusterIP: This is the default service type, and it exposes the service on a cluster-internal IP address. It is accessible only within the cluster.</p>
+</li>
+<li>
+<p>NodePort: This type exposes the service on each node's IP address at a static port. It allows external access to the service using the node's IP and the specified static port.</p>
+</li>
+<li>
+<p>LoadBalancer: This type automatically provisions a cloud provider load balancer to expose the service externally. It works in environments that support external load balancers.</p>
+</li>
+<li>
+<p>ExternalName: This type provides an alias for an external service by returning a CNAME record with the configured DNS name.</p>
+</li>
+</ol>
+<p>Services are a fundamental concept in Kubernetes and play a crucial role in enabling communication and load balancing between pods and external clients. They provide a stable and abstracted network endpoint that allows applications to scale and be more resilient without disrupting access from users or other components.</p>
+<p>In the upcoming section, I will delve into the process of deploying free5GC on Kubernetes.</p>
+<h2 id="deploying-5g-core-network-with-free5gc">Deploying 5G core network with free5GC</h2>
+<p>Now I'm going to introduce how to implement free5GC on Kubernetes with helm</p>
+<h3 id="install-require-packages">Install require packages</h3>
+<div class="highlight"><pre><span></span><code>sudo apt update -y
+sudo apt upgrade -y
+</code></pre></div>
+<h4 id="install-apt-transport-https">Install apt-transport-https</h4>
+<p>"apt-transport-https" is a crucial package that equips your system with the essential tools and libraries required to seamlessly integrate the HTTPS protocol. This integration ensures secure and encrypted communication when connecting to package repositories while utilizing the Advanced Package Tool (APT) for effective package management.<br />
+<div class="highlight"><pre><span></span><code>sudo apt install -y curl wget apt-transport-https
+</code></pre></div></p>
+<h4 id="install-gtp5g">Install gtp5g</h4>
+<p>"gtp5g" refers to a customized Linux kernel module specifically designed to handle packets by PFCP (Packet Forwarding Control Protocol) Information Elements (IEs) such as PDR (Packet Detection Rule) and FAR (Forwarding Action Rule). For comprehensive insights, you can delve into the 3GPP specifications TS 29.281 and TS 29.244.<br />
+To employ the UPF (User Plane Function) component effectively, it's imperative to operate on either the 5.0.0-23-generic or 5.4.x version of the Linux kernel. This ensures optimal compatibility and seamless integration with the necessary functionalities.<br />
+<div class="highlight"><pre><span></span><code>sudo apt install gcc
+sudo apt install make
+git clone -b v0.8.1 https://github.com/free5gc/gtp5g.git
+<span class="k">cd</span> gtp5g
+make
+sudo make install
+</code></pre></div></p>
+<h4 id="install-docker">Install docker</h4>
+<p>"docker" is a platform that enables developers to build, package, and distribute applications as containers. Containers are lightweight, portable, and self-sufficient units that encapsulate everything an application needs to run, including the code, runtime, system tools, system libraries, and settings. Docker provides a consistent environment across different development and deployment stages, from local development to testing and production.<br />
+<div class="highlight"><pre><span></span><code><span class="k">for</span> pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+<span class="k">echo</span> \
+  <span class="s2">&quot;deb [arch=&quot;</span>$(dpkg --print-architecture)<span class="s2">&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span>
+  <span class="s2">&quot;$(. /etc/os-release &amp;&amp; echo &quot;</span>$VERSION_CODENAME<span class="s2">&quot;)&quot;</span> stable<span class="s2">&quot; | \</span>
+  sudo tee /etc/apt/sources.list.d/docker.list <span class="p">&gt;</span> /dev/null
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</code></pre></div></p>
+<h4 id="install-minikube">Install minikube</h4>
+<p>"minikube" is an open-source tool that enables developers to set up and run a single-node Kubernetes cluster locally on their own computer. It's particularly useful for learning, development, and testing purposes. Minikube provides an easy way to experience Kubernetes without needing access to a full-scale cluster, making it a great tool for getting familiar with Kubernetes concepts and features.<br />
+<div class="highlight"><pre><span></span><code>wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+sudo chmod +x /usr/local/bin/minikube
+</code></pre></div></p>
+<h4 id="install-kubectl">Install kubectl</h4>
+<p>"kubectl" is the command-line tool used to interact with and manage Kubernetes clusters. It is an essential component for working with Kubernetes, allowing users to perform various tasks and operations on Kubernetes clusters directly from the terminal.<br />
+<div class="highlight"><pre><span></span><code>curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+</code></pre></div></p>
+<h4 id="install-helm">Install helm</h4>
+<p>"helm" is a package manager for Kubernetes that simplifies the deployment and management of applications and services on a Kubernetes cluster. It allows you to define, install, and upgrade complex applications using pre-configured templates called "charts." These charts encapsulate all the necessary resources, configurations, and dependencies required to run an application.<br />
+<div class="highlight"><pre><span></span><code>curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+helm list -A
+</code></pre></div><br />
+<img alt="" src="../check_helm.jpg" /></p>
+<h4 id="install-multus-cni">Install multus-cni</h4>
+<p>"multus-cni" is a project that provides a Kubernetes network plugin, specifically a "Container Network Interface" (CNI) plugin, which enables the attachment of multiple network interfaces to pods in a Kubernetes cluster.<br />
+<div class="highlight"><pre><span></span><code>git clone https://github.com/k8snetworkplumbingwg/multus-cni.git
+</code></pre></div></p>
+<h3 id="deploy-free5gc">Deploy free5GC</h3>
+<h4 id="useful-kubectl-command">Useful kubectl command</h4>
+<p>Now, I will proceed to introduce a selection of kubectl command that can be employed during the deployment of free5GC.</p>
+<p>"kubectl get pods" retrieves a list of running pods in the current namespace along with their names, statuses, and other relevant information.<br />
+<div class="highlight"><pre><span></span><code>kubectl get pods
+</code></pre></div><br />
+"kubectl describe pod" is used to get detailed information about a specific pod, including its status, events, labels, and more.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl describe pod [pod-name]
+</code></pre></div><br />
+"kubectl logs" fetches the logs of a specific pod, helping you troubleshoot issues and monitor application output.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl logs [pod-name]
+</code></pre></div><br />
+"kubectl exec -it" allows you to execute a command inside a running pod. The <code>-it</code> flag enables interactive terminal access.<br />
+<div class="highlight"><pre><span></span><code>kubectl exec -it [pod-name] -- [command]
+</code></pre></div><br />
+"kubectl apply -f " deploys resources defined in a YAML file, such as pods, services, or deployments, to your cluster.<br />
+<div class="highlight"><pre><span></span><code>kubectl apply -f [yaml-file]
+</code></pre></div><br />
+"kubectl delete" deletes a specific resource by specifying its type and name, freeing up resources and cleaning the cluster.<br />
+<div class="highlight"><pre><span></span><code>kubectl delete [resource-type] [resource-name]
+</code></pre></div><br />
+"kubectl expose deployment" creates a new service, typically of type LoadBalancer, to expose a deployment's pods to external network traffic.<br />
+<div class="highlight"><pre><span></span><code>kubectl expose deployment [deployment-name] --type=LoadBalancer --port=[port]
+</code></pre></div></p>
+<p>"kubectl get services" lists all services running in the current namespace along with their details, including ClusterIP, external IP (if applicable), and ports.<br />
+<div class="highlight"><pre><span></span><code>kubectl get services
+</code></pre></div><br />
+"kubectl get nodes" retrieves information about the worker nodes in the cluster, displaying their statuses, roles, and other essential data.<br />
+<div class="highlight"><pre><span></span><code>kubectl get nodes
+</code></pre></div><br />
+"kubectl describe node" provides detailed information about a specific node, including its capacity, allocated resources, and conditions.<br />
+<div class="highlight"><pre><span></span><code>kubectl describe node [node-name]
+</code></pre></div><br />
+"kubectl get namespaces" displays all available namespaces in the cluster, which are used to isolate resources and manage multi-tenancy.<br />
+<div class="highlight"><pre><span></span><code>kubectl get namespaces
+</code></pre></div><br />
+"kubectl create namespace" creates a new namespace, allowing you to logically separate and organize resources.<br />
+<div class="highlight"><pre><span></span><code>kubectl create namespace [namespace-name]
+</code></pre></div><br />
+"kubectl port-forward" enables you to create a network tunnel between your local machine and a specific pod running within a Kubernetes cluster. This allows you to access services or applications running inside the pod as if they were running on your local machine. The command forwards traffic from a specified local port to a port on the selected pod.<br />
+<div class="highlight"><pre><span></span><code>kubectl port-forward [pod-name] [local-port]:[remote-port]
+</code></pre></div></p>
+<h4 id="start-minikube">Start minikube</h4>
+<p>Use flannel as cni plugin to start minikue. Flannel is a popular "Container Network Interface" (CNI) plugin used for networking in Kubernetes and other container orchestration platforms. It provides a simple and lightweight network fabric designed to facilitate communication between containers and pods in a distributed environment, such as a Kubernetes cluster.<br />
+<div class="highlight"><pre><span></span><code>sudo usermod -aG docker $USER <span class="p">&amp;&amp;</span> newgrp docker
+minikube start --driver=docker --cpus=4 --memory=8g --disk-size=20g --cni=flannel
+## verify minikube installation
+minikube status
+</code></pre></div><br />
+<img alt="" src="../minikube_status.jpg" /></p>
+<h4 id="enable-multus-cni-plugin">Enable Multus-CNI Plugin</h4>
+<div class="highlight"><pre><span></span><code><span class="k">cd</span> multus-cni
+cat ./deployments/multus-daemonset.yml <span class="p">|</span> kubectl apply -f -
+</code></pre></div>
+<h4 id="install-free5gc-and-ueransim">Install free5GC and UERANSIM</h4>
+<p>If you have only one interface on each Kubernetes node and its name is <code>toto</code>. Then you have to set these parameters to <code>toto</code>:<br />
+<code>global.n2network.masterIf</code><br />
+<code>global.n3network.masterIf</code><br />
+<code>global.n4network.masterIf</code><br />
+<code>global.n6network.masterIf</code><br />
+<code>global.n9network.masterIf</code></p>
+<p><div class="highlight"><pre><span></span><code>kubectl create ns free5gc
+git clone https://github.com/Orange-OpenSource/towards5gs-helm.git
+<span class="k">cd</span> towards5gs-helm/charts/
+helm -n free5gc install free5gc-v1 ./free5gc/
+helm -n free5gc install ueransim-v1 ./ueransim/
+watch kubectl get pods -n free5gc
+</code></pre></div><br />
+<img alt="" src="../check_free5gc_pod.jpg" /></p>
+<h4 id="start-webconsole">Start WebConsole</h4>
+<p>free5GC offers a user-friendly web tool called WebConsole, designed to facilitate the creation and management of User Equipment (UE) registrations. This tool serves as a valuable resource for multiple 5G network functions (NFs), streamlining the process of handling UE registrations and associated tasks.<br />
+<div class="highlight"><pre><span></span><code>kubectl port-forward --namespace free5gc svc/webui-service 5000:5000
+</code></pre></div><br />
+Execute the following command in your local machine's terminal, and subsequently, you will be able to access the WebConsole via localhost:5000.<br />
+You can login with username <code>admin</code> and password <code>free5gc</code>.<br />
+<div class="highlight"><pre><span></span><code>ssh -L localhost:5000:localhost:5000 ubuntu@[VM ip]
+</code></pre></div><br />
+<img alt="" src="../webconsole_login.jpg" /><br />
+<img alt="" src="../webconsole_subscribe.jpg" /></p>
+<h2 id="service-monitoring">Service Monitoring</h2>
+<h3 id="install-prometheusgrafana-services">install Prometheus/Grafana services</h3>
+<p>For monitoring Kubernetes, I utilized Prometheus and Grafana. The installation of Prometheus and Grafana services is facilitated through the Helm chart provided by the prometheus-community.<br />
+<div class="highlight"><pre><span></span><code>helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+kubectl create namespace prometheus
+helm install prometheus prometheus-community/kube-prometheus-stack -n prometheus
+watch kubectl get pods -n prometheus
+</code></pre></div><br />
+<img alt="" src="../check_prometheus_pod.jpg" /></p>
+<p><div class="highlight"><pre><span></span><code>kubectl port-forward -n prometheus svc/prometheus-grafana 8080:80
+</code></pre></div><br />
+Execute the following command in your local machine's terminal, and subsequently, you will be able to access the WebConsole via localhost:8080.<br />
+<div class="highlight"><pre><span></span><code>ssh -L localhost:8080:localhost:8080 ubuntu@[VM ip]
+</code></pre></div><br />
+<img alt="" src="../grafana_login.jpg" /><br />
+A variety of dashboards are available, offering different perspectives for those who are interested. Below is a snapshot of one such dashboard option.</p>
+<p><img alt="" src="../Service_Monitoring.jpg" /></p>
+<h2 id="reference">Reference</h2>
+<p>https://free5gc.org/</p>
+<p>https://medium.com/rahasak/deploying-5g-core-network-with-free5gc-kubernets-and-helm-charts-29741cea3922</p>
+<p>https://github.com/Orange-OpenSource/towards5gs-helm</p>
+<p>https://github.com/k8snetworkplumbingwg/multus-cni</p>
+<h2 id="about">About</h2>
+<p>Hello, I am Elisa Lee. My ongoing research revolves around VoNR (Voice over New Radio). I encourage any inquiries or identification of errors within the article, as they are welcomed for correction. Your feedback is invaluable, so please don't hesitate to reach out via email to share your insights.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

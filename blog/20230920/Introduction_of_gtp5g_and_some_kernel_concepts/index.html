@@ -1,0 +1,1720 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Introduction of gtp5g and some kernel concepts - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-of-gtp5g-and-some-kernel-concepts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction of gtp5g and some kernel concepts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#netlink-generic-netlink-and-rtnetlink" class="md-nav__link">
+    Netlink, Generic Netlink and Rtnetlink
+  </a>
+  
+    <nav class="md-nav" aria-label="Netlink, Generic Netlink and Rtnetlink">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#netlink" class="md-nav__link">
+    Netlink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-netlink" class="md-nav__link">
+    Generic Netlink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtnetlink" class="md-nav__link">
+    RtNetlink
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#free5gc-upf" class="md-nav__link">
+    free5GC UPF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gtp5g" class="md-nav__link">
+    GTP5G
+  </a>
+  
+    <nav class="md-nav" aria-label="GTP5G">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#net_device_ops" class="md-nav__link">
+    net_device_ops
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gtp5g_link_ops" class="md-nav__link">
+    gtp5g_link_ops
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtnl_link_register" class="md-nav__link">
+    rtnl_link_register()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gtp5g_genl_family" class="md-nav__link">
+    gtp5g_genl_family
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#genl_register_family" class="md-nav__link">
+    genl_register_family()
+  </a>
+  
+    <nav class="md-nav" aria-label="genl_register_family()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#genl_validate_ops" class="md-nav__link">
+    genl_validate_ops()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#genl_family_find_byname" class="md-nav__link">
+    genl_family_find_byname()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#genl_validate_assign_mc_groups" class="md-nav__link">
+    genl_validate_assign_mc_groups()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20230920/Introduction_of_gtp5g_and_some_kernel_concepts.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20230920/Introduction_of_gtp5g_and_some_kernel_concepts.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="introduction-of-gtp5g-and-some-kernel-concepts">Introduction of gtp5g and some kernel concepts</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Jimmy<br />
+Date: 2023/9/20</p>
+</div>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>GTP (General Packet Radio System Tunneling Protocol) is a group of IP-based communication protocols used to transport General Packet Radio Services (GPRS) within LTE, 5G NR, and other networks. GTP can be broken down into several components: GTP-C, GTP-U, and GTP prime. GTP-C and GTP-U are responsible for the control plane and user plane, respectively, while GTP prime is utilized for transmitting charging data through the Ga interface as defined in the 3GPP GPRS Core Network.</p>
+<p>In the context of free5GC, the UPF network function combines the GTP-C control part to correctly instruct the routing path for any packet passing through the core network. GTP-U, on the other hand, is managed by <a href="https://github.com/free5gc/gtp5g">gtp5g</a>, which transports packets using kernel modules generated by gtp5g.<br />
+This article will introduce how gtp5g assists free5GC in handling packets and some kernel-related concepts.</p>
+<p>Let's start the journey!</p>
+<p>Additional information:</p>
+<ul>
+<li>Linux kernel version is 5.4.0-159-generic in article. According to other versions, some of content would be different, but the main concept is the same.</li>
+<li>Gtp5g version is v0.8.2</li>
+<li>UPF version is v1.2.0</li>
+</ul>
+<h2 id="netlink-generic-netlink-and-rtnetlink">Netlink, Generic Netlink and Rtnetlink</h2>
+<h3 id="netlink">Netlink</h3>
+<p>Before we continue, I need to introduce <a href="https://man7.org/linux/man-pages/man7/netlink.7.html">Netlink</a> first. What is Netlink? Netlink is an IPC (Inter Process Communication) protocol which can connect kernel space and user space processes by socket.  Traditionally, it used three methods: <strong>Ioctl</strong>, <strong>sysfs</strong>, or <strong>procfs</strong>, to facilitate communication between the kernel and user space. However, it can only be initiated from user space, not from kernel space. Netlink can support not only <strong>initiated from kernel and user space</strong> but also:</p>
+<ul>
+<li>Bidirectional transmission, asynchronous communication.</li>
+<li>Standard socket API used in user space.</li>
+<li>Specialized API used in kernel space.</li>
+<li>Support for multicast.</li>
+<li>Support for 32 protocol types.</li>
+</ul>
+<p>There are servel usages define in <a href="https://elixir.bootlin.com/linux/v5.4.159/source/include/uapi/linux/netlink.h#L9">include/uapi/linux/netlink.h</a><br />
+<div class="highlight"><pre><span></span><code><span class="cp">#define NETLINK_ROUTE       0   </span><span class="cm">/* Routing/device hook              */</span>
+<span class="cp">#define NETLINK_UNUSED      1   </span><span class="cm">/* Unused number                */</span>
+<span class="cp">#define NETLINK_USERSOCK    2   </span><span class="cm">/* Reserved for user mode socket protocols  */</span>
+<span class="cp">#define NETLINK_FIREWALL    3   </span><span class="cm">/* Unused number, formerly ip_queue     */</span>
+<span class="cp">#define NETLINK_SOCK_DIAG   4   </span><span class="cm">/* socket monitoring                */</span>
+<span class="cp">#define NETLINK_NFLOG       5   </span><span class="cm">/* netfilter/iptables ULOG */</span>
+<span class="cp">#define NETLINK_XFRM        6   </span><span class="cm">/* ipsec */</span>
+<span class="cp">#define NETLINK_SELINUX     7   </span><span class="cm">/* SELinux event notifications */</span>
+<span class="cp">#define NETLINK_ISCSI       8   </span><span class="cm">/* Open-iSCSI */</span>
+<span class="cp">#define NETLINK_AUDIT       9   </span><span class="cm">/* auditing */</span>
+<span class="cp">#define NETLINK_FIB_LOOKUP  10</span>
+<span class="cp">#define NETLINK_CONNECTOR   11</span>
+<span class="cp">#define NETLINK_NETFILTER   12  </span><span class="cm">/* netfilter subsystem */</span>
+<span class="cp">#define NETLINK_IP6_FW      13</span>
+<span class="cp">#define NETLINK_DNRTMSG     14  </span><span class="cm">/* DECnet routing messages */</span>
+<span class="cp">#define NETLINK_KOBJECT_UEVENT  15  </span><span class="cm">/* Kernel messages to userspace */</span>
+<span class="cp">#define NETLINK_GENERIC     16</span>
+<span class="cm">/* leave room for NETLINK_DM (DM Events) */</span>
+<span class="cp">#define NETLINK_SCSITRANSPORT   18  </span><span class="cm">/* SCSI Transports */</span>
+<span class="cp">#define NETLINK_ECRYPTFS    19</span>
+<span class="cp">#define NETLINK_RDMA        20</span>
+<span class="cp">#define NETLINK_CRYPTO      21  </span><span class="cm">/* Crypto layer */</span>
+<span class="cp">#define NETLINK_SMC     22  </span><span class="cm">/* SMC monitoring */</span>
+
+<span class="cp">#define NETLINK_INET_DIAG   NETLINK_SOCK_DIAG</span>
+
+<span class="cp">#define MAX_LINKS 32</span>
+</code></pre></div></p>
+<p>These are Linux system pre-defined Netlink protocols. Therefore, if users want to define their own Netlink protocol, they would need to modify the Linux kernel files to meet their requirements. However, the kernel must be protected from modification. Additionally, the maximum protocol number allowed is 32, can't exceed it.</p>
+<h3 id="generic-netlink">Generic Netlink</h3>
+<p>Due to the shortage of protocol numbers and the need to prevent kernel modification, kernel developers extended Netlink and introduced <a href="https://wiki.linuxfoundation.org/networking/generic_netlink_howto">Generic Netlink</a>. Generic Netlink supports 1023 protocols, addressing the protocol number limitation, and it allocates protocol IDs automatically.</p>
+<p>The following figure is Generic Netlink structure:</p>
+<pre class="mermaid"><code>graph TD
+A1[Application_1] --- B[Kernel_Socket_API]
+A2[Application_2] --- B[Kernel_Socket_API]
+
+B[Kernel_Socket_API] --- C[Netlink_Subsystem]
+B[Kernel_Socket_API] --- C[Netlink_Subsystem]
+
+C[Netlink_Subsystem] --- D[Generic_Netlink_Bus]
+
+D[Generic_Netlink_Bus] --- E1[Controller]
+D[Generic_Netlink_Bus] --- E2[Kernel_User_1]
+D[Generic_Netlink_Bus] --- E3[Kernel_User_2]
+
+</code></pre>
+<ul>
+<li>The Generic Netlink users <strong>application_1</strong> and <strong>application_2</strong> could communicate both user space and kernel space endpoint through Kernel_socket_API.</li>
+<li>The <strong><em>Netlink subsystem</em></strong> which serves as the underlying transport layer for all of the Generic Netlink communications.</li>
+<li>The <strong><em>Generic Netlink bus</em></strong> which is implemented inside the kernel, but which is available to userspace through the socket API and inside the kernel via the normal Netlink and Generic Netlink APIs.</li>
+<li>The <strong><em>Generic Netlink users</em></strong> who communicate with each other over the Generic Netlink bus; users can exist both in kernel and user space.</li>
+<li>The <strong><em>Generic Netlink controller</em></strong> which is part of the kernel and is responsible for dynamically allocating Generic Netlink communication channels and other management tasks. The Generic Netlink controller is implemented as a standard Generic Netlink kernel user, however, it listens on a special, pre-allocated Generic Netlink channel.</li>
+<li>The <strong>kernel socket API</strong>. Generic Netlink sockets are created with the PF_NETLINK domain and the NETLINK_GENERIC protocol values.</li>
+</ul>
+<h3 id="rtnetlink">RtNetlink</h3>
+<p>The last one is <a href="https://man7.org/linux/man-pages/man7/rtnetlink.7.html">rtnetlink</a>, it also known as Netlink protocol type NETLINK_ROUTE, user space program could read and alter kernel's routing table or create new network device.</p>
+<h2 id="free5gc-upf">free5GC UPF</h2>
+<p>Since gtp5g is part of UPF logically, article also covers part of UPF.</p>
+<p>The <strong>Driver</strong> provides functions to communicate with gtp5g (the functions are one-to-one match to gtp5g_genl_ops[] in <strong>genl.c</strong>). So, when UPF receives a PFCP message, it parses the content and then uses various functions of the <strong>Driver</strong> to instruct gtp5g to take regarding rules.<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// internel/forwarder/driver.go</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Driver</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">CreatePDR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">UpdatePDR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">RemovePDR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+
+<span class="w">    </span><span class="nx">CreateFAR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">UpdateFAR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">RemoveFAR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+
+<span class="w">    </span><span class="nx">CreateQER</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">UpdateQER</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">RemoveQER</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+
+<span class="w">    </span><span class="nx">CreateURR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">UpdateURR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="nx">report</span><span class="p">.</span><span class="nx">USAReport</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">RemoveURR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="nx">report</span><span class="p">.</span><span class="nx">USAReport</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">QueryURR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="nx">report</span><span class="p">.</span><span class="nx">USAReport</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">CreateBAR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">UpdateBAR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">RemoveBAR</span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">ie</span><span class="p">.</span><span class="nx">IE</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+
+<span class="w">    </span><span class="nx">HandleReport</span><span class="p">(</span><span class="nx">report</span><span class="p">.</span><span class="nx">Handler</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>UPF use rtnl to create device (interface) named <code>upfgtp</code>. User can observe it while executing <strong>run.sh</strong>.<br />
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">OpenGtp5gLink</span><span class="p">(</span><span class="nx">mux</span><span class="w"> </span><span class="o">*</span><span class="nx">nl</span><span class="p">.</span><span class="nx">Mux</span><span class="p">,</span><span class="w"> </span><span class="nx">addr</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">mtu</span><span class="w"> </span><span class="kt">uint32</span><span class="p">,</span><span class="w"> </span><span class="nx">log</span><span class="w"> </span><span class="o">*</span><span class="nx">logrus</span><span class="p">.</span><span class="nx">Entry</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">Gtp5gLink</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">g</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Gtp5gLink</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">:</span><span class="w"> </span><span class="nx">log</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">g</span><span class="p">.</span><span class="nx">mux</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">mux</span>
+
+<span class="w">    </span><span class="nx">rtconn</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">syscall</span><span class="p">.</span><span class="nx">NETLINK_ROUTE</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">g</span><span class="p">.</span><span class="nx">rtconn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">rtconn</span>
+<span class="w">    </span><span class="nx">g</span><span class="p">.</span><span class="nx">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">NewClient</span><span class="p">(</span><span class="nx">rtconn</span><span class="p">,</span><span class="w"> </span><span class="nx">mux</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">laddr</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">ResolveUDPAddr</span><span class="p">(</span><span class="s">&quot;udp4&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">addr</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">g</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;resolve addr&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">ListenUDP</span><span class="p">(</span><span class="s">&quot;udp4&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">laddr</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">g</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;listen&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">g</span><span class="p">.</span><span class="nx">conn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">conn</span>
+
+<span class="w">    </span><span class="c1">// TODO: Duplicate fd</span>
+<span class="w">    </span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">File</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">g</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;file&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">g</span><span class="p">.</span><span class="nx">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">f</span>
+
+<span class="w">    </span><span class="nx">linkinfo</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">nl</span><span class="p">.</span><span class="nx">Attr</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="nx">syscall</span><span class="p">.</span><span class="nx">IFLA_LINKINFO</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">AttrList</span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">Type</span><span class="p">:</span><span class="w">  </span><span class="nx">rtnllink</span><span class="p">.</span><span class="nx">IFLA_INFO_KIND</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">AttrString</span><span class="p">(</span><span class="s">&quot;gtp5g&quot;</span><span class="p">),</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="nx">rtnllink</span><span class="p">.</span><span class="nx">IFLA_INFO_DATA</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">AttrList</span><span class="p">{</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">Type</span><span class="p">:</span><span class="w">  </span><span class="nx">gtp5gnl</span><span class="p">.</span><span class="nx">IFLA_FD1</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">AttrU32</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">Fd</span><span class="p">()),</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">Type</span><span class="p">:</span><span class="w">  </span><span class="nx">gtp5gnl</span><span class="p">.</span><span class="nx">IFLA_HASHSIZE</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">AttrU32</span><span class="p">(</span><span class="mi">131072</span><span class="p">),</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">attrs</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="o">*</span><span class="nx">nl</span><span class="p">.</span><span class="nx">Attr</span><span class="p">{</span><span class="nx">linkinfo</span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">mtu</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">attrs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">attrs</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">nl</span><span class="p">.</span><span class="nx">Attr</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">Type</span><span class="p">:</span><span class="w">  </span><span class="nx">syscall</span><span class="p">.</span><span class="nx">IFLA_MTU</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">AttrU32</span><span class="p">(</span><span class="nx">mtu</span><span class="p">),</span>
+<span class="w">        </span><span class="p">})</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">rtnllink</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;upfgtp&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">attrs</span><span class="o">...</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">g</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;create&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">rtnllink</span><span class="p">.</span><span class="nx">Up</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;upfgtp&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">g</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;up&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">link</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">gtp5gnl</span><span class="p">.</span><span class="nx">GetLink</span><span class="p">(</span><span class="s">&quot;upfgtp&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">g</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;get link&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">g</span><span class="p">.</span><span class="nx">link</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">link</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Connect UPF Driver functions and <code>gtp5g_genl_ops</code>.<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// internl/forwarder/buffnetlink/server.go</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">OpenServer</span><span class="p">(</span><span class="nx">wg</span><span class="w"> </span><span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">*</span><span class="nx">nl</span><span class="p">.</span><span class="nx">Client</span><span class="p">,</span><span class="w"> </span><span class="nx">mux</span><span class="w"> </span><span class="o">*</span><span class="nx">nl</span><span class="p">.</span><span class="nx">Mux</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">Server</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Server</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">client</span><span class="p">:</span><span class="w"> </span><span class="nx">client</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">mux</span><span class="p">:</span><span class="w">    </span><span class="nx">mux</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">genl</span><span class="p">.</span><span class="nx">GetFamily</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gtp5g&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;get family&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nl</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">syscall</span><span class="p">.</span><span class="nx">NETLINK_GENERIC</span><span class="p">,</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">Groups</span><span class="p">[</span><span class="nx">gtp5gnl</span><span class="p">.</span><span class="nx">GENL_MCGRP</span><span class="p">].</span><span class="nx">ID</span><span class="p">))</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open netlink&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">mux</span><span class="p">.</span><span class="nx">PushHandler</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Wrap</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;push handler&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">BuffLog</span><span class="p">.</span><span class="nx">Infof</span><span class="p">(</span><span class="s">&quot;buff netlink server started&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// wg.Add(1)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="gtp5g">GTP5G</h2>
+<ul>
+<li>Gtp5g utilizes a Linux kernel module to manage packet traffic. A Linux kernel module can be thought of as a small piece of code that is inserted into the Linux kernel, allowing users to customize the program according to the current hardware device</li>
+<li>In gtp5g, the primary function is <strong>gtp5g_init</strong> in <strong>gtp5g.c</strong>; it exposes most of the components and techniques provided by gtp5g. This article will choose the following concepts to investigate further:</li>
+<li>Network device -&gt; <code>net_device_ops</code></li>
+<li>Rtnetlink -&gt; <code>gtp5g_link_ops</code></li>
+<li>Generic Netlink -&gt; <code>gtp5g_genl_family</code></li>
+<li>Additionally, the article will present two functions in detail:</li>
+<li><code>rtnl_link_register()</code></li>
+<li><code>genl_register_family()</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">// src/gtp5g.c</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__init</span><span class="w"> </span><span class="nf">gtp5g_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">GTP5G_LOG</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gtp5g Module initialization Ver: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DRV_VERSION</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">init_proc_gtp5g_dev_list</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// set hash initial value</span>
+<span class="w">    </span><span class="n">get_random_bytes</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gtp5g_h_initval</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">gtp5g_h_initval</span><span class="p">));</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rtnl_link_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gtp5g_link_ops</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GTP5G_ERR</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to register rtnl</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">error_out</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genl_register_family</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gtp5g_genl_family</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GTP5G_ERR</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to register generic</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">unreg_rtnl_link</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">register_pernet_subsys</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gtp5g_net_ops</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GTP5G_ERR</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to register namespace</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">unreg_genl_family</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_proc</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">unreg_pernet</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">GTP5G_LOG</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;5G GTP module loaded</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="net_device_ops"><code>net_device_ops</code></h3>
+<p>It is defined in <strong>dev.h</strong> and referenced in <strong>dev.c</strong>. The structure net_device_ops encompasses all operations related to network device, and free5GC inherits some of these operations to implement self-made netdev ops.<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// include/dev.h</span>
+<span class="k">extern</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device_ops</span><span class="w"> </span><span class="n">gtp5g_netdev_ops</span><span class="p">;</span>
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code><span class="c1">// src/gtpu/dev.c</span>
+<span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device_ops</span><span class="w"> </span><span class="n">gtp5g_netdev_ops</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ndo_init</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_dev_init</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ndo_uninit</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_dev_uninit</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ndo_start_xmit</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_dev_xmit</span><span class="p">,</span>
+<span class="cp">#if LINUX_VERSION_CODE &gt;= KERNEL_VERSION(5, 11, 0)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ndo_get_stats64</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">dev_get_tstats64</span><span class="p">,</span>
+<span class="cp">#else</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ndo_get_stats64</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">ip_tunnel_get_stats64</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="p">};</span>
+</code></pre></div><br />
+According to <a href="https://elixir.bootlin.com/linux/latest/source/include/linux/netdevice.h#L1422">/include/linux/netdevice.h</a>, you can find the definition of hooks of <strong>net_device_ops</strong>:</p>
+<ul>
+<li><code>.ndo_init</code>: This function is called once when a network device is registered. The network device can use this for any late stage initialization or semantic validation. It can fail with an error code which will be propagated back to register_netdev.</li>
+<li><code>.ndo_uninit</code>: This function is called when device is unregistered or when registration fails. It is not called if init fails.</li>
+<li><code>.ndo_start_xmit</code>: Called when a packet needs to be transmitted. Returns NETDEV_TX_OK. Can return NETDEV_TX_BUSY, but you should stop the queue before that can happen; it's for obsolete devices and weird corner cases, but the stack really does a non-trivial amount of useless work if you return NETDEV_TX_BUSY. Required; cannot be NULL.<br />
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">net_device_ops</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w">           </span><span class="p">(</span><span class="o">*</span><span class="n">ndo_init</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">void</span><span class="w">          </span><span class="p">(</span><span class="o">*</span><span class="n">ndo_uninit</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="w">  </span><span class="n">netdev_tx_t</span><span class="w">       </span><span class="p">(</span><span class="o">*</span><span class="n">ndo_start_xmit</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                      </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div><br />
+Gtp5g self-made structure:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// include/dev.h</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_dev</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">list_head</span><span class="w"> </span><span class="n">list</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sock</span><span class="w"> </span><span class="o">*</span><span class="n">sk1u</span><span class="p">;</span><span class="w"> </span><span class="c1">// UDP socket from user space</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">role</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hash_size</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">pdr_id_hash</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">far_id_hash</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">qer_id_hash</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">bar_id_hash</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">urr_id_hash</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">i_teid_hash</span><span class="p">;</span><span class="w"> </span><span class="c1">// Used for GTP-U packet detect</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">addr_hash</span><span class="p">;</span><span class="w">   </span><span class="c1">// Used for IPv4 packet detect</span>
+
+<span class="w">    </span><span class="cm">/* IEs list related to PDR */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">related_far_hash</span><span class="p">;</span><span class="w"> </span><span class="c1">// PDR list waiting the FAR to handle</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">related_qer_hash</span><span class="p">;</span><span class="w"> </span><span class="c1">// PDR list waiting the QER to handle</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">related_bar_hash</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">hlist_head</span><span class="w"> </span><span class="o">*</span><span class="n">related_urr_hash</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* Used by proc interface */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">list_head</span><span class="w"> </span><span class="n">proc_list</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></li>
+</ul>
+<p>It would find the private data address in network device by netdev_priv() and allocate the device statistics space for each CPU by netdev_alloc_pcpu_stats():<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// src/gtpu/dev.c</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">gtp5g_dev_init</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_dev</span><span class="w"> </span><span class="o">*</span><span class="n">gtp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netdev_priv</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">gtp</span><span class="o">-&gt;</span><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dev</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">tstats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netdev_alloc_pcpu_stats</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pcpu_sw_netstats</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">tstats</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">ENOMEM</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>From <a href="https://elixir.bootlin.com/linux/v5.4.159/source/include/linux/netdevice.h#L2223">/include/linux/netdevice.h</a>, the return value would be times of 32:<br />
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">netdev_priv</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">dev</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ALIGN</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="p">),</span><span class="w"> </span><span class="n">NETDEV_ALIGN</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Close the udp socket (sk1u) is used to receive uplink (N3) packet:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// src/gtpu/dev.c</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">gtp5g_dev_uninit</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_dev</span><span class="w"> </span><span class="o">*</span><span class="n">gtp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netdev_priv</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">gtp5g_encap_disable</span><span class="p">(</span><span class="n">gtp</span><span class="o">-&gt;</span><span class="n">sk1u</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free_percpu</span><span class="p">(</span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">tstats</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Utilized for the reception of downlink (N6) packets by a network device:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// src/gtpu/dev.c</span>
+<span class="k">static</span><span class="w"> </span><span class="n">netdev_tx_t</span><span class="w"> </span><span class="nf">gtp5g_dev_xmit</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">proto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ntohs</span><span class="p">(</span><span class="n">skb</span><span class="o">-&gt;</span><span class="n">protocol</span><span class="p">);</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_pktinfo</span><span class="w"> </span><span class="n">pktinfo</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* Ensure there is sufficient headroom */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">skb_cow_head</span><span class="p">(</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">needed_headroom</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">tx_err</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">skb_reset_inner_headers</span><span class="p">(</span><span class="n">skb</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* PDR lookups in gtp5g_build_skb_*() need rcu read-side lock.</span>
+<span class="cm">     * */</span>
+<span class="w">    </span><span class="n">rcu_read_lock</span><span class="p">();</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">proto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">ETH_P_IP</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_handle_skb_ipv4</span><span class="p">(</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span><span class="n">dev</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pktinfo</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">EOPNOTSUPP</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">rcu_read_unlock</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">tx_err</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">FAR_ACTION_FORW</span><span class="p">)</span>
+<span class="w">        </span><span class="n">gtp5g_xmit_skb_ipv4</span><span class="p">(</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pktinfo</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">NETDEV_TX_OK</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="gtp5g_link_ops"><code>gtp5g_link_ops</code></h3>
+<p>Ignore headder file here, structure defines Rtnetlink operations.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// src/gtpu/link.c</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">rtnl_link_ops</span><span class="w"> </span><span class="n">gtp5g_link_ops</span><span class="w"> </span><span class="n">__read_mostly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">kind</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gtp5g&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">maxtype</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">IFLA_GTP5G_MAX</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">policy</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_policy</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">priv_size</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_dev</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">setup</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_link_setup</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">validate</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_validate</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">newlink</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_newlink</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">dellink</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_dellink</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">get_size</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_get_size</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">fill_info</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_fill_info</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Definition is in <a href="https://elixir.bootlin.com/linux/v5.4/source/include/net/rtnetlink.h#L59">/include/net/rtnetlink.h</a>:<br />
+- <code>.kind</code>: Identifier<br />
+- <code>.maxtype</code>: Highest device specific netlink attribute number<br />
+- <code>.policy</code>: Netlink policy for device specific attribute validation<br />
+- <code>.priv_size</code>: sizeof net_device private space<br />
+- <code>.setup</code>: net_device setup function<br />
+- <code>.validate</code>: Optional validation function for netlink/changelink parameters<br />
+- <code>.newlink</code>: Function for configuring and registering a new device<br />
+- <code>.dellink</code>: Function to remove a device<br />
+- <code>.get_size</code>: Function to calculate required room for dumping device specific netlink attributes<br />
+- <code>.fill_info</code>: Function to dump device specific netlink attributes</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">rtnl_link_ops</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">list_head</span><span class="w">    </span><span class="n">list</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w">      </span><span class="o">*</span><span class="n">kind</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w">          </span><span class="n">priv_size</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w">            </span><span class="p">(</span><span class="o">*</span><span class="n">setup</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">maxtype</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">nla_policy</span><span class="w"> </span><span class="o">*</span><span class="n">policy</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">validate</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">tb</span><span class="p">[],</span>
+<span class="w">                        </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">[],</span>
+<span class="w">                        </span><span class="k">struct</span><span class="w"> </span><span class="nc">netlink_ext_ack</span><span class="w"> </span><span class="o">*</span><span class="n">extack</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">newlink</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net</span><span class="w"> </span><span class="o">*</span><span class="n">src_net</span><span class="p">,</span>
+<span class="w">                       </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                       </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">tb</span><span class="p">[],</span>
+<span class="w">                       </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">[],</span>
+<span class="w">                       </span><span class="k">struct</span><span class="w"> </span><span class="nc">netlink_ext_ack</span><span class="w"> </span><span class="o">*</span><span class="n">extack</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">changelink</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                          </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">tb</span><span class="p">[],</span>
+<span class="w">                          </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">[],</span>
+<span class="w">                          </span><span class="k">struct</span><span class="w"> </span><span class="nc">netlink_ext_ack</span><span class="w"> </span><span class="o">*</span><span class="n">extack</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w">            </span><span class="p">(</span><span class="o">*</span><span class="n">dellink</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                       </span><span class="k">struct</span><span class="w"> </span><span class="nc">list_head</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w">          </span><span class="p">(</span><span class="o">*</span><span class="n">get_size</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">fill_info</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                         </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w">          </span><span class="p">(</span><span class="o">*</span><span class="n">get_xstats_size</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">fill_xstats</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                           </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="nf">int</span><span class="w">        </span><span class="p">(</span><span class="o">*</span><span class="n">get_num_tx_queues</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="nf">int</span><span class="w">        </span><span class="p">(</span><span class="o">*</span><span class="n">get_num_rx_queues</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">slave_maxtype</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">nla_policy</span><span class="w"> </span><span class="o">*</span><span class="n">slave_policy</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">slave_changelink</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                            </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">slave_dev</span><span class="p">,</span>
+<span class="w">                            </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">tb</span><span class="p">[],</span>
+<span class="w">                            </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">[],</span>
+<span class="w">                            </span><span class="k">struct</span><span class="w"> </span><span class="nc">netlink_ext_ack</span><span class="w"> </span><span class="o">*</span><span class="n">extack</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w">          </span><span class="p">(</span><span class="o">*</span><span class="n">get_slave_size</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                          </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">slave_dev</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">fill_slave_info</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                           </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                           </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">slave_dev</span><span class="p">);</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">net</span><span class="w">      </span><span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">get_link_net</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w">          </span><span class="p">(</span><span class="o">*</span><span class="n">get_linkxstats_size</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                               </span><span class="kt">int</span><span class="w"> </span><span class="n">attr</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">fill_linkxstats</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                           </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                           </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">prividx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">attr</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Once rtnl link setting up, gtp5g would assign net_device_ops to device.<br />
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">gtp5g_link_setup</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">netdev_ops</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gtp5g_netdev_ops</span><span class="p">;</span><span class="w">   </span><span class="o">&lt;----</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">assignment</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">needs_free_netdev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">hard_header_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">addr_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">mtu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ETH_DATA_LEN</span><span class="w"> </span><span class="o">-</span>
+<span class="w">        </span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">iphdr</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">         </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">udphdr</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">         </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">gtpv1_hdr</span><span class="p">));</span>
+
+<span class="w">    </span><span class="cm">/* Zero header length. */</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ARPHRD_NONE</span><span class="p">;</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IFF_POINTOPOINT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IFF_NOARP</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IFF_MULTICAST</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">priv_flags</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">IFF_NO_QUEUE</span><span class="p">;</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">features</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">NETIF_F_LLTX</span><span class="p">;</span>
+<span class="w">    </span><span class="n">netif_keep_dst</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* TODO: Modify the headroom size based on</span>
+<span class="cm">     * what are the extension header going to support</span>
+<span class="cm">     * */</span>
+<span class="w">    </span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">needed_headroom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LL_MAX_HEADER</span><span class="w"> </span><span class="o">+</span>
+<span class="w">        </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">iphdr</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">        </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">udphdr</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">        </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">gtpv1_hdr</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="rtnl_link_register"><code>rtnl_link_register()</code></h3>
+<ul>
+<li>Definition is in <a href="https://elixir.bootlin.com/linux/v5.4/source/net/core/rtnetlink.c#L372">/net/core/rtnetlink.c</a></li>
+<li>This function should be used by drivers that create devices during module initialization. It must be called before registering the devices</li>
+<li>Using the <strong>kind</strong> property of rtnl_link_ops to search for the existence of ops in link_ops. If ops do not exist, then inserted it at the end of link_ops</li>
+<li>Once register sucess, UPF can create new network device (interface) using Rtnetlink socket<br />
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">__rtnl_link_register</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">rtnl_link_ops</span><span class="w"> </span><span class="o">*</span><span class="n">ops</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rtnl_link_ops_get</span><span class="p">(</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">kind</span><span class="p">))</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EEXIST</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* The check for setup is here because if ops</span>
+<span class="cm">     * does not have that filled up, it is not possible</span>
+<span class="cm">     * to use the ops for creating device. So do not</span>
+<span class="cm">     * fill up dellink as well. That disables rtnl_dellink.</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">setup</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">dellink</span><span class="p">)</span>
+<span class="w">        </span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">dellink</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unregister_netdevice_queue</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">list_add_tail</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">list</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">link_ops</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">EXPORT_SYMBOL_GPL</span><span class="p">(</span><span class="n">__rtnl_link_register</span><span class="p">);</span>
+</code></pre></div></li>
+</ul>
+<h3 id="gtp5g_genl_family">gtp5g_genl_family</h3>
+<p>Gtp5g defines the genl (Generic Netlink) interface to facilitate communication between user and kernel space after register 'family'. As mentioned earlier, there is a Generic Netlink Controller responsible for bus allocation and dynamically assigns tunnel based on genl family id (name).</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1">// src/genl/genl.c</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="n">gtp5g_genl_family</span><span class="w"> </span><span class="n">__ro_after_init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gtp5g&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">version</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">hdrsize</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">maxattr</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">GTP5G_ATTR_MAX</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">netnsok</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="k">module</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">THIS_MODULE</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ops</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_genl_ops</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">n_ops</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">gtp5g_genl_ops</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">mcgrps</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_genl_mcgrps</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">n_mcgrps</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">gtp5g_genl_mcgrps</span><span class="p">),</span>
+<span class="p">};</span>
+</code></pre></div><br />
+Definition is in <a href="https://elixir.bootlin.com/linux/v5.4.159/source/include/net/genetlink.h#L46">/include/net/genetlink.h</a>:<br />
+- <code>.name</code>: name of family (exclusive)<br />
+- <code>.version</code>: protocol version (usually is 1)<br />
+- <code>.hdrsize</code>: length of user specific header in bytes<br />
+- <code>.maxattr</code>: maximum number of attributes supported<br />
+- <code>.netnsok</code>: set to true if the family can handle network namespaces and should be presented in all of them<br />
+- <code>.ops</code>: the operations supported by this family<br />
+- <code>.n_ops</code>: number of operations supported by this family<br />
+- <code>.mcgrps</code>: multicast groups used by this family<br />
+- <code>.n_mcgrps</code>: number of multicast groups</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="n">id</span><span class="p">;</span><span class="w">     </span><span class="cm">/* private */</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">hdrsize</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">            </span><span class="n">name</span><span class="p">[</span><span class="n">GENL_NAMSIZ</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">version</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">maxattr</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w">            </span><span class="n">netnsok</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w">            </span><span class="n">parallel_ops</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">nla_policy</span><span class="w"> </span><span class="o">*</span><span class="n">policy</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="n">pre_doit</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_ops</span><span class="w"> </span><span class="o">*</span><span class="n">ops</span><span class="p">,</span>
+<span class="w">                        </span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                        </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_info</span><span class="w"> </span><span class="o">*</span><span class="n">info</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w">            </span><span class="p">(</span><span class="o">*</span><span class="n">post_doit</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_ops</span><span class="w"> </span><span class="o">*</span><span class="n">ops</span><span class="p">,</span>
+<span class="w">                         </span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+<span class="w">                         </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_info</span><span class="w"> </span><span class="o">*</span><span class="n">info</span><span class="p">);</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">**</span><span class="w">    </span><span class="n">attrbuf</span><span class="p">;</span><span class="w">    </span><span class="cm">/* private */</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_ops</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ops</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_multicast_group</span><span class="w"> </span><span class="o">*</span><span class="n">mcgrps</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">n_ops</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">n_mcgrps</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="n">mcgrp_offset</span><span class="p">;</span><span class="w">   </span><span class="cm">/* private */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">module</span><span class="w">       </span><span class="o">*</span><span class="k">module</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Gtp5g defines <code>gtp5g_genl_ops</code>, all operations are one-to-one match to Driver functions in UPF part:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// src/genl/genl.c</span>
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_ops</span><span class="w"> </span><span class="n">gtp5g_genl_ops</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GTP5G_CMD_ADD_PDR</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">doit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_genl_add_pdr</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// .policy = gtp5g_genl_pdr_policy,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ADMIN_PERM</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GTP5G_CMD_DEL_PDR</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">doit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_genl_del_pdr</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// .policy = gtp5g_genl_pdr_policy,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ADMIN_PERM</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GTP5G_CMD_GET_PDR</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">doit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_genl_get_pdr</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">dumpit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtp5g_genl_dump_pdr</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// .policy = gtp5g_genl_pdr_policy,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ADMIN_PERM</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="genl_register_family"><code>genl_register_family()</code></h3>
+<ul>
+<li>Definition is in <a href="https://elixir.bootlin.com/linux/v5.4.159/source/net/netlink/genetlink.c#L322">/net/netlink/genetlink.c</a></li>
+<li>Registers the specified family after validating it first. Only one family may be registered with the same family name or identifier. The family's ops, multicast groups and module pointer must already be assigned. Return 0 on success or a negative error code</li>
+<li>Three functions within this method hold greater significance (all of them in /net/netlink/genetlink.c):</li>
+<li><code>genl_validate_ops()</code></li>
+<li><code>genl_family_find_byname()</code></li>
+<li><code>genl_validate_assign_mc_groups()</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">genl_register_family</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="o">*</span><span class="n">family</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_START_ALLOC</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_MAX_ID</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genl_validate_ops</span><span class="p">(</span><span class="n">family</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">genl_lock_all</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">genl_family_find_byname</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">EEXIST</span><span class="p">;</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">errout_locked</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">&amp;</span><span class="n">genl_ctrl</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ID_CTRL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pmcraid&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ID_PMCRAID</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VFS_DQUOT&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ID_VFS_DQUOT</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">maxattr</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">parallel_ops</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">attrbuf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kmalloc_array</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">maxattr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                        </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">nlattr</span><span class="w"> </span><span class="o">*</span><span class="p">),</span>
+<span class="w">                        </span><span class="n">GFP_KERNEL</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">attrbuf</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">ENOMEM</span><span class="p">;</span>
+<span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">errout_locked</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span>
+<span class="w">        </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">attrbuf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">idr_alloc_cyclic</span><span class="p">(</span><span class="o">&amp;</span><span class="n">genl_fam_idr</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="p">,</span>
+<span class="w">                      </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">GFP_KERNEL</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">id</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">errout_free</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genl_validate_assign_mc_groups</span><span class="p">(</span><span class="n">family</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">errout_remove</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">genl_unlock_all</span><span class="p">();</span>
+
+<span class="w">    </span><span class="cm">/* send all events */</span>
+<span class="w">    </span><span class="n">genl_ctrl_event</span><span class="p">(</span><span class="n">CTRL_CMD_NEWFAMILY</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">n_mcgrps</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">genl_ctrl_event</span><span class="p">(</span><span class="n">CTRL_CMD_NEWMCAST_GRP</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="p">,</span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">mcgrps</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">mcgrp_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="nl">errout_remove</span><span class="p">:</span>
+<span class="w">    </span><span class="n">idr_remove</span><span class="p">(</span><span class="o">&amp;</span><span class="n">genl_fam_idr</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">);</span>
+<span class="nl">errout_free</span><span class="p">:</span>
+<span class="w">    </span><span class="n">kfree</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">attrbuf</span><span class="p">);</span>
+<span class="nl">errout_locked</span><span class="p">:</span>
+<span class="w">    </span><span class="n">genl_unlock_all</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">EXPORT_SYMBOL</span><span class="p">(</span><span class="n">genl_register_family</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="genl_validate_ops"><code>genl_validate_ops()</code></h4>
+<p>This function will verify if there is defined function for the operations and will also compare whether any operation is reused by a command. Using gtp5g as an example, command can be considered as action such as add, del, modify PDR rules.<br />
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">genl_validate_ops</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="o">*</span><span class="n">family</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_ops</span><span class="w"> </span><span class="o">*</span><span class="n">ops</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">ops</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n_ops</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">n_ops</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">WARN_ON</span><span class="p">(</span><span class="n">n_ops</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">ops</span><span class="p">))</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">n_ops</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_ops</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">dumpit</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">doit</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_ops</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">cmd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ops</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">cmd</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h4 id="genl_family_find_byname"><code>genl_family_find_byname()</code></h4>
+<p>Function would check every entry in genl_fam_idr whether exists the same family name.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="o">*</span><span class="n">genl_family_find_byname</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="o">*</span><span class="n">family</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">idr_for_each_entry</span><span class="p">(</span><span class="o">&amp;</span><span class="n">genl_fam_idr</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">family</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Here is the macro of <code>idr_for_each_entry()</code>:<br />
+<div class="highlight"><pre><span></span><code><span class="cp">#define idr_for_each_entry(idr, entry, id)          \</span>
+<span class="cp">    for (id = 0; ((entry) = idr_get_next(idr, &amp;(id))) != NULL; id += 1U)</span>
+</code></pre></div></p>
+<h4 id="genl_validate_assign_mc_groups"><code>genl_validate_assign_mc_groups()</code></h4>
+<p>This changes the number of multicast groups that are available when <strong>ntensok</strong> is ture:</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">genl_validate_assign_mc_groups</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_family</span><span class="w"> </span><span class="o">*</span><span class="n">family</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">first_id</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n_groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">n_mcgrps</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">groups_allocated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">n_groups</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_groups</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">genl_multicast_group</span><span class="w"> </span><span class="o">*</span><span class="n">grp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">mcgrps</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">WARN_ON</span><span class="p">(</span><span class="n">grp</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">))</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">WARN_ON</span><span class="p">(</span><span class="n">memchr</span><span class="p">(</span><span class="n">grp</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GENL_NAMSIZ</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">))</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* special-case our own group and hacks */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">&amp;</span><span class="n">genl_ctrl</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">first_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ID_CTRL</span><span class="p">;</span>
+<span class="w">        </span><span class="n">BUG_ON</span><span class="p">(</span><span class="n">n_groups</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;NET_DM&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">first_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="n">BUG_ON</span><span class="p">(</span><span class="n">n_groups</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GENL_ID_VFS_DQUOT</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">first_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ID_VFS_DQUOT</span><span class="p">;</span>
+<span class="w">        </span><span class="n">BUG_ON</span><span class="p">(</span><span class="n">n_groups</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GENL_ID_PMCRAID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">first_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GENL_ID_PMCRAID</span><span class="p">;</span>
+<span class="w">        </span><span class="n">BUG_ON</span><span class="p">(</span><span class="n">n_groups</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">groups_allocated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genl_allocate_reserve_groups</span><span class="p">(</span><span class="n">n_groups</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">first_id</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">mcgrp_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first_id</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* if still initializing, can&#39;t and don&#39;t need to to realloc bitmaps */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">init_net</span><span class="p">.</span><span class="n">genl_sock</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">netnsok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">net</span><span class="w"> </span><span class="o">*</span><span class="n">net</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">netlink_table_grab</span><span class="p">();</span>
+<span class="w">        </span><span class="n">rcu_read_lock</span><span class="p">();</span>
+<span class="w">        </span><span class="n">for_each_net_rcu</span><span class="p">(</span><span class="n">net</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__netlink_change_ngroups</span><span class="p">(</span><span class="n">net</span><span class="o">-&gt;</span><span class="n">genl_sock</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">mc_groups_longs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BITS_PER_LONG</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="cm">/*</span>
+<span class="cm">                 * No need to roll back, can only fail if</span>
+<span class="cm">                 * memory allocation fails and then the</span>
+<span class="cm">                 * number of _possible_ groups has been</span>
+<span class="cm">                 * increased on some sockets which is ok.</span>
+<span class="cm">                 */</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">rcu_read_unlock</span><span class="p">();</span>
+<span class="w">        </span><span class="n">netlink_table_ungrab</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netlink_change_ngroups</span><span class="p">(</span><span class="n">init_net</span><span class="p">.</span><span class="n">genl_sock</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">mc_groups_longs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BITS_PER_LONG</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">groups_allocated</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">family</span><span class="o">-&gt;</span><span class="n">n_mcgrps</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">            </span><span class="n">clear_bit</span><span class="p">(</span><span class="n">family</span><span class="o">-&gt;</span><span class="n">mcgrp_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">mc_groups</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="about">About</h2>
+<ul>
+<li>Jimmy Chang<ul>
+<li>Graduate student majoring in 5GC Research</li>
+<li>As I am a beginner in the Linux kernel, please feel free to send me an email if you find any errors.</li>
+<li><a href="jimmy9507.cs11@nycu.edu.tw">mail</a></li>
+<li><a href="https://www.linkedin.com/in/建耀-張-94591a235/">Linkin</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>https://bootlin.com</li>
+<li>https://www.linuxjournal.com/article/8498</li>
+<li>https://wiki.linuxfoundation.org/networking/generic_netlink_howto</li>
+<li>https://www.kernel.org/doc/html/latest/driver-api/driver-model/overview.html</li>
+<li>https://www.cnblogs.com/ssyfj/p/16230540.html</li>
+<li>https://www.twblogs.net/a/5b81e5852b71772165aedd7a</li>
+<li>https://www.cnblogs.com/ssyfj/p/16230540.html</li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10302887">IT blog by Ian Chen</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10243519">IT blog by 0xff07</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
