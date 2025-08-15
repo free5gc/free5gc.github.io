@@ -3,6 +3,7 @@
 > [!Note]
 > Author: [Alonza Tu](https://www.linkedin.com/in/feng-tu/)
 > Date: 2025/06/05
+> Update: 2025/08/04
 
 ![DC](./DC.png)
 
@@ -122,7 +123,50 @@ Finally, you can use these tunnel to transfer traffics in efficient.
 
 ## Dynamic Approach
 
-Under development, expected to support dynamic traffic offloading in future SMF releases.
+In the dynamic approach, the first tunnel is established during PDU session establishment, while the second tunnel is set up only when needed.
+
+According to [TS 37.340  10.2.2](https://www.tech-invite.com/3m37/toc/tinv-3gpp-37-340_k.html#top), if the master gNB wants to split a bearer—i.e., offload specific traffic flows to the secondary gNB—it will interact with the secondary gNB and then send the tunnels' information back to the core network.
+
+<!-- ```mermaid
+sequenceDiagram
+    participant m as Master-gNB
+    participant s as Secondary-gNB
+    participant AMF
+    participant SMF
+    participant UPF
+
+    Note over m, s: Xn-interface
+    m->>s: request Downlink TEID
+    s->>m: reply Downlink TEID
+    Note over m, s: Xn-interface
+    m->>AMF: PDU Session Modify Indication
+    AMF->>SMF: PDU Session Modify Indication
+    SMF<<->>UPF: N4 Update
+    SMF->>AMF: PDU Session Confirm
+    AMF->>m: PDU Session Confirm
+    Note over m, s: Xn-interface
+    m->>s: Uplink TEID
+    s->>m: Ack
+    Note over m, s: Xn-interface
+``` -->
+
+![dynamicProcedure](./dynamicProcedure.png)
+
+After the master gNB retrieves the second downlink tunnel information from the secondary gNB, it should encapsulate this tunnel information into `ngapType.PDUSessionResourceModifyIndicationTransfer` and send it to the AMF.
+
+> [!Note]
+> According to [TS 38.413 8.2.5.2](https://www.tech-invite.com/3m38/toc/tinv-3gpp-38-413_e.html#e-8-2-5), the IE `DL QoS Flow per TNL Information` carries the master tunnel's information, while the IE `Additional DL QoS Flow per TNL Information` carries the second tunnel's information.
+> ![38413-8.2.5.2](./38413-8.2.5.2.png)
+
+After the SMF receives this `PDUSessionResourceModifyIndicationTransfer` message forwarded by the AMF, it will check whether NR-DC is currently being activated and parse the message to retrieve tunnels' information. If NR-DC is being activated, the SMF will merge the second tunnel into the master tunnel and then release it. Otherwise, the SMF will configure the second tunnel by updating the N4 session, which will create and update the PDR/FAR in the UPF.
+
+If the modification procedure is successful, the SMF will respond with a confirmation message called `ngapType.PDUSessionResourceModifyConfirmTransfer`.
+
+> [!Note]
+> According to [TS 38.413 8.2.5.2](https://www.tech-invite.com/3m38/toc/tinv-3gpp-38-413_e.html#e-8-2-5), the confirmation message contains information about both successful and failed flow updates.
+> ![38413-confirm](./38413-confirm.png)
+
+Upon receiving the confirmation message, the master gNB utilizes it to proceed with the configuration of the second tunnel on the secondary gNB.
 
 ## How to use?
 
@@ -132,6 +176,9 @@ Please refer to our user guide: [NR-DC](https://free5gc.org/guide/9-nr-dc/)
 
 - [SMF: feat/nr-dc(static version)](https://github.com/free5gc/smf/pull/156)
 - [free5GC: feat/nr-dc(static version)](https://github.com/free5gc/free5gc/pull/674)
+
+- [SMF: feat/nr-dc(dynamic version)](https://github.com/free5gc/smf/pull/162)
+- [free5GC: feat/nr-dc(dynamic version)](https://github.com/free5gc/free5gc/pull/695)
 
 ## Reference
 
