@@ -96,7 +96,7 @@ After the response received by AMF, core network will create the **DC Tunnel** f
 
 ## Dynamic Approach
 
-### Expected Beaviors
+### Expected Behaviors
 
 - When dual connectivity is not activated:
 
