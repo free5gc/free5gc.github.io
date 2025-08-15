@@ -40,7 +40,8 @@ Here we take `buildPDUSessionResourceSetupResponseTransfer` function under free5
 - For basic, no NR-DC, it only contains **FIRST_DOWNLINK_TEID** and **MASTER_GNB_IP**:
 
     ```go
-    func buildPDUSessionResourceSetupResponseTransfer() (data customNgapType.PDUSessionResourceSetupResponseTransfer) {
+    func buildPDUSessionResourceSetupResponseTransfer() (data ngapType.PDUSessionResourceSetupResponseTransfer) {
+        var data ngapType.PDUSessionResourceSetupResponseTransfer
         // QoS Flow per TNL Information
         qosFlowPerTNLInformation := &data.QosFlowPerTNLInformation
         qosFlowPerTNLInformation.UPTransportLayerInformation.Present = ngapType.UPTransportLayerInformationPresentGTPTunnel
@@ -63,7 +64,7 @@ Here we take `buildPDUSessionResourceSetupResponseTransfer` function under free5
 - For NR-DC, we need to add the **SECOND_DOWNLINK_TEID** and **SECONDARY_GNB_IP**(ignore the basic part which is same with above):
 
     ```go
-    func buildPDUSessionResourceSetupResponseTransfer() (data customNgapType.PDUSessionResourceSetupResponseTransfer) {
+    func buildPDUSessionResourceSetupResponseTransferWithDC() (data ngapType.PDUSessionResourceSetupResponseTransfer) {
         // QoS Flow per TNL Information
         ...
         // UP Transport Layer Information in QoS Flow per TNL Information
@@ -95,7 +96,7 @@ After the response received by AMF, core network will create the **DC Tunnel** f
 
 ## Dynamic Approach
 
-### Expected Beavior
+### Expected Beaviors
 
 - When dual connectivity is not activated:
 
