@@ -159,6 +159,16 @@ Conversely, if the transition is from dual connectivity back to a single connect
 
 Once the modify indication transfer request is accepted and successfully processed, the core network will respond with an `ngapType.PDUSessionResourceModifyConfirmTransfer` message. This message contains the modified tunnel information, including its TEID. The master gNB can then use this information to update the secondary gNB.
 
+## Quickstart
+
+Please refer to: [free-ran-ue User Guide](https://alonza0314.github.io/free-ran-ue/doc-user-guide/)
+
+Currently, it support:
+
+- Static NR-DC
+- Dynamic NR-DC
+- Docker Deployment
+
 ## Reference
 
 - [TS 23.502 Procedure for the 5G System](https://www.tech-invite.com/3m23/tinv-3gpp-23-502.html)
