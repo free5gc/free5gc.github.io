@@ -320,6 +320,58 @@ round-trip min/avg/max = 0.601/0.903/1.150 ms
 
 從結果來看，修改後的 Gthulhu 排程器在高負載的情況下使 UPF 能在短時間內處理來自 UERANSIM 的封包。這樣的表現與我們預期的一致。
 
+### 透過自定義組態降低 RTT
+
+前面的的實驗中，我們為特定的 process 分配了專用的 CPU，這樣的做法確實能夠在高負載的情況下提升 RTT 的表現。然而，這種方法並不通用，因為每個系統的負載情況和工作負載可能會有所不同。
+因此，Gthulhu 發展出一套自定義的組態設定，讓使用者能夠根據自己的需求調整排程策略，專案原始碼請參考 [Gthulhu/api](https://github.com/Gthulhu/api)。
+
+```json
+{
+  "server": {
+    "port": ":8080",
+    "read_timeout": 15,
+    "write_timeout": 15,
+    "idle_timeout": 60
+  },
+  "logging": {
+    "level": "info",
+    "format": "text"
+  },
+  "jwt": {
+    "private_key_path": "./config/jwt_private_key.key",
+    "token_duration": 24
+  },
+  "strategies": {
+    "default": [
+      {
+        "priority": true,
+        "execution_time": 20000,
+        "selectors": [
+          {
+            "key": "app",
+            "value": "ueransim-macvlan"
+          }
+        ],
+        "command_regex": "nr-gnb|nr-ue|ping"
+      }
+    ]
+  }
+}
+```
+
+透過上方的 json 檔案，api server 能夠找出對應的 processes，並將這些 process 的排程策略更新至 Gthulhu。
+如果該任務的 `"priority": true`，則該任務本身能夠搶佔其他非 `"priority": true` 的任務，大大的降低任務從 `runnable` 到 `running` 的時間。
+在 free5GC 的整合案例中，降低 ueransim 的排程延遲代表著 UPF 能夠更快的處理來自 RAN 的封包，進而降低整體的 RTT。
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MfU64idQcHg?si=1tiZax9q0iLmONOE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+上方影片展示了在高負載的情況下，Gthulhu 如何透過自定義的排程策略顯著降低 RTT 的表現。
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R4EmZ18P954?si=9q3Y-Ess4SRZBzmn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+此外，Gthulhu 也支援簡易的 WEB GUI，讓使用者能夠更直觀地管理和監控排程策略。
+
+
 ## 結論
 
 5G 提出了網路切片的概念，期待透過將實體網路切分成多個虛擬網路來提供不同的服務品質。有了 Gthulhu 這樣的自訂排程器，我們可以更靈活地管理和優化這些虛擬網路的性能，將不同業務需求的 UPF 部署在不同的節點上，並根據實際需求調整排程策略。

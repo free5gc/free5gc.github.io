@@ -322,6 +322,57 @@ round-trip min/avg/max = 0.601/0.903/1.150 ms
 
 From the results, the modified Gthulhu scheduler enables the UPF to process packets from UERANSIM in a short time under high load conditions. This performance is consistent with our expectations.
 
+### Reducing RTT through Custom Configuration
+
+In the previous experiments, we allocated dedicated CPUs for specific processes, which indeed improved RTT performance under high load conditions. However, this approach is not universal, as each system's load conditions and workloads may differ.
+Therefore, Gthulhu has developed a set of custom configuration settings that allow users to adjust scheduling strategies according to their needs. For the project source code, please refer to [Gthulhu/api](https://github.com/Gthulhu/api).
+
+```json
+{
+  "server": {
+    "port": ":8080",
+    "read_timeout": 15,
+    "write_timeout": 15,
+    "idle_timeout": 60
+  },
+  "logging": {
+    "level": "info",
+    "format": "text"
+  },
+  "jwt": {
+    "private_key_path": "./config/jwt_private_key.key",
+    "token_duration": 24
+  },
+  "strategies": {
+    "default": [
+      {
+        "priority": true,
+        "execution_time": 20000,
+        "selectors": [
+          {
+            "key": "app",
+            "value": "ueransim-macvlan"
+          }
+        ],
+        "command_regex": "nr-gnb|nr-ue|ping"
+      }
+    ]
+  }
+}
+```
+
+Through the above JSON file, the API server can identify corresponding processes and update these processes' scheduling strategies to Gthulhu.
+If a task has `"priority": true`, the task itself can preempt other non-`"priority": true` tasks, significantly reducing the time from `runnable` to `running` state.
+In the free5GC integration case, reducing ueransim's scheduling delay means that the UPF can process packets from the RAN more quickly, thereby reducing overall RTT.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MfU64idQcHg?si=1tiZax9q0iLmONOE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The above video demonstrates how Gthulhu significantly reduces RTT performance through custom scheduling strategies under high load conditions.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R4EmZ18P954?si=9q3Y-Ess4SRZBzmn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+Additionally, Gthulhu also supports a simple WEB GUI, allowing users to manage and monitor
+
 ## Conclusion
 
 5G introduces the concept of network slicing, expecting to provide different service qualities by dividing physical networks into multiple virtual networks. With custom schedulers like Gthulhu, we can more flexibly manage and optimize the performance of these virtual networks, deploy UPFs with different business requirements on different nodes, and adjust scheduling strategies according to actual needs.
