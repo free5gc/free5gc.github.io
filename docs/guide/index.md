@@ -67,8 +67,10 @@ For Container deployment:
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
-- NR-DC
 - Roaming
+- CNTi
+- BSF
+- Grafana
 
 If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
 
