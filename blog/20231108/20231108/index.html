@@ -1,0 +1,1736 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Introduction of IP Multimedia Subsystem Part 1 - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-of-ip-multimedia-subsystem-part-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction of IP Multimedia Subsystem Part 1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definition-and-overview-of-ims" class="md-nav__link">
+    Definition and Overview of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition and Overview of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduction-to-ims" class="md-nav__link">
+    Introduction to IMS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purpose-and-significance-of-ims" class="md-nav__link">
+    Purpose and Significance of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Purpose and Significance of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose-of-ims" class="md-nav__link">
+    Purpose of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Purpose of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multimedia-services" class="md-nav__link">
+    Multimedia Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability" class="md-nav__link">
+    Interoperability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-convergence" class="md-nav__link">
+    Service Convergence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality-of-service-qos" class="md-nav__link">
+    Quality of Service (QoS)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-management" class="md-nav__link">
+    Session Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mobility-management" class="md-nav__link">
+    Mobility Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#billing-and-charging" class="md-nav__link">
+    Billing and Charging
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#significance-of-ims" class="md-nav__link">
+    Significance of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Significance of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transition-to-all-ip-networks" class="md-nav__link">
+    Transition to All-IP Networks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#facilitates-4g-and-5g-technologies" class="md-nav__link">
+    Facilitates 4G and 5G Technologies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhances-user-experience" class="md-nav__link">
+    Enhances User Experience
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enables-next-generation-services" class="md-nav__link">
+    Enables Next-Generation Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promotes-innovation" class="md-nav__link">
+    Promotes Innovation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-standardization" class="md-nav__link">
+    Global Standardization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-components-of-ims" class="md-nav__link">
+    Key Components of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Components of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sip-session-initiation-protocol" class="md-nav__link">
+    SIP (Session Initiation Protocol)
+  </a>
+  
+    <nav class="md-nav" aria-label="SIP (Session Initiation Protocol)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#role-of-sip-in-ims" class="md-nav__link">
+    Role of SIP in IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Role of SIP in IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-establishment" class="md-nav__link">
+    Session Establishment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-location-and-registration" class="md-nav__link">
+    User Location and Registration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-control" class="md-nav__link">
+    Call Control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-invocation" class="md-nav__link">
+    Service Invocation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-modification-and-termination" class="md-nav__link">
+    Session Modification and Termination
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#media-negotiation" class="md-nav__link">
+    Media Negotiation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signaling-for-establishing-modifying-and-terminating-sessions" class="md-nav__link">
+    Signaling for establishing, modifying, and terminating sessions
+  </a>
+  
+    <nav class="md-nav" aria-label="Signaling for establishing, modifying, and terminating sessions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-establishment_1" class="md-nav__link">
+    Session Establishment:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-modification" class="md-nav__link">
+    Session Modification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-termination" class="md-nav__link">
+    Session Termination
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdp-session-description-protocol" class="md-nav__link">
+    SDP (Session Description Protocol)
+  </a>
+  
+    <nav class="md-nav" aria-label="SDP (Session Description Protocol)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#role-of-sdp-in-session-negotiation-and-description" class="md-nav__link">
+    Role of SDP in session negotiation and description
+  </a>
+  
+    <nav class="md-nav" aria-label="Role of SDP in session negotiation and description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-negotiation" class="md-nav__link">
+    Session Negotiation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-description" class="md-nav__link">
+    Session Description
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negotiating-capabilities" class="md-nav__link">
+    Negotiating Capabilities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hss-home-subscriber-server" class="md-nav__link">
+    HSS (Home Subscriber Server)
+  </a>
+  
+    <nav class="md-nav" aria-label="HSS (Home Subscriber Server)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition-and-function-of-hss-in-ims" class="md-nav__link">
+    Definition and function of HSS in IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition and function of HSS in IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-of-hss-in-ims" class="md-nav__link">
+    Function of HSS in IMS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-subscriber-data-and-authentication" class="md-nav__link">
+    Managing subscriber data and authentication
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing subscriber data and authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managing-subscriber-data" class="md-nav__link">
+    Managing Subscriber Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    Authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cscf-call-session-control-function" class="md-nav__link">
+    CSCF (Call Session Control Function)
+  </a>
+  
+    <nav class="md-nav" aria-label="CSCF (Call Session Control Function)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proxy-cscf-p-cscf" class="md-nav__link">
+    Proxy CSCF (P-CSCF)
+  </a>
+  
+    <nav class="md-nav" aria-label="Proxy CSCF (P-CSCF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-functions" class="md-nav__link">
+    Key Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrogating-cscf-i-cscf" class="md-nav__link">
+    Interrogating CSCF (I-CSCF)
+  </a>
+  
+    <nav class="md-nav" aria-label="Interrogating CSCF (I-CSCF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-functions_1" class="md-nav__link">
+    Key Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serving-cscf-s-cscf" class="md-nav__link">
+    Serving CSCF (S-CSCF)
+  </a>
+  
+    <nav class="md-nav" aria-label="Serving CSCF (S-CSCF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-functions_2" class="md-nav__link">
+    Key Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cscfs-role-in-callsession-control-and-routing" class="md-nav__link">
+    CSCFs Role in Call/Session Control and Routing
+  </a>
+  
+    <nav class="md-nav" aria-label="CSCFs Role in Call/Session Control and Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-setup-and-control" class="md-nav__link">
+    Session Setup and Control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-and-authorization" class="md-nav__link">
+    Authentication and Authorization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routing-and-interrogation" class="md-nav__link">
+    Routing and Interrogation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-enforcement" class="md-nav__link">
+    Service Enforcement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interworking-with-other-networks" class="md-nav__link">
+    Interworking with Other Networks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-and-interfaces-of-ims" class="md-nav__link">
+    Architecture and Interfaces of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture and Interfaces of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-of-ims" class="md-nav__link">
+    Architecture of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mgcfmedia-gateway-control-function" class="md-nav__link">
+    MGCF(Media Gateway Control Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asapplication-server" class="md-nav__link">
+    AS(Application Server)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tas-telephony-application-server" class="md-nav__link">
+    TAS (Telephony Application Server)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-cscf" class="md-nav__link">
+    P-CSCF
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-cscf" class="md-nav__link">
+    I-CSCF
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-cscf" class="md-nav__link">
+    S-CSCF
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hss" class="md-nav__link">
+    HSS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interfaces-of-ims" class="md-nav__link">
+    Interfaces of IMS
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaces of IMS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gm-interface" class="md-nav__link">
+    Gm Interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mw-interface" class="md-nav__link">
+    Mw Interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isc-interface" class="md-nav__link">
+    ISC Interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sh-interface" class="md-nav__link">
+    Sh Interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cx-interfaces" class="md-nav__link">
+    Cx Interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rx-interface" class="md-nav__link">
+    Rx Interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mg-interface" class="md-nav__link">
+    Mg Interface
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20231108/20231108.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20231108/20231108.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="introduction-of-ip-multimedia-subsystem-part-1">Introduction of IP Multimedia Subsystem Part 1</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Elisa Lee<br />
+Date: 2023/11/08</p>
+</div>
+<hr />
+<p>The IMS is a framework for delivering multimedia and voice services over IP networks. It plays a crucial role in enabling communication services like voice, video, and messaging to be delivered in a converged, efficient, and scalable manner.</p>
+<h2 id="definition-and-overview-of-ims">Definition and Overview of IMS</h2>
+<h3 id="introduction-to-ims">Introduction to IMS</h3>
+<p>A standardized, open architectural framework that allows multimedia services to be delivered over IP networks. It is defined by the 3GPP (3rd Generation Partnership Project) and widely used in mobile networks.</p>
+<h3 id="purpose-and-significance-of-ims">Purpose and Significance of IMS</h3>
+<h4 id="purpose-of-ims">Purpose of IMS</h4>
+<h5 id="multimedia-services">Multimedia Services</h5>
+<p>IMS is designed to support a wide range of multimedia services such as voice, video, messaging, and data services over IP networks.</p>
+<h5 id="interoperability">Interoperability</h5>
+<p>It provides a standardized architecture that allows different network elements and applications from various vendors to work together seamlessly. This promotes interoperability, which is vital in a diverse telecommunications ecosystem.</p>
+<h5 id="service-convergence">Service Convergence</h5>
+<p>IMS allows the convergence of various services like voice, video, and data onto a single IP network. This makes it possible for users to access multiple services through a unified interface.</p>
+<h5 id="quality-of-service-qos">Quality of Service (QoS)</h5>
+<p>IMS enables network operators to prioritize and manage different types of traffic, ensuring that services like voice and video receive the necessary bandwidth and low latency for a high-quality user experience.</p>
+<h5 id="session-management">Session Management</h5>
+<p>It manages sessions for different types of services, ensuring that sessions are established, maintained, and terminated appropriately.</p>
+<h5 id="mobility-management">Mobility Management</h5>
+<p>IMS allows for seamless mobility across different access networks (e.g., Wi-Fi, LTE, 5G), ensuring continuity of services as users move between different coverage areas.</p>
+<h5 id="security">Security</h5>
+<p>IMS incorporates security features and protocols to protect the confidentiality, integrity, and authenticity of communication sessions.</p>
+<h5 id="billing-and-charging">Billing and Charging</h5>
+<p>It supports real-time charging and billing capabilities, allowing operators to accurately charge users for the services they consume.</p>
+<h4 id="significance-of-ims">Significance of IMS</h4>
+<h5 id="transition-to-all-ip-networks">Transition to All-IP Networks</h5>
+<p>IMS is a key enabler in the shift from traditional circuit-switched networks to all-IP networks. This transition is essential for supporting advanced multimedia services.</p>
+<h5 id="facilitates-4g-and-5g-technologies">Facilitates 4G and 5G Technologies</h5>
+<p>IMS is a critical component for the deployment and operation of 4G LTE and 5G networks, providing the infrastructure for delivering high-speed data services and advanced multimedia applications.</p>
+<h5 id="enhances-user-experience">Enhances User Experience</h5>
+<p>By enabling the delivery of high-quality multimedia services, IMS significantly enhances the user experience, particularly for applications like video calling, streaming, and real-time gaming.</p>
+<h5 id="enables-next-generation-services">Enables Next-Generation Services</h5>
+<p>IMS is foundational for emerging technologies like IoT (Internet of Things) and Industry 4.0, enabling a wide range of applications and services across various industries.</p>
+<h5 id="promotes-innovation">Promotes Innovation</h5>
+<p>IMS's standardized architecture encourages innovation by allowing developers to create new services and applications that can run on IMS-enabled networks.</p>
+<h5 id="global-standardization">Global Standardization</h5>
+<p>IMS is based on international standards defined by organizations like 3GPP and ETSI (European Telecommunications Standards Institute), ensuring global compatibility and uniformity in telecommunications networks.</p>
+<h2 id="key-components-of-ims">Key Components of IMS</h2>
+<h3 id="sip-session-initiation-protocol">SIP (Session Initiation Protocol)</h3>
+<p>SIP is a signaling protocol used for initiating, maintaining, modifying, and terminating real-time sessions that involve video, voice, messaging, and other communications applications and services over the internet. It operates at the application layer of the OSI model and is widely used for VoIP (Voice over Internet Protocol) and other multimedia communication applications.</p>
+<h4 id="role-of-sip-in-ims">Role of SIP in IMS</h4>
+<p>In the context of IMS, SIP serves as the primary signaling protocol.</p>
+<h5 id="session-establishment">Session Establishment</h5>
+<p>SIP is used to initiate communication sessions between devices or applications. When a user wants to make a call, send a message, or establish a multimedia session, SIP is responsible for setting up the connection.</p>
+<h5 id="user-location-and-registration">User Location and Registration</h5>
+<p>SIP allows devices to register their location on the network. This information is crucial for routing calls and messages to the correct destination.</p>
+<h5 id="call-control">Call Control</h5>
+<p>SIP handles the signaling for call control functions such as call setup, call hold, call transfer, and call release. It defines how these operations should be communicated between endpoints.</p>
+<h5 id="service-invocation">Service Invocation</h5>
+<p>It enables the invocation of various services within IMS, like call forwarding, call waiting, and supplementary services.</p>
+<h5 id="session-modification-and-termination">Session Modification and Termination</h5>
+<p>SIP is also responsible for modifying existing sessions (e.g., adding participants to a call) and terminating sessions when the user ends the communication.</p>
+<h5 id="media-negotiation">Media Negotiation</h5>
+<p>While SIP is responsible for signaling, it doesn't handle the actual media (audio, video, etc.) transfer. It works in conjunction with protocols like RTP (Real-time Transport Protocol) for media transmission.</p>
+<h4 id="signaling-for-establishing-modifying-and-terminating-sessions">Signaling for establishing, modifying, and terminating sessions</h4>
+<h5 id="session-establishment_1">Session Establishment:</h5>
+<ul>
+<li>
+<p>Caller's Request:<br />
+The caller's device sends a SIP INVITE message to the SIP server, indicating the intention to establish a session with the callee.</p>
+</li>
+<li>
+<p>SIP Server Processing:<br />
+The SIP server processes the INVITE message. It checks the user's location and forwards the request to the recipient's SIP server.</p>
+</li>
+<li>
+<p>Recipient's Response:<br />
+The recipient's SIP server delivers the INVITE message to the callee's device. If the recipient is available and agrees to the session, their device sends a SIP 200 OK response back.</p>
+</li>
+<li>
+<p>Session Establishment:<br />
+Once the caller's device receives the 200 OK response, it acknowledges the establishment of the session. The media streams (audio, video, etc.) can then begin.</p>
+</li>
+</ul>
+<h5 id="session-modification">Session Modification</h5>
+<p>If a user wants to modify an ongoing session, such as adding another participant to a call, the SIP signaling is used to send an UPDATE request. This request is processed by the SIP servers and communicated to the affected parties.</p>
+<h5 id="session-termination">Session Termination</h5>
+<p>When a user decides to end a session, their device sends a SIP BYE message. This message is processed by the SIP servers, and the appropriate responses are sent to indicate the termination of the session.<br />
+It's important to note that SIP is a text-based protocol, and it uses URLs similar to those used on the web to identify users and services. This makes it versatile and easy to integrate into existing internet infrastructure.</p>
+<h3 id="sdp-session-description-protocol">SDP (Session Description Protocol)</h3>
+<p>The SDP is a protocol used in multimedia communications to negotiate and describe sessions between participants. It provides a concise and human-readable way to convey information about the characteristics of a multimedia session.</p>
+<h4 id="role-of-sdp-in-session-negotiation-and-description">Role of SDP in session negotiation and description</h4>
+<h5 id="session-negotiation">Session Negotiation</h5>
+<ul>
+<li>
+<p>Media Types:<br />
+This includes information about the type of media (e.g., audio, video, application data) that will be exchanged during the session.</p>
+</li>
+<li>
+<p>Codecs and Formats:<br />
+SDP specifies which codecs (compression/decompression algorithms) and formats will be used for media encoding and decoding.</p>
+</li>
+<li>
+<p>Transport Protocols:<br />
+It describes the transport protocol and ports that will be used for sending and receiving media packets.</p>
+</li>
+<li>
+<p>Network Addresses:<br />
+SDP provides information about the IP addresses and ports where media should be sent.</p>
+</li>
+<li>
+<p>Timing and Synchronization:<br />
+SDP can include information about timing aspects like session start and end times, as well as synchronization of different media streams.</p>
+</li>
+</ul>
+<h5 id="session-description">Session Description</h5>
+<p>SDP accomplishes session description by providing a structured text-based format that includes information about the session parameters mentioned above. This description is typically conveyed in the form of an SDP message.</p>
+<h5 id="negotiating-capabilities">Negotiating Capabilities</h5>
+<ul>
+<li>
+<p>Establishing Media Streams:<br />
+SDP is crucial for establishing media streams. It specifies how media should be encoded, transported, and synchronized between participants. This ensures that audio, video, and other data are transmitted and received correctly.</p>
+</li>
+<li>
+<p>Interoperability:<br />
+SDP is a standardized format, allowing devices and applications from different vendors to communicate effectively. This promotes interoperability, which is crucial in diverse multimedia environments.</p>
+</li>
+<li>
+<p>Dynamic Adaptation:<br />
+SDP can be updated dynamically during a session. For example, if network conditions change, SDP can be used to renegotiate parameters like codecs or bitrates to ensure the best possible quality.</p>
+</li>
+</ul>
+<h3 id="hss-home-subscriber-server">HSS (Home Subscriber Server)</h3>
+<p>The HSS is a crucial component within the IMS architecture. It serves as a central database that stores and manages subscriber-related information for users in a telecommunications network.</p>
+<h4 id="definition-and-function-of-hss-in-ims">Definition and function of HSS in IMS</h4>
+<h5 id="definition">Definition</h5>
+<p>The HSS is a core network element in the IMS architecture. It is a centralized database that contains essential information about subscribers, including their identities, services, and authentication credentials. The HSS plays a pivotal role in facilitating various services and functions within IMS.</p>
+<h5 id="function-of-hss-in-ims">Function of HSS in IMS</h5>
+<ul>
+<li>
+<p>Subscriber Profile Management:<br />
+The HSS stores detailed information about each subscriber, including their IMS public user identity, contact information, allocated services, and preferences. This data is used for session setup, authorization, and routing decisions.</p>
+</li>
+<li>
+<p>Authentication and Authorization:<br />
+HSS is responsible for authenticating users when they attempt to access IMS services. It verifies the subscriber's credentials (such as username and password) before granting access. Additionally, it provides information about the services and capabilities available to each subscriber.</p>
+</li>
+<li>
+<p>Subscriber Location:<br />
+It keeps track of the location of subscribers within the network. This information is crucial for routing calls and messages to the appropriate serving network element.</p>
+</li>
+<li>
+<p>Security Functions:<br />
+The HSS plays a role in the security architecture of IMS. It stores security-related keys and information necessary for secure communication between the subscriber's device and the IMS network.</p>
+</li>
+<li>
+<p>Policy and Charging Control (PCC):<br />
+HSS may also be involved in policy control and charging decisions. It provides information about the subscriber's subscription and policy rules that dictate how services are delivered and charged.</p>
+</li>
+</ul>
+<h4 id="managing-subscriber-data-and-authentication">Managing subscriber data and authentication</h4>
+<h5 id="managing-subscriber-data">Managing Subscriber Data</h5>
+<ul>
+<li>
+<p>Subscriber Registration:<br />
+When a subscriber logs into the network, the HSS is involved in the registration process. It verifies the subscriber's identity and allocates necessary resources and services.</p>
+</li>
+<li>
+<p>Profile Updates:<br />
+The HSS is responsible for updating subscriber profiles. This includes adding or removing services, updating contact information, or changing authentication credentials.</p>
+</li>
+<li>
+<p>Roaming Support:<br />
+In the case of roaming, the HSS plays a key role in managing the subscriber's information, ensuring that services can be delivered seamlessly across different networks.</p>
+</li>
+</ul>
+<h5 id="authentication">Authentication</h5>
+<ul>
+<li>
+<p>Challenge-Response Mechanism:<br />
+When a subscriber attempts to access IMS services, the HSS challenges the subscriber's device for authentication credentials.</p>
+</li>
+<li>
+<p>Verifying Credentials:<br />
+The HSS verifies the subscriber's credentials using authentication algorithms and keys. This ensures that only authorized users can access the network.</p>
+</li>
+<li>
+<p>Generating Security Tokens:<br />
+After successful authentication, the HSS generates security tokens that are used to secure the communication sessions between the subscriber's device and the network.</p>
+</li>
+<li>
+<p>Subscriber Privacy and Security:<br />
+The authentication process ensures that subscriber information and communication sessions are protected from unauthorized access and interception.</p>
+</li>
+</ul>
+<h3 id="cscf-call-session-control-function">CSCF (Call Session Control Function)</h3>
+<p>The CSCF is a crucial element in the IMS architecture, responsible for handling call/session control and routing within the network. There are three types of CSCFs, each serving specific roles in the IMS framework.</p>
+<h4 id="proxy-cscf-p-cscf">Proxy CSCF (P-CSCF)</h4>
+<p>The P-CSCF is a vital component within the IMS architecture. It serves as the initial point of contact for UE (User Equipment) when establishing communication sessions. The P-CSCF behaves as a proxy, managing incoming requests by either processing them internally or forwarding them to appropriate destinations. It does not modify the Request URI in the SIP INVITE message. In certain scenarios, the P-CSCF may also act as a User Agent, independently generating SIP transactions. Additionally, the P-CSCF's address is discovered by UEs following PDP context activation, allowing for seamless initiation of sessions.</p>
+<h5 id="key-functions">Key Functions</h5>
+<ul>
+<li>
+<p>Forwarding SIP register requests from the UE to the appropriate I-CSCF based on the UE's home domain.</p>
+</li>
+<li>
+<p>Relaying SIP messages received from the UE to the designated SIP server (e.g., S-CSCF) obtained during the registration process.</p>
+</li>
+<li>
+<p>Forwarding SIP requests or responses to the UE.</p>
+</li>
+<li>
+<p>Detecting and handling emergency session establishment requests according to specified error handling procedures.</p>
+</li>
+<li>
+<p>Generating Call Detail Records for transaction records.</p>
+</li>
+<li>
+<p>Establishing and maintaining Security Associations with each UE.</p>
+</li>
+<li>
+<p>Performing SIP message compression and decompression.</p>
+</li>
+<li>
+<p>Authorizing bearer resources and managing QoS</p>
+</li>
+</ul>
+<h4 id="interrogating-cscf-i-cscf">Interrogating CSCF (I-CSCF)</h4>
+<p>The I-CSCF functions as the initial entry point within an operator's network for all incoming connections directed to a user of that network operator or to a roaming user currently situated within the operator's service area. An operator's network may incorporate multiple I-CSCFs to manage these incoming connections effectively.</p>
+<h5 id="key-functions_1">Key Functions</h5>
+<ul>
+<li>Assigning a Serving-CSCF (S-CSCF) to a user during the SIP registration process.</li>
+<li>Routing SIP requests received from other networks to the appropriate S-CSCF.</li>
+<li>Retrieving the S-CSCF address from the HSS.</li>
+<li>Forwarding SIP requests or responses to the determined S-CSCF.</li>
+<li>Generating Call Detail Records to maintain transaction records.</li>
+</ul>
+<h4 id="serving-cscf-s-cscf">Serving CSCF (S-CSCF)</h4>
+<p>The S-CSCF is a pivotal component in the IMS architecture. Its primary role involves providing session control services for the UE. The S-CSCF maintains a session state essential for supporting various services as required by the network operator. It's worth noting that different S-CSCFs within an operator's network may have varying functionalities tailored to specific requirements.</p>
+<h5 id="key-functions_2">Key Functions</h5>
+<ul>
+<li>May act as a Registrar, accepting registration requests and making its information available through the location server (e.g., HSS).</li>
+<li>Controls sessions for registered endpoints, including rejecting IMS communication to/from barred public user identities.</li>
+<li>May behave as a Proxy Server, handling requests internally or forwarding them.</li>
+<li>May behave as a User Agent, capable of terminating and independently generating SIP transactions.</li>
+<li>Provides endpoints with service event-related information, such as notification of tones/announcements and location of additional media resources, along with billing notifications.</li>
+<li>Obtains the Address of the I-CSCF for the network operator serving the destination user and forwards SIP requests/responses accordingly.</li>
+<li>Routes SIP requests/responses based on the type of procedure.</li>
+</ul>
+<h4 id="cscfs-role-in-callsession-control-and-routing">CSCFs Role in Call/Session Control and Routing</h4>
+<h5 id="session-setup-and-control">Session Setup and Control</h5>
+<ul>
+<li>
+<p>P-CSCF: Acts as the first point of contact for UE and handles initial session signaling. It forwards requests to the appropriate destination, facilitating session establishment.</p>
+</li>
+<li>
+<p>I-CSCF: Serves as the entry point within the operator's network for connections directed to a user. It assigns a S-CSCF during SIP registration and routes requests/responses accordingly.</p>
+</li>
+<li>
+<p>S-CSCF: Manages session control services for the UE. It maintains a session state as required by the network operator and controls sessions for registered endpoints.</p>
+</li>
+</ul>
+<h5 id="authentication-and-authorization">Authentication and Authorization</h5>
+<ul>
+<li>
+<p>P-CSCF: May perform Registrar functions, accepting registration requests from the UE and making information available through the location server (e.g., HSS).</p>
+</li>
+<li>
+<p>S-CSCF: Manages authentication and authorization for the UE, ensuring secure access to network services.</p>
+</li>
+</ul>
+<h5 id="routing-and-interrogation">Routing and Interrogation</h5>
+<ul>
+<li>I-CSCF: Routes SIP requests received from other networks towards the appropriate S-CSCF. It retrieves the S-CSCF address from the HSS and forwards requests/responses accordingly.</li>
+</ul>
+<h5 id="service-enforcement">Service Enforcement</h5>
+<ul>
+<li>S-CSCF: Enforces services by providing endpoints with service event-related information, such as notification of tones/announcements, location of additional media resources, and billing notifications.</li>
+</ul>
+<h5 id="interworking-with-other-networks">Interworking with Other Networks</h5>
+<ul>
+<li>S-CSCF: Depending on operator policy, may forward SIP requests or responses to SIP servers located within an ISP domain outside of the IMS Core Network. It can also forward requests for call routing to the PSTN or CS Domain.</li>
+</ul>
+<h2 id="architecture-and-interfaces-of-ims">Architecture and Interfaces of IMS</h2>
+<h3 id="architecture-of-ims">Architecture of IMS</h3>
+<p><img alt="" src="../IMS_Architecture.jpg" /></p>
+<h4 id="mgcfmedia-gateway-control-function">MGCF(Media Gateway Control Function)</h4>
+<p>The MGCF is a crucial component within the IMS architecture. Its primary role is to facilitate the interconnection between the IMS network and circuit-switched networks, such as the Public Switched Telephone Network (PSTN) or the Circuit-Switched domain.</p>
+<h4 id="asapplication-server">AS(Application Server)</h4>
+<p>An AS in the context of the IMS is a critical component responsible for providing various value-added services to users within the IMS network. The AS hosts and executes applications that deliver a wide range of services, enriching the user experience with multimedia capabilities.</p>
+<h4 id="tas-telephony-application-server">TAS (Telephony Application Server)</h4>
+<p>The TAS is a critical component within the IMS architecture. It plays a key role in delivering advanced telephony services and features in a multimedia-rich environment. The TAS is responsible for the provisioning, execution, and control of telephony-related applications and services within the IMS network.</p>
+<h4 id="p-cscf">P-CSCF</h4>
+<p>As described above.</p>
+<h4 id="i-cscf">I-CSCF</h4>
+<p>As described above.</p>
+<h4 id="s-cscf">S-CSCF</h4>
+<p>As described above.</p>
+<h4 id="hss">HSS</h4>
+<p>As described above.</p>
+<h3 id="interfaces-of-ims">Interfaces of IMS</h3>
+<h4 id="gm-interface">Gm Interface</h4>
+<ul>
+<li>Description: The Gm Interface plays a pivotal role in all user-based communications. It serves as the link between the UE and the P-CSCF, facilitating various functions such as registration, de-registration, handling incoming and outgoing calls, managing SIP signaling, and enabling any form of communication between the user and the IMS network. To ensure security, the Gm and Mw Interfaces are physically isolated. This interface is responsible for authentication, encryption, and comprehensive session control. Gm utilizes SIP and SDP protocols.</li>
+<li>Function: Facilitates connectivity between the UE and the IMS network for tasks including registration, authentication, encryption, and session control.</li>
+</ul>
+<h4 id="mw-interface">Mw Interface</h4>
+<ul>
+<li>Description: The Mw Interface facilitates communication between CSCF nodes within the IMS core network. Usually, the Session Border Controller (SBC) hosts the P-CSCF, establishing a connection to the I/S-CSCF through the Mw Protocol. Mw employs SIP and SDP Protocols to enable this connectivity.</li>
+<li>Function: Facilitates message exchange between CSCFs (e.g., from P-CSCF to S-CSCF)</li>
+</ul>
+<h4 id="isc-interface">ISC Interface</h4>
+<ul>
+<li>Description: The ISC interface establishes connectivity between the S-CSCF and TAS (Telephony Application Server). This interface engages with the MMTel supplementary services deployed on the TAS, utilizing the IMS Service Control Interface to request services. Additionally, it accommodates TAS-initiated requests to the IMS.</li>
+<li>Function: The S-CSCF interacts with the MMTel supplementary services integrated into the TAS.</li>
+</ul>
+<h4 id="sh-interface">Sh Interface</h4>
+<ul>
+<li>Description: The Sh Interface is employed between the TAS and HSS to facilitate the exchange of User Profile information, encompassing service-related details, user location information, and charging function data. It enables the transmission of service and subscriber-related information from the HSS to the TAS. This operation is akin to a Location Update between the HSS and TAS. Sh operates using the Diameter protocol.</li>
+<li>Function: The TAS retrieves user profiles from the HSS and activates services for the user.</li>
+</ul>
+<h4 id="cx-interfaces">Cx Interfaces</h4>
+<ul>
+<li>Description:The Cx Interface is utilized between the I/S-CSCF and HSS to download subscriber data from the HSS to the S-CSCF. It enables IMS registration and the transfer of subscriber data to the S-CSCF. Cx operates on the Diameter protocol.</li>
+<li>Function: The I/S-CSCF communicates with the HSS to retrieve user profiles, assisting in user registration and authentication.</li>
+</ul>
+<h4 id="rx-interface">Rx Interface</h4>
+<ul>
+<li>Description: The Rx interface serves as a bridge between the IMS Network and the Packet Core. It operates between the P-CSCF and the PCRF, enabling the request of an appropriate policy for session establishment, including both incoming and outgoing voice calls. The Rx Interface plays a crucial role in controlling the setup of various call types, thereby authorizing and managing resource usage in the access networks. It operates on the Diameter protocol.</li>
+<li>Function: Establishing a suitable policy for incoming or outgoing calls on the network through PCRF.</li>
+</ul>
+<h4 id="mg-interface">Mg Interface</h4>
+<ul>
+<li>Description: The Mg Interface facilitates the transmission of SIP messages between an S/I-CSCF and an MGCF for signaling purposes. It is utilized for the exchange of signaling between the CSCF and Media Gateway for calls coming and going towards circuit core networks.</li>
+<li>Function: Facilitates interworking with the circuit-switched network for the CSCF.</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<p>3GPP TS 29 163: "Interworking between the IP Multimedia (IM) Core Network (CN) subsystem and Circuit Switched (CS) networks"</p>
+<p>3GPP TS 22.228: "Service requirements for the Internet Protocol (IP) multimedia core network subsystem (IMS) - Stage 1"</p>
+<p>3GPP TS 23.218: "IP Multimedia (IM) session handling; IM call model; Stage 2"</p>
+<p>3GPP TS 23.228: "IP Multimedia Subsystem (IMS) - Stage 2"</p>
+<p>3GPP TS 24.229: "IP multimedia call control protocol based on Session Initiation Protocol (SIP) and Session Description Protocol (SDP) - Stage 3"</p>
+<p>3GPP TS 29.228: "IP Multimedia (IM) Subsystem Cx and Dx Interfaces; Signalling flows and message contents"</p>
+<h2 id="about">About</h2>
+<p>Hello, I am Elisa Lee. My ongoing research revolves around VoNR (Voice over New Radio). I encourage any inquiries or identification of errors within the article, as they are welcomed for correction. Your feedback is invaluable, so please don't hesitate to reach out via email to share your insights.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
