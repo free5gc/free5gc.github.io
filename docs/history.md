@@ -2,6 +2,23 @@
 
 ## 2025 Roadmap
 
+![free5gc-roadmp-2025](./assets/free5gc-roadmap-2025.png)
+
+## Augest 29, 2025: v4.1.0
+
+In the release v4.1.0 of free5GC, we have fixed a series of bugs, which including:
+
+- [Encryption Method in TNGF](https://github.com/free5gc/tngf/pull/14)
+- [Nil expiry in NSSAIAvailability POST api request](https://github.com/free5gc/nssf/pull/39)
+- [Unsafe bdt type assertion](https://github.com/free5gc/pcf/pull/53)
+- [Wrong response code in policydata bdt put procedure](https://github.com/free5gc/udr/pull/51)
+- [Non 3GPP reconnection fail](https://github.com/free5gc/udm/pull/62)
+
+In addition, we also introduce new features:
+
+- [NR-DC](https://free5gc.org/guide/9-nr-dc)
+- [Prometheus metrics](https://github.com/free5gc/amf/pull/173)
+
 ## April 22, 2025: v4.0.1
 
 In the release v4.0.1 of free5GC, we have fixed a series of bugs, which including:
