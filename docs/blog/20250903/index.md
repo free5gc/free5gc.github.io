@@ -87,7 +87,7 @@ Looking ahead, a combination of predictive algorithms, smarter session anchoring
 
 ## Reference
 
-- [ts 38.300](https://www.etsi.org/deliver/etsi_ts/138300_138399/138300/18.01.00_60/ts_138300v180100p.pdf)
+- [TS 38.300](https://www.etsi.org/deliver/etsi_ts/138300_138399/138300/18.01.00_60/ts_138300v180100p.pdf)
 - [3GPP Release 18](https://www.3gpp.org/specifications-technologies/releases/release-18)
 
 
