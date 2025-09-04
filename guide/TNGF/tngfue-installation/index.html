@@ -1,0 +1,1212 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Tngfue installation - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-free5gc-installation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tngfue installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../blog/" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-free5gc-installation" class="md-nav__link">
+    1. free5GC installation
+  </a>
+  
+    <nav class="md-nav" aria-label="1. free5GC installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#follow-the-tutorial-in-free5gc-official-site" class="md-nav__link">
+    Follow the tutorial in free5GC official site:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-for-nfs" class="md-nav__link">
+    Configuration for NFs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-use-webconsole-to-add-ue" class="md-nav__link">
+    2. Use WebConsole to Add UE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-access-point-setup" class="md-nav__link">
+    3. Access Point Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Access Point Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-openwrt" class="md-nav__link">
+    3.1 OpenWRT
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 OpenWRT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ap-information" class="md-nav__link">
+    AP information
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-wi-fi-network-essid" class="md-nav__link">
+    Configuring Wi-Fi Network ESSID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-wi-fi-network-security" class="md-nav__link">
+    Configuring Wi-Fi Network Security
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-hostapd-cli" class="md-nav__link">
+    3.2 Hostapd (CLI)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tngfue-installation" class="md-nav__link">
+    4. TNGFUE Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="4. TNGFUE Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-source-code" class="md-nav__link">
+    Get Source Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tngfue-configuration" class="md-nav__link">
+    TNGFUE Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="TNGFUE Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-automated-setup" class="md-nav__link">
+    A. Automated Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-advanced-manual-setup" class="md-nav__link">
+    B. Advanced Manual Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="B. Advanced Manual Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#buildcompile-configuration" class="md-nav__link">
+    Build/Compile Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tngfue-settings" class="md-nav__link">
+    TNGFUE Settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-parameters" class="md-nav__link">
+    Security Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-binary" class="md-nav__link">
+    Build binary
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-testing" class="md-nav__link">
+    5. Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-run-free5gc-with-tngf" class="md-nav__link">
+    A. Run free5GC with TNGF
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-run-tngfue" class="md-nav__link">
+    B. Run TNGFUE
+  </a>
+  
+    <nav class="md-nav" aria-label="B. Run TNGFUE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-using-the-run-script" class="md-nav__link">
+    Run using the run script
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatively-run-manually" class="md-nav__link">
+    (Alternatively) Run manually
+  </a>
+  
+    <nav class="md-nav" aria-label="(Alternatively) Run manually">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-xfrm-and-gretun0-does-not-exist" class="md-nav__link">
+    Make sure xfrm and greTun0 does not exist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-wi-fi-interface-ip-to-the-same-lan-as-free5gc" class="md-nav__link">
+    Set Wi-Fi interface IP to the same LAN as free5GC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    Run
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    Example output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-transfer-data-over-the-gretun0-interface" class="md-nav__link">
+    C. Transfer data over the greTun0 interface
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/guide/TNGF/tngfue-installation.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/guide/TNGF/tngfue-installation.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>Tngfue installation</h1>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JETJ7TJ805"></script>
+<script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JETJ7TJ805'); </script>
+
+<h2 id="1-free5gc-installation">1. free5GC installation</h2>
+<p>(Optional) If you install free5GC on a VM, add a network adapter set to bridged mode, and set the card name to your AP. Some additional information on how to configure multiple network interfaces on the VM are available on <a href="../../2-config-vm-en/#4-setting-static-ip-address">the docs</a> and on <a href="https://documentation.ubuntu.com/server/explanation/networking/configuring-networks/">Ubuntu docs page</a>.</p>
+<h4 id="follow-the-tutorial-in-free5gc-official-site">Follow the tutorial in free5GC official site:</h4>
+<ul>
+<li><a href="https://free5gc.org/guide/3-install-free5gc/">Installing free5GC and webconsole</a></li>
+</ul>
+<h3 id="configuration-for-nfs">Configuration for NFs</h3>
+<p>Modify <code>~/free5gc/config/tngfcfg.yaml</code> file<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># --- Bind Interfaces ---</span>
+<span class="nt">IKEBindAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;YOUR_FREE5GC_IP&gt;</span><span class="w"> </span><span class="c1"># IP address of Nwu interface (IKE) on this TNGF</span>
+<span class="nt">RadiusBindAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;YOUR_FREE5GC_IP&gt;</span><span class="w"> </span><span class="c1"># IP address of Nwu interface (IKE) on this TNGF</span>
+</code></pre></div></p>
+<h2 id="2-use-webconsole-to-add-ue">2. Use WebConsole to Add UE</h2>
+<ul>
+<li>Start your webconsole server<br />
+    <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/free5gc/webconsole/
+make<span class="w"> </span><span class="c1"># If webconsole was not previously compiled</span>
+./bin/webconsole
+</code></pre></div></li>
+<li>Open your web browser from your host machine, and enter the URL <code>http://&lt;FREE5GC_IP&gt;:5000</code></li>
+<li>On the login page, enter username <code>admin</code> and password <code>free5gc</code></li>
+<li>Go to <code>SUBSCRIBERS</code> and click on <code>CREATE</code></li>
+<li>Check that the <code>SUPI (IMSI)</code> field is unique and modify other fields as necessary to ensure data consistency with <a href="#security-parameters">sec.conf file</a><br />
+<img alt="subscribe" src="../subscribe.png" /></li>
+<li>Then, scroll the page all the way down and click on <code>CREATE</code>.</li>
+</ul>
+<h2 id="3-access-point-setup">3. Access Point Setup</h2>
+<p>Follow Section 3.1 to set up an Access Point using OpenWRT firmware or, alternatively,  Section 3.2 to build an AP on Ubuntu 22.04 using the hostapd daemon.</p>
+<h3 id="31-openwrt">3.1 OpenWRT</h3>
+<p><strong>Note:</strong> The steps of this section were tested using OpenWrt as AP firmware (see screenshot below)</p>
+<h4 id="ap-information">AP information</h4>
+<p><img alt="APinformation" src="../AP_info.png" /></p>
+<h4 id="configuring-wi-fi-network-essid">Configuring Wi-Fi Network ESSID</h4>
+<blockquote>
+<p><strong>Network → Wireless → Edit → Interface Configuration → General Setup</strong><br />
+<img alt="AP1" src="../AP1.png" /></p>
+</blockquote>
+<h4 id="configuring-wi-fi-network-security">Configuring Wi-Fi Network Security</h4>
+<blockquote>
+<p><strong>Interface Configuration → Wireless Security</strong><br />
+<img alt="AP2" src="../AP2.png" /></p>
+</blockquote>
+<p><strong>Note:</strong> <code>RADIUS Authentication Server</code> is free5GC's IP. <code>RADIUS Authentication Secret</code> must match the one from <code>RadiusSecret</code> parameter on <a href="https://github.com/free5gc/free5gc/blob/main/config/tngfcfg.yaml">tngfcfg.yaml file</a></p>
+<p><strong>Tip:</strong> If WPA2-EAP isn't available on the OpenWrt firmware installed, check <a href="./../Trouble_Shooting.md#13-unable-to-find-wpa2-eap-encryption-option-in-openwrt-installation">this troubleshooting section</a>.</p>
+<!-- The next step is not required. For further details, see: https://forum.free5gc.org/t/running-tngfue-on-another-subnet/2571/4
+#### Open Dynamic DHCP
+> **Network → Interface → Edit lan →  DHCP server → Advance Setting**
+> ![AP3](./AP3.png) -->
+
+<h3 id="32-hostapd-cli">3.2 Hostapd (CLI)</h3>
+<p><strong>Note:</strong> This section explains how to use hostapd to set up an access point. Hostapd is an open-source daemon that can be used on Linux systems (like Ubuntu) to build a DIY alternative to OpenWRT.</p>
+<p>To install hostapd on Ubuntu 22.04 (it requires a Wi-Fi interface available):<br />
+<div class="highlight"><pre><span></span><code>sudo apt install hostapd
+</code></pre></div></p>
+<p>Write a new config file for hostapd:<br />
+<div class="highlight"><pre><span></span><code>sudo nano /etc/hostapd/hostapd.conf
+</code></pre></div></p>
+<p>Paste the following content into it: <br />
+<div class="highlight"><pre><span></span><code>interface=wlan0
+driver=nl80211
+ssid=free5gc-ap
+hw_mode=g
+channel=6
+ieee8021x=1
+auth_algs=1
+wpa=2
+wpa_key_mgmt=WPA-EAP
+rsn_pairwise=CCMP
+
+# RADIUS config
+auth_server_addr=192.168.1.102
+auth_server_port=1812
+auth_server_shared_secret=free5gctngf
+
+nas_identifier=myhostapd
+</code></pre></div><br />
+<strong>Note 1:</strong> Ensure that <code>auth_server_addr</code> and <code>auth_server_shared_secret</code> must match <code>RadiusBindAddress</code> and <code>RadiusSecret</code> parameters on <a href="https://github.com/free5gc/free5gc/blob/main/config/tngfcfg.yaml">tngfcfg.yaml file</a>.</p>
+<p><strong>Note 2:</strong> Ensure that <code>interface</code> matches the name of the WiFi interface of your device.</p>
+<p>Start the hostapd service:<br />
+<div class="highlight"><pre><span></span><code>sudo systemctl unmask hostapd
+sudo systemctl enable --now hostapd
+</code></pre></div></p>
+<h2 id="4-tngfue-installation">4. TNGFUE Installation</h2>
+<p>Install TNGFUE in another device with a Wi-Fi interface available</p>
+<h3 id="get-source-code">Get Source Code</h3>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/free5gc/tngfue.git
+cd tngfue
+</code></pre></div>
+<h3 id="tngfue-configuration">TNGFUE Configuration</h3>
+<h4 id="a-automated-setup">A. Automated Setup</h4>
+<p>Use the <code>prepare</code> script:</p>
+<p>(Optional) Open the script and adjust it with the desired parameters/vars<br />
+<div class="highlight"><pre><span></span><code>nano prepare.sh
+</code></pre></div></p>
+<p><strong>Note:</strong> Confirm the Wi-Fi interface name (i.e. <code>IFACE_NAME</code>) is the same as the OS name</p>
+<p>Run the script to begin building TNGFUE<br />
+<div class="highlight"><pre><span></span><code>./prepare.sh
+</code></pre></div></p>
+<h4 id="b-advanced-manual-setup">B. Advanced Manual Setup</h4>
+<p><strong>(Alternatively)</strong> To configure and build manually:</p>
+<p><strong>Note:</strong> The <code>prepare</code> script executed the steps below, you may skip to the <a href="#5-testing">next section</a></p>
+<h5 id="buildcompile-configuration">Build/Compile Configuration</h5>
+<p>Make sure the flag <code>CONFIG_EAP_VENDOR_TEST</code> of the <code>.config</code> file inside <code>wpa_supplicant</code> folder is enabled as shown below:<br />
+<div class="highlight"><pre><span></span><code>...
+CONFIG_EAP_VENDOR_TEST=y
+...
+</code></pre></div><br />
+<strong>Tip:</strong> This setting is <a href="https://github.com/free5gc/tngfue/blob/main/wpa_supplicant/.config#L152">already enabled</a></p>
+<h5 id="tngfue-settings">TNGFUE Settings</h5>
+<p>Modify <code>~/tngfue/wpa_supplicant.conf</code></p>
+<ul>
+<li><code>ssid:</code> your ap/wifi name <br />
+(same as the AP setting part)</li>
+<li><code>identity:</code> identity information for this ue <br />
+(set whatever you want)</li>
+<li><code>password:</code> wifi/ap password<br />
+(same as the AP setting part)</li>
+</ul>
+<div class="highlight"><pre><span></span><code>ctrl_interface=udp
+update_config=1
+network={
+    ssid=&quot;&lt;YOUR_AP_NAME&gt;&quot;
+    key_mgmt=WPA-EAP
+    eap=VENDOR-TEST IKEV2
+    identity=&quot;&lt;YOUR_IDENTITY_INFO&gt;&quot;
+    password=&quot;&lt;YOUR_PASSWORD&gt;&quot;
+}
+</code></pre></div>
+<p>E.g.<br />
+<div class="highlight"><pre><span></span><code>ctrl_interface=udp
+update_config=1
+network={
+    ssid=&quot;free5gc-ap&quot;
+    key_mgmt=WPA-EAP
+    eap=VENDOR-TEST IKEV2
+    identity=&quot;tngfue&quot;
+    password=&quot;free5gctngf&quot;
+}
+</code></pre></div></p>
+<h5 id="security-parameters">Security Parameters</h5>
+<p>In <code>tngfue/wpa_supplicant/sec.conf</code>:</p>
+<ul>
+<li><code>wifiifname:</code> your wifi interface name <br />
+(you can find this by typing <code>ifconfig</code> in terminal)</li>
+</ul>
+<p>You can find all the parameters listed below on the Web Console subscriber page.</p>
+<ul>
+<li><code>imsi_identity:</code> SUPI(IMSI)</li>
+<li><code>MSIN:</code> SUPI without the PLMN part</li>
+</ul>
+<p>Format: <br />
+<div class="highlight"><pre><span></span><code>wifiifname: &lt;YOUR_WIFI_INTERFACE_NAME&gt;
+K:&lt;UE_K_IN_WEBCONSOLE&gt;
+imsi_identity:&lt;UE_SUPI_IN_WEBCONSOLE&gt;
+nai_username:type0.rid61695.schid0.userid&lt;MSIN&gt;
+SQN:&lt;UE_SQN_IN_WEBCONSOLE&gt;
+AMF:&lt;AMF_IN_WEBCONSOLE&gt;
+OPC:&lt;UE_OPCV_IN_WEBCONSOLE&gt;
+</code></pre></div></p>
+<p>E.g.<br />
+<div class="highlight"><pre><span></span><code>wifiifname:wlp3s0
+K:8baf473f2f8fd09487cccbd7097c6862
+imsi_identity:208930000000007
+nai_username:type0.rid61695.schid0.userid000000000007
+SQN:16f3b3f70fe1
+AMF:8000
+OPC:8e27b6af0e692e750f32667a3b14605d
+</code></pre></div></p>
+<h5 id="build-binary">Build binary</h5>
+<p><div class="highlight"><pre><span></span><code>cd ~/tngfue/wpa_supplicant/
+make
+</code></pre></div><br />
+For more information, see <a href="../Trouble_Shooting.md#14-troubleshooting-missing-packages-when-trying-to-build-tngfue-on-ubuntu">this troubleshooting section</a></p>
+<h2 id="5-testing">5. Testing</h2>
+<h3 id="a-run-free5gc-with-tngf">A. Run free5GC with TNGF</h3>
+<p>On free5GC's machine:<br />
+<div class="highlight"><pre><span></span><code>cd ~/free5gc
+./run.sh -tngf
+</code></pre></div></p>
+<h3 id="b-run-tngfue">B. Run TNGFUE</h3>
+<p>On TNGFUE's machine:</p>
+<h4 id="run-using-the-run-script">Run using the <code>run</code> script</h4>
+<p><div class="highlight"><pre><span></span><code>./run.sh
+</code></pre></div><br />
+Then skip to <a href="#example-output">the next section</a></p>
+<h4 id="alternatively-run-manually"><strong>(Alternatively)</strong> Run manually</h4>
+<h5 id="make-sure-xfrm-and-gretun0-does-not-exist">Make sure xfrm and greTun0 does not exist</h5>
+<blockquote>
+<p>If you have not successfully connected to TNGF yet, you can skip this step</p>
+</blockquote>
+<p>Delete both interfaces using:<br />
+<div class="highlight"><pre><span></span><code>sudo ip l del greTun0
+sudo ip l del xfrm-1
+</code></pre></div></p>
+<h5 id="set-wi-fi-interface-ip-to-the-same-lan-as-free5gc">Set Wi-Fi interface IP to the same LAN as free5GC</h5>
+<div class="highlight"><pre><span></span><code>ip a add 192.168.1.202/24 brd 192.168.1.255 dev &lt;YOUR_WIFI_INTERFACE_NAME&gt;
+ip r add default via 192.168.1.202 dev &lt;YOUR_WIFI_INTERFACE_NAME&gt;
+</code></pre></div>
+<h5 id="run">Run</h5>
+<div class="highlight"><pre><span></span><code>cd ~/tngfue/wpa_supplicant
+sudo ./wpa_supplicant -c ../wpa_supplicant.conf -i &lt;YOUR_WIFI_INTERFACE_NAME&gt;
+</code></pre></div>
+<h4 id="example-output">Example output</h4>
+<p>When the session successfully connects, it will be possible to see these five interfaces established. <br />
+<img alt="interfaces" src="../interfaces.png" /></p>
+<p>And TNGFUE will show that connection is completed.<br />
+<img alt="tngfue1" src="../tngfue1.png" /><br />
+<img alt="tngfue2" src="../tngfue2.png" /></p>
+<h3 id="c-transfer-data-over-the-gretun0-interface">C. Transfer data over the greTun0 interface</h3>
+<p><div class="highlight"><pre><span></span><code>ping -I greTun0 8.8.8.8
+</code></pre></div><br />
+<img alt="ping" src="../ping.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

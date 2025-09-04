@@ -1,0 +1,1135 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>利用 Custom eBPF-based Schedulers 改善網路效能 - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#custom-ebpf-based-schedulers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              利用 Custom eBPF-based Schedulers 改善網路效能
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scx-5g" class="md-nav__link">
+    scx 與 5G 領域結合的可能性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gthulhu" class="md-nav__link">
+    牛刀小試：觀察 Gthulhu 載入後資料層的效能差異
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gtp5g" class="md-nav__link">
+    對 GTP5G 進行最佳化排程
+  </a>
+  
+    <nav class="md-nav" aria-label="對 GTP5G 進行最佳化排程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#downlink-cpu" class="md-nav__link">
+    觀察 Downlink 由哪一個 cpu 負責處理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gthulhu_1" class="md-nav__link">
+    Gthulhu 的組態設定
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stress-ng" class="md-nav__link">
+    使用 stress-ng 產生負載
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ping" class="md-nav__link">
+    使用 ping 進行測試
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtt" class="md-nav__link">
+    透過自定義組態降低 RTT
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    結論
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    關於作者
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250726/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250726/index.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="custom-ebpf-based-schedulers">利用 Custom eBPF-based Schedulers 改善網路效能</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://www.linkedin.com/in/ian-chen-88b70b1aa/">Ian Chen</a><br />
+Date: 2025/07/26</p>
+</div>
+<hr />
+<p>Linux Kernel 自 v6.12 開始支援 sched_ext，它允許使用者藉由 eBPF 程式來定義自訂的 CPU 排程器。這個功能使得開發者能夠創建更靈活和高效的排程策略，以滿足特定的性能需求。<br />
+筆者深受 scx 專案的啟發，並且參考 <a href="https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_rustland">scx_rustland</a> 的概念，實作了讓開發者能夠使用 golang 語言來撰寫自訂排程器的框架 <a href="https://github.com/Gthulhu/scx_goland_core">scx_goland_core</a>。</p>
+<h2 id="scx-5g">scx 與 5G 領域結合的可能性</h2>
+<p>對於 5G 與 scx 的結合，已經有些許討論 <a href="https://free5gc.org/blog/20250305/20250305/">[1]</a> <a href="https://free5gc.org/blog/20250509/20250509/">[2]</a> <a href="https://lwn.net/Articles/1027096/">[3]</a>。然而，考慮到現代 Cloud-Native App (5G Core Network) 的特性，目前尚沒有相關案例探討 scx 如何在雲原生架構上運作。</p>
+<p><img alt="alt text" src="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250726/fig1.png?raw=true" /><br />
+<em>圖一：API 架構</em></p>
+<p>對此，筆者提出了一個初步的想法，基於 scx_goland_core 框架開發了一個可在雲原生環境中運行的自訂排程器 <a href="https://gthulhu.github.io/docs/">Gthulhu</a>，它可以部署於 Kubernetes 群集中，透過部署的方式管理叢集中大量節點的排程策略。</p>
+<p>我們可以透過 Restful API 對 Gthulhu API server 下達排程策略，讓 API server 為我們找出需要調整的 workloads。與此同時，Gthulhu 會定期向 API server 發送心跳訊息，並在必要時更新排程策略。</p>
+<blockquote>
+<p>關於 Gthulhu 的詳細資訊，請參考 <a href="https://gthulhu.github.io/docs/how-it-works.en/">Gthulhu Docs</a>。</p>
+</blockquote>
+<h2 id="gthulhu">牛刀小試：觀察 Gthulhu 載入後資料層的效能差異</h2>
+<p>在本次實驗中，筆者的機器運作 在 Ubuntu 24.04 LTS 上，使用 Linux Kernel 6.12。實驗的目的是觀察 Gthulhu 在載入後對資料層效能的影響。</p>
+<p>試驗環境如下：</p>
+<ul>
+<li>VM1 (Ubuntu 24.04 LTS, Linux Kernel 6.12)<ul>
+<li>部署 free5GC v4.0.1</li>
+</ul>
+</li>
+<li>VM2 (Ubuntu 20.04 LTS, Linux Kernel 5.4.0)<ul>
+<li>部署 UERANSIM</li>
+</ul>
+</li>
+</ul>
+<p><img alt="alt text" src="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250726/fig2.png?raw=true" /></p>
+<p>待 PDU Session 建立後，筆者使用 <code>ping</code> 工具對 UPF N6 介面進行測試，並觀察在載入 Gthulhu 前後的延遲變化。</p>
+<p><img alt="alt text" src="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250726/fig3.png?raw=true" /></p>
+<p>載入前，Linux 預設的排程器為 EEVDF，RTT 相關參數如下：</p>
+<ul>
+<li>rtt min = 1.263 ms</li>
+<li>rtt avg = 1.907 ms</li>
+<li>rtt max = 6.405 ms</li>
+<li>rtt mdev = 0.657 ms</li>
+</ul>
+<p>rtt min/avg/max/mdev = 1.222/1.864/3.771/0.433 ms<br />
+載入 Gthulhu 後，RTT 參數變化如下：</p>
+<ul>
+<li>rtt min = 1.222 ms</li>
+<li>rtt avg = 1.864 ms</li>
+<li>rtt max = 3.771 ms</li>
+<li>rtt mdev = 0.433 ms</li>
+</ul>
+<p>由此可見，載入 Gthulhu 後，RTT 的平均值和最大值均有所下降，顯示出 Gthulhu 在資料層的排程上確實有助於降低延遲。</p>
+<h2 id="gtp5g">對 GTP5G 進行最佳化排程</h2>
+<p>根據前面的實驗結果可以得知，在不對排程器進行任何調整的前提下，Gthulhu 確實有效的降低 RTT 的表現。那麼，我們有機會利用網路子系統的知識結合 Gthulhu 更進一步對 GTP5G 進行調教嗎？</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>實驗環境如下：<br />
+- 5GC on kubernetes<br />
+- N3/N6 使用 <a href="https://github.com/k8snetworkplumbingwg/multus-cni">Multus CNI</a> 建立 macvlan interfaces（N6 綁定 enp7s0，N3 介面綁定 dummy interface）</p>
+</div>
+<h3 id="downlink-cpu">觀察 Downlink 由哪一個 cpu 負責處理</h3>
+<div class="highlight"><pre><span></span><code>$ grep enp7s0 /proc/interrupts
+
+ 159:     116096     131508     763166     532207    4697697    3924514   24589811    5660340   29315073   11862910   25971964    8494127    1935719    2420802    5149765     948266    6835920    2126158    1825640    1044404  IR-PCI-MSIX-0000:07:00.0    0-edge      enp7s0
+</code></pre></div>
+<p>透過上方執行的命令可以得知 enp7s0 對應的 IRQ 為 159，接著利用 <code>cat /proc/irq/${IRQ}/smp_affinity_list</code> 可以得知 IRQ 159 綁定的 CPU：<br />
+<div class="highlight"><pre><span></span><code>$ cat /proc/irq/159/smp_affinity_list
+11
+</code></pre></div><br />
+當 enp7s0 收到來自 Data Network 的封包，會接封包送往 UPF Container 對應的 n6 interface，而 N6 interface 會將 downlink 封包轉送至虛擬介面 gtp5g 內。<br />
+因此，處理 gtp5g downlink 流量的 CPU 應該是 CPU 11，這一點可以透過 eBPF program 驗證。</p>
+<p>在筆者先前撰寫的 <a href="https://free5gc.org/blog/20241224/">Debug gtp5g kernel module using stacktrace and eBPF</a> 一文中已經探討過使用 eBPF 追蹤 kernel module 的可能性，只要追蹤一下 gtp5g 的 source code 便可以得知 downlink 封包最後會進入 <code>gtp5g_xmit_skb_ipv4</code>，使用 <code>sudo cat /sys/kernel/tracing/available_filter_functions | grep gtp5g</code> 也可得知該函式在 available_filter_functions 清單內。</p>
+<div class="highlight"><pre><span></span><code><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;fentry/gtp5g_xmit_skb_ipv4&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">BPF_PROG</span><span class="p">(</span><span class="n">capture_skb</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_pktinfo</span><span class="w"> </span><span class="o">*</span><span class="n">pktinfo</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">__u64</span><span class="w"> </span><span class="n">pid_tgid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_current_pid_tgid</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pid_tgid</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xFFFFFFFF</span><span class="p">;</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">tgid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pid_tgid</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_smp_processor_id</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;gtp5g_xmit_skb_ipv4: PID=%u, TGID=%u, CPU=%u&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="n">tgid</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>將上述的 eBPF 程式載入到核心後，利用 UERANSIM 建立 PDU Session 向 <code>8.8.8.8</code> 發送 ICMP 封包時，我們即可觀察 eBPF 程式的輸出：</p>
+<div class="highlight"><pre><span></span><code>gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156182.987076: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156183.987343: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156184.986858: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156185.987004: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156186.987574: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156187.987330: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156188.987722: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156189.988054: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156190.988038: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+        kubelite-3377186 [011] b.s21 6156191.987614: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=3377186, TGID=3376931, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156192.987963: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156193.987763: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+          &lt;idle&gt;-0       [011] b.s31 6156194.988095: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=11
+</code></pre></div>
+<p>從 eBPF 程式的輸出可得知，gtp5g 的 downlink 流量確實由 CPU 11 負責處理，與先前的猜測相同。<br />
+當我使用 <code>echo "12" | sudo tee /proc/irq/159/smp_affinity_list</code> 修改 IRQ 159 綁定的 CPU 後，eBPF 程式的輸出也會馬上改變：</p>
+<div class="highlight"><pre><span></span><code>gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156445.013125: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156446.012413: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156447.012498: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156448.013280: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156449.012909: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156450.013119: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+          &lt;idle&gt;-0       [012] b.s31 6156451.013496: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=0, TGID=0, CPU=12
+</code></pre></div>
+<blockquote>
+<p>補充：<br />
+IRQ 綁定的 CPU 有可能會被 irqbalance 動態的更新，建議可以用 <code>$ sudo systemctl stop irqbalance</code> 暫時關閉 irqbalance。</p>
+</blockquote>
+<p>話說回來，即使將 irqbalance 關閉，eBPF 程式的輸出仍有可能出現非預期情況。<br />
+當我將 ICMP 的目標從外部 IP 改為 UPF container 本身 N6 網卡的 IP 時，eBPF 程式的輸出如下：</p>
+<div class="highlight"><pre><span></span><code>          nr-gnb-168420  [016] b.s41 6158463.012636: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=16
+          nr-gnb-168420  [016] b.s41 6158464.012282: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=16
+          nr-gnb-168420  [017] b.s41 6158465.012408: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=17
+          nr-gnb-168420  [017] b.s41 6158466.012551: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=17
+          nr-gnb-168420  [016] b.s41 6158467.012401: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=16
+          nr-gnb-168420  [006] b.s41 6158468.012565: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
+          nr-gnb-168420  [006] b.s41 6158469.012700: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
+          nr-gnb-168420  [006] b.s41 6158470.012549: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
+          nr-gnb-168420  [006] b.s41 6158471.012763: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
+          nr-gnb-168420  [006] b.s41 6158472.012862: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=168420, TGID=168410, CPU=6
+</code></pre></div>
+<p>基本上執行 <code>gtp5g_xmit_skb_ipv4</code> 的 CPU 一定會是 scheduler 為 <code>nr-gnb</code> process 分配的 CPU。原因也很簡單，因為送往 N6 網卡的封包會在 Container 內處理完畢，不會經過 enp7s0 網卡，所以封包從 UERANSIM 傳出一路到 N6 返回都會在同一個上下文內處理完畢。</p>
+<p>了解 Linux 核心處理封包的行為後，我們可以實驗看看當系統滿載的情況下，UERANSIM 透過 uesimtun0 向 UPF N6 IP 發送 ICMP echo request 的表現。</p>
+<h3 id="gthulhu_1">Gthulhu 的組態設定</h3>
+<p>在本次實驗中，組態的設定固定如下：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Gthulhu Scheduler Configuration</span>
+<span class="c1"># This configuration file allows you to adjust scheduler parameters before eBPF program loading</span>
+
+<span class="nt">scheduler</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Default time slice in nanoseconds (default: 5000000 = 5ms)</span>
+<span class="w">  </span><span class="nt">slice_ns_default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000000</span>
+
+<span class="w">  </span><span class="c1"># Minimum time slice in nanoseconds (default: 500000 = 0.5ms)</span>
+<span class="w">  </span><span class="nt">slice_ns_min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500000</span>
+<span class="nt">api</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:8080</span>
+<span class="w">  </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">early_processing</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">builtin_idle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<h3 id="stress-ng">使用 <code>stress-ng</code> 產生負載</h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>stress-ng<span class="w"> </span>-c<span class="w"> </span><span class="m">20</span><span class="w"> </span>--timeout<span class="w"> </span>60s<span class="w"> </span>--metrics-brief
+</code></pre></div>
+<h3 id="ping">使用 <code>ping</code> 進行測試</h3>
+<p>Gthulhu scheduler 借鑑了 scx_rustland 的設計，因此，在本實驗中我們使用 scx_rustland 作為對照組：</p>
+<div class="highlight"><pre><span></span><code>/UERANSIM<span class="w"> </span><span class="c1"># taskset -c 5 ping 10.10.2.60 -I uesimtun0 -c 10</span>
+PING<span class="w"> </span><span class="m">10</span>.10.2.60<span class="w"> </span><span class="o">(</span><span class="m">10</span>.10.2.60<span class="o">)</span>:<span class="w"> </span><span class="m">56</span><span class="w"> </span>data<span class="w"> </span>bytes
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">75</span>.589<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">75</span>.917<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">63</span>.919<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">71</span>.934<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">72</span>.005<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">64</span>.108<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">83</span>.945<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">7</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">100</span>.525<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">59</span>.987<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">63</span>.940<span class="w"> </span>ms
+
+---<span class="w"> </span><span class="m">10</span>.10.2.60<span class="w"> </span>ping<span class="w"> </span>statistics<span class="w"> </span>---
+<span class="m">10</span><span class="w"> </span>packets<span class="w"> </span>transmitted,<span class="w"> </span><span class="m">10</span><span class="w"> </span>packets<span class="w"> </span>received,<span class="w"> </span><span class="m">0</span>%<span class="w"> </span>packet<span class="w"> </span>loss
+round-trip<span class="w"> </span>min/avg/max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">59</span>.987/73.186/100.525<span class="w"> </span>ms
+</code></pre></div>
+<p>我們可以觀察出：當系統的每個 CPU 滿載時，scx_rustland 在處理封包的效率上非常糟糕。這個問題在 Gthulhu 排程器上亦然：</p>
+<div class="highlight"><pre><span></span><code>/UERANSIM<span class="w"> </span><span class="c1"># taskset -c 5 ping 10.10.2.60 -I uesimtun0 -c 10</span>
+PING<span class="w"> </span><span class="m">10</span>.10.2.60<span class="w"> </span><span class="o">(</span><span class="m">10</span>.10.2.60<span class="o">)</span>:<span class="w"> </span><span class="m">56</span><span class="w"> </span>data<span class="w"> </span>bytes
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">22</span>.085<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">59</span>.904<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">96</span>.299<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">20</span>.349<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">71</span>.244<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">28</span>.001<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">74</span>.964<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">7</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">59</span>.977<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">32</span>.617<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">90</span>.945<span class="w"> </span>ms
+
+---<span class="w"> </span><span class="m">10</span>.10.2.60<span class="w"> </span>ping<span class="w"> </span>statistics<span class="w"> </span>---
+<span class="m">10</span><span class="w"> </span>packets<span class="w"> </span>transmitted,<span class="w"> </span><span class="m">10</span><span class="w"> </span>packets<span class="w"> </span>received,<span class="w"> </span><span class="m">0</span>%<span class="w"> </span>packet<span class="w"> </span>loss
+round-trip<span class="w"> </span>min/avg/max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span>.349/55.638/96.299<span class="w"> </span>ms
+</code></pre></div>
+<p>接著，讓我們嘗試以下做法，看能不能降低 round-trip-time：</p>
+<ul>
+<li>將某個 CPU（這裡使用 CPU 5）給 UERANSIM、<code>icmp</code> 工具</li>
+<li>若其他任務被分配到 CPU 5，則隨機為它分配其他 CPU</li>
+</ul>
+<p>相關改動請參考：</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span>   // ...
+<span class="w"> </span>   log.Println(&quot;scheduler started&quot;)
+<span class="gi">+   var specialPid int32 = 168420 // Special case for PID 168420</span>
+<span class="gi">+   var specialPidCpu int32 = 5</span>
+
+<span class="w"> </span>   for true {
+<span class="w"> </span>       select {
+<span class="w"> </span>       case &lt;-ctx.Done():
+<span class="w"> </span>           log.Println(&quot;context done, exiting scheduler loop&quot;)
+<span class="w"> </span>           return
+<span class="w"> </span>       default:
+<span class="w"> </span>       }
+<span class="w"> </span>       sched.DrainQueuedTask(bpfModule)
+<span class="w"> </span>       t = sched.GetTaskFromPool()
+<span class="w"> </span>       if t == nil {
+<span class="w"> </span>           bpfModule.BlockTilReadyForDequeue(ctx)
+<span class="w"> </span>       } else if t.Pid != -1 {
+<span class="w"> </span>           task = core.NewDispatchedTask(t)
+<span class="w"> </span>           err, cpu = bpfModule.SelectCPU(t)
+<span class="w"> </span>           if err != nil {
+<span class="w"> </span>               log.Printf(&quot;SelectCPU failed: %v&quot;, err)
+<span class="w"> </span>           }
+
+<span class="gi">+           if t.Pid == specialPid {</span>
+<span class="gi">+               if specialPidCpu == -1 &amp;&amp; cpu != core.RL_CPU_ANY {</span>
+<span class="gi">+                   specialPidCpu = cpu</span>
+<span class="gi">+               } else {</span>
+<span class="gi">+                   cpu = specialPidCpu</span>
+<span class="gi">+               }</span>
+<span class="gi">+           } else {</span>
+<span class="gi">+               if cpu == core.RL_CPU_ANY {</span>
+<span class="gi">+                   // ramdom select cpu 0-19</span>
+<span class="gi">+                   cpu = int32(rand.Intn(20))</span>
+<span class="gi">+               }</span>
+<span class="gi">+               if specialPidCpu == cpu {</span>
+<span class="gi">+                   if (cpu &amp; 1) == 1 {</span>
+<span class="gi">+                       cpu = cpu - 1</span>
+<span class="gi">+                   } else {</span>
+<span class="gi">+                       cpu = cpu + 1</span>
+<span class="gi">+                   }</span>
+<span class="gi">+               }</span>
+<span class="gi">+           }</span>
+
+<span class="w"> </span>           // Evaluate used task time slice.
+<span class="w"> </span>           nrWaiting := core.GetNrQueued() + core.GetNrScheduled() + 1
+<span class="w"> </span>           task.Vtime = t.Vtime
+</code></pre></div>
+<p>Special pid <code>168420</code> 是透過 eBPF 程式觀察出負責執行 <code>gtp5g_xmit_skb_ipv4()</code> 的 process id：</p>
+<div class="highlight"><pre><span></span><code>          nr-gnb-770208  [005] b.s41 6233538.456200: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] bNs41 6233711.301750: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] bNs41 6233712.346565: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] bNs41 6233713.312931: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] bNs41 6233714.314609: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] bNs41 6233715.340537: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] b.s41 6233716.337300: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] b.s41 6233717.389852: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] b.s41 6233718.387986: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] b.s41 6233719.368526: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+          nr-gnb-770208  [005] bNs41 6233720.396073: bpf_trace_printk: gtp5g_xmit_skb_ipv4: PID=770208, TGID=770198, CPU=5
+</code></pre></div>
+<p>完成修改後，讓我們嘗試重新執行 Gthulhu 並再次測試：</p>
+<div class="highlight"><pre><span></span><code>/UERANSIM<span class="w"> </span><span class="c1"># taskset -c 5 ping 10.10.2.60 -I uesimtun0 -c 10</span>
+PING<span class="w"> </span><span class="m">10</span>.10.2.60<span class="w"> </span><span class="o">(</span><span class="m">10</span>.10.2.60<span class="o">)</span>:<span class="w"> </span><span class="m">56</span><span class="w"> </span>data<span class="w"> </span>bytes
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">0</span>.767<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">1</span>.150<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">1</span>.120<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">0</span>.968<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">1</span>.002<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">0</span>.601<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">1</span>.132<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">7</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">0</span>.833<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">0</span>.666<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.10.2.60:<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">0</span>.795<span class="w"> </span>ms
+
+---<span class="w"> </span><span class="m">10</span>.10.2.60<span class="w"> </span>ping<span class="w"> </span>statistics<span class="w"> </span>---
+<span class="m">10</span><span class="w"> </span>packets<span class="w"> </span>transmitted,<span class="w"> </span><span class="m">10</span><span class="w"> </span>packets<span class="w"> </span>received,<span class="w"> </span><span class="m">0</span>%<span class="w"> </span>packet<span class="w"> </span>loss
+round-trip<span class="w"> </span>min/avg/max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.601/0.903/1.150<span class="w"> </span>ms
+</code></pre></div>
+<p>從結果來看，修改後的 Gthulhu 排程器在高負載的情況下使 UPF 能在短時間內處理來自 UERANSIM 的封包。這樣的表現與我們預期的一致。</p>
+<h3 id="rtt">透過自定義組態降低 RTT</h3>
+<p>前面的的實驗中，我們為特定的 process 分配了專用的 CPU，這樣的做法確實能夠在高負載的情況下提升 RTT 的表現。然而，這種方法並不通用，因為每個系統的負載情況和工作負載可能會有所不同。<br />
+因此，Gthulhu 發展出一套自定義的組態設定，讓使用者能夠根據自己的需求調整排程策略，專案原始碼請參考 <a href="https://github.com/Gthulhu/api">Gthulhu/api</a>。</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;:8080&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;read_timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;write_timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;idle_timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;logging&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;jwt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;private_key_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./config/jwt_private_key.key&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;token_duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;strategies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;execution_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20000</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;selectors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;app&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ueransim-macvlan&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;command_regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nr-gnb|nr-ue|ping&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>透過上方的 json 檔案，api server 能夠找出對應的 processes，並將這些 process 的排程策略更新至 Gthulhu。<br />
+如果該任務的 <code>"priority": true</code>，則該任務本身能夠搶佔其他非 <code>"priority": true</code> 的任務，大大的降低任務從 <code>runnable</code> 到 <code>running</code> 的時間。<br />
+在 free5GC 的整合案例中，降低 ueransim 的排程延遲代表著 UPF 能夠更快的處理來自 RAN 的封包，進而降低整體的 RTT。</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MfU64idQcHg?si=1tiZax9q0iLmONOE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<p>上方影片展示了在高負載的情況下，Gthulhu 如何透過自定義的排程策略顯著降低 RTT 的表現。</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R4EmZ18P954?si=9q3Y-Ess4SRZBzmn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<p>此外，Gthulhu 也支援簡易的 WEB GUI，讓使用者能夠更直觀地管理和監控排程策略。</p>
+<h2 id="_1">結論</h2>
+<p>5G 提出了網路切片的概念，期待透過將實體網路切分成多個虛擬網路來提供不同的服務品質。有了 Gthulhu 這樣的自訂排程器，我們可以更靈活地管理和優化這些虛擬網路的性能，將不同業務需求的 UPF 部署在不同的節點上，並根據實際需求調整排程策略。</p>
+<h2 id="_2">關於作者</h2>
+<p>Ian Chen 是一名熱衷於開源技術的開發者，專注於 5G 和雲原生架構的研究。他發起了 <a href="https://gthulhu.github.io/docs/">Gthulhu</a> 專案，同時也是 free5GC 的主要貢獻者，致力於推廣和實現 5G 網路的開源解決方案。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1178 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Flexible GTP-U Handling: A Userspace Implementation - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#flexible-gtp-u-handling-a-userspace-implementation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Flexible GTP-U Handling: A Userspace Implementation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uplink" class="md-nav__link">
+    Uplink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downlink" class="md-nav__link">
+    Downlink
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    Implementation
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#at-ue" class="md-nav__link">
+    At UE
+  </a>
+  
+    <nav class="md-nav" aria-label="At UE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bring-up-a-network-device-in-kernel-space" class="md-nav__link">
+    Bring up a network device in kernel space
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-up-packet-forwarding-channels" class="md-nav__link">
+    Set up packet forwarding channels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-plane-packet-handler-transmit-packets-between-tun-and-ran" class="md-nav__link">
+    Data plane packet handler (transmit packets between TUN and RAN)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#at-ran" class="md-nav__link">
+    At RAN
+  </a>
+  
+    <nav class="md-nav" aria-label="At RAN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uplink-ran-receives-packets-from-ue-and-formats-them-as-gtp-packets-for-sending-to-upf" class="md-nav__link">
+    Uplink (RAN receives packets from UE and formats them as GTP packets for sending to UPF)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downlink-ran-receives-packets-from-upf-and-removes-their-gtp-header-for-sending-to-ue" class="md-nav__link">
+    Downlink (RAN receives packets from UPF and removes their GTP header for sending to UE)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About me
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250723/20250723.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250723/20250723.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="flexible-gtp-u-handling-a-userspace-implementation">Flexible GTP-U Handling: A Userspace Implementation</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://www.linkedin.com/in/feng-tu-b91405345/">Alonza Tu</a><br />
+Date: 2025/07/23</p>
+</div>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>In current open source RAN and UE simulators, the GTP-U function is usually implemented in kernel space. For example, <a href="https://github.com/HewlettPackard/PacketRusher">PacketRusher</a> uses the <a href="https://github.com/free5gc/gtp5g">gtp5g</a> kernel module to handle GTP packet forwarding.</p>
+<p>However, if we want more flexible control over GTP-U, moving it to user space is a better choice. The goal of this project is to test the dynamic NR-DC feature in <a href="https://github.com/free5gc/free5gc">free5GC</a>. Although moving GTP-U to user space may incur some performance overhead, it offers greater flexibility for development and testing.</p>
+<h2 id="overview"><strong>Overview</strong></h2>
+<p>Here is an example of the ICMP process, i.e., <code>ping</code>.</p>
+<h3 id="uplink">Uplink</h3>
+<pre class="mermaid"><code>graph LR
+    UE_Kernel(["&lt;b&gt;UE Kernel&lt;/b&gt;&lt;br/&gt;ping 8.8.8.8"])
+    TUN(["&lt;b&gt;TUN&lt;br/&gt;ueTun0&lt;/b&gt;"])
+    UE_Sim(["&lt;b&gt;UE Simulator&lt;/b&gt;"])
+    RAN_Sim(["&lt;b&gt;RAN Simulator&lt;/b&gt;"])
+    UPF(["&lt;b&gt;UPF&lt;/b&gt;&lt;br/&gt;UDP 2152"])
+
+    UE_Kernel -.-&gt;|"ICMP Packet"| TUN
+    TUN -- "User Data" --&gt; UE_Sim
+    UE_Sim -- "TCP" --&gt; RAN_Sim
+    RAN_Sim -- "Encapsulate GTP-U &lt;br/&gt; with TEID" --&gt; UPF
+
+    %% 樣式美化
+    classDef kernel fill:#e3f2fd,stroke:#1976d2,stroke-width:2px;
+    classDef tun fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
+    classDef sim fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    classDef ran fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px;
+    classDef gtpu fill:#fbe9e7,stroke:#d84315,stroke-width:2px;
+    classDef upf fill:#ede7f6,stroke:#5e35b1,stroke-width:2px;
+
+    class UE_Kernel kernel;
+    class TUN tun;
+    class UE_Sim sim;
+    class RAN_Sim ran;
+    class GTPU gtpu;
+    class UPF upf;</code></pre>
+<ol>
+<li>Create a TUN device in the UE to serve as a virtual network interface for user traffic.</li>
+<li>The UE reads packets from the TUN device in user space and sends them to the RAN simulator via TCP.</li>
+<li>The RAN simulator receives the data from the UE and encapsulates the packets as GTP-U packets with the assigned TEID.</li>
+<li>The RAN simulator sends the encapsulated GTP-U packets to the UPF over UDP (port 2152).</li>
+</ol>
+<h3 id="downlink">Downlink</h3>
+<pre class="mermaid"><code>graph LR
+  UPF(["&lt;b&gt;UPF&lt;/b&gt;&lt;br/&gt;UDP 2152"])
+  RAN_Sim(["&lt;b&gt;RAN Simulator&lt;/b&gt;"])
+  UE_Sim(["&lt;b&gt;UE Simulator&lt;/b&gt;"])
+  TUN(["&lt;b&gt;TUN&lt;br/&gt;ueTun0&lt;/b&gt;"])
+  UE_Kernel(["&lt;b&gt;UE Kernel&lt;/b&gt;&lt;br/&gt;ping reply"])
+
+  UPF -- "GTP-U Packet" --&gt; RAN_Sim
+  RAN_Sim -- "Decapsulate GTP-U&lt;br/&gt;with TEID" --&gt; UE_Sim
+  UE_Sim -- "User Data" --&gt; TUN
+  TUN -.-&gt;|"ICMP Reply"| UE_Kernel
+
+  %% 樣式美化
+  classDef upf fill:#ede7f6,stroke:#5e35b1,stroke-width:2px;
+  classDef ran fill:#e3f2fd,stroke:#1976d2,stroke-width:2px;
+  classDef sim fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+  classDef tun fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
+  classDef kernel fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px;
+
+  class UPF upf;
+  class RAN_Sim ran;
+  class UE_Sim sim;
+  class TUN tun;
+  class UE_Kernel kernel;</code></pre>
+<ol>
+<li>When the UPF has data to send to the UE, it encapsulates the data into a GTP-U packet and sends it via UDP (port 2152) to the RAN simulator.</li>
+<li>The RAN simulator receives the GTP-U packet, decapsulates it based on the TEID, and forwards the original IP packet to the corresponding UE.</li>
+<li>The UE simulator receives the packet in user space and writes the raw packet into the TUN device.</li>
+<li>The UE kernel processes the packet and generates a response (e.g., ping reply).</li>
+</ol>
+<h2 id="implementation"><strong>Implementation</strong></h2>
+<p>To describe the implementation, we will separate the infrastructure into UE and RAN components.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The connections mentioned here only consider the <strong>data plane</strong>.</p>
+</div>
+<h3 id="at-ue">At UE</h3>
+<p>After the PDU session establishment procedure, the UE will receive configuration messages, including the UE IP address.</p>
+<h4 id="bring-up-a-network-device-in-kernel-space">Bring up a network device in kernel space</h4>
+<p>This network device will act as an entry point for user traffic from kernel space to user space. We use the <a href="https://github.com/songgao/water">water</a> library to create and manage TUN devices.</p>
+<ol>
+<li>
+<p>Using the <a href="https://github.com/songgao/water">water</a> library to bring up a network device:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">tunCfg</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">water</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span><span class="w"> </span><span class="nx">DeviceType</span><span class="p">:</span><span class="w"> </span><span class="nx">water</span><span class="p">.</span><span class="nx">TUN</span><span class="w"> </span><span class="p">}</span>
+<span class="nx">tunCfg</span><span class="p">.</span><span class="nx">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ueTunnelDeviceName</span>
+</code></pre></div>
+</li>
+<li>
+<p>Set up the device with UE IP:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">cmds</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[][]</span><span class="kt">string</span><span class="p">{</span>
+<span class="w">  </span><span class="p">{</span><span class="s">&quot;ip&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;add&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%s/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ip</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;dev&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ueTunnelDeviceName</span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="s">&quot;ip&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;link&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;set&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dev&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ueTunnelDeviceName</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;up&quot;</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">cmd</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">cmds</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">exec</span><span class="p">.</span><span class="nx">Command</span><span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="nx">cmd</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">...</span><span class="p">).</span><span class="nx">Run</span><span class="p">();</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;error bringing up tunnel device: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ol>
+<h4 id="set-up-packet-forwarding-channels">Set up packet forwarding channels</h4>
+<p>Here we will set up two channels to transmit packets between the <strong>READER</strong> and <strong>TRANSMITTER</strong>.</p>
+<ol>
+<li>
+<p>Uplink (read from tunnel device and send to RAN):</p>
+<div class="highlight"><pre><span></span><code><span class="nx">u</span><span class="p">.</span><span class="nx">readFromTun</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span>
+<span class="k">go</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">buffer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">)</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueTunnelDevice</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">u</span><span class="p">.</span><span class="nx">readFromTun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">n</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}()</span>
+</code></pre></div>
+</li>
+<li>
+<p>Downlink (receive from RAN and write to tunnel device):</p>
+<div class="highlight"><pre><span></span><code><span class="nx">u</span><span class="p">.</span><span class="nx">readFromRan</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span>
+<span class="k">go</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">buffer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">)</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">ranDataPlaneConn</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">ErrClosed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">u</span><span class="p">.</span><span class="nx">readFromRan</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">n</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}()</span>
+</code></pre></div>
+</li>
+</ol>
+<h4 id="data-plane-packet-handler-transmit-packets-between-tun-and-ran">Data plane packet handler (transmit packets between TUN and RAN)</h4>
+<p>Using <code>select</code> statement with for loops to handle bidirectional traffic.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">buffer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">u</span><span class="p">.</span><span class="nx">readFromTun</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">ranDataPlaneConn</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">ErrClosed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">buffer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">u</span><span class="p">.</span><span class="nx">readFromRan</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">ueTunnelDevice</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="at-ran">At RAN</h3>
+<p>The RAN will maintain a <strong>MAP</strong> for mapping each TEID to its corresponding UE connection.</p>
+<h4 id="uplink-ran-receives-packets-from-ue-and-formats-them-as-gtp-packets-for-sending-to-upf">Uplink (RAN receives packets from UE and formats them as GTP packets for sending to UPF)</h4>
+<ol>
+<li>
+<p>RAN continuously reads from the UE connection and formats the packet as a GTP packet:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">buffer</span><span class="p">,</span><span class="w"> </span><span class="nx">gtpChannel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">),</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span>
+<span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueDataPlaneConn</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">ErrClosed</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">tmp</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="nx">n</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">copy</span><span class="p">(</span><span class="nx">tmp</span><span class="p">,</span><span class="w"> </span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">n</span><span class="p">])</span>
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">formatGtpPacketAndWriteToGtpChannel</span><span class="p">(</span><span class="nx">ulTeidBytes</span><span class="p">,</span><span class="w"> </span><span class="nx">tmp</span><span class="p">,</span><span class="w"> </span><span class="nx">g</span><span class="p">.</span><span class="nx">gtpChannel</span><span class="p">,</span><span class="w"> </span><span class="nx">g</span><span class="p">.</span><span class="nx">GnbLogger</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>RAN formats a GTP header with the corresponding TEID and encapsulates it in front of the original packet. Then this GTP packet will be written to the gtpChannel for later transmission:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">gtpHeader</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span>
+
+<span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mh">0x32</span>
+<span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mh">0xff</span>
+<span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nx">PutUint16</span><span class="p">(</span><span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span><span class="w"> </span><span class="nb">uint16</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">packet</span><span class="p">)</span><span class="o">+</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">copy</span><span class="p">(</span><span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">4</span><span class="p">:],</span><span class="w"> </span><span class="nx">teid</span><span class="p">)</span>
+<span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span><span class="w"> </span><span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span><span class="w"> </span><span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span><span class="w"> </span><span class="nx">gtpHeader</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span>
+
+<span class="nx">gtpPacket</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">gtpHeader</span><span class="p">,</span><span class="w"> </span><span class="nx">packet</span><span class="o">...</span><span class="p">)</span>
+<span class="nx">gtpChannel</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nx">gtpPacket</span>
+</code></pre></div>
+</li>
+<li>
+<p>RAN reads GTP packets from gtpChannel and sends them to UPF (N3 Connection):</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">Done</span><span class="p">():</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">packet</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">gtpChannel</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">n3Conn</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">packet</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ol>
+<h4 id="downlink-ran-receives-packets-from-upf-and-removes-their-gtp-header-for-sending-to-ue">Downlink (RAN receives packets from UPF and removes their GTP header for sending to UE)</h4>
+<ol>
+<li>
+<p>Receive the GTP packet from N3 connection and pass the packet to the forward function:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">n3Conn</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">ErrClosed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">forwardPacketToUe</span><span class="p">(</span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">n</span><span class="p">],</span><span class="w"> </span><span class="nx">teidToConn</span><span class="p">,</span><span class="w"> </span><span class="nx">gnbLogger</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>Parse the GTP packet and forward to the UE connection by TEID (from <strong>MAP</strong>):</p>
+<div class="highlight"><pre><span></span><code><span class="nx">teid</span><span class="p">,</span><span class="w"> </span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">parseGtpPacket</span><span class="p">(</span><span class="nx">gtpPacket</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="p">}</span>
+
+<span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">found</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">teidToConn</span><span class="p">.</span><span class="nx">Load</span><span class="p">(</span><span class="nx">teid</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">found</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="p">}</span>
+
+<span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">conn</span><span class="p">.(</span><span class="nx">net</span><span class="p">.</span><span class="nx">Conn</span><span class="p">).</span><span class="nx">Write</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>GTP packet parsing function:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">parseGtpPacket</span><span class="p">(</span><span class="nx">gtpPacket</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">basicHeader</span><span class="p">,</span><span class="w"> </span><span class="nx">headerLength</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">gtpPacket</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span><span class="w"> </span><span class="mi">8</span>
+<span class="w">    </span><span class="nx">pduSessionType</span><span class="p">,</span><span class="w"> </span><span class="nx">pduSessionLength</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">byte</span><span class="p">(</span><span class="mh">0x85</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">basicHeader</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&amp;</span><span class="mh">0x02</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">headerLength</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">gtpPacket</span><span class="p">[</span><span class="nx">headerLength</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0x00</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">headerLength</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">switch</span><span class="w"> </span><span class="nx">gtpPacket</span><span class="p">[</span><span class="nx">headerLength</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="nx">pduSessionType</span><span class="p">:</span>
+<span class="w">                </span><span class="nx">extensionHeaderLength</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">gtpPacket</span><span class="p">[</span><span class="nx">headerLength</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="w">                </span><span class="nx">headerLength</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">                </span><span class="nx">headerLength</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">extensionHeaderLength</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">pduSessionLength</span>
+<span class="w">            </span><span class="k">default</span><span class="p">:</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;unknown GTP extension header type: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">gtpPacket</span><span class="p">[</span><span class="nx">headerLength</span><span class="p">])</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">basicHeader</span><span class="p">[</span><span class="mi">4</span><span class="p">:]),</span><span class="w"> </span><span class="nx">gtpPacket</span><span class="p">[</span><span class="nx">headerLength</span><span class="p">:],</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ol>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>This document presents a comprehensive design for implementing GTP-U functionality in user space, providing greater flexibility for testing and development purposes, particularly for dynamic NR-DC features in free5GC. The implementation separates concerns between UE and RAN components, with clear packet forwarding mechanisms for both uplink and downlink traffic.</p>
+<p>The key benefits of this approach include:</p>
+<ul>
+<li>Enhanced control over GTP-U packet processing</li>
+<li>Better debugging and monitoring capabilities</li>
+<li>Easier integration with test frameworks</li>
+<li>Flexibility in implementing custom GTP-U behaviors</li>
+</ul>
+<p>While there may be some performance overhead compared to kernel-space implementations, the gained flexibility makes this approach valuable for research and development scenarios.</p>
+<h2 id="reference">Reference</h2>
+<p>If you want more detailed information, please refer to the links below for the complete RAN/UE simulator implementation.</p>
+<ul>
+<li><a href="https://alonza0314.github.io/free-ran-ue/">free-ran-ue offcial wesite</a></li>
+<li><a href="https://github.com/alonza0314/free-ran-ue">free-ran-ue github</a></li>
+</ul>
+<h2 id="about-me">About me</h2>
+<p>Hi, I'm Alonza, a core network developer currently contributing to the free5GC project. I am also working on the development of <a href="https://alonza0314.github.io/free-ran-ue/">free-ran-ue</a>, a userspace RAN/UE simulator. If you have any ideas or would like to collaborate, feel free to reach out!</p>
+<h2 id="connect-with-me">Connect with me</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/Alonza0314">https://github.com/Alonza0314</a></li>
+<li>Website: <a href="https://alonza0314.github.io/">Alonza0314</a></li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/feng-tu-b91405345/">Alonza Tu</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
