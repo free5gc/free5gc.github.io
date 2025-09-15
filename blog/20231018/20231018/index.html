@@ -1,0 +1,980 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>LTE Authentication Introduction: EPS-AKA' - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lte-authentication-introduction-eps-aka" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LTE Authentication Introduction: EPS-AKA'
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abstract" class="md-nav__link">
+    Abstract
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-definition-of-authentication" class="md-nav__link">
+    Understanding the Definition of Authentication
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-hierarchy-generation-in-4g" class="md-nav__link">
+    Key Hierarchy Generation in 4G
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eps-aka-procedure" class="md-nav__link">
+    EPS-AKA' Procedure
+  </a>
+  
+    <nav class="md-nav" aria-label="EPS-AKA' Procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ue-sends-the-attach-request-to-the-mme" class="md-nav__link">
+    The UE sends the Attach Request to the MME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-mme-sends-the-authentication-information-request-to-the-hss" class="md-nav__link">
+    The MME sends the Authentication Information Request to the HSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hss-sends-the-authentication-information-answer-to-the-mme" class="md-nav__link">
+    The HSS sends the Authentication Information Answer to the MME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-mme-sends-the-authentication-request-to-the-ue" class="md-nav__link">
+    The MME sends the Authentication Request to the UE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ue-sends-the-authentication-response-to-the-mme" class="md-nav__link">
+    The UE sends the Authentication Response to the MME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-mme-receives-the-authentication-response" class="md-nav__link">
+    The MME receives the Authentication Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4g-vs-5g-aka-a-comparison" class="md-nav__link">
+    4G vs. 5G AKA: A Comparison
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20231018/20231018.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20231018/20231018.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="lte-authentication-introduction-eps-aka">LTE Authentication Introduction: EPS-AKA'</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Wilson<br />
+Date: 2023/10/18</p>
+</div>
+<h2 id="abstract">Abstract</h2>
+<p>In this article, I will delve into the topic of EPS-AKA', a subject closely related to 4G network security. The article is structured as follows:</p>
+<ol>
+<li>An introduction to EPS-AKA'.</li>
+<li>An explanation of the concept of authentication.</li>
+<li>An exploration of key hierarchy generation in the 4G network, emphasizing its relevance to the EPS-AKA' procedure.</li>
+<li>A detailed examination of the EPS-AKA' procedure.</li>
+<li>A comparison between 4G AKA and 5G AKA, highlighting both their similarities and differences.</li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>Every day, people use apps like Line to send messages, watch videos on YouTube, and send emails via Gmail. To do any these activities, a connection to the Internet must be established. However, once a connection is made, the data packets transmitted are at risk of being intercepted. To ensure the confidentiality of the data and to verify its integrity, the LTE Security Procedure is initiated whenever a mobile phone goes online or sends a message.</p>
+<p>The LTE Security Procedure is categorized into three stages :</p>
+<ul>
+<li>EPS-AKA'</li>
+<li>NAS Security</li>
+<li>AS Security</li>
+</ul>
+<p>EPS-AKA' stands for "Evolved Packet System-Authentication and Key Agreement". As suggested by its full name, AKA primarily involves two key actions:</p>
+<ul>
+<li>Authentication</li>
+<li>Key Agreement</li>
+</ul>
+<p>The focus of this article will be on EPS-AKA', which is further divided into two main steps:</p>
+<ol>
+<li>In the first step, the network <strong>generate an authentication vector</strong>. Some of the information within this vector is used for authentication.</li>
+<li>The second step involves <strong>mutual authentication</strong> between the user and the network.</li>
+</ol>
+<h2 id="understanding-the-definition-of-authentication">Understanding the Definition of Authentication</h2>
+<p>Most people have come across the term "authentication", and its definition varies depending on context and interpretation. For the purposes of this article, and based on my own understanding, I'll use an everyday analogy to explain the concept of authentication.</p>
+<p>Imagine during summer of winter vacation, your family decides to travel abroad. Before you board the plane, you must clear customs. The customs officier determines if you can proceed by examining your passport. This procedure resembles the process of authentication. As illustrated in Figure 1, a traveler presents their passport to a customs officer who then compares the passport details with information on their computer. If the passport's contents match the computer's records, you are granted passage. At the heart of authentication is this act of verification.</p>
+<p>In the context of the EPS-AKA' procedure, authentication occurs twice:</p>
+<ol>
+<li>Initially, the HSS provides the <script type="math/tex">AUTN_{HSS}</script> to the UE. The UE then compares the received <script type="math/tex">AUTN_{HSS}</script> whith its <script type="math/tex">AUTN_{UE}</script>. If the <script type="math/tex">AUTN_{HSS}</script> mathes the <script type="math/tex">AUTN_{UE}</script>, it indicates sucessful authentication. This step verifies the authenticity of the HSS and, by extension, the network.</li>
+<li>In the second instance, the UE forwards the RES to the MME. The MME then compares the provided RES with the XRES. If the RES aligns with the XRES, authentication is successful. This stage confirms the authenticity of the UE.</li>
+</ol>
+<p><img alt="" src="../figure1.png" /><br />
+<br/><strong>Figure 1. The Definition of Authentication</strong></p>
+<h2 id="key-hierarchy-generation-in-4g">Key Hierarchy Generation in 4G</h2>
+<p>The Figure 2 is the key hierarchy generation in 4G. When an UE is generated, the <code>IMSI</code> and <code>K</code> value are stored in the USIM card, and the <code>IMSI</code> and <code>K</code> value are regarded as the permanent value. When an UE subscribes to the operator's network, the HSS will get the permanent value of the UE's <code>IMSI</code> and <code>K</code>.</p>
+<p>The USIM and HSS use the <code>K</code> as the base to generate the <code>CK</code> and <code>IK</code> in the EPS-AKA' stage of the LTE Security Procedure. The HSS uses the <code>CK</code> and <code>IK</code> as the base to generate the <script type="math/tex">K_{ASME}</script> and transmits the <script type="math/tex">K_{ASME}</script> to the MME. The USIM transmits the <code>CK</code> and <code>IK</code> to the UE, and UE uses the <code>CK</code> and <code>IK</code> as the base to generate the <script type="math/tex">K_{ASME}</script>.</p>
+<p>The UE and MME use the <script type="math/tex">K_{ASME}</script> as the base and generate separately three keys in the NAS Security stage of the LTE Security Procedure. Three keys are the <script type="math/tex">K_{NASenc}</script>, <script type="math/tex">K_{NASint}</script>, and <script type="math/tex">K_{eNB}</script>. The <script type="math/tex">K_{NASenc}</script> and <script type="math/tex">K_{NASint}</script> are used in the NAS Security stage, and the <script type="math/tex">K_{eNB}</script> is transmitted to the eNodeB.</p>
+<p>The UE and eNodeB use the <script type="math/tex">K_{eNB}</script> as the base and generate separately three keys in the AS Security stage of the LTE Security Procedure. Three keys are the <script type="math/tex">K_{UPenc}</script>, <script type="math/tex">K_{RRCint}</script>, and <script type="math/tex">K_{RRCenc}</script>.</p>
+<p><img alt="" src="../figure2.png" /><br />
+<br/><strong>Figure 2. Key Hierarchy Generation in 4G</strong></p>
+<h2 id="eps-aka-procedure">EPS-AKA' Procedure</h2>
+<p><img alt="" src="../figure3.png" /><br />
+<br/><strong>Figure 3. EPS-AKA' Procedure</strong></p>
+<h4 id="the-ue-sends-the-attach-request-to-the-mme">The UE sends the <code>Attach Request</code> to the MME</h4>
+<p>The Figure 3 shows the entire EPS-AKA' procedure. The UE sends the <code>Attach Request</code> to the MME. The <code>Attach Request</code> contains the <code>IMSI</code>, <code>UE Network Capability</code>, and <script type="math/tex">KSI_{ASME}</script>. The <code>IMSI</code> is like the ID number of this UE. The <code>UE Network Capability</code> is what encryption and integrity protection algorithms the UE supports. The UE sends <code>UE Network Capability</code> to tell MME. The content of <code>UE Network Capability</code> is like EEA0=on, EEA1=on, EEA2=off, ..., EIA1=on, EIA2=on, ... The on and off symbols are represented by one bit. The <script type="math/tex">KSI_{ASME}</script> represents the number corresponding to the <script type="math/tex">K_{ASME}</script>. The <script type="math/tex">KSI_{ASME}</script> is represented by 3 bits. The value of <script type="math/tex">KSI_{ASME}</script> is 7, which means that the UE does not have the <script type="math/tex">K_{ASME}</script> yet.</p>
+<h4 id="the-mme-sends-the-authentication-information-request-to-the-hss">The MME sends the <code>Authentication Information Request</code> to the HSS</h4>
+<p>The MME sends the <code>Authentication Information Request</code> to the HSS after receiving the <code>Attach Request</code>. The <code>Authentication Information Request</code> contains the <code>IMSI</code>, <code>SN ID</code>, <code>n</code>, and <code>Network Type</code>. The full English name of <code>SN ID</code> is Serving Network ID, which refers to the network that the user wants to connect to. The value of <code>SN ID</code> is usually composed of the MCC and MNC (PLMN ID). The <code>n</code> represents how many verifcation vectors are sent to the HSS. The <code>Network Type</code> is what kind of wireless network the user wants to connect to the Internet from my understanding.</p>
+<h4 id="the-hss-sends-the-authentication-information-answer-to-the-mme">The HSS sends the <code>Authentication Information Answer</code> to the MME</h4>
+<p>The HSS automatically generates the <code>RAND</code> and <code>SQN</code> after receiving the <code>Authentication Information Request</code>. The HSS inputs the <code>K</code>, <code>SQN</code>, and <code>RAND</code> into the Cryptographic Function. The Cryptographic Function uses the EPS AKA algorithm and outputs the <code>XRES</code>, <script type="math/tex">AUTN_{HSS}</script>, <code>CK</code>, and <code>IK</code>. The HSS inputs the <code>CK</code>, <code>IK</code>, <code>SQN</code>, and <code>SN ID</code> into the KDF (Key Derivation Function). The KDF outputs <script type="math/tex">K_{ASME}</script>. Then, the <code>RAND</code> that is generated by the HSS itself, the <script type="math/tex">AUTN_{HSS}</script> and <code>XRES</code> that are generated by the Cryptographic Function, and the <script type="math/tex">K_{ASME}</script> that is generated by KDF are combined into the AV. The <code>Authentication Information Answer</code> includes AV and is sent to the MME.</p>
+<h4 id="the-mme-sends-the-authentication-request-to-the-ue">The MME sends the <code>Authentication Request</code> to the UE</h4>
+<p>The MME selects an AV among multiple AVs and sends the <code>Authentication Request</code> to the UE after receiving the <code>Authentication Information Answer</code>. The <code>Authentication Request</code> contains the <code>RAND</code>, <script type="math/tex">AUTN_{HSS}</script>, and <script type="math/tex">KSI_{ASME}</script>.</p>
+<h4 id="the-ue-sends-the-authentication-response-to-the-mme">The UE sends the <code>Authentication Response</code> to the MME</h4>
+<p>The UE receives the <code>Authentication Request</code>. Why do you see the <code>SQN</code> is generated by the HSS in the Figure 3? The <script type="math/tex">AUTN_{HSS}</script> carries the <code>SQN</code>. The UE can find the <code>SQN</code> in the <script type="math/tex">AUTN_{HSS}</script>. The USIM inputs the <code>K</code>, <code>SQN</code>, and <code>RAND</code> into the Cryptographic Function. The Cryptographic Function uses the EPS AKA algorithm and outputs the <code>RES</code>, <script type="math/tex">AUTN_{UE}</script>, <code>CK</code>, and <code>IK</code>. When the UE gets <script type="math/tex">AUTN_{UE}</script>, it compares the <script type="math/tex">AUTN_{UE}</script> with the <script type="math/tex">AUTN_{HSS}</script>. If the authentication is successful, the UE will generate the <code>RES</code>. The <code>Authentication Response</code> contains the <code>RES</code> and is returned to the MME.</p>
+<h4 id="the-mme-receives-the-authentication-response">The MME receives the <code>Authentication Response</code></h4>
+<p>The MME compares the <code>XRES</code> with <code>RES</code> after receiving the <code>Authentication Response</code>. If the content of the <code>XRES</code> and <code>RES</code> are the same, it means that the authentication is successful. The authentication stage has come to an end.</p>
+<p>Finally, the UE inputs the <code>CK</code>, <code>IK</code>, <code>SQN</code>, and <code>SN ID</code> into the KDF. The KDF outputs <script type="math/tex">K_{ASME}</script>. The UE and MME have the same <script type="math/tex">K_{ASME}</script>. The <script type="math/tex">K_{ASME}</script> doesn't be transmitted between the UE and MME. The <script type="math/tex">K_{ASME}</script> is transmitted in the form of the <script type="math/tex">KSI_{ASME}</script> to prevent the <script type="math/tex">K_{ASME}</script> from being stolen by a third party.</p>
+<h2 id="4g-vs-5g-aka-a-comparison">4G vs. 5G AKA: A Comparison</h2>
+<p><strong>Similarities:</strong></p>
+<ol>
+<li>Both 4G and 5G UEs utilize the same Universal Subscriber Identity Module (USIM).</li>
+<li>Both systems rely on shared symmetric keys for authentication.</li>
+</ol>
+<p><strong>Differences:</strong></p>
+<ol>
+<li>
+<p>Authentication Mechanism:</p>
+<ul>
+<li>4G: EPS-AKA'</li>
+<li>5G: 5G-AKA and EAP-AKA'</li>
+</ul>
+</li>
+<li>
+<p>Serving Network:</p>
+<ul>
+<li>4G: MME</li>
+<li>5G: SEAF</li>
+</ul>
+</li>
+<li>
+<p>Home Network:</p>
+<ul>
+<li>4G: HSS</li>
+<li>5G: AUSF, UDM, ARPF, and SIDF</li>
+</ul>
+</li>
+<li>
+<p>Network Function for Authentication Vector Generation:</p>
+<ul>
+<li>4G: HSS</li>
+<li>5G: UDM and ARPF</li>
+</ul>
+</li>
+<li>
+<p>Network Function to Verify UE Identity:</p>
+<ul>
+<li>4G: MME</li>
+<li>5G<ul>
+<li>5G-AKA: SEAF and AUSF</li>
+<li>EAP-AKA': AUSF</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Key Hierarchy Generation:</p>
+<ul>
+<li>4G: K -&gt; CK + IK -&gt; <script type="math/tex">K_{ASME}</script>
+</li>
+<li>5G<ul>
+<li>5G-AKA: K -&gt; CK + IK -&gt; <script type="math/tex">K_{ASME}</script> -&gt; <script type="math/tex">K_{SEAF}</script>
+</li>
+<li>EAP-AKA': K -&gt; CK + IK -&gt; CK' + IK' -&gt; <script type="math/tex">K_{MSK}</script> -&gt; <script type="math/tex">K_{SEAF}</script>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.netmanias.com/en/?m=view&amp;id=techdocs&amp;no=5902">LTE Security I: Concept and Authentication</a></li>
+<li><a href="https://www.netmanias.com/en/?m=view&amp;id=techdocs&amp;no=5903">LTE Security II: NAS and AS Security</a></li>
+<li><a href="https://kknews.cc/zh-tw/code/65y6x9l.html">https://kknews.cc/zh-tw/code/65y6x9l.html</a></li>
+<li><a href="https://nccnews.com.tw/202010/ch4.html">https://nccnews.com.tw/202010/ch4.html</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hi, my name is Wilson. I am a master’s student. My main area of research is network slicing. In the future, I will introduce more information about 5G. Hope you enjoy it.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
