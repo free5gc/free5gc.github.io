@@ -306,6 +306,32 @@ The forum will provide a unique opportunity for participants to share insights, 
 
 Submissions will be evaluated based on technical rigor, novelty, and relevance to 5G core networks. Priority will be given to papers that demonstrate practical security implications, novel attack models, performance improvements, or defense mechanisms applicable to free5GC, L25GC+, and related platforms.
 
+## Program
+
+The following times are on GMT+8.
+
+| Time | Session | Title | Authors/Speaker |
+|------|---------|-------|-----------------|
+| 10:00–10:10 | Opening | Opening Remarks | |
+| 10:10–10:30 | Keynote | Recent Research and Development of free5GC | Prof. Jyh-Cheng Chen, Lifetime Chair Professor, National Yang Ming Chiao Tung University |
+| 10:30–11:00 | Break | Morning Tea Break | |
+| 11:00–12:00 | Session I | Rethinking 5G Core for Performance, Fairness, and Flexibility | Yang-Zhe Lin, Chun-Ting Lin, Po-Yi Lin (National Yang Ming Chiao Tung University), Shixiong Qi (University of Kentucky), Jyh-Cheng Chen (National Yang Ming Chiao Tung University), K. K. Ramakrishnan (University of California, Riverside) |
+| | | A Machine Learning-Driven NWDAF Architecture For Intelligent 5G Core Networks | Tsung-Fang Chen, Chien Chen, Jyh-Cheng Chen (National Yang Ming Chiao Tung University) |
+| | | Federated Spectrum Poisoning: Attacks and Defenses | Ngoc Duy Pham, Thusitha Dayaratne (Monash University), Viet Vo (Swinburne University of Technology), Blake Haydon (Monash University), Shangqi Lai, Alsharif Abuadbba, Hajime Suzuki (CSIRO's Data61), Carsten Rudolph (Monash University), Xingliang Yuan (The University of Melbourne) |
+| 12:00–13:30 | Break | Lunch | |
+| 13:30–15:00 | Session II | Saving 5G Core from Cryptocrastination | Aditya Koranga (NgKore, OpenSSL and Post-Quantum Cryptography Alliance) |
+| | | Implementing EAP-TLS in free5GC for Non-SIM Device Connectivity | Chuan-Yi Cheng, Yu-Xun Tang, Ping-Tsan Liu, Chi-Yu Li (National Yang Ming Chiao Tung University) |
+| | | Design and Implementation of Accounting Manipulation over PFCP in 5G Core Networks | Jia-Ding Lin, Peng-Yu Chen, Chin-Ya Huang (National Taiwan University of Science and Technology) |
+| | | P4-enabled Trusted WLAN Access Network with Edge Computing | Ze-yu Jin, Wai-Lok Shum, Li-Hsing Yen, Chien-Chao Tseng (National Yang Ming Chiao Tung University) |
+| | | Robust Anomaly Detection in O-RAN: Leveraging LLMs against Data Manipulation Attacks | Thusitha Dayaratne, Ngoc Duy Pham (Monash University), Viet Vo (Swinburne University of Technology), Shangqi Lai, Sharif Abuadbba, Hajime Suzuki (CSIRO's Data61), Xingliang Yuan (The University of Melbourne), Carsten Rudolph (Monash University) |
+| 15:00–15:30 | Break | Afternoon Tea Break | |
+| 15:30–16:20 | Session III | Creation and Support of 5G Core Network Slices with a focus on eMBB | Meng-Ting Hsieh, Fuchun Joseph Lin, Chien Chen, Jyh-Cheng Chen (National Yang Ming Chiao Tung University) |
+| | | Performance and Viability Analysis of Deploying Cloud-native 5G Autoscaling Platforms | Amber Yucebas, Ruoting Xiong, Yi Ren, Xu Zhang (University of East Anglia) |
+| | | Creation and Support of 5G Edge Network Slicing – Focusing on URLLC Slicing | Wei-Cheng Lai, Fuchun Joseph Lin, Jyh-Cheng Chen, Chien Chen (National Yang Ming Chiao Tung University) |
+| | | Support New Radio Dual Connectivity (NR-DC) in free5GC Core Network | Feng Tu, Chien Chen, Jyh-Cheng Chen (National Yang Ming Chiao Tung University) |
+| 16:20–16:30 | Closing | Concluding Remarks | |
+
+
 ## Topics of Interest
 
 We invite original research papers, technical reports, and case studies in, but not limited to, the following areas:
