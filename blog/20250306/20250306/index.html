@@ -1,0 +1,1267 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Install Free5GC with LoxiLB NGAP load-balancing - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install-free5gc-with-loxilb-ngap-load-balancing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install Free5GC with LoxiLB NGAP load-balancing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250306/20250306.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250306/20250306.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="install-free5gc-with-loxilb-ngap-load-balancing">Install Free5GC with LoxiLB NGAP load-balancing</h1>
+<p>This blog discusses how <a href="https://github.com/loxilb-io/loxilb"><strong>LoxiLB</strong></a>, an open-source, eBPF-based load balancer, addresses challenges in NGAP (NG Application Protocol) Layer 7 load balancing within 5G networks with <a href="https://github.com/free5gc/free5gc"><strong>Free5GC</strong></a>, an open-source implementation of a 5G core network (5GC). Traditional Layer 4 load balancing can lead to issues such as AMF (Access and Mobility Management Function) overload and problematic handovers, especially when gNBs (next-generation Node Bs) serve a large number of UEs (User Equipments). LoxiLB overcomes these challenges by comprehending both NGAP and NAS (Non-Access Stratum) protocols, enabling effective distribution of UEs across stateless AMFs and facilitating seamless handovers. More information about this topic can be found <a href="https://www.loxilb.io/post/ngap-load-balancing-with-loxilb">here</a>.</p>
+<p>This post provides a step-by-step deployment guide using open-source solutions like <strong>Free5GC, LoxiLB, and UERANSIM</strong>, all orchestrated in a cloud-native fashion with Kubernetes, to demonstrate this functionality.</p>
+<h1 id="overview"><strong>Overview</strong></h1>
+<p>LoxiLB is deployed as a load balancer in front of multiple AMFs in a Free5GC deployment to ensure high availability and seamless failover for NGAP connections originating from a gNB (UERANSIM). By proxying NGAP traffic, LoxiLB ensures that if an AMF instance goes down, the gNB's NGAP connection remains intact and continues to function without interruption. Additionally, when a failed AMF instance recovers, LoxiLB replays cached NG Setup requests, etc to restore connectivity automatically.</p>
+<h3 id="flow-diagram"><strong>Flow Diagram</strong></h3>
+<p><strong>1. Normal Operation:</strong></p>
+<ul>
+<li>UERANSIM (gNB) establishes an NGAP connection through LoxiLB.</li>
+<li>LoxiLB load balances NGAP traffic across multiple Free5GC AMFs.</li>
+<li>The NG Setup procedure is completed with the selected AMF.</li>
+</ul>
+<p><strong>2. AMF Failure Handling:</strong></p>
+<ul>
+<li>If an AMF fails, LoxiLB detects the failure and reroutes the gNB's NGAP session, along with its associated UEs, to a healthy AMF.</li>
+<li>The gNB does not experience connection loss because LoxiLB maintains the session.</li>
+</ul>
+<p><strong>3. AMF Recovery &amp; NGAP Replay:</strong></p>
+<ul>
+<li>When the failed AMF is restored, LoxiLB replays cached NG Setup requests and other related messages.</li>
+<li>The AMF resumes handling NGAP traffic without requiring the gNB to reinitiate the setup.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>                          +-------------------+
+                          |   UERANSIM gNB    |
+                          | (Simulated gNB)   |
+                          +-------------------+
+                                   |
+                     NG Setup Req  |  NGAP Signaling
+                                   v
+                          +-------------------+
+                          |      LoxiLB       |
+                          | (NGAP Proxy/LB)   |
+                          +-------------------+
+                               /     |     \
+       +----------------+    +----------------+    +----------------+
+       |   AMF 1 (UP)   |    |   AMF 2 (DOWN)  |   |   AMF 3 (UP)   |
+       |  (Processing)  |    | (Failure State) |   |  (Processing)  |
+       +----------------+    +----------------+    +----------------+
+                                        |
+                         AMF 2 Recovers |
+                                        v
+                              +----------------+
+                              |   AMF 2 (UP)   |
+                              | (Cache Replay) |
+                              +----------------+
+</code></pre></div>
+<p>This architecture significantly enhances 5G network reliability by ensuring the NGAP signaling plane remains operational even when individual AMF instances experience failures, making it ideal for production 5G deployments requiring high availability</p>
+<h1 id="prerequisites">Prerequisites</h1>
+<h2 id="install-k8s-microk8s">Install K8s (MicroK8s)</h2>
+<p>Install MicroK8s by referring to the guide  https://free5gc.org/guide/7-free5gc-helm/ </p>
+<p>After installing MicroK8s, enable Multus as well, and then additionally run the following command. (It is required to to create a PV to run Free5GC properly)</p>
+<div class="highlight"><pre><span></span><code>microk8s enable hostpath-storage
+</code></pre></div>
+<h2 id="install-gtp5g-kernel-module">Install gtp5g kernel module</h2>
+<p>To run free5gc, you need the gtp5g module. The following commands install the basic packages for compiling kernel modules.</p>
+<div class="highlight"><pre><span></span><code>sudo apt -y install git gcc gcc-12 g++ cmake autoconf libtool pkg-config libmnl-dev libyaml-dev
+</code></pre></div>
+<p>Then, install the module by referring to the <a href="https://github.com/free5gc/gtp5g">gtp5g</a> page.</p>
+<h1 id="topology">Topology</h1>
+<p><img alt="loxilb-k8s-arch-calico-multus-free5gc.jpg" src="../loxilb-k8s-arch-calico-multus-free5gc.jpg" /></p>
+<p>The core networks (N2, N3, N4, N6, N9) of free5gc are configured using Multus. Therefore, each core pod of free5gc has an additional Multus network interface in addition to the default interface (eth0) provided by K8s CNI (default: calico).</p>
+<p>gNB uses the N2 network to access AMF. Therefore, it is reasonable for LoxiLB to also have an N2 network interface to load balance the traffic.</p>
+<p>In this document, free5gc is deployed as a K8s pod using Helm. At the same time, LoxiLB is also deployed to K8s in in-cluster mode. At this time, LoxiLB does not operate in host mode, but uses the pod network and is assigned the N2 Multus network interface.</p>
+<p>gNB sees the external IP of the load balancer service as the AMF IP and forwards the traffic. LoxiLB can load balance the traffic to AMF.</p>
+<p>In this document, K8s is installed as a single node in a VM environment. The Host VM has an enp0s8 interface and an IP of 192.168.122.230.</p>
+<h1 id="install-free5gc-using-helm">Install free5gc (using Helm)</h1>
+<p>Download the free5gc Helm package with the following command.</p>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/free5gc/free5gc-helm.git
+cd free5gc-helm/charts
+</code></pre></div>
+<h2 id="modify-free5gcvaluesyaml">Modify free5gc/values.yaml</h2>
+<p>Modify the free5gc/values.yaml file to suit your environment.</p>
+<div class="highlight"><pre><span></span><code>vi free5gc/values.yaml
+</code></pre></div>
+<p>The part that needs to be modified in the values.yaml file is the masterIf of each network. The VM used as a host in the current document has an enp0s8 interface, and that interface becomes the masterIf of the Multus interface. Therefore, modify it as follows:</p>
+<div class="highlight"><pre><span></span><code>n2network:
+    enabled: true
+    name: n2network
+    type: ipvlan
+    **masterIf: enp1s0**
+    subnetIP: 10.100.50.248
+    cidr: 29
+    gatewayIP: 10.100.50.254
+    excludeIP: 10.100.50.254
+</code></pre></div>
+<p>Modify other networks (n3, n4, n6, n9) in the same way.</p>
+<aside>
+💡
+
+NOTE: This document is based on a VM with one interface. The official document, [free5GC Helm Installation](https://free5gc.org/guide/7-free5gc-helm/) - free5GC, recommends using two interfaces.
+
+</aside>
+
+<p>Next, find AMF in the global section and change service.ngap.enabled to true and service.ngap.type to LoadBalancer.</p>
+<div class="highlight"><pre><span></span><code>amf:
+    n2if:  # NGAP
+      ipAddress: 10.100.50.249
+    service:
+      ngap:
+        **enabled: true**
+        name: amf-n2
+        port: 38412
+        nodeport: 31412
+        protocol: SCTP
+        **type: LoadBalancer**
+</code></pre></div>
+<h2 id="modify-amf-serviceyaml">Modify amf-service.yaml</h2>
+<p>Next, modify the amf-service.yaml file.</p>
+<div class="highlight"><pre><span></span><code>vi free5gc/charts/free5gc-amf/templates/amf-service.yaml file
+</code></pre></div>
+<p>Add the following annotation to metadata: And specify “<a href="http://loxilb.io/loxilb%E2%80%9D">loxilb.io/loxilb”</a> in spec.loadBalancerClass.</p>
+<div class="highlight"><pre><span></span><code>metadata:
+  name: {{ include &quot;free5gc-amf.fullname&quot; $ }}-{{ $.Values.global.amf.service.ngap.name }}
+  labels:
+    project: {{ $.Values.global.projectName }}
+    nf: {{ .name }}
+  annotations:
+    **loxilb.io/probetype: &quot;none&quot;
+    loxilb.io/lbmode: &quot;fullproxy&quot;
+    loxilb.io/epselect: &quot;n2&quot;
+    loxilb.io/multus-nets: &quot;n2network-free5gc-helm-free5gc-amf&quot;**
+spec:
+  type: {{ $.Values.global.amf.service.ngap.type }}
+  **loadBalancerClass: &quot;loxilb.io/loxilb&quot;**
+</code></pre></div>
+<p>A description of the annotation can be found on kube-loxilb’s github <a href="https://github.com/loxilb-io/kube-loxilb?tab=readme-ov-file#how-to-deploy-kube-loxilb-">site</a>.</p>
+<h2 id="run-helm-install-command">Run helm install command</h2>
+<p>Deploy free5gc with the following command:</p>
+<div class="highlight"><pre><span></span><code>helm install -n free5gc free5gc-helm ./ \
+--set global.n6network.masterIf=enp0s8 \
+--set global.n6network.subnetIP=&quot;192.168.122.0&quot; \
+--set global.n6network.gatewayIP=&quot;192.168.122.1&quot; \
+--set free5gc-upf.upf1.n6if.ipAddress=&quot;192.168.122.251&quot; \
+--set free5gc-upf.upf2.n6if.ipAddress=&quot;192.168.122.252&quot; \
+--set free5gc-upf.upfb.n6if.ipAddress=&quot;192.168.122.253&quot; \
+--set global.n2network.masterIf=enp0s8 \
+--set global.n3network.masterIf=enp0s8 \
+--set global.n4network.masterIf=enp0s8 \
+--set global.n9network.masterIf=enp0s8
+</code></pre></div>
+<p>enp0s8 specified in global.n6network.masterIf is the interface name of the Host VM.</p>
+<p>The IP address specified in global.n6network.subnetIP &amp; global.n6network.gatewayIP is the network subnet and gateway information used by enp0s8. upf1, upf2, and upfb use the same subnet as the corresponding subnet to enable external communication. Therefore, the IPs of upf1, upf2, and upfb must be IPs that are not used by other machines.</p>
+<p>Since this document uses only one interface, the option is set to use enp0s8 as the master for other networks as well. (Same as specified in the values.yaml file)</p>
+<p>If the deployment is successful, the following pods are created.</p>
+<div class="highlight"><pre><span></span><code>kubectl get pods -n free5gc
+NAME                                                     READY   STATUS    RESTARTS        AGE
+free5gc-helm-free5gc-amf-amf-8667945876-qcwlk            1/1     Running   0               5d2h
+free5gc-helm-free5gc-ausf-ausf-64c684f546-crgjt          1/1     Running   0               5d2h
+free5gc-helm-free5gc-chf-chf-7c7bb88fb7-xkpnj            1/1     Running   0               5d2h
+free5gc-helm-free5gc-dbpython-dbpython-59684d749-6rppv   1/1     Running   0               5d2h
+free5gc-helm-free5gc-nef-nef-759b6dfbdb-xrn5r            1/1     Running   0               5d2h
+free5gc-helm-free5gc-nrf-nrf-6c8cc8b69-wwzf8             1/1     Running   0               5d2h
+free5gc-helm-free5gc-nssf-nssf-5c9d76fc69-f4vfj          1/1     Running   0               5d2h
+free5gc-helm-free5gc-pcf-pcf-78f7dbc67d-29xk8            1/1     Running   0               5d2h
+free5gc-helm-free5gc-smf-smf-5dbcc8565c-2sj7w            1/1     Running   0               5d2h
+free5gc-helm-free5gc-udm-udm-68ff9fbd47-hh2z7            1/1     Running   0               5d2h
+free5gc-helm-free5gc-udr-udr-5bd79d98f8-8gfzh            1/1     Running   0               5d2h
+free5gc-helm-free5gc-upf-upf1-79d75db8cd-l26ch           1/1     Running   0               5d2h
+free5gc-helm-free5gc-upf-upf2-67dcd99f89-l2jf5           1/1     Running   0               5d2h
+free5gc-helm-free5gc-upf-upfb-794d46bbb8-nh8fh           1/1     Running   0               5d2h
+free5gc-helm-free5gc-webui-webui-75c45c779c-9vvc7        1/1     Running   0               5d2h
+mongodb-0                                                1/1     Running   0               5d2h
+</code></pre></div>
+<p>PVC is produced as follows:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pvc -n free5gc
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        AGE
+cert-pvc            Bound    pvc-dbc3f5ff-bdcc-4b06-bde3-462c3c96ec95   1Mi        ROX            microk8s-hostpath   5d2h
+datadir-mongodb-0   Bound    pvc-ba897e0c-9860-4d42-8bc7-9f0ceb1ff17b   6Gi        RWO            microk8s-hostpath   6d3h
+</code></pre></div>
+<p>For service, the amf service will be stuck in pending state. This is because loxilb has not been deployed yet.</p>
+<div class="highlight"><pre><span></span><code>kubectl get svc -n free5gc
+NAME                                TYPE           CLUSTER-IP       EXTERNAL-IP         PORT(S)            AGE
+free5gc-helm-free5gc-amf-amf-n2     LoadBalancer   10.152.183.91    &lt;pending&gt;           38412:31412/SCTP   5d2h
+free5gc-helm-free5gc-amf-service    ClusterIP      10.152.183.146   &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-ausf-service   ClusterIP      10.152.183.42    &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-chf-service    ClusterIP      10.152.183.254   &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-nef-service    ClusterIP      10.152.183.162   &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-nssf-service   ClusterIP      10.152.183.181   &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-pcf-service    ClusterIP      10.152.183.50    &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-smf-service    ClusterIP      10.152.183.206   &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-udm-service    ClusterIP      10.152.183.36    &lt;none&gt;              80/TCP             5d2h
+free5gc-helm-free5gc-udr-service    ClusterIP      10.152.183.95    &lt;none&gt;              80/TCP             5d2h
+gnb-service                         ClusterIP      10.152.183.43    &lt;none&gt;              4997/UDP           5d2h
+loxilb-egress-service               LoadBalancer   10.152.183.211   llbanyextip         9999:31237/TCP     5d2h
+loxilb-lb-service                   ClusterIP      None             &lt;none&gt;              11111/TCP          5d2h
+mongodb                             ClusterIP      10.152.183.83    &lt;none&gt;              27017/TCP          5d2h
+nrf-nnrf                            ClusterIP      10.152.183.176   &lt;none&gt;              8000/TCP           5d2h
+webui-nbiling                       ClusterIP      10.152.183.56    &lt;none&gt;              2122/TCP           5d2h
+webui-ncgf                          ClusterIP      10.152.183.180   &lt;none&gt;              2121/TCP           5d2h
+webui-service                       NodePort       10.152.183.226   &lt;none&gt;              5000:30500/TCP     5d2h
+</code></pre></div>
+<h1 id="deploy-loxilb">Deploy LoxiLB</h1>
+<p>Save the following to a file named loxilb.yaml:</p>
+<div class="highlight"><pre><span></span><code>apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: loxilb-lb
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: loxilb-app
+  template:
+    metadata:
+      name: loxilb-lb
+      labels:
+        app: loxilb-app
+      annotations:
+        k8s.v1.cni.cncf.io/networks: &#39;[ { &quot;name&quot;: &quot;n2network-free5gc-helm-free5gc-amf&quot;,
+          &quot;interface&quot;: &quot;n2&quot;, &quot;ips&quot;: [ &quot;10.100.50.253/29&quot; ], &quot;gateway&quot;: [ &quot;10.100.50.254&quot;
+          ] }]&#39;
+    spec:
+      #hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      tolerations:
+      - key: &quot;node-role.kubernetes.io/master&quot;
+        operator: Exists
+      - key: &quot;node-role.kubernetes.io/control-plane&quot;
+        operator: Exists
+      containers:
+      - name: loxilb-app
+        image: &quot;ghcr.io/loxilb-io/loxilb:scp2&quot;
+        imagePullPolicy: Always
+        command: [ &quot;/root/loxilb-io/loxilb/loxilb&quot;, &quot;--proxyonlymode&quot; ]
+        ports:
+        - containerPort: 11111
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loxilb-egress-service
+  namespace: free5gc
+  annotations:
+    loxilb.io/egress: &quot;yes&quot;
+    loxilb.io/probetype: &quot;none&quot;
+    loxilb.io/staticIP: &quot;0.0.0.0&quot;
+spec:
+  type: LoadBalancer
+  loadBalancerClass: loxilb.io/loxilb
+  selector:
+    app: loxilb-app
+  ports:
+  - name: loxilb-egress
+    port: 9999
+    targetPort: 9999
+    protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loxilb-lb-service
+  namespace: free5gc
+spec:
+  clusterIP: None
+  selector:
+    app: loxilb-app
+  ports:
+  - name: loxilb-app
+    port: 11111
+    targetPort: 11111
+    protocol: TCP
+</code></pre></div>
+<p>If you look at the annotations, you can see the <a href="http://k8s.v1.cni.cncf.io/networks">k8s.v1.cni.cncf.io/networks</a> entry. This is an option to assign the loxilb pod an N2 Multus network interface. The IP addresses are set to 10.100.50.253/29. If you changed the N2 network subnet, you should also change the IP addresses.</p>
+<p>Deploy loxilb with the following command.</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f loxilb.yaml
+</code></pre></div>
+<p>You will also need to deploy kube-loxilb. Save the following to a file called kube-loxilb.yaml:</p>
+<div class="highlight"><pre><span></span><code>---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-loxilb
+  namespace: kube-system
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kube-loxilb
+rules:
+  - apiGroups:
+      - &quot;&quot;
+    resources:
+      - nodes
+    verbs:
+      - get
+      - watch
+      - list
+      - patch
+  - apiGroups:
+      - &quot;&quot;
+    resources:
+      - pods
+    verbs:
+      - get
+      - watch
+      - list
+      - patch
+  - apiGroups:
+      - &quot;&quot;
+    resources:
+      - endpoints
+      - services
+      - namespaces
+      - services/status
+    verbs:
+      - get
+      - watch
+      - list
+      - patch
+      - update
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - gatewayclasses
+      - gatewayclasses/status
+      - gateways
+      - gateways/status
+      - tcproutes
+      - udproutes
+    verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;, &quot;patch&quot;, &quot;update&quot;]
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
+  - apiGroups:
+      - bgppeer.loxilb.io
+    resources:
+      - bgppeerservices
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - bgppolicydefinedsets.loxilb.io
+    resources:
+      - bgppolicydefinedsetsservices
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - bgppolicydefinition.loxilb.io
+    resources:
+      - bgppolicydefinitionservices
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - bgppolicyapply.loxilb.io
+    resources:
+      - bgppolicyapplyservices
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - loxiurl.loxilb.io
+    resources:
+      - loxiurls
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - egress.loxilb.io
+    resources:
+      - egresses
+    verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;, &quot;patch&quot;, &quot;update&quot;]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kube-loxilb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kube-loxilb
+subjects:
+  - kind: ServiceAccount
+    name: kube-loxilb
+    namespace: kube-system
+---
+apiVersion: apps/v1             
+kind: Deployment           
+metadata:                           
+  name: kube-loxilb                        
+  namespace: kube-system                           
+  labels:                          
+    app: kube-loxilb-app                           
+spec:                             
+  replicas: 1                             
+  selector:                          
+    matchLabels:                      
+      app: kube-loxilb-app                            
+  template:                         
+    metadata:                          
+      labels:                       
+        app: kube-loxilb-app                    
+    spec:                       
+      dnsPolicy: ClusterFirstWithHostNet                         
+      tolerations:                      
+        # Mark the pod as a critical add-on for rescheduling.           
+        - key: CriticalAddonsOnly            
+          operator: Exists                          
+      priorityClassName: system-node-critical                      
+      serviceAccountName: kube-loxilb                       
+      terminationGracePeriodSeconds: 0                    
+      containers:                     
+      - name: kube-loxilb                     
+        image: ghcr.io/loxilb-io/kube-loxilb:latest              
+        imagePullPolicy: Always                      
+        command:                   
+        - /bin/kube-loxilb                
+        args:               
+        - --cidrPools=defaultPool=10.100.50.253/32                   
+        - --setRoles=0.0.0.0
+        - --setLBMode=1
+        resources:             
+          requests:           
+            cpu: &quot;100m&quot;
+            memory: &quot;50Mi&quot;             
+          limits:              
+            cpu: &quot;100m&quot;                
+            memory: &quot;50Mi&quot;              
+        securityContext:           
+          privileged: true             
+          capabilities:            
+            add: [&quot;NET_ADMIN&quot;, &quot;NET_RAW&quot;]
+</code></pre></div>
+<p>In cidrPools of args, we specified the 10.100.50.253/32 IP address used in loxilb above.</p>
+<p>Deploy kube-loxilb with the following command.</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f kube-loxilb.yaml
+</code></pre></div>
+<p>After some time has passed since the deployment was completed, you can see that the external IP Address <em>10.100.50.253</em> has been assigned to the AMF service.</p>
+<div class="highlight"><pre><span></span><code>NAME                                TYPE           CLUSTER-IP       EXTERNAL-IP         PORT(S)            AGE
+free5gc-helm-free5gc-amf-amf-n2     LoadBalancer   10.152.183.91    llb-10.100.50.253   38412:31412/SCTP   5d2h
+</code></pre></div>
+<h1 id="test">Test</h1>
+<p>We will deploy ueransim for testing. The free5gc helm package includes ueransim by default. Modify ueransim's values.yaml file for deployment.</p>
+<div class="highlight"><pre><span></span><code>vi ueransim/values.yaml
+</code></pre></div>
+<p>As with free5gc, modify the masterIf for each network to suit your host environment. In this document, we use the enp0s8 interface of the host VM.</p>
+<div class="highlight"><pre><span></span><code>global:
+  #Global network parametes
+  n2network:
+    enabled: true
+    name: n2network
+    type: ipvlan
+    masterIf: enp0s8
+    subnetIP: 10.100.50.248
+    cidr: 29
+    gatewayIP: 10.100.50.254
+    excludeIP: 10.100.50.254
+  n3network:
+    enabled: true
+    name: n3network
+    type: ipvlan
+    masterIf: enp0s8
+    subnetIP: 10.100.50.232
+    cidr: 29
+    gatewayIP: 10.100.50.238
+    excludeIP: 10.100.50.238
+</code></pre></div>
+<p>Then, modify the amf.n2if.ipAddress entry to the external IP of the AMF service.</p>
+<div class="highlight"><pre><span></span><code>amf:
+    n2if:  # NGAP
+      ipAddress: 10.100.50.253
+</code></pre></div>
+<p>Deploy ueransim with the following command:</p>
+<div class="highlight"><pre><span></span><code>helm install -n free5gc ueransim ./ueransim/
+</code></pre></div>
+<p>After that, you need to access the web UI and create a subscriber for UE. To access it, set up port forwarding with the following command.</p>
+<div class="highlight"><pre><span></span><code>kubectl port-forward svc/webui-service 5000:5000  --address 0.0.0.0
+</code></pre></div>
+<p>After that, access the web UI with the URL <host_ip>:5000. In this document, it is 192.168.122.230:5000.</p>
+<p>When you access the web UI, a login page will appear. The default account is admin:free5gc.</p>
+<p>After logging in, click the Create button in the SUBSCRIBERS menu and create a UE. (The basic information is already registered.)</p>
+<p>After that, you can check that the UE is connected in the AMF log, and you can check that it is communicating externally with the following command.</p>
+<div class="highlight"><pre><span></span><code>kubectl exec -it -n free5gc deployment/ueransim-ue \
+-- ping -I uesimtun0 8.8.8.8
+</code></pre></div>
+<h1 id="troubleshooting-points"><strong>Troubleshooting Points</strong></h1>
+<h2 id="persistentvolume-issue">PersistentVolume Issue</h2>
+<p>Sometimes, the pods of free5gc are in a pending state, so when you check the pvc, it mught also be in a pending state. In this case, you need to add the provisionor with the following command.</p>
+<div class="highlight"><pre><span></span><code>microk8s enable hostpath-storage
+</code></pre></div>
+<p>If you still have the same problem, refer to Create Persistent Volume in the free5GC Helm Installation - free5GC document and manually add two PersistentVolumes.</p>
+<h2 id="issue-in-using-k3s">Issue in using K3s</h2>
+<p>Free5GC uses PersistentVolume, and uses ReadOnlyMany for accessModes.</p>
+<p>Since K3s does not support this mode due to lightweight issues, please test using microk8s recommended in the official documentation.</p>
+<p><strong><em>Author(s) - BackGuyn Jung (LoxiLB), William Linn (Free5GC)</em></strong></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1524 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>GTP5G-Tracer: Detailed Project Explanation - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gtp5g-tracer-detailed-project-explanation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GTP5G-Tracer: Detailed Project Explanation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-gtp5g" class="md-nav__link">
+    What is GTP5G?
+  </a>
+  
+    <nav class="md-nav" aria-label="What is GTP5G?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gtp5g-tracer" class="md-nav__link">
+    GTP5G-Tracer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uplink-flow-ue-internet" class="md-nav__link">
+    Uplink Flow (UE → Internet)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downlink-flow-internet-ue" class="md-nav__link">
+    Downlink Flow (Internet → UE)
+  </a>
+  
+    <nav class="md-nav" aria-label="Downlink Flow (Internet → UE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-log" class="md-nav__link">
+    Understanding the Log
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the Log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uplink-packet-example" class="md-nav__link">
+    Uplink Packet Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    Analysis:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downlink-packet-example-hypothetical" class="md-nav__link">
+    Downlink Packet Example (Hypothetical)
+  </a>
+  
+    <nav class="md-nav" aria-label="Downlink Packet Example (Hypothetical)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-components" class="md-nav__link">
+    Log Components
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packet-flow-analysis" class="md-nav__link">
+    Packet Flow Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-tells-us" class="md-nav__link">
+    What This Tells Us
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#significance-for-5g-networks" class="md-nav__link">
+    Significance for 5G Networks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpf-tracing-vs-traditional-tracing-methods" class="md-nav__link">
+    BPF Tracing vs. Traditional Tracing Methods
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps-hand-on-some-new-entry" class="md-nav__link">
+    Next Steps: Hand-on some new entry
+  </a>
+  
+    <nav class="md-nav" aria-label="Next Steps: Hand-on some new entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-gtp5g-tracing-advanced-analysis-guide" class="md-nav__link">
+    Enhanced GTP5G Tracing: Advanced Analysis Guide
+  </a>
+  
+    <nav class="md-nav" aria-label="Enhanced GTP5G Tracing: Advanced Analysis Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-introduction-to-enhanced-tracing" class="md-nav__link">
+    1. Introduction to Enhanced Tracing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-key-enhancements" class="md-nav__link">
+    2. Key Enhancements
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Key Enhancements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-packet-length-tracking" class="md-nav__link">
+    2.1 Packet Length Tracking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-high-precision-timestamps" class="md-nav__link">
+    2.2 High-Precision Timestamps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-improved-return-value-presentation" class="md-nav__link">
+    2.3 Improved Return Value Presentation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-device-transition-tracking" class="md-nav__link">
+    2.4 Device Transition Tracking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-packet-flow-analysis" class="md-nav__link">
+    3. Packet Flow Analysis
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Packet Flow Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-uplink-flow-ue-core-network" class="md-nav__link">
+    3.1 Uplink Flow (UE → Core Network)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-downlink-flow-core-network-ue" class="md-nav__link">
+    3.2 Downlink Flow (Core Network → UE)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-performance-analysis" class="md-nav__link">
+    4. Performance Analysis
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-function-processing-time" class="md-nav__link">
+    4.1 Function Processing Time
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-gtp-header-overhead" class="md-nav__link">
+    4.2 GTP Header Overhead
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20250913/20250913.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20250913/20250913.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="gtp5g-tracer-detailed-project-explanation">GTP5G-Tracer: Detailed Project Explanation</h1>
+<h2 id="overview">Overview</h2>
+<p>gtp5g-tracer is an eBPF-based network tracing tool specifically designed to monitor and trace GTP-U (GPRS Tunneling Protocol User Plane) traffic in 5G networks. It provides real-time visibility into packet flows through the GTP5G kernel module, which is crucial for debugging and monitoring 5G network performance.</p>
+<h2 id="what-is-gtp5g">What is GTP5G?</h2>
+<p>GTP (GPRS Tunneling Protocol) is a fundamental protocol in mobile networks that has been used from 2G/GPRS through 5G networks. Here's why it's important:</p>
+<h3 id="gtp5g-tracer">GTP5G-Tracer</h3>
+<h2 id="uplink-flow-ue-internet">Uplink Flow (UE → Internet)</h2>
+<div class="highlight"><pre><span></span><code>+--------+        +--------+        +----------------+        +---------+
+|   UE   | -----&gt; |  gNB   | -----&gt; | UPF GTP Module | -----&gt; | Internet|
++--------+        +--------+        +----------------+        +---------+
+                                           |
+                                           | gtp5g_encap_recv() called
+                                           ↓
+                  +------------------------------------------+
+                  | BPF fentry hook triggered                |
+                  | - Logs PID, TGID, CPU                    |
+                  | - Logs device name (e.g., wlp2s0)        |
+                  +------------------------------------------+
+                                           |
+                                           | GTP packet processing
+                                           | - GTP header removed
+                                           | - Inner IP packet extracted
+                                           ↓
+                  +------------------------------------------+
+                  | BPF fexit hook triggered                 |
+                  | - Logs PID, TGID, CPU                    |
+                  | - Logs device name (e.g., upfgtp)        |
+                  +------------------------------------------+
+                                           |
+                                           ↓
+                                    Packet continues
+                                    to destination
+</code></pre></div>
+<h2 id="downlink-flow-internet-ue">Downlink Flow (Internet → UE)</h2>
+<div class="highlight"><pre><span></span><code>+---------+        +----------------+        +--------+        +--------+
+| Internet| -----&gt; | UPF GTP Module | -----&gt; |  gNB   | -----&gt; |   UE   |
++---------+        +----------------+        +--------+        +--------+
+                          |
+                          | gtp5g_xmit_skb_ipv4() called
+                          ↓
+                  +------------------------------------------+
+                  | BPF fentry hook triggered                |
+                  | - Logs PID, TGID, CPU                    |
+                  | - Logs device name (e.g., upfgtp)        |
+                  +------------------------------------------+
+                          |
+                          | GTP packet processing
+                          | - GTP header added
+                          | - IP packet encapsulated
+                          ↓
+                  +------------------------------------------+
+                  | BPF fexit hook triggered                 |
+                  | - Logs PID, TGID, CPU                    |
+                  | - Logs device name (e.g., wlp2s0)        |
+                  +------------------------------------------+
+                          |
+                          ↓
+                    Packet continues
+                    to destination
+</code></pre></div>
+<h3 id="understanding-the-log">Understanding the Log</h3>
+<p>The logs from the GTP5G tracer provide valuable insights into the packet flow through the GTP tunnels in our 5G network. Let's break down what each part of the log means:</p>
+<p>after:<br />
+<div class="highlight"><pre><span></span><code>sudo cat /sys/kernel/debug/tracing/trace_pipe
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>irq/135-iwlwifi-457     [007] ..s21 534515.160592: bpf_trace_printk: fexit/gtp5g_encap_recv: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457     [007] ..s21 534515.160594: bpf_trace_printk: fexit/gtp5g_encap_recv: DEV=upfgtp
+</code></pre></div>
+<h4 id="uplink-packet-example">Uplink Packet Example</h4>
+<div class="highlight"><pre><span></span><code># Entry point - Packet arrives from UE
+irq/135-iwlwifi-457     [007] ..s21 534516.239030: bpf_trace_printk: fentry/gtp5g_encap_recv: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457     [007] ..s21 534516.239035: bpf_trace_printk: fentry/gtp5g_encap_recv: DEV=wlp2s0
+
+# Exit point - Packet processed and forwarded
+irq/135-iwlwifi-457     [007] ..s21 534516.239047: bpf_trace_printk: fexit/gtp5g_encap_recv: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457     [007] ..s21 534516.239048: bpf_trace_printk: fexit/gtp5g_encap_recv: DEV=upfgtp
+</code></pre></div>
+<h4 id="analysis">Analysis:</h4>
+<ol>
+<li>Packet arrives on wireless interface (<code>wlp2s0</code>)</li>
+<li>GTP5G module processes it (taking 17 microseconds)</li>
+<li>Packet exits on UPF GTP interface (<code>upfgtp</code>)</li>
+<li>Processing happens in interrupt context (<code>irq/135-iwlwifi</code>)</li>
+<li>Same CPU (7) handles the entire operation</li>
+</ol>
+<h3 id="downlink-packet-example-hypothetical">Downlink Packet Example (Hypothetical)</h3>
+<div class="highlight"><pre><span></span><code># Entry point - Packet arrives from Internet
+kworker/3:1-1234        [003] ..s21 534517.345030: bpf_trace_printk: fentry/gtp5g_xmit_skb_ipv4: PID=1234, TGID=1234, CPU=3
+kworker/3:1-1234        [003] ..s21 534517.345035: bpf_trace_printk: fentry/gtp5g_xmit_skb_ipv4: DEV=upfgtp
+
+# Exit point - Packet processed and forwarded
+kworker/3:1-1234        [003] ..s21 534517.345047: bpf_trace_printk: fexit/gtp5g_xmit_skb_ipv4: PID=1234, TGID=1234, CPU=3
+kworker/3:1-1234        [003] ..s21 534517.345048: bpf_trace_printk: fexit/gtp5g_xmit_skb_ipv4: DEV=wlp2s0
+</code></pre></div>
+<p><strong>Analysis:</strong><br />
+1. Packet arrives on UPF GTP interface (<code>upfgtp</code>)<br />
+2. GTP5G module processes it (taking 12 microseconds)<br />
+3. Packet exits on wireless interface (<code>wlp2s0</code>)<br />
+4. Processing happens in kernel worker context<br />
+5. Same CPU (3) handles the entire operation</p>
+<h4 id="log-components">Log Components</h4>
+<ol>
+<li><strong>Process Information</strong>: <code>irq/135-iwlwifi-457</code></li>
+<li>This shows the process handling the packet</li>
+<li><code>irq/135-iwlwifi</code> indicates it's an interrupt handler for the WiFi interface</li>
+<li>
+<p><code>457</code> is the process ID</p>
+</li>
+<li>
+<p><strong>CPU Core</strong>: <code>[007]</code></p>
+</li>
+<li>
+<p>The packet is being processed on CPU core 7</p>
+</li>
+<li>
+<p><strong>Timestamp</strong>: <code>534515.160592</code></p>
+</li>
+<li>
+<p>Time in seconds since system boot when this event occurred</p>
+</li>
+<li>
+<p><strong>Trace Source</strong>: <code>bpf_trace_printk</code></p>
+</li>
+<li>
+<p>Indicates the log was generated by our eBPF program using the <code>bpf_printk()</code> function</p>
+</li>
+<li>
+<p><strong>Function and Event Type</strong>: <code>fexit/gtp5g_encap_recv</code></p>
+</li>
+<li><code>fexit</code> means this is logged at the exit point of the function</li>
+<li>
+<p><code>gtp5g_encap_recv</code> is the function being traced (handling uplink traffic)</p>
+</li>
+<li>
+<p><strong>Process Details</strong>: <code>PID=457, TGID=457, CPU=7</code></p>
+</li>
+<li>PID: Process ID handling the packet</li>
+<li>TGID: Thread Group ID (main process ID)</li>
+<li>
+<p>CPU: Confirms which CPU core is processing the packet</p>
+</li>
+<li>
+<p><strong>Interface</strong>: <code>DEV=upfgtp</code> or <code>DEV=wlp2s0</code></p>
+</li>
+<li>The network device handling the packet</li>
+<li><code>upfgtp</code> is the GTP tunnel interface for the User Plane Function</li>
+<li><code>wlp2s0</code> is likely your wireless network interface</li>
+</ol>
+<h3 id="packet-flow-analysis">Packet Flow Analysis</h3>
+<p>Looking at the sequence of logs:</p>
+<div class="highlight"><pre><span></span><code>irq/135-iwlwifi-457     [007] ..s21 534516.239030: bpf_trace_printk: fentry/gtp5g_encap_recv: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457     [007] ..s21 534516.239035: bpf_trace_printk: fentry/gtp5g_encap_recv: DEV=wlp2s0
+irq/135-iwlwifi-457     [007] ..s21 534516.239047: bpf_trace_printk: fexit/gtp5g_encap_recv: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457     [007] ..s21 534516.239048: bpf_trace_printk: fexit/gtp5g_encap_recv: DEV=upfgtp
+</code></pre></div>
+<p>This sequence shows a complete uplink packet flow:</p>
+<ol>
+<li><strong>Packet Entry</strong> (<code>fentry/gtp5g_encap_recv</code>):</li>
+<li>A packet enters the <code>gtp5g_encap_recv</code> function</li>
+<li>It comes from the wireless interface <code>wlp2s0</code></li>
+<li>
+<p>This is the start of uplink processing (UE → Core Network)</p>
+</li>
+<li>
+<p><strong>Packet Exit</strong> (<code>fexit/gtp5g_encap_recv</code>):</p>
+</li>
+<li>The same packet exits the function after processing</li>
+<li>It's now associated with the <code>upfgtp</code> interface</li>
+<li>
+<p>This shows the packet has been successfully encapsulated in a GTP tunnel</p>
+</li>
+<li>
+<p><strong>Processing Time</strong>:</p>
+</li>
+<li>The time difference between entry and exit (534516.239047 - 534516.239030 = 0.000017 seconds or 17 microseconds)</li>
+<li>This represents the processing overhead of GTP encapsulation</li>
+</ol>
+<h3 id="what-this-tells-us">What This Tells Us</h3>
+<ol>
+<li><strong>Uplink Traffic Flow</strong>:</li>
+<li>The logs show packets coming from the wireless interface (likely from a UE)</li>
+<li>These packets are being encapsulated into GTP tunnels</li>
+<li>
+<p>They exit through the UPF's GTP interface toward the core network</p>
+</li>
+<li>
+<p><strong>GTP Tunnel Operation</strong>:</p>
+</li>
+<li>The GTP5G module is successfully receiving packets from the wireless interface</li>
+<li>It's processing them through the <code>gtp5g_encap_recv</code> function</li>
+<li>
+<p>It's forwarding them through the GTP tunnel interface</p>
+</li>
+<li>
+<p><strong>Performance Insights</strong>:</p>
+</li>
+<li>Processing time is in microseconds, showing efficient packet handling</li>
+<li>The same CPU core (7) handles the entire operation, avoiding inter-core communication overhead</li>
+<li>The interrupt handler for the wireless card is directly involved in the GTP processing</li>
+</ol>
+<h3 id="significance-for-5g-networks">Significance for 5G Networks</h3>
+<p>These logs confirm that:</p>
+<ol>
+<li>The GTP5G kernel module is correctly handling uplink traffic</li>
+<li>Packets are being properly encapsulated into GTP tunnels</li>
+<li>The data path from UE to core network is functioning</li>
+</ol>
+<p>This tracing capability is valuable for:<br />
+- Debugging GTP tunnel issues<br />
+- Performance analysis of the 5G user plane<br />
+- Verifying correct packet flow in a 5G deployment<br />
+- Identifying potential bottlenecks in packet processing</p>
+<h3 id="bpf-tracing-vs-traditional-tracing-methods">BPF Tracing vs. Traditional Tracing Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>BPF Tracing</th>
+<th>tcpdump</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overhead</td>
+<td>Very low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Kernel Modification</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Granularity</td>
+<td>Function level</td>
+<td>Packet level</td>
+</tr>
+<tr>
+<td>Context Information</td>
+<td>Rich (PID, CPU, etc.)</td>
+<td>Limited</td>
+</tr>
+<tr>
+<td>Dynamic Attachment</td>
+<td>Yes</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Safety</td>
+<td>Verified by kernel</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Performance Impact</td>
+<td>Minimal</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<h2 id="next-steps-hand-on-some-new-entry">Next Steps: Hand-on some new entry</h2>
+<p>To gain further insights:<br />
+1. Compare with downlink traffic (look for <code>gtp5g_xmit_skb_ipv4</code> entries)<br />
+2. Correlate with actual application performance<br />
+3. Monitor under different load conditions<br />
+4. Compare processing times across different packet types and sizes </p>
+<p>List available functions in GTP5G:<br />
+<div class="highlight"><pre><span></span><code>wirelab@wirelab-14Z980-G-AA52C2:~/work/gtp5g-tracer$ sudo cat /sys/kernel/tracing/available_filter_functions | grep &quot;gtp5g&quot;
+[sudo] password for wirelab: 
+get_dbg_lvl [gtp5g]
+set_dbg_lvl [gtp5g]
+ip_string [gtp5g]
+gtp5g_dev_uninit [gtp5g]
+gtp5g_dev_init [gtp5g]
+gtp5g_find_dev [gtp5g]
+update_usage_statistic [gtp5g]
+gtp5g_dev_xmit [gtp5g]
+dev_hashtable_new [gtp5g]
+gtp5g_hashtable_free [gtp5g]
+gtp5g_encap_disable.part.0 [gtp5g]
+gtp5g_encap_disable_locked [gtp5g]
+    .
+    .
+    .
+</code></pre></div></p>
+<p>These functions handle the main packet processing flow:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+<th>Tracing Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gtp5g_encap_recv</code></td>
+<td>Handles uplink GTP packets</td>
+<td><strong>High</strong> - Entry point for uplink traffic</td>
+</tr>
+<tr>
+<td><code>gtp5g_xmit_skb_ipv4</code></td>
+<td>Transmits downlink packets</td>
+<td><strong>High</strong> - Entry point for downlink traffic</td>
+</tr>
+<tr>
+<td><code>gtp5g_handle_skb_ipv4</code></td>
+<td>Processes IPv4 packets</td>
+<td><strong>High</strong> - Core packet handling</td>
+</tr>
+<tr>
+<td><code>gtp5g_push_header</code></td>
+<td>Adds GTP header to packets</td>
+<td><strong>Medium</strong> - Header encapsulation</td>
+</tr>
+<tr>
+<td><code>ip4_find_route</code></td>
+<td>Finds routing for IPv4 packets</td>
+<td><strong>Medium</strong> - Routing decisions</td>
+</tr>
+<tr>
+<td><code>ip_xmit</code></td>
+<td>Transmits IP packets</td>
+<td><strong>Medium</strong> - Final transmission</td>
+</tr>
+</tbody>
+</table>
+<p>These functions handle QoS enforcement and traffic policing:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+<th>Tracing Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policePacket</code></td>
+<td>Applies traffic policing</td>
+<td><strong>High</strong> - QoS enforcement</td>
+</tr>
+<tr>
+<td><code>update_counter</code></td>
+<td>Updates traffic counters</td>
+<td><strong>Medium</strong> - Traffic accounting</td>
+</tr>
+<tr>
+<td><code>update_usage_statistic</code></td>
+<td>Updates usage statistics</td>
+<td><strong>Medium</strong> - Usage tracking</td>
+</tr>
+<tr>
+<td><code>check_counter</code></td>
+<td>Checks traffic counters</td>
+<td><strong>Low</strong> - Counter verification</td>
+</tr>
+</tbody>
+</table>
+<p>These functions handle device initialization and management:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+<th>Tracing Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gtp5g_dev_init</code></td>
+<td>Initializes GTP5G device</td>
+<td><strong>Medium</strong> - Device setup</td>
+</tr>
+<tr>
+<td><code>gtp5g_dev_uninit</code></td>
+<td>Uninitializes GTP5G device</td>
+<td><strong>Medium</strong> - Device cleanup</td>
+</tr>
+<tr>
+<td><code>gtp5g_find_dev</code></td>
+<td>Finds GTP5G device</td>
+<td><strong>Low</strong> - Device lookup</td>
+</tr>
+<tr>
+<td><code>gtp5g_link_setup</code></td>
+<td>Sets up GTP5G link</td>
+<td><strong>Medium</strong> - Link establishment</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enhanced-gtp5g-tracing-advanced-analysis-guide">Enhanced GTP5G Tracing: Advanced Analysis Guide</h3>
+<p>This document provides a comprehensive explanation of the enhanced GTP5G tracer, focusing on the advanced features we've implemented and how to interpret the detailed trace output.</p>
+<h4 id="1-introduction-to-enhanced-tracing">1. Introduction to Enhanced Tracing</h4>
+<p>The enhanced GTP5G tracer provides deep visibility into the GTP5G kernel module's packet processing pipeline. Our advanced tracing features now capture:</p>
+<ul>
+<li>Packet lengths at various processing stages</li>
+<li>High-precision timestamps for performance analysis</li>
+<li>Hexadecimal representation of memory pointers</li>
+<li>Device transitions during packet processing</li>
+<li>GTP packet detection</li>
+<li>Packet metadata presence</li>
+</ul>
+<h4 id="2-key-enhancements">2. Key Enhancements</h4>
+<h5 id="21-packet-length-tracking">2.1 Packet Length Tracking</h5>
+<p>We now track packet sizes throughout the processing pipeline:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">skb</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">skb_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">skb</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">;</span>
+<span class="w">    </span><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;fentry/gtp5g_xmit_skb_ipv4: LEN=%u, TS=%llu&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">skb_len</span><span class="p">,</span><span class="w"> </span><span class="n">ts</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This allows us to observe GTP header overhead and packet transformations.</p>
+<h5 id="22-high-precision-timestamps">2.2 High-Precision Timestamps</h5>
+<p>Nanosecond timestamps enable precise performance measurements:</p>
+<div class="highlight"><pre><span></span><code><span class="n">__u64</span><span class="w"> </span><span class="n">ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_ktime_get_ns</span><span class="p">();</span>
+<span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;fexit/gtp5g_push_header: RET=0x%x (skb ptr), LEN=%u, TS=%llu&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">,</span><span class="w"> </span><span class="n">skb_len</span><span class="p">,</span><span class="w"> </span><span class="n">ts</span><span class="p">);</span>
+</code></pre></div>
+<h5 id="23-improved-return-value-presentation">2.3 Improved Return Value Presentation</h5>
+<p>Return values are now displayed in hexadecimal with explanatory comments:</p>
+<div class="highlight"><pre><span></span><code><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;fexit/gtp5g_handle_skb_ipv4: PID=%u, TGID=%u, RET=0x%x (skb ptr)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="n">tgid</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">);</span>
+</code></pre></div>
+<h5 id="24-device-transition-tracking">2.4 Device Transition Tracking</h5>
+<p>We explicitly track which network interfaces packets traverse:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">skb</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">skb</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;fentry/gtp5g_xmit_skb_ipv4: DEV=%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">skb</span><span class="o">-&gt;</span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="3-packet-flow-analysis">3. Packet Flow Analysis</h4>
+<h5 id="31-uplink-flow-ue-core-network">3.1 Uplink Flow (UE → Core Network)</h5>
+<p>The trace clearly shows the uplink packet flow:</p>
+<div class="highlight"><pre><span></span><code># Packet arrives on external interface (wlp2s0)
+irq/135-iwlwifi-457 [007] ..s21 592868.790221: bpf_trace_printk: fentry/gtp5g_encap_recv: DEV=wlp2s0
+irq/135-iwlwifi-457 [007] ..s21 592868.790223: bpf_trace_printk: fentry/gtp5g_encap_recv: GTP packet detected (len &gt;= 8)
+irq/135-iwlwifi-457 [007] ..s21 592868.790225: bpf_trace_printk: fentry/gtp5g_encap_recv: PID=457, TGID=457, CPU=7, LEN=108
+
+# PDR lookup succeeds
+irq/135-iwlwifi-457 [007] ..s21 592868.790227: bpf_trace_printk: fentry/pdr_find_by_gtp1u: PID=457, TGID=457
+irq/135-iwlwifi-457 [007] ..s21 592868.790230: bpf_trace_printk: fexit/pdr_find_by_gtp1u: PID=457, PDR=Found
+
+# Packet exits on internal interface (upfgtp) after processing
+irq/135-iwlwifi-457 [007] ..s21 592868.790238: bpf_trace_printk: fexit/gtp5g_encap_recv: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457 [007] ..s21 592868.790239: bpf_trace_printk: fexit/gtp5g_encap_recv: DEV=upfgtp
+</code></pre></div>
+<p>Key observations:<br />
+- Initial packet length: 108 bytes (includes GTP header)<br />
+- GTP packet detection confirms GTP-U protocol<br />
+- PDR lookup succeeds, indicating proper rule configuration<br />
+- Device transition: wlp2s0 (external) → upfgtp (internal)</p>
+<h5 id="32-downlink-flow-core-network-ue">3.2 Downlink Flow (Core Network → UE)</h5>
+<p>The downlink flow is equally well-documented:</p>
+<div class="highlight"><pre><span></span><code># Packet starts on internal interface (upfgtp)
+irq/135-iwlwifi-457 [007] b.s21 592868.797649: bpf_trace_printk: fentry/gtp5g_handle_skb_ipv4: PID=457, TGID=457, CPU=7
+irq/135-iwlwifi-457 [007] b.s21 592868.797650: bpf_trace_printk: fentry/gtp5g_handle_skb_ipv4: DEV=upfgtp
+
+# GTP header addition (encapsulation)
+irq/135-iwlwifi-457 [007] b.s21 592868.797655: bpf_trace_printk: fentry/gtp5g_push_header: PID=457, TGID=457, LEN=84
+irq/135-iwlwifi-457 [007] b.s21 592868.797655: bpf_trace_printk: fentry/gtp5g_push_header: DEV=upfgtp
+irq/135-iwlwifi-457 [007] b.s21 592868.797657: bpf_trace_printk: fexit/gtp5g_push_header: RET=0xc02cc8d0 (skb ptr), LEN=100, TS=592873802793332
+
+# Packet handling completed with new size
+irq/135-iwlwifi-457 [007] b.s21 592868.797661: bpf_trace_printk: fexit/gtp5g_handle_skb_ipv4: LEN=100, TS=592873802797124
+irq/135-iwlwifi-457 [007] b.s21 592868.797662: bpf_trace_printk: fexit/gtp5g_handle_skb_ipv4: PID=457, TGID=457, RET=0x13dfa000 (skb ptr)
+
+# Packet transmission begins
+irq/135-iwlwifi-457 [007] b.s21 592868.797664: bpf_trace_printk: fentry/gtp5g_xmit_skb_ipv4: DEV=upfgtp
+irq/135-iwlwifi-457 [007] b.s21 592868.797664: bpf_trace_printk: fentry/gtp5g_xmit_skb_ipv4: LEN=100, TS=592873802800132
+irq/135-iwlwifi-457 [007] b.s21 592868.797665: bpf_trace_printk: fentry/gtp5g_xmit_skb_ipv4: pktinfo exists
+
+# Packet exits on external interface with final size
+irq/135-iwlwifi-457 [007] b.s21 592868.797680: bpf_trace_printk: fexit/gtp5g_xmit_skb_ipv4: DEV=wlp2s0
+irq/135-iwlwifi-457 [007] b.s21 592868.797681: bpf_trace_printk: fexit/gtp5g_xmit_skb_ipv4: LEN=170, TS=592873802816526
+</code></pre></div>
+<p>Key observations:<br />
+- Initial packet length: 84 bytes (IP packet)<br />
+- After GTP header addition: 100 bytes (+16 bytes GTP header)<br />
+- Final packet length: 170 bytes (additional headers added during transmission)<br />
+- Device transition: upfgtp (internal) → wlp2s0 (external)<br />
+- Return values shown as memory pointers (0xc02cc8d0, 0x13dfa000)</p>
+<h4 id="4-performance-analysis">4. Performance Analysis</h4>
+<h5 id="41-function-processing-time">4.1 Function Processing Time</h5>
+<p>With high-precision timestamps, we can calculate processing times:</p>
+<div class="highlight"><pre><span></span><code># gtp5g_push_header function
+Entry: TS=592873802793332
+Exit:  TS=592873802797124
+Duration: 3,792 nanoseconds (3.8 microseconds)
+
+# gtp5g_xmit_skb_ipv4 function
+Entry: TS=592873802800132
+Exit:  TS=592873802816526
+Duration: 16,394 nanoseconds (16.4 microseconds)
+</code></pre></div>
+<h5 id="42-gtp-header-overhead">4.2 GTP Header Overhead</h5>
+<p>The traces clearly show the GTP header size:</p>
+<div class="highlight"><pre><span></span><code>Before encapsulation: 84 bytes
+After encapsulation:  100 bytes
+GTP header overhead:  16 bytes
+</code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>The enhanced GTP5G tracer provides unprecedented visibility into the GTP5G kernel module's packet processing pipeline. With detailed packet length tracking, high-precision timestamps, improved return value presentation, and device transition tracking, it's now possible to gain deep insights into GTP-U packet processing, troubleshoot issues, and optimize performance.</p>
+<p>This level of visibility is essential for understanding, debugging, and optimizing 5G User Plane Function (UPF) implementations, making it an invaluable tool for 5G core network development and operations.</p>
+<h2 id="about">About</h2>
+<p>Hello, I'm William Lin. I'd like to share my excitement about being a member of the free5GC project, which is a part of the Linux Foundation. I'm always eager to discuss any aspects of core network development or related technologies.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/williamlin0518">williamlin0518</a></li>
+<li>Linkedin: <a href="https://www.linkedin.com/in/cheng-wei-lin-b36b7b235/">Cheng Wei Lin</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
