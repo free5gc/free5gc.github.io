@@ -33,15 +33,20 @@ To install the theme use
 
         cd free5gc.github.io
 
-3. If not already done, install the requirements using
+3. Create an Virtual Env and activate it (required after Ubuntu 24.04)
 
-        pip install pymdown-extensions mkdocs-callouts mkdocs-material
+        python3 -m venv mkdocs-env
+        source mkdocs-env/bin/activate
 
-    Or (to install the full environment)
-    
+    After using, using deactivate to exit the environment
+
+        deactivate
+
+4. Install required packages in venv
+
         pip install -r requirements.txt
 
-4. Deploy an instace of the website
+5. Deploy an instance of the website
 
         mkdocs serve
 
@@ -65,6 +70,7 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
 * `mkdocs -h` - Print help message and exit.
+* `mkdocs -a` - specified the expose IP:port
 
 ### Project layout
 
