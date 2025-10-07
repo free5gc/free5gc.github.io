@@ -3,7 +3,7 @@
 # Blogs
 
 ## Official
-
+- [2025/10/03: Visualizing 5G Core Metrics with Prometheus and Grafana on free5gc-helm](./20251003/index.md)
 - [2025/09/13: GTP5G-Tracer: Detailed Project Explanation and Expand](./20250913/20250913.md)
 - [2025/09/03: Handover in Non-Terrestrial Networks](./20250903/index.md)
 - [2025/07/26: Improving Network Performance with Custom eBPF-based Schedulers](./20250726/index.en.md), [[zh-tw]](./20250726/index.md)
