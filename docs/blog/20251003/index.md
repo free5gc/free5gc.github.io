@@ -140,7 +140,6 @@ Now that you've confirmed data is flowing, you can create dashboards to visualiz
 
 For your convenience, we have provided a starter dashboard that you can import directly. Simply copy the JSON model in [Appendix](#appendix) and paste it into Grafana's import tool.
 
-
 ## Conclusion
 The transition to a cloud-native 5G architecture is not just about containerizing network functions; it's about embracing the rich ecosystem of tools that make these dynamic systems manageable. By integrating Prometheus and Grafana with the `free5gc-helm` project, you unlock a powerful observability stack, transforming raw operational data into actionable insights. You are no longer flying blind; you now have the instrumentation to measure, analyze, and optimize your 5G core network with confidence, ensuring a more resilient and performant service for the future.
 
