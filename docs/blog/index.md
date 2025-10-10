@@ -3,6 +3,8 @@
 # Blogs
 
 ## Official
+
+- [2025/10/08: Getting Started with ns-3: A Guide to Network Simulation and 5G Modeling](./20251008/20251008.md)
 - [2025/10/03: Visualizing 5G Core Metrics with Prometheus and Grafana on free5gc-helm](./20251003/index.md)
 - [2025/09/13: GTP5G-Tracer: Detailed Project Explanation and Expand](./20250913/20250913.md)
 - [2025/09/03: Handover in Non-Terrestrial Networks](./20250903/index.md)
