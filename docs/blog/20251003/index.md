@@ -138,11 +138,26 @@ You should now see a graph displaying the real-time data for that metric, confir
 ## Building Your First Dashboard
 Now that you've confirmed data is flowing, you can create dashboards to visualize it. A dashboard is a collection of panels, with each panel displaying the result of a specific query. Navigate to the **Dashboards** section and click **Create dashboard** to build your first visualization.
 
-For your convenience, we have provided a starter dashboard that you can import directly. Simply copy the JSON model below and paste it into Grafana's import tool.
+For your convenience, we have provided a starter dashboard that you can import directly. Simply copy the JSON model in [Appendix](#appendix) and paste it into Grafana's import tool.
 
-<details>
-  <summary>Click to view the full JSON model</summary>
-  <pre><code>
+
+## Conclusion
+The transition to a cloud-native 5G architecture is not just about containerizing network functions; it's about embracing the rich ecosystem of tools that make these dynamic systems manageable. By integrating Prometheus and Grafana with the `free5gc-helm` project, you unlock a powerful observability stack, transforming raw operational data into actionable insights. You are no longer flying blind; you now have the instrumentation to measure, analyze, and optimize your 5G core network with confidence, ensuring a more resilient and performant service for the future.
+
+## reference
+- [Prometheus official website](https://prometheus.io/)
+- [Grafana Github](https://github.com/grafana/grafana)
+
+## About me
+Hi, I’m Guo-Cheng Wu, a newcomer to 5G and free5GC, and currently conducting research on Network Slicing. Let me know without hesitation if there is any mistake in the article.
+
+## Connect with Me
+Github: [https://github.com/leowu0407](https://github.com/leowu0407)
+
+## Appendix
+
+- Grafana JSON Model
+```
 {
   "__inputs": [
     {
@@ -575,18 +590,4 @@ For your convenience, we have provided a starter dashboard that you can import d
   "version": 16,
   "weekStart": ""
 }
-  </code></pre>
-</details>
-
-## Conclusion
-The transition to a cloud-native 5G architecture is not just about containerizing network functions; it's about embracing the rich ecosystem of tools that make these dynamic systems manageable. By integrating Prometheus and Grafana with the `free5gc-helm` project, you unlock a powerful observability stack, transforming raw operational data into actionable insights. You are no longer flying blind; you now have the instrumentation to measure, analyze, and optimize your 5G core network with confidence, ensuring a more resilient and performant service for the future.
-
-## reference
-- [Prometheus official website](https://prometheus.io/)
-- [Grafana Github](https://github.com/grafana/grafana)
-
-## About me
-Hi, I’m Guo-Cheng Wu, a newcomer to 5G and free5GC, and currently conducting research on Network Slicing. Let me know without hesitation if there is any mistake in the article.
-
-## Connect with Me
-Github: [https://github.com/leowu0407](https://github.com/leowu0407)
+```
