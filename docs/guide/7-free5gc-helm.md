@@ -1,86 +1,74 @@
-# free5GC Helm Installation
+# free5gc-helm
+
 ## Prerequirements
-### MicroK8s Installation
-- Install MicroK8s
+
+- Install
+
+    - MicroK8s
+
+        ```bash
+        sudo snap install microk8s --classic --channel=1.28/stable
+        ```
+
+    - kubectl
+
+        ```bash
+         sudo snap install kubectl --classic
+        ```
+
+    - helm
+
+        ```bash
+        sudo snap install helm --classic
+        ```
+
+- Set `sudo` group and join
+
     ```bash
-    sudo snap install microk8s --classic --channel=1.28/stable
+    sudo groupadd microk8s
+    sudo usermod -aG microk8s $USER
+    newgrp microk8s
     ```
-    - Join the group
-        ```bash
-        sudo usermod -a -G microk8s $USER
-        mkdir -p ~/.kube
-        chmod 0700 ~/.kube
-        ```
-    - Re-enter the session
-        ```bash
-        su - $USER
-        ```
-    - Verify the Installation 
-        ```bash
-        microk8s status --wait-ready
-        ```
-- To [work with local kubectl](https://microk8s.io/docs/working-with-kubectl)
+
+- Set [`microk8s` work with local `kubectl`](https://microk8s.io/docs/working-with-kubectl)
+
     ```bash
-    sudo snap install kubectl --classic
-    sudo snap install helm --classic
+    mkdir -p ~/.kube
+    chmod 0700 ~/.kube
     microk8s config > ~/.kube/config
-    su - $USER
-    ```
-- Create namespace for free5GC
-    ```bash
-    kubectl create ns free5gc
     ```
 
-### Network configuration
-- Reference: [Toward5Gs -- Network Configuration](https://github.com/Orange-OpenSource/towards5gs-helm/tree/main/charts/free5gc#networks-configuration)
-- This Helm chart requires two network interfaces: `eth0` and `eth1`
-    - Both of them should have the ability to connect to the Internet
-    - By default, one of them (`eth1`) will be the N6 network interface
-- In Summary, the `value.yaml` in each configuration should be set up correctly
-    - Suppose we have two NW interfaces:
-        1. `eth0`: `172.19.244.39/20`
-        2. `eth1`: `192.168.50.43/24`
-    - We take `eth1` as the interface connected to DN, the following values should be changed:
-        1. `global.n6network.subnetIP`, `global.n6network.gatewayIP`
-        2. `free5gc-upf.n6if.ipAddress`
-        3. For changing the interface, these values should be modified: `global.n2network.masterIf`, `global.n3network.masterIf`, `global.n4network.masterIf`, `global.n6network.masterIf`
-    - `free5gc-helm/charts/free5gc/value.yaml`
-        ```yaml
-        global:
-          n6network:
-            enabled: true
-            name: n6network
-            type: ipvlan
-            masterIf: eth1
-            subnetIP: 192.168.50.0
-            cidr: 24
-            gatewayIP: 192.168.50.1
-            excludeIP: 10.100.100.254
-        ```
-    - `free5gc-helm/charts/free5gc/charts/free5gc-upf/values.yaml`
-        ```yaml
-        upf:    
-            n6if:  # DN
-                ipAddress: 192.168.50.66
-        ```
-        - When choosing "ULCL" architecture for the user plane, `n6if` configuration in `upf1`, `upf2`, `upfb` should also be changed to the DN interface
-    - These values could be setup by using `helm install --set`, see [helm chart installation](#Helm-Chart)
+## IP Forward Configuration
 
-### CNI Plugin Configuration
-- Starting from version 1.19, MicroK8s clusters use the **Calico CNI** by default ([ref](https://microk8s.io/docs/change-cidr)).
+> [!NOTE]
+> Reference: [Calico CNI Docs](https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings).
+
+- Starting from version 1.19, MicroK8s clusters use the **Calico CNI** by default.
+
     - To enable IP forwarding on UPF, Calico CNI needs some necessary configurations.
-    - Some CNI plugin, like Flannel, kube-ovn, allow this funtionality by default
-- Setup Calico CNI for IP Forwarding
-    1. `/var/snap/microk8s/current/args/cni-network/cni.yaml`
+    - Some CNI plugin, like Flannel, kube-ovn, allow this funtionality by default.
+
+- Setup Calico CNI for IP forwarding:
+
+    - Edit `/var/snap/microk8s/current/args/cni-network/cni.yaml`
+
         ```yaml
+        ...
         kind: ConfigMap
+        ...
         data:
+            ...
             cni_network_config: |-
                 {
-                    # ...
+                    ...
                     "plugins": [
                         {
-                            # Append IP forwarding settings
+                            "type": "calico",
+                            ...
+                            "kubernetes": {
+                                "kubeconfig": "__KUBECONFIG_FILEPATH__"
+                            },
+                            # append IP forwarding settings
                             "container_settings": {
                                 "allow_ip_forwarding": true
                             },
@@ -88,45 +76,53 @@
                     ]
                 }
         ```
-        - Refer to the [Calico CNI Docs](https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings)
-    2. `/var/snap/microk8s/current/args/kubelet`
-        - append the following line
-            ```bash
-            --allowed-unsafe-sysctls "net.ipv4.ip_forward"
-            ```
-    3. Apply settings
-        ```bash
-        kubectl apply -f /var/snap/microk8s/current/args/cni-network/cni.yaml
-        ```
-    4. Restart MicroK8s
-        ```bash
-        microk8s stop
-        microk8s start
-        ```
-- **Otherwise,** Use `kube-ovn` CNI plugin
-    ```bash
-    sudo microk8s enable kube-ovn --force
-    ```
-    - [Official doc](https://microk8s.io/docs/addon-kube-ovn)
 
-### multus-cni plugin
-- Enables attaching multiple network interfaces to pods
-    - [Github link](https://github.com/k8snetworkplumbingwg/multus-cni)
-- [MicroK8s multus addons](https://microk8s.io/docs/addon-multus)
-    ```bash
-    microk8s enable community
-    microk8s enable multus
-    ```
-- Reference Multus Guide
-    1. [Multus - Create Network Definitions](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#create-network-attachment-definition)
-    2. [Multus - Tell pods to use those networks via annotations](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#run-pod-with-network-annotation)
-    
+- Setup kubelet args for IP fowarding:
 
-## Installation
-### Create Persistent Volumn
-- Use `kubectl apply` to declarative create persistent volume for mongo
-    - `kubectl apply -f persistent-vol-for-mongodb.yaml`
-    - `persistent-vol-for-mongodb.yaml`
+    - Edit `/var/snap/microk8s/current/args/kubelet`
+
+        ```bash
+        # append this arg
+        --allowed-unsafe-sysctls "net.ipv4.ip_forward"
+        ```
+
+- Apply settings and restart MicroK8s
+
+    ```bash
+    # apply cni configuration
+    kubectl apply -f /var/snap/microk8s/current/args/cni-network/cni.yaml
+    # restart MicroK8s
+    microk8s stop
+    microk8s start
+    ```
+
+## Addons Enable
+
+> [!Note]
+> Reference:
+>
+> - [MicroK8s multus addons](https://microk8s.io/docs/addon-multus)
+> - [Multus - Create Network Definitions](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#create-network-attachment-definition)
+> - [Multus - Tell pods to use those networks via annotations](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#run-pod-with-network-annotation)
+
+```bash
+microk8s enable community
+microk8s enable multus
+microk8s enable hostpath-storage
+```
+
+## Create Persistent Volumn
+
+- Create two storage directories:
+
+    - One for mongo: `/home/usr/mongo` <= just an example
+    - One for cert: `/home/use/cert` <= just an example
+
+- For mongodb
+
+    - Create an storage directory: `/home/usr/mongo` <= just an example
+    - Create an YAML file: `persistent-vol-for-mongodb.yaml`
+
         ```yaml
         apiVersion: v1
         kind: PersistentVolume
@@ -142,7 +138,7 @@
           persistentVolumeReclaimPolicy: Retain
           storageClassName: microk8s-hostpath
           local:
-            path: </path/to/storage>
+            path: <mongo_storage_dir> # edit to your own path, like: /home/use/mongo
           nodeAffinity:
             required:
               nodeSelectorTerms:
@@ -150,12 +146,20 @@
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                  - <work-node-name>
+                  - <work_node_name> # edit to you node name
         ```
-        - directory on `/path/to/storage` should be created previously
-- Use `kubectl apply` to declarative create persistent volume for `nrf.pem`
-    - `kubectl apply -f persistent-vol-for-cert.yaml`
-    - `persistent-vol-for-cert.yaml`
+
+    - Apply via `kubectl`
+
+        ```bash
+        kubectl apply -f persistent-vol-for-mongodb.yaml
+        ```
+
+- For cert
+
+    - Create an storage directory: `/home/usr/cert` <= just an example
+    - Create an YAML file: `persistent-vol-for-cert.yaml`
+
         ```yaml
         apiVersion: v1
         kind: PersistentVolume
@@ -171,7 +175,7 @@
           persistentVolumeReclaimPolicy: Retain
           storageClassName: microk8s-hostpath
           local:
-            path: </path/to/storage>
+            path: <cert_storage_dir> # edit to your own path, like: /home/use/cert
           nodeAffinity:
             required:
               nodeSelectorTerms:
@@ -179,65 +183,106 @@
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                  - <work-node-name>
+                  - <work-node-name> # edit to you node name
         ```
-        - directory on `/path/to/storage` should be created previously
-- Check persistent volume
+
+    - Apply via `kubectl`
+
+        ```bash
+        kubectl apply -f persistent-vol-for-cert.yaml
+        ```
+
+- Check it
+
     ```bash
-    kubectl get persistentvolume
+    kubectl get pv
     ```
-    
-### Helm Chart
-- Clone the repository
+
+## Helm Chart
+
+- Clone from github
+
     ```bash
     git clone https://github.com/free5gc/free5gc-helm.git
     ```
-- Enter the directory: `free5gc-helm/charts/`
-- free5GC
+
+## Network configuration
+
+> [!Note]
+> Reference: [Toward5Gs -- Network Configuration](https://github.com/Orange-OpenSource/towards5gs-helm/tree/main/charts/free5gc#networks-configuration)
+
+- In summary, the `value.yaml` in each configuration should be set up correctly.
+
+    - **free5gc-helm** offered a network configuration YAML file at `free5gc-helm/charts/free5gc/value.yaml`.
+    - For `N2`/`N3`/`N4`/`N6`/`N9` interfaces, the `masterIf` and other `IP` field should be modified for customized deployment.
+
+- **(Optional)** These values could also be setup by using `helm install --set`.
+
     ```bash
+    helm install -n free5gc free5gc-helm ./free5gc/ \
+        --set global.n6network.subnetIP="x.x.x.x" \
+        --set global.n6network.gatewayIP="y.y.y.y" \
+        --set free5gc-upf.upf.n6if.ipAddress="z.z.z.z"
+    ```
+
+## Install Chart
+
+- Set working namespace for free5GC
+
+    ```bash
+    kubectl create ns free5gc
+    ```
+
+- Install free5GC charts
+
+    ```bash
+    cd free5gc-helm/charts
     helm install -n free5gc free5gc-helm ./free5gc/ 
     ```
-    - Install with customized interface settings
-        ```bash
-        helm install -n free5gc free5gc-helm ./free5gc/ \
-        --set global.n6network.subnetIP="192.168.50.0" \
-        --set global.n6network.gatewayIP="192.168.50.1" \
-        --set free5gc-upf.upf.n6if.ipAddress="192.168.50.66"
-        ```
-- UERANSIM
+
+- Install UERANSIM chart
+
     ```bash
+    cd free5gc-helm/charts
     helm install -n free5gc ueransim ./ueransim/ 
     ```
-- Verification
-    - List installed charts
+
+- Check installation
+
+    - Check installed charts
+
         ```bash
         helm ls -A
         ```
-    - Check services, pods, repicaets, and deployments 
-        ```bash
-        kubectl get all -n free5gc 
-        ```
-- Check IP forwarding is avalible in upf
-    ```bash
-    kubectl exec -it -n free5gc deployment/free5gc-helm-free5gc-upf-upf \
-    -- cat /proc/sys/net/ipv4/ip_forward
-    ```
-    - This output should be `1`
-- Result
-    ![](./images/7-1.png)
 
+    - Check services, pods, replicates and deployments
+
+        ```bash
+        # status at each pod is expected as "Running"
+        kubectl get all -n free5gc
+        ```
+
+- Check IP forwarding is available at UPF
+
+    ```bash
+    # output should be '1'
+    kubectl exec -it -n free5gc deployment/free5gc-helm-free5gc-upf-upf \
+        -- cat /proc/sys/net/ipv4/ip_forward
+    ```
 
 ## Test
-- Add subscribors via webui
-    1. Port forwarding 
-        ```bash
-        kubectl port-forward svc/webui-service 5000:5000  --address 0.0.0.0
-        ```
-    2. access `<externel_ip>:5000`
-        ![](./images/7-2.png)
-- Ping externel network with tunnel 
+
+- Add subscribers via web console
+
+    - Access ``<external_ip>:30500`
+
+        ![7-2](./images/7-2.png)
+
+- Ping external network with GTP-Tunnel
+
     ```bash
     kubectl exec -it -n free5gc deployment/ueransim-ue \
-    -- ping -I uesimtun0 8.8.8.8
+        -- ping -I uesimtun0 8.8.8.8
     ```
-    ![](./images/7-3.png)
+
+    ![7-3](./images/7-3.png)
