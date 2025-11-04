@@ -1,0 +1,1104 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Introduction to 5G AKA - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-to-5g-aka" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to 5G AKA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-terms" class="md-nav__link">
+    Quick terms
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5g-aka-procedure-and-steps-with-free5gc-code-spotlights" class="md-nav__link">
+    5G AKA procedure and steps (with free5GC code spotlights)
+  </a>
+  
+    <nav class="md-nav" aria-label="5G AKA procedure and steps (with free5GC code spotlights)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-registration-request-and-identity-protection" class="md-nav__link">
+    1. Registration request and identity protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vector-acquisition-from-the-home-network" class="md-nav__link">
+    2. Vector acquisition from the home network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-network-challenges-the-ue" class="md-nav__link">
+    3. Network challenges the UE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ue-validates-autn-and-computes-res-derives-keys" class="md-nav__link">
+    4. UE validates AUTN and computes RES*, derives keys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-serving-network-verification-and-ausf-confirmation" class="md-nav__link">
+    5. Serving-network verification and AUSF confirmation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-security-context-establishment-in-the-serving-network" class="md-nav__link">
+    6. Security context establishment in the serving network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-resynchronization-only-if-needed" class="md-nav__link">
+    7. Resynchronization (only if needed)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-reauthentication-and-handovers" class="md-nav__link">
+    8. Re‑authentication and handovers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kdf-reference-used-across-free5gc" class="md-nav__link">
+    KDF reference used across free5GC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251029/20251029.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251029/20251029.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="introduction-to-5g-aka">Introduction to 5G AKA</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Che-Wei Lin<br />
+Date: 2025/10/29</p>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>The <strong>5G Authentication and Key Agreement</strong> (5G AKA) protocol is the primary authentication mechanism defined by 3GPP to secure communication between a user device (UE) and the network. It ensures mutual authentication between the User Equipment (UE), the Serving Network (SN), and the Home Network (HN), while also generating cryptographic keys used to protect subsequent data exchanges.</p>
+<p>In this article, we’ll walk through the 5G AKA procedure and highlight selected segments of its implementation in <strong>free5GC</strong>, combining protocol concepts with practical implementation.</p>
+<h2 id="quick-terms">Quick terms</h2>
+<ul>
+<li><code>USIM</code>: Secure element holding the long-term key K and performing AKA functions</li>
+<li><code>SEAF</code>: Security Anchor Function (typically co-located with AMF; holds anchor keys)</li>
+<li><code>ARPF</code>: Authentication credential Repository and Processing Function (in UDM; generates auth vectors)</li>
+<li><code>SUPI</code>: Subscriber permanent identifier </li>
+<li><code>SUCI</code>: Concealed SUPI</li>
+<li><code>SNname (SNN)</code>: Serving Network Name</li>
+<li><code>RES*</code>: UE’s computed response</li>
+<li><code>XRES*</code>: Expected response computed on the home side</li>
+<li><code>HRES*/HXRES*</code>: Hashed versions used for verification at AUSF/SEAF boundary</li>
+<li><code>CK</code>, <code>IK</code>: AKA cipher/integrity base keys used as inputs to 5G KDFs</li>
+<li><code>K</code>: Long-term secret in USIM and ARPF</li>
+<li><code>K_AUSF</code>: Key derived from CK/IK and SNN on both UE and AUSF sides</li>
+<li><code>K_SEAF</code>: Anchor key delivered to the serving network after successful auth</li>
+<li><code>K_AMF</code>: Key derived at UE and AMF from K_SEAF; source for NAS/AS keys</li>
+</ul>
+<h2 id="5g-aka-procedure-and-steps-with-free5gc-code-spotlights">5G AKA procedure and steps (with free5GC code spotlights)</h2>
+<p>5G AKA follows a <strong>challenge-and-response</strong> protocol. At a high level, the UE proves knowledge of a secret (K) shared with its home network. The home network creates an authentication challenge; the UE validates it and computes a response. If the response matches what the home network expects, both sides derive fresh keys and the serving network gets an anchor key to secure the session.</p>
+<p>Here is an overview of how the 5G AKA procedure works:<br />
+<img alt="5G AKA procedure" src="../image/5G_AKA_procedure.png" /><br />
+<strong>Figure 1.</strong> The 5G AKA procedure (source: <a href="https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/17.05.00_60/ts_133501v170500p.pdf">3GPP TS 33.501</a>). </p>
+<blockquote>
+<p>Note: The step numbers in the following explanation do not strictly correspond to those shown in the figure above.</p>
+</blockquote>
+<h3 id="1-registration-request-and-identity-protection"><strong>1. Registration request and identity protection</strong></h3>
+<ul>
+<li>UE → gNB → AMF/SEAF: Sends a Registration Request carrying <code>SUCI</code>.</li>
+</ul>
+<h3 id="2-vector-acquisition-from-the-home-network"><strong>2. Vector acquisition from the home network</strong></h3>
+<ul>
+<li>SEAF/AMF → AUSF: Ask for an auth vector.</li>
+<li>AUSF → UDM/ARPF: Request 5G-HE-AKA vector for the subscriber (UDM de‑conceals <code>SUCI</code> to <code>SUPI</code>).</li>
+<li>UDM/ARPF generates <code>RAND</code>, <code>AUTN</code>, <code>RES</code>, <code>CK</code>, <code>IK</code>; then derives <code>XRES*</code> and <code>K_AUSF</code>.</li>
+</ul>
+<p>Code spotlight (<code>XRES*</code> derivation and 5G-HE auth vector)<br />
+<a href="https://github.com/free5gc/udm/blob/main/internal/sbi/processor/generate_auth_data.go">udm/internal/sbi/processor/generate_auth_data.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Key = CK || IK, per TS 33.501</span>
+<span class="nx">key</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">CK</span><span class="p">,</span><span class="w"> </span><span class="nx">IK</span><span class="o">...</span><span class="p">)</span>
+<span class="nx">FC</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">FC_FOR_RES_STAR_XRES_STAR_DERIVATION</span>
+<span class="nx">P0</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">authInfoRequest</span><span class="p">.</span><span class="nx">ServingNetworkName</span><span class="p">)</span><span class="w"> </span><span class="c1">// SNN</span>
+<span class="nx">P1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">RAND</span>
+<span class="nx">P2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">RES</span>
+
+<span class="nx">kdfValForXresStar</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">GetKDFValue</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">FC</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">P0</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P0</span><span class="p">),</span>
+<span class="w">    </span><span class="nx">P1</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P1</span><span class="p">),</span>
+<span class="w">    </span><span class="nx">P2</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P2</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="nx">xresStar</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">kdfValForXresStar</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">kdfValForXresStar</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">:]</span>
+
+<span class="c1">// Fill in rand, xres, autn, ckPrime, ikPrime</span>
+<span class="nx">av</span><span class="p">.</span><span class="nx">Rand</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">RAND</span><span class="p">)</span>
+<span class="nx">av</span><span class="p">.</span><span class="nx">Xres</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">RES</span><span class="p">)</span>
+<span class="nx">av</span><span class="p">.</span><span class="nx">Autn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">AUTN</span><span class="p">)</span>
+<span class="nx">av</span><span class="p">.</span><span class="nx">CkPrime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">ckPrime</span><span class="p">)</span>
+<span class="nx">av</span><span class="p">.</span><span class="nx">IkPrime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">ikPrime</span><span class="p">)</span>
+<span class="nx">av</span><span class="p">.</span><span class="nx">AvType</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AvType_EAP_AKA_PRIME</span>
+</code></pre></div></p>
+<h3 id="3-network-challenges-the-ue"><strong>3. Network challenges the UE</strong></h3>
+<ul>
+<li>AUSF → AMF: Provides <code>RAND</code>, <code>AUTN</code>, and <code>HXRES*</code> plus <code>SNN</code> context.</li>
+<li>AMF → UE: Sends NAS Authentication Request (<code>RAND</code>, <code>AUTN</code>).</li>
+</ul>
+<p>Code spotlight (AUSF computing <code>HXRES*</code> to include in 5G-SE AV):<br />
+<a href="https://github.com/free5gc/ausf/blob/main/internal/sbi/processor/ue_authentication.go">ausf/internal/sbi/processor/ue_authentication.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Derive HXRES* from XRES*</span>
+<span class="nx">concat</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">authInfoResult</span><span class="p">.</span><span class="nx">AuthenticationVector</span><span class="p">.</span><span class="nx">Rand</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">authInfoResult</span><span class="p">.</span><span class="nx">AuthenticationVector</span><span class="p">.</span><span class="nx">XresStar</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">hxresStarBytes</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">bytes</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">concat</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">hxresStarBytes</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bytes</span>
+<span class="p">}</span>
+<span class="nx">hxresStarAll</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sha256</span><span class="p">.</span><span class="nx">Sum256</span><span class="p">(</span><span class="nx">hxresStarBytes</span><span class="p">)</span>
+<span class="nx">hxresStar</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">hxresStarAll</span><span class="p">[</span><span class="mi">16</span><span class="p">:])</span><span class="w"> </span><span class="c1">// last 128 bits</span>
+</code></pre></div></p>
+<p>Code spotlight (AMF building Authentication Request)<br />
+<a href="https://github.com/free5gc/amf/blob/main/internal/gmm/message/build.go">amf/internal/gmm/message/build.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Set RAND (16 bytes) into NAS IE</span>
+<span class="nx">rand</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">av5gAka</span><span class="p">.</span><span class="nx">Rand</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">}</span>
+<span class="nx">authenticationRequest</span><span class="p">.</span><span class="nx">AuthenticationParameterRAND</span><span class="w"> </span><span class="p">=</span>
+<span class="w">    </span><span class="nx">nasType</span><span class="p">.</span><span class="nx">NewAuthenticationParameterRAND</span><span class="p">(</span><span class="nx">nasMessage</span><span class="p">.</span><span class="nx">AuthenticationRequestAuthenticationParameterRANDType</span><span class="p">)</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">tmp</span><span class="w"> </span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="kt">byte</span>
+<span class="nb">copy</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[:],</span><span class="w"> </span><span class="nx">rand</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+<span class="nx">authenticationRequest</span><span class="p">.</span><span class="nx">AuthenticationParameterRAND</span><span class="p">.</span><span class="nx">SetRANDValue</span><span class="p">(</span><span class="nx">tmp</span><span class="p">)</span>
+
+<span class="c1">// Set AUTN (16 bytes) into NAS IE</span>
+<span class="nx">autn</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">av5gAka</span><span class="p">.</span><span class="nx">Autn</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">}</span>
+<span class="nx">authenticationRequest</span><span class="p">.</span><span class="nx">AuthenticationParameterAUTN</span><span class="w"> </span><span class="p">=</span>
+<span class="w">    </span><span class="nx">nasType</span><span class="p">.</span><span class="nx">NewAuthenticationParameterAUTN</span><span class="p">(</span><span class="nx">nasMessage</span><span class="p">.</span><span class="nx">AuthenticationRequestAuthenticationParameterAUTNType</span><span class="p">)</span>
+<span class="nb">copy</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[:],</span><span class="w"> </span><span class="nx">autn</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+<span class="nx">authenticationRequest</span><span class="p">.</span><span class="nx">AuthenticationParameterAUTN</span><span class="p">.</span><span class="nx">SetAUTNValue</span><span class="p">(</span><span class="nx">tmp</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="4-ue-validates-autn-and-computes-res-derives-keys"><strong>4. UE validates <code>AUTN</code> and computes <code>RES*</code>, derives keys</strong></h3>
+<ul>
+<li>UE checks <code>AUTN</code> MAC and <code>SQN</code> freshness; if ok, computes <code>RES</code>, <code>CK</code>, <code>IK</code>.</li>
+<li>UE derives <code>RES*</code>, <code>K_AUSF</code> (from <code>CK||IK</code>, <code>SNN</code>, <code>SQN⊕AK</code>) and then <code>K_SEAF</code> from <code>K_AUSF</code>; derives <code>K_AMF</code> later with <code>SUPI</code> binding and <code>ABBA</code>.</li>
+</ul>
+<p>Code spotlight (UE test harness deriving <code>K_AUSF</code> → <code>K_SEAF</code> → <code>K_AMF</code>)<br />
+<a href="https://github.com/free5gc/free5gc/blob/main/test/ranUe.go">free5gc/test/ranUe.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="nx">P1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">SQNxorAK</span>
+<span class="nx">Kausf</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">GetKDFValue</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">FC</span><span class="p">,</span><span class="w"> </span><span class="nx">P0</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P0</span><span class="p">),</span><span class="w"> </span><span class="nx">P1</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P1</span><span class="p">))</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fatal</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;GetKDFValue error: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+
+<span class="nx">P0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">snName</span><span class="p">)</span>
+<span class="nx">Kseaf</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">GetKDFValue</span><span class="p">(</span><span class="nx">Kausf</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">FC_FOR_KSEAF_DERIVATION</span><span class="p">,</span><span class="w"> </span><span class="nx">P0</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P0</span><span class="p">))</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fatal</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;GetKDFValue error: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+
+<span class="nx">P0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">groups</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="c1">// SUPI digits</span>
+<span class="nx">L0</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P0</span><span class="p">)</span>
+<span class="nx">P1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">}</span><span class="w"> </span><span class="c1">// ABBA</span>
+<span class="nx">L1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P1</span><span class="p">)</span>
+
+<span class="nx">ue</span><span class="p">.</span><span class="nx">Kamf</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">GetKDFValue</span><span class="p">(</span><span class="nx">Kseaf</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">FC_FOR_KAMF_DERIVATION</span><span class="p">,</span><span class="w"> </span><span class="nx">P0</span><span class="p">,</span><span class="w"> </span><span class="nx">L0</span><span class="p">,</span><span class="w"> </span><span class="nx">P1</span><span class="p">,</span><span class="w"> </span><span class="nx">L1</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fatal</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;GetKDFValue error: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+<h3 id="5-serving-network-verification-and-ausf-confirmation"><strong>5. Serving-network verification and AUSF confirmation</strong></h3>
+<ul>
+<li>UE → SEAF: Sends <code>RES*</code> in NAS Authentication Response.</li>
+<li>SEAF computes <code>HRES* = SHA-256(RAND || RES*)</code> and compares with <code>HXRES*</code>. If they match, authentication is successful from the serving network viewpoint; SEAF forwards <code>RES*</code> to AUSF for home-network confirmation.</li>
+<li>AUSF compares <code>RES*</code> with stored <code>XRES*</code>. If equal, AUSF confirms success and provides <code>K_SEAF</code> (and <code>SUPI</code> if <code>SUCI</code> was used).</li>
+</ul>
+<p>Code spotlight (AUSF: <code>RES*</code> confirmation and return of <code>K_SEAF</code>)<br />
+<a href="https://github.com/free5gc/ausf/blob/main/internal/sbi/processor/ue_authentication.go">ausf/internal/sbi/processor/ue_authentication.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Compare RES* with stored XRES*</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">strings</span><span class="p">.</span><span class="nx">EqualFold</span><span class="p">(</span><span class="nx">updateConfirmationData</span><span class="p">.</span><span class="nx">ResStar</span><span class="p">,</span><span class="w"> </span><span class="nx">ausfCurrentContext</span><span class="p">.</span><span class="nx">XresStar</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">confirmDataRsp</span><span class="p">.</span><span class="nx">AuthResult</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AusfUeAuthenticationAuthResult_SUCCESS</span>
+<span class="w">    </span><span class="nx">confirmDataRsp</span><span class="p">.</span><span class="nx">Supi</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="nx">currentSupi</span>
+<span class="w">    </span><span class="nx">confirmDataRsp</span><span class="p">.</span><span class="nx">Kseaf</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ausfCurrentContext</span><span class="p">.</span><span class="nx">Kseaf</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ausfCurrentContext</span><span class="p">.</span><span class="nx">AuthStatus</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AusfUeAuthenticationAuthResult_FAILURE</span>
+<span class="w">    </span><span class="nx">confirmDataRsp</span><span class="p">.</span><span class="nx">AuthResult</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AusfUeAuthenticationAuthResult_FAILURE</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="6-security-context-establishment-in-the-serving-network"><strong>6. Security context establishment in the serving network</strong></h3>
+<ul>
+<li>UE and AMF derive <code>K_AMF</code> from <code>K_SEAF</code>, then NAS keys; gNB later derives <code>K_gNB</code> and AS keys for RRC/UP.</li>
+</ul>
+<p>Code spotlight (UE test harness deriving NAS algorithm keys from <code>K_AMF</code>)<br />
+<a href="https://github.com/free5gc/free5gc/blob/main/test/ranUe.go">free5gc/test/ranUe.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Security Key</span>
+<span class="nx">P0</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="nx">security</span><span class="p">.</span><span class="nx">NNASEncAlg</span><span class="p">}</span>
+<span class="nx">L0</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P0</span><span class="p">)</span>
+<span class="nx">P1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="nx">ue</span><span class="p">.</span><span class="nx">CipheringAlg</span><span class="p">}</span>
+<span class="nx">L1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P1</span><span class="p">)</span>
+
+<span class="nx">kenc</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">GetKDFValue</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">Kamf</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">FC_FOR_ALGORITHM_KEY_DERIVATION</span><span class="p">,</span><span class="w"> </span><span class="nx">P0</span><span class="p">,</span><span class="w"> </span><span class="nx">L0</span><span class="p">,</span><span class="w"> </span><span class="nx">P1</span><span class="p">,</span><span class="w"> </span><span class="nx">L1</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fatal</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;GetKDFValue error: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)}</span>
+<span class="nb">copy</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">KnasEnc</span><span class="p">[:],</span><span class="w"> </span><span class="nx">kenc</span><span class="p">[</span><span class="mi">16</span><span class="p">:</span><span class="mi">32</span><span class="p">])</span>
+
+<span class="c1">// Integrity Key</span>
+<span class="nx">P0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="nx">security</span><span class="p">.</span><span class="nx">NNASIntAlg</span><span class="p">}</span>
+<span class="nx">L0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P0</span><span class="p">)</span>
+<span class="nx">P1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="nx">ue</span><span class="p">.</span><span class="nx">IntegrityAlg</span><span class="p">}</span>
+<span class="nx">L1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">KDFLen</span><span class="p">(</span><span class="nx">P1</span><span class="p">)</span>
+
+<span class="nx">kint</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">GetKDFValue</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">Kamf</span><span class="p">,</span><span class="w"> </span><span class="nx">ueauth</span><span class="p">.</span><span class="nx">FC_FOR_ALGORITHM_KEY_DERIVATION</span><span class="p">,</span><span class="w"> </span><span class="nx">P0</span><span class="p">,</span><span class="w"> </span><span class="nx">L0</span><span class="p">,</span><span class="w"> </span><span class="nx">P1</span><span class="p">,</span><span class="w"> </span><span class="nx">L1</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fatal</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;GetKDFValue error: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)}</span>
+<span class="nb">copy</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">KnasInt</span><span class="p">[:],</span><span class="w"> </span><span class="nx">kint</span><span class="p">[</span><span class="mi">16</span><span class="p">:</span><span class="mi">32</span><span class="p">])</span>
+</code></pre></div></p>
+<h3 id="7-resynchronization-only-if-needed"><strong>7. Resynchronization (only if needed)</strong></h3>
+<ul>
+<li>If UE detects <code>AUTN</code> failure due to sequence number drift, UE → SEAF/AMF: Sends <code>AUTS</code> for resync.</li>
+<li>AUSF relays resync to UDM; UDM re-generates vectors with new <code>SQN</code> and flow restarts.</li>
+</ul>
+<p>Code spotlight (UDM Milenage helpers used for MAC-A/MAC-S and AK/AUTN calculations)<br />
+<a href="https://github.com/free5gc/udm/blob/main/internal/util/milenage.go">udm/internal/util/milenage.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Generate AKA params and extract AUTN tail (MAC-A)</span>
+<span class="nx">ik</span><span class="p">,</span><span class="w"> </span><span class="nx">ck</span><span class="p">,</span><span class="w"> </span><span class="nx">xres</span><span class="p">,</span><span class="w"> </span><span class="nx">autn</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">milenage</span><span class="p">.</span><span class="nx">GenerateAKAParameters</span><span class="p">(</span><span class="nx">opc</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="p">,</span><span class="w"> </span><span class="nx">rand</span><span class="p">,</span><span class="w"> </span><span class="nx">sqn</span><span class="p">,</span><span class="w"> </span><span class="nx">amf</span><span class="p">)</span>
+
+<span class="c1">// For MAC-S, use resync AMF (0000)</span>
+<span class="nx">resyncAMFBytes</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="s">&quot;0000&quot;</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="nx">err</span><span class="p">}</span>
+<span class="nx">ikS</span><span class="p">,</span><span class="w"> </span><span class="nx">ckS</span><span class="p">,</span><span class="w"> </span><span class="nx">xresS</span><span class="p">,</span><span class="w"> </span><span class="nx">autnS</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">milenage</span><span class="p">.</span><span class="nx">GenerateAKAParameters</span><span class="p">(</span><span class="nx">opc</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="p">,</span><span class="w"> </span><span class="nx">rand</span><span class="p">,</span><span class="w"> </span><span class="nx">sqn</span><span class="p">,</span><span class="w"> </span><span class="nx">resyncAMFBytes</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="8-reauthentication-and-handovers"><strong>8. Re‑authentication and handovers</strong></h3>
+<ul>
+<li>5G supports efficient re‑auth flows and a key hierarchy so that subsequent procedures (e.g., mobility, handovers, access changes) don’t require repeating full home authentication unless needed.</li>
+</ul>
+<h3 id="kdf-reference-used-across-free5gc"><strong>KDF reference used across free5GC</strong></h3>
+<p>free5GC’s shared KDF utility implements TS 33.220/33.501 HMAC‑SHA256 KDF and function codes<br />
+<a href="https://github.com/free5gc/util/blob/main/ueauth/ueauth.go">util/ueauth/ueauth.go:</a><br />
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">FC_FOR_CK_PRIME_IK_PRIME_DERIVATION</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_KSEAF_DERIVATION</span><span class="w">              </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;6C&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_RES_STAR_XRES_STAR_DERIVATION</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;6B&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_KAUSF_DERIVATION</span><span class="w">              </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;6A&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_KAMF_DERIVATION</span><span class="w">               </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;6D&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_KGNB_KN3IWF_DERIVATION</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;6E&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_NH_DERIVATION</span><span class="w">                 </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;6F&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_ALGORITHM_KEY_DERIVATION</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;69&quot;</span>
+<span class="w">    </span><span class="nx">FC_FOR_KTIPSEC_KTNAP_DERIVATION</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;84&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">GetKDFValue</span><span class="p">(</span><span class="nx">key</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="nx">FC</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">param</span><span class="w"> </span><span class="o">...</span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kdf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hmac</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="nx">sha256</span><span class="p">.</span><span class="nx">New</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="p">)</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">S</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">STmp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">hex</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">FC</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;GetKDFValue FC decode failed: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)}</span><span class="w"> </span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">STmp</span><span class="w">    </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">param</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">S</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="o">...</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">kdf</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">S</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;GetKDFValue KDF write failed: %+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)}</span>
+<span class="w">    </span><span class="nx">sum</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">kdf</span><span class="p">.</span><span class="nx">Sum</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Through its structured challenge–response process and layered key system, 5G AKA enables mutual authentication between the UE, serving network, and home network while securely generating session-specific keys. By exploring the protocol together with its implementation in free5GC, we can see how 3GPP’s specifications are brought to life in software—from authentication vector generation and verification to the derivation of keys across different network functions.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/17.05.00_60/ts_133501v170500p.pdf">TS 33.501</a></li>
+<li><a href="https://ithelp.ithome.com.tw/m/articles/10293421">5G Security</a></li>
+<li><a href="https://www.cnblogs.com/machi12/p/15557919.html">5G AKA协议详解</a></li>
+<li>References to implementation:<ul>
+<li>AUSF, HXRES*, K_SEAF, confirmation: <a href="https://github.com/free5gc/ausf/blob/main/internal/sbi/processor/ue_authentication.go">ausf/internal/sbi/processor/ue_authentication.go</a></li>
+<li>UDM, vector and XRES*, K_AUSF: <a href="https://github.com/free5gc/udm/blob/main/internal/sbi/processor/generate_auth_data.go">udm/internal/sbi/processor/generate_auth_data.go</a></li>
+<li>AMF, NAS Authentication Request build: <a href="https://github.com/free5gc/amf/blob/main/internal/gmm/message/build.go">amf/internal/gmm/message/build.go</a></li>
+<li>Util KDF: <a href="https://github.com/free5gc/util/blob/main/ueauth/ueauth.go">util/ueauth/ueauth.go</a></li>
+<li>UE test harness (KAMF/NAS keys): <a href="https://github.com/free5gc/free5gc/blob/main/test/ranUe.go">free5gc/test/ranUe.go</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Che Wei, Lin, and I’ve recently begun my journey into 5G technology and the free5GC community. I hope you found this blog post helpful, and please feel free to reach out if you notice any errors or have suggestions for improvement.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/Zach1113">Zach1113</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
