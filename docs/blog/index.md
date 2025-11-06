@@ -4,8 +4,7 @@
 
 ## Official
 - [2025/11/19: NEF PFD Management Implementation and Testing](./20251119/20251119.md)
-
-
+- [2025/11/12: Getting Started with go-gtp5gnl: Userspace Control of GTP-U for free5GC UPF](./20251112/20251112.md)
 - [2025/11/05: Introduction of Xn and NG(N2) based handover](./20251105/20251105.md)
 - [2025/10/29: Introduction to 5G AKA](./20251029/20251029.md)
 - [2025/10/15: NGAP Introduction](./20251015/20251015.md)
