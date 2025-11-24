@@ -1,0 +1,1245 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Debug gtp5g kernel module using stacktrace and eBPF - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#debug-gtp5g-kernel-module-using-stacktrace-and-ebpf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Debug gtp5g kernel module using stacktrace and eBPF
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#case-study-kernel-panic-caused-by-the-online-charging-pdu-session" class="md-nav__link">
+    Case Study - kernel panic caused by the online charging PDU Session
+  </a>
+  
+    <nav class="md-nav" aria-label="Case Study - kernel panic caused by the online charging PDU Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-out-the-problem" class="md-nav__link">
+    Figure out the problem
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-potentials-of-the-ebpf-for-kernel-debugging" class="md-nav__link">
+    The potentials of the eBPF for kernel debugging
+  </a>
+  
+    <nav class="md-nav" aria-label="The potentials of the eBPF for kernel debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-compile-the-kernel-with-btf-enabled" class="md-nav__link">
+    [Optional] Compile the kernel with BTF enabled
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-btf" class="md-nav__link">
+    What is BTF?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-btf-for-gtp5g" class="md-nav__link">
+    Generate BTF for GTP5G
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trace-the-function-calls-in-gtp5g" class="md-nav__link">
+    Trace the function calls in GTP5G
+  </a>
+  
+    <nav class="md-nav" aria-label="Trace the function calls in GTP5G">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load-and-attach-ebpf-program" class="md-nav__link">
+    Load and attach eBPF program
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20241224/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20241224/index.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="debug-gtp5g-kernel-module-using-stacktrace-and-ebpf">Debug gtp5g kernel module using stacktrace and eBPF</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://www.linkedin.com/in/ian-chen-88b70b1aa/">Ian Chen</a><br />
+Date: 2024/12/24</p>
+</div>
+<hr />
+<h2 id="case-study-kernel-panic-caused-by-the-online-charging-pdu-session">Case Study - kernel panic caused by the online charging PDU Session</h2>
+<p>free5GC is highly rely on the infrastructures provided by the Linux Kernel, especially the gtp5g kernel module.</p>
+<p><a href="https://github.com/andy89923">@andy89923</a> found a reproducible kernel panic issue.<br />
+Follow the actions below can always produce the kernel panic:</p>
+<ul>
+<li>Create online charging PDU Session</li>
+<li>Ping the Data Network (should match the ip filter of the charging configuration)</li>
+</ul>
+<p>Please also note that, the case of kernel panic will only happens if the version of gtp5g greater than v0.8.x.</p>
+<h3 id="figure-out-the-problem">Figure out the problem</h3>
+<p>Although we can get the panic log by using the dmesg. However, the stack dumps are not useful enough for kernel debugging at all.</p>
+<p>However, we can use the <a href="https://github.com/torvalds/linux/blob/master/scripts/decode_stacktrace.sh">decode_stacktrace.sh</a> can find the specific line in source code by leveraging the vmlinux.</p>
+<p>The original panic logs:<br />
+<div class="highlight"><pre><span></span><code>[  +0.004968] ------------[ cut here ]------------
+[  +0.000002] kernel BUG at mm/slub.c:307!
+[  +0.000109] invalid opcode: 0000 [#1] SMP PTI
+[  +0.000056] CPU: 3 PID: 191301 Comm: nrf Tainted: G           OE     5.4.0-131-generic #147-Ubuntu
+[  +0.000068] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[  +0.000047] RIP: 0010:kfree+0x236/0x250
+[  +0.000048] Code: e7 e8 9e 71 fd ff e9 ef fe ff ff 4d 89 f1 41 b8 01 00 00 00 48 89 d9 48 89 da 4c 89 e6 4c 89 ef e8 6f fa ff ff e9 d0 fe ff ff &lt;0f&gt; 0b 48 8b 05 d1 51 77 01 e9 ff fd ff ff 66 66 2e 0f 1f 84 00 00
+[  +0.000108] RSP: 0000:ffffa104c015c7f0 EFLAGS: 00010246
+[  +0.000018] RAX: ffff93e58bc98000 RBX: ffff93e58bc98000 RCX: ffff93e58bc98000
+[  +0.000017] RDX: 0000000000039962 RSI: bdd6aff4c23d967a RDI: ffff93e58bc98000
+[  +0.000017] RBP: ffffa104c015c810 R08: ffff93e58bc98000 R09: ffffa104c015c8d8
+[  +0.000018] R10: ffff93e5d302c680 R11: 0000000000000001 R12: fffffc7d8c2f2600
+[  +0.000018] R13: ffff93e6adc06bc0 R14: ffffffff99edcf25 R15: ffff93e565a70600
+[  +0.000017] FS:  000000c000580090(0000) GS:ffff93e6afac0000(0000) knlGS:0000000000000000
+[  +0.000020] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  +0.000014] CR2: 00007fac6fecf160 CR3: 000000034857c001 CR4: 0000000000760ee0
+[  +0.000026] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  +0.000018] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  +0.000021] PKRU: 55555554
+[  +0.000007] Call Trace:
+[  +0.000014]  &lt;IRQ&gt;
+[  +0.000031]  skb_free_head+0x25/0x30
+[  +0.000018]  skb_release_data+0x11d/0x180
+[  +0.000015]  skb_release_all+0x26/0x30
+[  +0.000015]  consume_skb+0x2c/0xb0
+[  +0.000046]  gtp5g_dev_xmit+0xc3/0x170 [gtp5g]
+[  +0.000016]  ? update_load_avg+0x7c/0x670
+[  +0.000017]  dev_hard_start_xmit+0x91/0x1f0
+[  +0.000019]  __dev_queue_xmit+0x75f/0x990
+[  +0.000016]  ? nfnetlink_has_listeners+0x15/0x20 [nfnetlink]
+[  +0.000016]  dev_queue_xmit+0x10/0x20
+[  +0.000014]  neigh_direct_output+0x11/0x20
+[  +0.000019]  ip_finish_output2+0x17e/0x580
+[  +0.000016]  __ip_finish_output+0xf3/0x270
+[  +0.000017]  ip_finish_output+0x2d/0xb0
+[  +0.000018]  ip_output+0x75/0xf0
+[  +0.000010]  ? __ip_finish_output+0x270/0x270
+[  +0.000013]  ip_forward_finish+0x58/0x90
+[  +0.000012]  ip_forward+0x3b9/0x4c0
+[  +0.000010]  ? ip4_key_hashfn+0xb0/0xb0
+[  +0.000012]  ip_sublist_rcv_finish+0x3d/0x50
+[  +0.000021]  ip_sublist_rcv+0x1c5/0x270
+[  +0.000956]  ? ip_rcv_finish_core.isra.0+0x3c0/0x3c0
+[  +0.000637]  ip_list_rcv+0x10b/0x130
+[  +0.000678]  __netif_receive_skb_list_core+0x228/0x250
+[  +0.000576]  netif_receive_skb_list_internal+0x1a1/0x2b0
+[  +0.000572]  gro_normal_list.part.0+0x1e/0x40
+[  +0.000524]  napi_complete_done+0x91/0x130
+[  +0.000557]  virtnet_poll+0x30d/0x450 [virtio_net]
+[  +0.000558]  net_rx_action+0x142/0x390
+[  +0.000598]  __do_softirq+0xd1/0x2c1
+[  +0.000559]  irq_exit+0xae/0xb0
+[  +0.000500]  do_IRQ+0x5a/0xf0
+[  +0.000504]  common_interrupt+0xf/0xf
+[  +0.000488]  &lt;/IRQ&gt;
+[  +0.000467] RIP: 0033:0x423172
+[  +0.000467] Code: 23 4c 89 44 24 38 e8 8d 46 ff ff 48 85 f6 0f 84 a0 00 00 00 48 8b 94 24 88 00 00 00 49 89 f1 48 8b 74 24 48 4d 89 c8 4d 8b 09 &lt;49&gt; 29 d0 4d 85 c9 74 b0 4d 89 ca 49 29 d1 4c 39 ce 77 a5 4c 89 44
+[  +0.001066] RSP: 002b:000000c000593e90 EFLAGS: 00000202 ORIG_RAX: ffffffffffffffdb
+[  +0.000517] RAX: 000000c000387200 RBX: 0000000000018e00 RCX: 5000000000000000
+[  +0.000461] RDX: 000000c000380000 RSI: 0000000000020000 RDI: 0000000000000040
+[  +0.000590] RBP: 000000c000593f08 R08: 000000c0003873d0 R09: 0000000000d17b82
+[  +0.000601] R10: 0000000000d1ce8e R11: 0000000000018e00 R12: 0000000000000001
+[  +0.000619] R13: 13679e0f6eacd19f R14: 000000c0005821a0 R15: 0000000000000000
+[  +0.000461] Modules linked in: sctp vxlan xt_multiport xt_set ipt_rpfilter iptable_raw ip_set_hash_ip ip_set_hash_net ip_set wireguard ip6_udp_tunnel veth xfrm_user xfrm_algo nf_conntrack_netlink xt_addrtype xt_nat xt_tcpudp xt_MASQUERADE xt_mark xt_conntrack iptable_mangle ip6table_filter ip6table_mangle ip6table_nat ip6_tables iptable_nat nf_nat br_netfilter bridge stp llc nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nft_counter nft_compat nf_tables nfnetlink iptable_filter xt_comment bpfilter aufs overlay dummy dm_multipath scsi_dh_rdac scsi_dh_emc scsi_dh_alua binfmt_misc intel_rapl_msr intel_rapl_common isst_if_common nfit kvm_intel kvm rapl joydev input_leds serio_raw mac_hid qemu_fw_cfg sch_fq_codel gtp5g(OE) sunrpc ramoops udp_tunnel reed_solomon efi_pstore ip_tables x_tables autofs4 btrfs zstd_compress raid10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx xor raid6_pq libcrc32c raid1 raid0 multipath linear hid_generic usbhid hid bochs_drm drm_vram_helper ttm
+[  +0.000189]  drm_kms_helper crct10dif_pclmul crc32_pclmul syscopyarea sysfillrect ghash_clmulni_intel sysimgblt aesni_intel crypto_simd cryptd glue_helper fb_sys_fops virtio_net psmouse net_failover drm failover virtio_scsi i2c_piix4 pata_acpi floppy
+[  +0.005947] ---[ end trace e017af78fce65824 ]---
+</code></pre></div></p>
+<p>You can follow the commands below to make the panic logs more human-friendly:<br />
+<div class="highlight"><pre><span></span><code>$ sudo apt install linux-source-5.4.0
+$ cd /usr/src/linux-source-5.4.0
+$ sudo make -j$(nproc) vmlinux // if you don&#39;t have vmlinux file
+$ sudo ./scripts/decode_stacktrace.sh ./vmlinux ./ ~/gtp5g/ &lt; ~/panic.log  &gt; ~/out.log
+</code></pre></div><br />
+The output will looks like:<br />
+<div class="highlight"><pre><span></span><code>[  +0.004968] ------------[ cut here ]------------
+[  +0.000002] kernel BUG at mm/slub.c:307!
+[  +0.000109] invalid opcode: 0000 [#1] SMP PTI
+[  +0.000056] CPU: 3 PID: 191301 Comm: nrf Tainted: G           OE     5.4.0-131-generic #147-Ubuntu
+[  +0.000068] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[   +0.000047] RIP: 0010:kfree (/usr/src/linux-source-5.4.0/mm/slub.c:307 /usr/src/linux-source-5.4.0/mm/slub.c:302 /usr/src/linux-source-5.4.0/mm/slub.c:3035 /usr/src/linux-source-5.4.0/mm/slub.c:3060 /usr/src/linux-source-5.4.0/mm/slub.c:4027)
+[ +0.000048] Code: e7 e8 9e 71 fd ff e9 ef fe ff ff 4d 89 f1 41 b8 01 00 00 00 48 89 d9 48 89 da 4c 89 e6 4c 89 ef e8 6f fa ff ff e9 d0 fe ff ff &lt;0f&gt; 0b 48 8b 05 d1 51 77 01 e9 ff fd ff ff 66 66 2e 0f 1f 84 00 00
+All code
+========
+   0:   e7 e8                   out    %eax,$0xe8
+   2:   9e                      sahf
+   3:   71 fd                   jno    0x2
+   5:   ff                      (bad)
+   6:   e9 ef fe ff ff          jmpq   0xfffffffffffffefa
+   b:   4d 89 f1                mov    %r14,%r9
+   e:   41 b8 01 00 00 00       mov    $0x1,%r8d
+  14:   48 89 d9                mov    %rbx,%rcx
+  17:   48 89 da                mov    %rbx,%rdx
+  1a:   4c 89 e6                mov    %r12,%rsi
+  1d:   4c 89 ef                mov    %r13,%rdi
+  20:   e8 6f fa ff ff          callq  0xfffffffffffffa94
+  25:   e9 d0 fe ff ff          jmpq   0xfffffffffffffefa
+  2a:*  0f 0b                   ud2         &lt;-- trapping instruction
+  2c:   48 8b 05 d1 51 77 01    mov    0x17751d1(%rip),%rax        # 0x1775204
+  33:   e9 ff fd ff ff          jmpq   0xfffffffffffffe37
+  38:   66                      data16
+  39:   66                      data16
+  3a:   2e                      cs
+  3b:   0f                      .byte 0xf
+  3c:   1f                      (bad)
+  3d:   84 00                   test   %al,(%rax)
+    ...
+
+Code starting with the faulting instruction
+===========================================
+   0:   0f 0b                   ud2
+   2:   48 8b 05 d1 51 77 01    mov    0x17751d1(%rip),%rax        # 0x17751da
+   9:   e9 ff fd ff ff          jmpq   0xfffffffffffffe0d
+   e:   66                      data16
+   f:   66                      data16
+  10:   2e                      cs
+  11:   0f                      .byte 0xf
+  12:   1f                      (bad)
+  13:   84 00                   test   %al,(%rax)
+    ...
+[  +0.000108] RSP: 0000:ffffa104c015c7f0 EFLAGS: 00010246
+[  +0.000018] RAX: ffff93e58bc98000 RBX: ffff93e58bc98000 RCX: ffff93e58bc98000
+[  +0.000017] RDX: 0000000000039962 RSI: bdd6aff4c23d967a RDI: ffff93e58bc98000
+[  +0.000017] RBP: ffffa104c015c810 R08: ffff93e58bc98000 R09: ffffa104c015c8d8
+[  +0.000018] R10: ffff93e5d302c680 R11: 0000000000000001 R12: fffffc7d8c2f2600
+[  +0.000018] R13: ffff93e6adc06bc0 R14: ffffffff99edcf25 R15: ffff93e565a70600
+[  +0.000017] FS:  000000c000580090(0000) GS:ffff93e6afac0000(0000) knlGS:0000000000000000
+[  +0.000020] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  +0.000014] CR2: 00007fac6fecf160 CR3: 000000034857c001 CR4: 0000000000760ee0
+[  +0.000026] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  +0.000018] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  +0.000021] PKRU: 55555554
+[  +0.000007] Call Trace:
+[  +0.000014]  &lt;IRQ&gt;
+[   +0.000031] skb_free_head (/usr/src/linux-source-5.4.0/net/core/skbuff.c:602)
+[   +0.000018] skb_release_data (/usr/src/linux-source-5.4.0/net/core/skbuff.c:622)
+[   +0.000015] skb_release_all (/usr/src/linux-source-5.4.0/net/core/skbuff.c:676)
+[   +0.000015] consume_skb (/usr/src/linux-source-5.4.0/net/core/skbuff.c:690 /usr/src/linux-source-5.4.0/net/core/skbuff.c:848)
+[   +0.000046] gtp5g_dev_xmit (/home/ianchen0119/gtp5g/src/gtpu/dev.c:136) gtp5g
+[   +0.000016] ? update_load_avg (/usr/src/linux-source-5.4.0/kernel/sched/fair.c:3388 /usr/src/linux-source-5.4.0/kernel/sched/fair.c:3602)
+[   +0.000017] dev_hard_start_xmit (/usr/src/linux-source-5.4.0/./include/linux/prandom.h:58 /usr/src/linux-source-5.4.0/net/core/dev.c:3216 /usr/src/linux-source-5.4.0/net/core/dev.c:3234)
+[   +0.000019] __dev_queue_xmit (/usr/src/linux-source-5.4.0/./include/net/sch_generic.h:179 /usr/src/linux-source-5.4.0/net/core/dev.c:3453 /usr/src/linux-source-5.4.0/net/core/dev.c:3765)
+[   +0.000016] ? nfnetlink_has_listeners+0x15/0x20 nfnetlink
+[   +0.000016] dev_queue_xmit (/usr/src/linux-source-5.4.0/net/core/dev.c:3834)
+[   +0.000014] neigh_direct_output (/usr/src/linux-source-5.4.0/net/core/neighbour.c:1548)
+[   +0.000019] ip_finish_output2 (/usr/src/linux-source-5.4.0/./include/net/neighbour.h:510 /usr/src/linux-source-5.4.0/net/ipv4/ip_output.c:236)
+[   +0.000016] __ip_finish_output (/usr/src/linux-source-5.4.0/net/ipv4/ip_output.c:317)
+[   +0.000017] ip_finish_output (/usr/src/linux-source-5.4.0/net/ipv4/ip_output.c:326)
+[   +0.000018] ip_output (/usr/src/linux-source-5.4.0/net/ipv4/ip_output.c:444)
+[   +0.000010] ? __ip_finish_output (/usr/src/linux-source-5.4.0/net/ipv4/ip_output.c:320)
+[   +0.000013] ip_forward_finish (/usr/src/linux-source-5.4.0/net/ipv4/ip_forward.c:84)
+[   +0.000012] ip_forward (/usr/src/linux-source-5.4.0/./include/linux/netfilter.h:300 /usr/src/linux-source-5.4.0/net/ipv4/ip_forward.c:157)
+[   +0.000010] ? ip4_key_hashfn (/usr/src/linux-source-5.4.0/net/ipv4/ip_forward.c:66)
+[   +0.000012] ip_sublist_rcv_finish (/usr/src/linux-source-5.4.0/net/ipv4/ip_input.c:539)
+[   +0.000021] ip_sublist_rcv (/usr/src/linux-source-5.4.0/net/ipv4/ip_input.c:588)
+[   +0.000956] ? ip_rcv_finish_core.isra.0 (/usr/src/linux-source-5.4.0/net/ipv4/ip_input.c:407)
+[   +0.000637] ip_list_rcv (/usr/src/linux-source-5.4.0/net/ipv4/ip_input.c:622)
+[   +0.000678] __netif_receive_skb_list_core (/usr/src/linux-source-5.4.0/net/core/dev.c:5014 /usr/src/linux-source-5.4.0/net/core/dev.c:5062)
+[   +0.000576] netif_receive_skb_list_internal (/usr/src/linux-source-5.4.0/net/core/dev.c:5116 /usr/src/linux-source-5.4.0/net/core/dev.c:5209)
+[   +0.000572] gro_normal_list.part.0 (/usr/src/linux-source-5.4.0/./include/linux/compiler.h:295 /usr/src/linux-source-5.4.0/./include/linux/list.h:28 /usr/src/linux-source-5.4.0/net/core/dev.c:5321)
+[   +0.000524] napi_complete_done (/usr/src/linux-source-5.4.0/net/core/dev.c:6063 (discriminator 1) /usr/src/linux-source-5.4.0/net/core/dev.c:6051 (discriminator 1))
+[   +0.000557] virtnet_poll+0x30d/0x450 virtio_net
+[   +0.000558] net_rx_action (/usr/src/linux-source-5.4.0/net/core/dev.c:6366 /usr/src/linux-source-5.4.0/net/core/dev.c:6436)
+[   +0.000598] __do_softirq (/usr/src/linux-source-5.4.0/./arch/x86/include/asm/jump_label.h:25 /usr/src/linux-source-5.4.0/./include/linux/jump_label.h:200 /usr/src/linux-source-5.4.0/./include/trace/events/irq.h:142 /usr/src/linux-source-5.4.0/kernel/softirq.c:293)
+[   +0.000559] irq_exit (/usr/src/linux-source-5.4.0/kernel/softirq.c:373 /usr/src/linux-source-5.4.0/kernel/softirq.c:413)
+[   +0.000500] do_IRQ (/usr/src/linux-source-5.4.0/arch/x86/kernel/irq.c:267 (discriminator 42))
+[   +0.000504] common_interrupt (/usr/src/linux-source-5.4.0/arch/x86/entry/entry_64.S:613)
+[  +0.000488]  &lt;/IRQ&gt;
+[  +0.000467] RIP: 0033:0x423172
+[ +0.000467] Code: 23 4c 89 44 24 38 e8 8d 46 ff ff 48 85 f6 0f 84 a0 00 00 00 48 8b 94 24 88 00 00 00 49 89 f1 48 8b 74 24 48 4d 89 c8 4d 8b 09 &lt;49&gt; 29 d0 4d 85 c9 74 b0 4d 89 ca 49 29 d1 4c 39 ce 77 a5 4c 89 44
+All code
+========
+   0:   23 4c 89 44             and    0x44(%rcx,%rcx,4),%ecx
+   4:   24 38                   and    $0x38,%al
+   6:   e8 8d 46 ff ff          callq  0xffffffffffff4698
+   b:   48 85 f6                test   %rsi,%rsi
+   e:   0f 84 a0 00 00 00       je     0xb4
+  14:   48 8b 94 24 88 00 00    mov    0x88(%rsp),%rdx
+  1b:   00
+  1c:   49 89 f1                mov    %rsi,%r9
+  1f:   48 8b 74 24 48          mov    0x48(%rsp),%rsi
+  24:   4d 89 c8                mov    %r9,%r8
+  27:   4d 8b 09                mov    (%r9),%r9
+  2a:*  49 29 d0                sub    %rdx,%r8     &lt;-- trapping instruction
+  2d:   4d 85 c9                test   %r9,%r9
+  30:   74 b0                   je     0xffffffffffffffe2
+  32:   4d 89 ca                mov    %r9,%r10
+  35:   49 29 d1                sub    %rdx,%r9
+  38:   4c 39 ce                cmp    %r9,%rsi
+  3b:   77 a5                   ja     0xffffffffffffffe2
+  3d:   4c                      rex.WR
+  3e:   89                      .byte 0x89
+  3f:   44                      rex.R
+
+Code starting with the faulting instruction
+===========================================
+   0:   49 29 d0                sub    %rdx,%r8
+   3:   4d 85 c9                test   %r9,%r9
+   6:   74 b0                   je     0xffffffffffffffb8
+   8:   4d 89 ca                mov    %r9,%r10
+   b:   49 29 d1                sub    %rdx,%r9
+   e:   4c 39 ce                cmp    %r9,%rsi
+  11:   77 a5                   ja     0xffffffffffffffb8
+  13:   4c                      rex.WR
+  14:   89                      .byte 0x89
+  15:   44                      rex.R
+[  +0.001066] RSP: 002b:000000c000593e90 EFLAGS: 00000202 ORIG_RAX: ffffffffffffffdb
+[  +0.000517] RAX: 000000c000387200 RBX: 0000000000018e00 RCX: 5000000000000000
+[  +0.000461] RDX: 000000c000380000 RSI: 0000000000020000 RDI: 0000000000000040
+[  +0.000590] RBP: 000000c000593f08 R08: 000000c0003873d0 R09: 0000000000d17b82
+[  +0.000601] R10: 0000000000d1ce8e R11: 0000000000018e00 R12: 0000000000000001
+[  +0.000619] R13: 13679e0f6eacd19f R14: 000000c0005821a0 R15: 0000000000000000
+[  +0.000461] Modules linked in: sctp vxlan xt_multiport xt_set ipt_rpfilter iptable_raw ip_set_hash_ip ip_set_hash_net ip_set wireguard ip6_udp_tunnel veth xfrm_user xfrm_algo nf_conntrack_netlink xt_addrtype xt_nat xt_tcpudp xt_MASQUERADE xt_mark xt_conntrack iptable_mangle ip6table_filter ip6table_mangle ip6table_nat ip6_tables iptable_nat nf_nat br_netfilter bridge stp llc nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nft_counter nft_compat nf_tables nfnetlink iptable_filter xt_comment bpfilter aufs overlay dummy dm_multipath scsi_dh_rdac scsi_dh_emc scsi_dh_alua binfmt_misc intel_rapl_msr intel_rapl_common isst_if_common nfit kvm_intel kvm rapl joydev input_leds serio_raw mac_hid qemu_fw_cfg sch_fq_codel gtp5g(OE) sunrpc ramoops udp_tunnel reed_solomon efi_pstore ip_tables x_tables autofs4 btrfs zstd_compress raid10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx xor raid6_pq libcrc32c raid1 raid0 multipath linear hid_generic usbhid hid bochs_drm drm_vram_helper ttm
+[  +0.000189]  drm_kms_helper crct10dif_pclmul crc32_pclmul syscopyarea sysfillrect ghash_clmulni_intel sysimgblt aesni_intel crypto_simd cryptd glue_helper fb_sys_fops virtio_net psmouse net_failover drm failover virtio_scsi i2c_piix4 pata_acpi floppy
+[  +0.005947] ---[ end trace e017af78fce65824 ]---
+</code></pre></div></p>
+<p>The kernel panic is caused by the kfree function, I believe that the root cause is the socket buffer <a href="https://stackoverflow.com/questions/21057393/what-does-double-free-mean">double-free</a>. Moreover, <code>gtp5g_dev_xmit</code> is the dowlink entry function in GTP5G, So I can narrow down the scope of the problem.</p>
+<p>For the online charging session, the FAR (Forwarding Action Rule) action will be changed to PKT_DROP after the first uplink packet be sent to data network til the UPF get the quota from SMF. So the downlink packet for responding the first uplink packet will be freed twice before UPF het the new quota.</p>
+<blockquote>
+<p>The deatils of the charging system design can be found at <a href="https://free5gc.org/doc/Chf/design/#usage-report">CHF design document</a>.</p>
+</blockquote>
+<p>The interesting thing is that the panic won't happens til the we upgrade the gtp5g to v0.9.0^.<br />
+I believe that the issue started to be visible is effected by <a href="https://github.com/free5gc/gtp5g/pull/101">#101</a>, because of it gives the more accurate packet counting (timing issue).</p>
+<h2 id="the-potentials-of-the-ebpf-for-kernel-debugging">The potentials of the eBPF for kernel debugging</h2>
+<p>The article: <a href="https://blog.cloudflare.com/live-patch-security-vulnerabilities-with-ebpf-lsm/">Live-patching security vulnerabilities inside the Linux kernel with eBPF Linux Security Module</a>, posted by CloudFlare, has well explained how they leverage the eBPF to detect critical events in the kernel, even make the kernel more secured!</p>
+<p>It inspires me started thinking: is it possible to use eBPF to troubleshoot our own kernel module?</p>
+<h3 id="optional-compile-the-kernel-with-btf-enabled">[Optional] Compile the kernel with BTF enabled</h3>
+<p>In our testing environment, we build the kernel v6.12.4:<br />
+<div class="highlight"><pre><span></span><code>$ wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.4.tar.xz
+$ tar xvf linux-6.12.4.tar.xz
+</code></pre></div><br />
+Once you have downloaded the kernel source, you can started building the kernel by following the steps described in the article: <a href="https://medium.com/@suruti94/building-the-linux-kernel-with-btf-1a617cfb4a24">Building the Linux kernel with BTF</a>.</p>
+<h3 id="what-is-btf">What is BTF?</h3>
+<blockquote>
+<p>The Extended Berkeley Packet Filter (eBPF) is esteemed for its portability, a primary attribute of which is due to the BPF Type Format (BTF). More details about BTF can be discovered in this comprehensive guide.</p>
+<p>Before the advent of Compile Once-Run Everywhere (CO-RE), developers working with eBPF had to compile an individual eBPF object for each kernel version they intended to support. This stipulation led toolkits, such as iovisor/bcc, to depend on runtime compilations to handle different kernel versions.</p>
+<p>However, the introduction of CO-RE facilitated a significant shift in eBPF portability, allowing a single eBPF object to be loaded into multiple differing kernels. This is achieved by the libbpf loader, a component within the eBPF's loader and verification architecture. The libbpf loader arranges the necessary infrastructure for an eBPF object, including eBPF map creation, code relocation, setting up eBPF probes, managing links, handling their attachments, among others.</p>
+<p>Here's the technical insight: both the eBPF object and the target kernel contain BTF information, generally embedded within their respective ELF (Executable and Linkable Format) files. The libbpf loader leverages this embedded BTF information to calculate the requisite changes such as relocations, map creations, probe attachments, and more for an eBPF object. As a result, this eBPF object can be loaded and have its programs executed across any kernel without the need for object modification, thus enhancing portability.<br />
+-- <a href="https://github.com/aquasecurity/btfhub">aquasecurity/btfhub</a></p>
+</blockquote>
+<h3 id="generate-btf-for-gtp5g">Generate BTF for GTP5G</h3>
+<p>Add the btf target in the Makefile like this:</p>
+<div class="highlight"><pre><span></span><code>diff --git a/Makefile b/Makefile
+index bec4880..bab04d4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -98,3 +98,6 @@ uninstall:
+        $(DEPMOD)
+        rm -f /etc/modules-load.d/gtp5g.conf
+        rmmod -f  $(MODULE_NAME)
++
++btf:
++       pahole --btf_encode gtp5g.ko
++       pahole --btf_encode gtp5g.o
+</code></pre></div>
+<p>And run the commands below:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make
+$<span class="w"> </span>make<span class="w"> </span>btf
+$<span class="w"> </span>readelf<span class="w"> </span>-S<span class="w"> </span>gtp5g.ko<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>BTF
+$<span class="w"> </span>sudo<span class="w"> </span>make<span class="w"> </span>install
+</code></pre></div>
+<p>In this way, you will able to see the gtp5g btf by using btftool:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>bpftool<span class="w"> </span>btf<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gtp5g
+<span class="m">410</span>:<span class="w"> </span>name<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span><span class="w">  </span>size<span class="w"> </span>243774B
+</code></pre></div>
+<p>use the command below to dump vmlinux and gtp5g BTF to C file:<br />
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>bpftool<span class="w"> </span>btf<span class="w"> </span>dump<span class="w"> </span>file<span class="w"> </span>/sys/kernel/btf/vmlinux<span class="w"> </span>format<span class="w"> </span>c<span class="w"> </span>&gt;<span class="w"> </span>vmlinux/vmlinux.h
+$<span class="w"> </span>bpftool<span class="w"> </span>btf<span class="w"> </span>dump<span class="w"> </span>file<span class="w"> </span>/sys/kernel/btf/gtp5g<span class="w"> </span>format<span class="w"> </span>c<span class="w"> </span>&gt;<span class="w"> </span>vmlinux/vmlinux.h
+</code></pre></div></p>
+<h2 id="trace-the-function-calls-in-gtp5g">Trace the function calls in GTP5G</h2>
+<p>The eBPF program type <code>BPF_PROG_TYPE_TRACING</code> are a newer alternative to kprobes and tracepoints since Linux Kernel v5.5, which provides practically zero overhead by leveraging the BPF trampoline.</p>
+<p>The command below can be used to list all of available functions for tracing purpose:<br />
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/sys/kernel/tracing/available_filter_functions<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gtp5g
+//<span class="w"> </span>...
+gtp5g_dbg_read<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+proc_qos_write<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+gtp5g_qos_read<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+gtp5g_far_read<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+proc_pdr_write<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+proc_dbg_write<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+gtp5g_pdr_read<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+proc_qer_write<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+proc_far_write<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+proc_urr_write<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+get_proc_gtp5g_dev_list_head<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+init_proc_gtp5g_dev_list<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+create_proc<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+remove_proc<span class="w"> </span><span class="o">[</span>gtp5g<span class="o">]</span>
+</code></pre></div></p>
+<p>If we want to trace the function entry of gtp5g_encap_recv, we can write a program like below:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;vmlinux.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf_tracing.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf_helpers.h&gt;</span>
+
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;fentry/gtp5g_xmit_skb_ipv4&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">BPF_PROG</span><span class="p">(</span><span class="n">gtp5g_uplink</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_pktinfo</span><span class="w"> </span><span class="o">*</span><span class="n">pktinfo</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">__u64</span><span class="w"> </span><span class="n">pid_tgid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_current_pid_tgid</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pid_tgid</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xFFFFFFFF</span><span class="p">;</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">tgid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pid_tgid</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_smp_processor_id</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;gtp5g_xmit_skb_ipv4: PID=%u, TGID=%u, CPU=%u&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="n">tgid</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">char</span><span class="w"> </span><span class="n">_license</span><span class="p">[]</span><span class="w"> </span><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;license&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GPL&quot;</span><span class="p">;</span>
+</code></pre></div>
+<ul>
+<li>Any program with the <code>fentry</code> prefix will be executed before the execution of target function (in this case is <code>gtp5g_xmit_skb_ipv4()</code>), and can be identified as the <code>BPF_PROG_TYPE_TRACING</code> type by the kernel.</li>
+<li>The arguments of the <code>BPF_PROG</code> follows the kernel function you want to trace. for example:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// The definition in the gtp5g, the BPF_PROG&#39;s args should be same with the target function</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">gtp5g_xmit_skb_ipv4</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">gtp5g_pktinfo</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+</code></pre></div></li>
+</ul>
+<h3 id="load-and-attach-ebpf-program">Load and attach eBPF program</h3>
+<p>Typically, we can load and attach the eBPF program into specific system hook by using bpftool. However, the bpftool does not support all of attachment types provided by the kernel.</p>
+<p>Therefore, I use the <a href="github.com/aquasecurity/libbpfgo">libbpfgo</a> and <a href="https://github.com/libbpf/libbpf">libbpf</a> to implement the agent program for loading eBPF program:<br />
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;os&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+
+<span class="w">    </span><span class="nx">bpf</span><span class="w"> </span><span class="s">&quot;github.com/aquasecurity/libbpfgo&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">bpfModule</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bpf</span><span class="p">.</span><span class="nx">NewModuleFromFile</span><span class="p">(</span><span class="s">&quot;main.o&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">bpfModule</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bpfModule</span><span class="p">.</span><span class="nx">BPFLoadObject</span><span class="p">();</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">prog</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bpfModule</span><span class="p">.</span><span class="nx">GetProgram</span><span class="p">(</span><span class="s">&quot;gtp5g_uplink&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">link</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">prog</span><span class="p">.</span><span class="nx">AttachGeneric</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">FileDescriptor</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<blockquote>
+<p>INFO<br />
+You will need to write a Makefile for building the BPF program and its agent.<br />
+If you don't know how to get started, please refer to my side project: <a href="https://github.com/ENSREG/tinyLB/blob/master/Makefile">tinyLB</a>.</p>
+</blockquote>
+<p>To see the output of the attached eBPF program:<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/sys/kernel/debug/tracing/trace_pipe
+<span class="w">           </span>&lt;...&gt;-236797<span class="w">  </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s21<span class="w"> </span><span class="m">6141919</span>.013036:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">236797</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">236797</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141920</span>.013210:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141921</span>.014070:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141922</span>.013615:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141923</span>.013975:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141924</span>.014871:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141925</span>.013730:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">        </span>kubelite-3377186<span class="w"> </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s21<span class="w"> </span><span class="m">6141926</span>.013908:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">3377186</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">3376931</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141927</span>.014084:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141928</span>.015013:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141929</span>.014465:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141930</span>.014600:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141931</span>.013976:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141932</span>.014142:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+<span class="w">          </span>&lt;idle&gt;-0<span class="w">       </span><span class="o">[</span><span class="m">009</span><span class="o">]</span><span class="w"> </span>b.s31<span class="w"> </span><span class="m">6141933</span>.014331:<span class="w"> </span>bpf_trace_printk:<span class="w"> </span>gtp5g_xmit_skb_ipv4:<span class="w"> </span><span class="nv">PID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">TGID</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">CPU</span><span class="o">=</span><span class="m">9</span>
+</code></pre></div></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This article shows how to troubleshoot the kernel panic by using the <code>decode_stacktrace.sh</code> script and how to trace the function calls in the kernel module by using eBPF.<br />
+The eBPF is a powerful tool for kernel debugging. It can be used to trace the function calls in the kernel module with low overhead and even make the kernel more secure by detecting critical events.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>https://lwn.net/Articles/592724/</li>
+<li><a href="https://stackoverflow.com/questions/38006485/make-linux-kernel-function-show-in-ftrace-available-filter-function">Make linux kernel function show in ftrace available_filter_function</a></li>
+<li>https://askubuntu.com/questions/1348250/skipping-btf-generation-xxx-due-to-unavailability-of-vmlinux-on-ubuntu-21-04</li>
+<li>https://github.com/aquasecurity/btfhub/blob/main/docs/how-to-use-pahole.md#tools-that-generate-btf-information</li>
+</ul>
+<h2 id="about">About</h2>
+<p>Greetings! My name is <a href="https://www.linkedin.com/in/ian-chen-88b70b1aa/">Ian</a>. I'm currently a Technical Steering Committee member of the free5GC project. We're focusing on delevering a fully open-source 5G core network for academic and industry usage.<br />
+If you're interested in our project, the pull requests and issues are always welcome!</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

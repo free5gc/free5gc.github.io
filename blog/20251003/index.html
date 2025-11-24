@@ -1,0 +1,1502 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Visualizing 5G Core Metrics with Prometheus and Grafana on free5gc-helm - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#visualizing-5g-core-metrics-with-prometheus-and-grafana-on-free5gc-helm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Visualizing 5G Core Metrics with Prometheus and Grafana on free5gc-helm
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-prometheus" class="md-nav__link">
+    What is Prometheus?
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Prometheus?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    Key Features
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-grafana" class="md-nav__link">
+    What is Grafana?
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Grafana?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features_1" class="md-nav__link">
+    Key Features
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prometheus-and-grafana-in-the-5g-core-context" class="md-nav__link">
+    Prometheus and Grafana in the 5G Core Context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-practical-guide-integrating-with-free5gc-helm" class="md-nav__link">
+    A Practical Guide: Integrating with free5gc-helm
+  </a>
+  
+    <nav class="md-nav" aria-label="A Practical Guide: Integrating with free5gc-helm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-deploy-free5gc-with-free5gc-helm" class="md-nav__link">
+    Step 1: Deploy free5GC with free5gc-helm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-deploy-prometheus-and-grafana" class="md-nav__link">
+    Step 2: Deploy Prometheus and Grafana
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-deploy-the-podmonitor-to-link-prometheus-and-free5gc" class="md-nav__link">
+    Step 3: Deploy the PodMonitor to Link Prometheus and free5GC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-access-prometheus-and-grafana" class="md-nav__link">
+    Step 4: Access Prometheus and Grafana
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Access Prometheus and Grafana">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-prometheus" class="md-nav__link">
+    Access Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-grafana" class="md-nav__link">
+    Access Grafana
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-add-the-prometheus-data-source-in-grafana" class="md-nav__link">
+    Step 5: Add the Prometheus Data Source in Grafana
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-explore-free5gc-data-in-grafana" class="md-nav__link">
+    Step 6: Explore free5GC Data in Grafana
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-your-first-dashboard" class="md-nav__link">
+    Building Your First Dashboard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About me
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    Appendix
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251003/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251003/index.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="visualizing-5g-core-metrics-with-prometheus-and-grafana-on-free5gc-helm">Visualizing 5G Core Metrics with Prometheus and Grafana on free5gc-helm</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Guo-Cheng Wu<br />
+Date: 2025/10/03</p>
+</div>
+<hr />
+<p>The telecommunications landscape is undergoing a monumental shift, transitioning from monolithic, hardware-centric systems to a cloud-native paradigm. As projects like <code>free5gc-helm</code> demonstrate, the future of 5G lies in containerized microservices orchestrated on platforms like Kubernetes. This evolution brings incredible benefits in scalability, resilience, and portability, allowing network functions to be deployed and scaled with unprecedented agility.</p>
+<p>However, this dynamic, distributed environment also introduces new challenges. With network functions running as dozens of pods across a cluster, how do we track their health? How do we measure performance, identify bottlenecks, or diagnose issues in real-time? The answer is <strong>observability</strong>. We need robust tools to collect, store, and visualize the vast amount of metrics these systems generate.</p>
+<p>This is where the powerful open-source duo of <strong>Prometheus</strong> and <strong>Grafana</strong> comes in. Prometheus provides a scalable and reliable time-series database for collecting metrics, while Grafana offers a flexible and intuitive platform for visualizing them.</p>
+<p>This blog post will serve as a comprehensive guide to integrating this monitoring stack with the <code>free5gc-helm</code> deployment. We will start by introducing the core concepts of Prometheus and Grafana, explaining their specific roles in monitoring a 5G core network, and finally, walk you through the exact steps to get everything up and running.</p>
+<h2 id="what-is-prometheus">What is Prometheus?</h2>
+<p>Prometheus is an open-source monitoring and alerting toolkit originally created at SoundCloud in 2012. It has since been widely adopted and is now a graduated project of the Cloud Native Computing Foundation (CNCF). At its core, Prometheus stores monitoring data as time series, where each metric is recorded with a timestamp and optional labels for richer context. It offers a powerful query language (PromQL) for flexible analysis, collects data through an efficient pull model over HTTP, and supports both static configuration and service discovery for target detection.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li>
+<p><strong>Multi-dimensional Data Model</strong>: Prometheus stores data as time series, where each series is identified by a metric name and a set of key-value pairs. This allows for powerful and flexible querying.</p>
+</li>
+<li>
+<p><strong>Service Discovery</strong>: Prometheus can be configured to automatically discover targets to monitor. In Kubernetes, it can dynamically find pods and services based on their labels and annotations, eliminating the need to manually configure every single microservice.</p>
+</li>
+<li>
+<p><strong>PromQL (Prometheus Query Language)</strong>: A flexible and powerful functional query language designed specifically for time-series data. PromQL allows you to select, aggregate, and perform calculations on your metrics in real-time.</p>
+</li>
+<li>
+<p><strong>Alerting</strong>: Prometheus integrates with the Alertmanager component, which handles alerts and notifications based on defined rules, ensuring that operators are notified of issues before they impact users.</p>
+</li>
+</ul>
+<h2 id="what-is-grafana">What is Grafana?</h2>
+<p>While Prometheus is excellent at collecting and storing data, its built-in graphing capabilities are basic and intended primarily for ad-hoc querying. To truly understand your data, you need a powerful visualization tool, and this is where Grafana shines.</p>
+<p>Grafana is an open-source observability platform that connects to a wide range of data sources, with Prometheus being one of the most popular. It enables users to build, explore, and share interactive dashboards, offering a unified view of complex systems.</p>
+<h3 id="key-features_1">Key Features</h3>
+<ul>
+<li>
+<p><strong>Rich Visualizations</strong>: A wide variety of panels and plugins let you display metrics and logs in different formats — from time-series graphs and gauges to tables, and heatmaps.</p>
+</li>
+<li>
+<p><strong>Dynamic Dashboards</strong>: Build reusable dashboards with template variables, enabling teams to quickly filter, drill down, and compare data across different environments or time ranges.</p>
+</li>
+<li>
+<p><strong>Flexible Data Sources</strong>: Grafana is not tied to a single backend. You can mix queries from multiple data sources within the same dashboard, making it a powerful tool for heterogeneous systems.</p>
+</li>
+<li>
+<p><strong>Exploration Tools</strong>: Easily run ad-hoc queries, explore metrics side by side, or pivot from metrics to logs with preserved labels for faster troubleshooting.</p>
+</li>
+<li>
+<p><strong>Integrated Alerting</strong>: Define and manage alerts visually from your panels. Grafana continuously evaluates these rules and can send notifications to popular channels such as Slack, PagerDuty, or OpsGenie.</p>
+</li>
+</ul>
+<h2 id="prometheus-and-grafana-in-the-5g-core-context">Prometheus and Grafana in the 5G Core Context</h2>
+<p>So, how do these tools apply specifically to a free5GC deployment? A 5G core is a complex system of interconnected NFs, each responsible for a critical part of the network's operation. To ensure reliability and performance, we need to monitor Key Performance Indicators (KPIs) from each of these NFs.</p>
+<p>There are some metrics we can track in free5GC:</p>
+<ul>
+<li>
+<p><strong>AMF</strong>:</p>
+<ul>
+<li>Number of active PDU sessions.</li>
+<li>Number of UEs that are connected to the core network.</li>
+<li>Number of UEs currently in the handover procedure.</li>
+</ul>
+</li>
+<li>
+<p><strong>Other NFs</strong>:</p>
+<ul>
+<li>The latency of requests sent to other NFs.</li>
+<li>The total number of outbound SBI requests sent by an NF.</li>
+</ul>
+</li>
+</ul>
+<h2 id="a-practical-guide-integrating-with-free5gc-helm">A Practical Guide: Integrating with free5gc-helm</h2>
+<p>Starting from v4.1.0, free5GC includes support for Prometheus, which can be used with both <a href="https://github.com/free5gc/free5gc-compose">free5gc-compose</a> and <a href="https://github.com/free5gc/free5gc-helm">free5gc-helm</a>.</p>
+<p>In the following example, we will demonstrate how to set up and integrate Prometheus and Grafana with free5GC using <code>free5gc-helm</code>.</p>
+<h3 id="step-1-deploy-free5gc-with-free5gc-helm">Step 1: Deploy free5GC with free5gc-helm</h3>
+<p>You can follow our <a href="https://free5gc.org/guide/7-free5gc-helm/">official guide</a> to deploy free5gc-helm.</p>
+<p>Before installing, you need to update the configuration file of the NF you want to monitor and enable metrics. For example, to enable metrics for AMF, you should modify the <code>~/free5gc-helm/charts/free5gc/charts/free5gc-amf/values.yaml</code>, and set <code>metrics.enable</code> to <code>true</code>.<br />
+<img alt="image" src="1.png" /></p>
+<p>After installing free5gc-helm, verify that all pods are running:</p>
+<ul>
+<li><code>kubectl get pods -n free5gc</code></li>
+</ul>
+<h3 id="step-2-deploy-prometheus-and-grafana">Step 2: Deploy Prometheus and Grafana</h3>
+<p>Use the <a href="https://prometheus-community.github.io/helm-charts/">Prometheus Community Kubernetes Helm Charts</a> to install Prometheus and Grafana.</p>
+<ul>
+<li><code>helm repo add prometheus-community https://prometheus-community.github.io/helm-charts</code></li>
+<li><code>helm repo update</code></li>
+<li><code>helm install prometheus prometheus-community/kube-prometheus-stack -n free5gc</code></li>
+</ul>
+<p>After installation, confirm the pods are running:</p>
+<ul>
+<li><code>kubectl get pods -n free5gc</code><br />
+<img alt="image" src="2.png" /></li>
+</ul>
+<h3 id="step-3-deploy-the-podmonitor-to-link-prometheus-and-free5gc">Step 3: Deploy the PodMonitor to Link Prometheus and free5GC</h3>
+<p>This step links Prometheus with your free5GC pods. We provide a ready-to-use configuration file for a PodMonitor, which instructs the Prometheus Operator on how to discover and scrape metrics from the pods.</p>
+<ul>
+<li><code>cd ~/free5gc-helm/charts/free5gc</code></li>
+<li><code>kubectl apply -f prometheus.yaml</code><blockquote>
+<p><strong>Note:</strong> This example assumes free5GC is deployed in the <code>free5gc</code> namespace.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="step-4-access-prometheus-and-grafana">Step 4: Access Prometheus and Grafana</h3>
+<p>Once the <code>PodMonitor</code> is applied, the Prometheus Operator will automatically configure the Prometheus server to begin scraping your free5GC pods.</p>
+<h4 id="access-prometheus">Access Prometheus</h4>
+<ul>
+<li><code>kubectl port-forward --address 0.0.0.0 prometheus-prometheus-kube-prometheus-prometheus-0 9090:9090 -n free5gc</code></li>
+</ul>
+<p>Open your browser and confirm Prometheus is collecting metrics from each free5GC NF.<br />
+<img alt="image" src="3.png" /></p>
+<h4 id="access-grafana">Access Grafana</h4>
+<p>First, check the Grafana pod name</p>
+<ul>
+<li><code>kubectl get pods -n free5gc</code></li>
+</ul>
+<p>Then, port-forward to access Grafana:</p>
+<ul>
+<li><code>kubectl port-forward --address 0.0.0.0 &lt;grafana_pod_name&gt; 3000:3000 -n free5gc</code></li>
+</ul>
+<p>You should see the login page of Grafana<br />
+<img alt="image" src="4.png" /></p>
+<p>Log in with the default credentials:</p>
+<ul>
+<li>Username: admin</li>
+<li>Password: prom-operator</li>
+</ul>
+<h3 id="step-5-add-the-prometheus-data-source-in-grafana">Step 5: Add the Prometheus Data Source in Grafana</h3>
+<p>If the data source isn't automatically configured, you can add it manually.</p>
+<ol>
+<li>In Grafana, navigate to: <code>Home &gt; Connections &gt; Data sources &gt; Add new data source</code>.</li>
+<li>
+<p>Select Prometheus and configure the <strong>Prometheus server URL</strong> as <code>http://prometheus-operated.monitoring.svc:9090</code>.<br />
+<img alt="image" src="5.png" /></p>
+</li>
+<li>
+<p>Click <strong>Save &amp; Test</strong>. Once successful, you can start exploring your metrics.</p>
+</li>
+</ol>
+<h3 id="step-6-explore-free5gc-data-in-grafana">Step 6: Explore free5GC Data in Grafana</h3>
+<p>Before building a dashboard, the best place to verify that Grafana is receiving data from Prometheus is the Explore view.</p>
+<ol>
+<li>In the Grafana side menu, click the <strong>Explore</strong> icon.</li>
+<li>At the top of the page, select the <strong>Prometheus</strong> data source from the dropdown menu.</li>
+<li>In the query editor's Metrics browser, you can type <code>free5gc_</code> to see a list of all available metrics from your 5G core.</li>
+<li>Select a metric to query, for example, <code>free5gc_sbi_outbound_request_total</code>.</li>
+<li>Click the <strong>Run query</strong> button in the top-right corner.</li>
+</ol>
+<p>You should now see a graph displaying the real-time data for that metric, confirming that your observability pipeline is fully operational.<br />
+<img alt="image" src="6.png" /></p>
+<h2 id="building-your-first-dashboard">Building Your First Dashboard</h2>
+<p>Now that you've confirmed data is flowing, you can create dashboards to visualize it. A dashboard is a collection of panels, with each panel displaying the result of a specific query. Navigate to the <strong>Dashboards</strong> section and click <strong>Create dashboard</strong> to build your first visualization.</p>
+<p>For your convenience, we have provided a starter dashboard that you can import directly. Simply copy the JSON model in <a href="#appendix">Appendix</a> and paste it into Grafana's import tool.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The transition to a cloud-native 5G architecture is not just about containerizing network functions; it's about embracing the rich ecosystem of tools that make these dynamic systems manageable. By integrating Prometheus and Grafana with the <code>free5gc-helm</code> project, you unlock a powerful observability stack, transforming raw operational data into actionable insights. You are no longer flying blind; you now have the instrumentation to measure, analyze, and optimize your 5G core network with confidence, ensuring a more resilient and performant service for the future.</p>
+<h2 id="reference">reference</h2>
+<ul>
+<li><a href="https://prometheus.io/">Prometheus official website</a></li>
+<li><a href="https://github.com/grafana/grafana">Grafana Github</a></li>
+</ul>
+<h2 id="about-me">About me</h2>
+<p>Hi, I’m Guo-Cheng Wu, a newcomer to 5G and free5GC, and currently conducting research on Network Slicing. Let me know without hesitation if there is any mistake in the article.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<p>Github: <a href="https://github.com/leowu0407">https://github.com/leowu0407</a></p>
+<h2 id="appendix">Appendix</h2>
+<ul>
+<li>Grafana JSON Model<br />
+<div class="highlight"><pre><span></span><code>{
+  &quot;__inputs&quot;: [
+    {
+      &quot;name&quot;: &quot;DS_PROMETHEUS&quot;,
+      &quot;label&quot;: &quot;prometheus&quot;,
+      &quot;description&quot;: &quot;&quot;,
+      &quot;type&quot;: &quot;datasource&quot;,
+      &quot;pluginId&quot;: &quot;prometheus&quot;,
+      &quot;pluginName&quot;: &quot;Prometheus&quot;
+    }
+  ],
+  &quot;__elements&quot;: {},
+  &quot;__requires&quot;: [
+    {
+      &quot;type&quot;: &quot;grafana&quot;,
+      &quot;id&quot;: &quot;grafana&quot;,
+      &quot;name&quot;: &quot;Grafana&quot;,
+      &quot;version&quot;: &quot;12.1.1&quot;
+    },
+    {
+      &quot;type&quot;: &quot;datasource&quot;,
+      &quot;id&quot;: &quot;prometheus&quot;,
+      &quot;name&quot;: &quot;Prometheus&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;
+    },
+    {
+      &quot;type&quot;: &quot;panel&quot;,
+      &quot;id&quot;: &quot;stat&quot;,
+      &quot;name&quot;: &quot;Stat&quot;,
+      &quot;version&quot;: &quot;&quot;
+    },
+    {
+      &quot;type&quot;: &quot;panel&quot;,
+      &quot;id&quot;: &quot;timeseries&quot;,
+      &quot;name&quot;: &quot;Time series&quot;,
+      &quot;version&quot;: &quot;&quot;
+    }
+  ],
+  &quot;annotations&quot;: {
+    &quot;list&quot;: [
+      {
+        &quot;builtIn&quot;: 1,
+        &quot;datasource&quot;: {
+          &quot;type&quot;: &quot;grafana&quot;,
+          &quot;uid&quot;: &quot;-- Grafana --&quot;
+        },
+        &quot;enable&quot;: true,
+        &quot;hide&quot;: true,
+        &quot;iconColor&quot;: &quot;rgba(0, 211, 255, 1)&quot;,
+        &quot;name&quot;: &quot;Annotations &amp; Alerts&quot;,
+        &quot;target&quot;: {
+          &quot;limit&quot;: 100,
+          &quot;matchAny&quot;: false,
+          &quot;tags&quot;: [],
+          &quot;type&quot;: &quot;dashboard&quot;
+        },
+        &quot;type&quot;: &quot;dashboard&quot;
+      }
+    ]
+  },
+  &quot;editable&quot;: true,
+  &quot;fiscalYearStartMonth&quot;: 0,
+  &quot;graphTooltip&quot;: 0,
+  &quot;id&quot;: null,
+  &quot;links&quot;: [],
+  &quot;panels&quot;: [
+    {
+      &quot;fieldConfig&quot;: {
+        &quot;defaults&quot;: {
+          &quot;mappings&quot;: [],
+          &quot;thresholds&quot;: {
+            &quot;mode&quot;: &quot;absolute&quot;,
+            &quot;steps&quot;: [
+              {
+                &quot;color&quot;: &quot;green&quot;,
+                &quot;value&quot;: 0
+              },
+              {
+                &quot;color&quot;: &quot;red&quot;,
+                &quot;value&quot;: 80
+              }
+            ]
+          }
+        },
+        &quot;overrides&quot;: []
+      },
+      &quot;gridPos&quot;: {
+        &quot;h&quot;: 8,
+        &quot;w&quot;: 12,
+        &quot;x&quot;: 0,
+        &quot;y&quot;: 0
+      },
+      &quot;id&quot;: 1,
+      &quot;options&quot;: {
+        &quot;colorMode&quot;: &quot;value&quot;,
+        &quot;graphMode&quot;: &quot;area&quot;,
+        &quot;justifyMode&quot;: &quot;auto&quot;,
+        &quot;orientation&quot;: &quot;auto&quot;,
+        &quot;percentChangeColorMode&quot;: &quot;standard&quot;,
+        &quot;reduceOptions&quot;: {
+          &quot;calcs&quot;: [
+            &quot;lastNotNull&quot;
+          ],
+          &quot;fields&quot;: &quot;&quot;,
+          &quot;values&quot;: false
+        },
+        &quot;showPercentChange&quot;: false,
+        &quot;textMode&quot;: &quot;auto&quot;,
+        &quot;wideLayout&quot;: true
+      },
+      &quot;pluginVersion&quot;: &quot;12.1.1&quot;,
+      &quot;targets&quot;: [
+        {
+          &quot;datasource&quot;: {
+            &quot;type&quot;: &quot;prometheus&quot;,
+            &quot;uid&quot;: &quot;${DS_PROMETHEUS}&quot;
+          },
+          &quot;editorMode&quot;: &quot;builder&quot;,
+          &quot;expr&quot;: &quot;sum(clamp_min(free5gc_amf_business_ue_connectivity{instance=~\&quot;$instance\&quot;}, 0))&quot;,
+          &quot;legendFormat&quot;: &quot;__auto&quot;,
+          &quot;range&quot;: true,
+          &quot;refId&quot;: &quot;A&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Connected UEs&quot;,
+      &quot;type&quot;: &quot;stat&quot;
+    },
+    {
+      &quot;fieldConfig&quot;: {
+        &quot;defaults&quot;: {
+          &quot;mappings&quot;: [],
+          &quot;thresholds&quot;: {
+            &quot;mode&quot;: &quot;absolute&quot;,
+            &quot;steps&quot;: [
+              {
+                &quot;color&quot;: &quot;green&quot;,
+                &quot;value&quot;: 0
+              },
+              {
+                &quot;color&quot;: &quot;red&quot;,
+                &quot;value&quot;: 80
+              }
+            ]
+          }
+        },
+        &quot;overrides&quot;: []
+      },
+      &quot;gridPos&quot;: {
+        &quot;h&quot;: 8,
+        &quot;w&quot;: 12,
+        &quot;x&quot;: 12,
+        &quot;y&quot;: 0
+      },
+      &quot;id&quot;: 2,
+      &quot;options&quot;: {
+        &quot;colorMode&quot;: &quot;value&quot;,
+        &quot;graphMode&quot;: &quot;area&quot;,
+        &quot;justifyMode&quot;: &quot;auto&quot;,
+        &quot;orientation&quot;: &quot;auto&quot;,
+        &quot;percentChangeColorMode&quot;: &quot;standard&quot;,
+        &quot;reduceOptions&quot;: {
+          &quot;calcs&quot;: [
+            &quot;lastNotNull&quot;
+          ],
+          &quot;fields&quot;: &quot;&quot;,
+          &quot;values&quot;: false
+        },
+        &quot;showPercentChange&quot;: false,
+        &quot;textMode&quot;: &quot;auto&quot;,
+        &quot;wideLayout&quot;: true
+      },
+      &quot;pluginVersion&quot;: &quot;12.1.1&quot;,
+      &quot;targets&quot;: [
+        {
+          &quot;datasource&quot;: {
+            &quot;type&quot;: &quot;prometheus&quot;,
+            &quot;uid&quot;: &quot;${DS_PROMETHEUS}&quot;
+          },
+          &quot;editorMode&quot;: &quot;builder&quot;,
+          &quot;expr&quot;: &quot;sum(free5gc_amf_business_active_pdu_session_current_count{instance=~\&quot;$instance\&quot;})&quot;,
+          &quot;legendFormat&quot;: &quot;__auto&quot;,
+          &quot;range&quot;: true,
+          &quot;refId&quot;: &quot;A&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Active PDU Sessions&quot;,
+      &quot;type&quot;: &quot;stat&quot;
+    },
+    {
+      &quot;fieldConfig&quot;: {
+        &quot;defaults&quot;: {
+          &quot;color&quot;: {
+            &quot;mode&quot;: &quot;palette-classic&quot;
+          },
+          &quot;custom&quot;: {
+            &quot;axisBorderShow&quot;: false,
+            &quot;axisCenteredZero&quot;: false,
+            &quot;axisColorMode&quot;: &quot;text&quot;,
+            &quot;axisLabel&quot;: &quot;&quot;,
+            &quot;axisPlacement&quot;: &quot;auto&quot;,
+            &quot;barAlignment&quot;: 0,
+            &quot;barWidthFactor&quot;: 0.6,
+            &quot;drawStyle&quot;: &quot;line&quot;,
+            &quot;fillOpacity&quot;: 10,
+            &quot;gradientMode&quot;: &quot;opacity&quot;,
+            &quot;hideFrom&quot;: {
+              &quot;legend&quot;: false,
+              &quot;tooltip&quot;: false,
+              &quot;viz&quot;: false
+            },
+            &quot;insertNulls&quot;: false,
+            &quot;lineInterpolation&quot;: &quot;linear&quot;,
+            &quot;lineWidth&quot;: 1,
+            &quot;pointSize&quot;: 5,
+            &quot;scaleDistribution&quot;: {
+              &quot;type&quot;: &quot;linear&quot;
+            },
+            &quot;showPoints&quot;: &quot;auto&quot;,
+            &quot;spanNulls&quot;: false,
+            &quot;stacking&quot;: {
+              &quot;group&quot;: &quot;A&quot;,
+              &quot;mode&quot;: &quot;none&quot;
+            },
+            &quot;thresholdsStyle&quot;: {
+              &quot;mode&quot;: &quot;off&quot;
+            }
+          },
+          &quot;mappings&quot;: [],
+          &quot;thresholds&quot;: {
+            &quot;mode&quot;: &quot;absolute&quot;,
+            &quot;steps&quot;: [
+              {
+                &quot;color&quot;: &quot;green&quot;,
+                &quot;value&quot;: 0
+              },
+              {
+                &quot;color&quot;: &quot;red&quot;,
+                &quot;value&quot;: 80
+              }
+            ]
+          }
+        },
+        &quot;overrides&quot;: []
+      },
+      &quot;gridPos&quot;: {
+        &quot;h&quot;: 16,
+        &quot;w&quot;: 24,
+        &quot;x&quot;: 0,
+        &quot;y&quot;: 8
+      },
+      &quot;id&quot;: 4,
+      &quot;options&quot;: {
+        &quot;legend&quot;: {
+          &quot;calcs&quot;: [],
+          &quot;displayMode&quot;: &quot;list&quot;,
+          &quot;placement&quot;: &quot;bottom&quot;,
+          &quot;showLegend&quot;: true
+        },
+        &quot;tooltip&quot;: {
+          &quot;hideZeros&quot;: false,
+          &quot;mode&quot;: &quot;multi&quot;,
+          &quot;sort&quot;: &quot;none&quot;
+        }
+      },
+      &quot;pluginVersion&quot;: &quot;12.1.1&quot;,
+      &quot;targets&quot;: [
+        {
+          &quot;datasource&quot;: {
+            &quot;type&quot;: &quot;prometheus&quot;,
+            &quot;uid&quot;: &quot;${DS_PROMETHEUS}&quot;
+          },
+          &quot;editorMode&quot;: &quot;builder&quot;,
+          &quot;expr&quot;: &quot;sum by (nf_type) (rate(free5gc_sbi_outbound_request_total{nf_type=~\&quot;$nf_type\&quot;, instance=~\&quot;$instance\&quot;}[1m]))&quot;,
+          &quot;legendFormat&quot;: &quot;{{nf_type}}&quot;,
+          &quot;range&quot;: true,
+          &quot;refId&quot;: &quot;A&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;SBI Outbound Request Rate (1m avg)&quot;,
+      &quot;type&quot;: &quot;timeseries&quot;
+    },
+    {
+      &quot;fieldConfig&quot;: {
+        &quot;defaults&quot;: {
+          &quot;color&quot;: {
+            &quot;mode&quot;: &quot;palette-classic&quot;
+          },
+          &quot;custom&quot;: {
+            &quot;axisBorderShow&quot;: false,
+            &quot;axisCenteredZero&quot;: false,
+            &quot;axisColorMode&quot;: &quot;text&quot;,
+            &quot;axisLabel&quot;: &quot;&quot;,
+            &quot;axisPlacement&quot;: &quot;auto&quot;,
+            &quot;barAlignment&quot;: 0,
+            &quot;barWidthFactor&quot;: 0.6,
+            &quot;drawStyle&quot;: &quot;line&quot;,
+            &quot;fillOpacity&quot;: 10,
+            &quot;gradientMode&quot;: &quot;opacity&quot;,
+            &quot;hideFrom&quot;: {
+              &quot;legend&quot;: false,
+              &quot;tooltip&quot;: false,
+              &quot;viz&quot;: false
+            },
+            &quot;insertNulls&quot;: false,
+            &quot;lineInterpolation&quot;: &quot;linear&quot;,
+            &quot;lineWidth&quot;: 1,
+            &quot;pointSize&quot;: 5,
+            &quot;scaleDistribution&quot;: {
+              &quot;type&quot;: &quot;linear&quot;
+            },
+            &quot;showPoints&quot;: &quot;auto&quot;,
+            &quot;spanNulls&quot;: false,
+            &quot;stacking&quot;: {
+              &quot;group&quot;: &quot;A&quot;,
+              &quot;mode&quot;: &quot;none&quot;
+            },
+            &quot;thresholdsStyle&quot;: {
+              &quot;mode&quot;: &quot;off&quot;
+            }
+          },
+          &quot;mappings&quot;: [],
+          &quot;thresholds&quot;: {
+            &quot;mode&quot;: &quot;absolute&quot;,
+            &quot;steps&quot;: [
+              {
+                &quot;color&quot;: &quot;green&quot;,
+                &quot;value&quot;: 0
+              },
+              {
+                &quot;color&quot;: &quot;red&quot;,
+                &quot;value&quot;: 80
+              }
+            ]
+          },
+          &quot;unit&quot;: &quot;s&quot;
+        },
+        &quot;overrides&quot;: []
+      },
+      &quot;gridPos&quot;: {
+        &quot;h&quot;: 16,
+        &quot;w&quot;: 24,
+        &quot;x&quot;: 0,
+        &quot;y&quot;: 24
+      },
+      &quot;id&quot;: 5,
+      &quot;options&quot;: {
+        &quot;legend&quot;: {
+          &quot;calcs&quot;: [],
+          &quot;displayMode&quot;: &quot;list&quot;,
+          &quot;placement&quot;: &quot;bottom&quot;,
+          &quot;showLegend&quot;: true
+        },
+        &quot;tooltip&quot;: {
+          &quot;hideZeros&quot;: false,
+          &quot;mode&quot;: &quot;multi&quot;,
+          &quot;sort&quot;: &quot;none&quot;
+        }
+      },
+      &quot;pluginVersion&quot;: &quot;12.1.1&quot;,
+      &quot;targets&quot;: [
+        {
+          &quot;datasource&quot;: {
+            &quot;type&quot;: &quot;prometheus&quot;,
+            &quot;uid&quot;: &quot;${DS_PROMETHEUS}&quot;
+          },
+          &quot;editorMode&quot;: &quot;builder&quot;,
+          &quot;expr&quot;: &quot;(sum by (nf_type, target_service_name) (rate(free5gc_sbi_outbound_request_duration_seconds_sum{nf_type=~\&quot;$nf_type\&quot;, instance=~\&quot;$instance\&quot;}[1m])) / sum by (nf_type, target_service_name) (rate(free5gc_sbi_outbound_request_duration_seconds_count{nf_type=~\&quot;$nf_type\&quot;, instance=~\&quot;$instance\&quot;}[1m])))&quot;,
+          &quot;legendFormat&quot;: &quot;{{nf_type}} to {{target_service_name}}&quot;,
+          &quot;range&quot;: true,
+          &quot;refId&quot;: &quot;A&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Average SBI Request Latency (1m avg)&quot;,
+      &quot;type&quot;: &quot;timeseries&quot;
+    }
+  ],
+  &quot;refresh&quot;: &quot;5s&quot;,
+  &quot;schemaVersion&quot;: 41,
+  &quot;tags&quot;: [],
+  &quot;templating&quot;: {
+    &quot;list&quot;: [
+      {
+        &quot;current&quot;: {},
+        &quot;datasource&quot;: {
+          &quot;type&quot;: &quot;prometheus&quot;,
+          &quot;uid&quot;: &quot;${DS_PROMETHEUS}&quot;
+        },
+        &quot;definition&quot;: &quot;label_values(free5gc_sbi_outbound_request_total, nf_type)&quot;,
+        &quot;includeAll&quot;: true,
+        &quot;multi&quot;: true,
+        &quot;name&quot;: &quot;nf_type&quot;,
+        &quot;options&quot;: [],
+        &quot;query&quot;: {
+          &quot;query&quot;: &quot;label_values(free5gc_sbi_outbound_request_total, nf_type)&quot;,
+          &quot;refId&quot;: &quot;StandardVariableQuery&quot;
+        },
+        &quot;refresh&quot;: 1,
+        &quot;regex&quot;: &quot;&quot;,
+        &quot;type&quot;: &quot;query&quot;
+      },
+      {
+        &quot;current&quot;: {},
+        &quot;datasource&quot;: {
+          &quot;type&quot;: &quot;prometheus&quot;,
+          &quot;uid&quot;: &quot;${DS_PROMETHEUS}&quot;
+        },
+        &quot;definition&quot;: &quot;label_values(up, instance)&quot;,
+        &quot;includeAll&quot;: true,
+        &quot;multi&quot;: true,
+        &quot;name&quot;: &quot;instance&quot;,
+        &quot;options&quot;: [],
+        &quot;query&quot;: {
+          &quot;query&quot;: &quot;label_values(up, instance)&quot;,
+          &quot;refId&quot;: &quot;StandardVariableQuery&quot;
+        },
+        &quot;refresh&quot;: 1,
+        &quot;regex&quot;: &quot;&quot;,
+        &quot;type&quot;: &quot;query&quot;
+      }
+    ]
+  },
+  &quot;time&quot;: {
+    &quot;from&quot;: &quot;now-5m&quot;,
+    &quot;to&quot;: &quot;now&quot;
+  },
+  &quot;timepicker&quot;: {},
+  &quot;timezone&quot;: &quot;&quot;,
+  &quot;title&quot;: &quot;free5GC - Core Network Overview&quot;,
+  &quot;uid&quot;: &quot;68300355-86a7-4e3f-b15f-5f5a89160a6f&quot;,
+  &quot;version&quot;: 16,
+  &quot;weekStart&quot;: &quot;&quot;
+}
+</code></pre></div></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
