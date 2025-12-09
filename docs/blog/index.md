@@ -5,6 +5,7 @@
 ## Official
 
 - [2025/12/10: GTP5G Netlink Protocol Decoder: Implementation and Message Analysis](./20251210/20251210.md)
+- [2025/12/02: Introduction to BSF](./20251202/20251202.md)
 - [2025/11/26: Implementing GTP-driven Automatic Scheduling Optimization with eBPF-based Scheduler](./20251126/20251126.md)
 - [2025/11/19: NEF PFD Management Implementation and Testing](./20251119/20251119.md)
 - [2025/11/12: Getting Started with go-gtp5gnl: Userspace Control of GTP-U for free5GC UPF](./20251112/20251112.md)
