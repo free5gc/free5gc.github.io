@@ -1,0 +1,1005 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Nephio: a Cloud Native Network Automation Linux Foundation Project - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nephio-a-cloud-native-network-automation-linux-foundation-project" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Nephio: a Cloud Native Network Automation Linux Foundation Project
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nephios-goal" class="md-nav__link">
+    Nephio's Goal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-problem-does-nephio-solve" class="md-nav__link">
+    What Problem Does Nephio Solve?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-kubernetes-based-cloud-native-automation" class="md-nav__link">
+    Benefits of Kubernetes Based Cloud Native Automation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-as-a-uniform-automation-control-plane" class="md-nav__link">
+    Kubernetes as a Uniform Automation Control Plane
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nephio-release-1" class="md-nav__link">
+    Nephio Release 1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prove-of-concept-free5gc-operator" class="md-nav__link">
+    Prove-of-Concept: free5gc-operator
+  </a>
+  
+    <nav class="md-nav" aria-label="Prove-of-Concept: free5gc-operator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-nephio-free5gc-operator-do" class="md-nav__link">
+    What does Nephio free5gc-operator do?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-on-pre-provisioned-vm" class="md-nav__link">
+    Installation on Pre-Provisioned VM
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation on Pre-Provisioned VM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kick-off-an-installation-on-vm" class="md-nav__link">
+    Kick Off an Installation on VM:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free5gc-amfsmfupf-deployments-prerequisite-automatically-done-in-environment-setup" class="md-nav__link">
+    free5GC AMF/SMF/UPF Deployment's Prerequisite (automatically done in environment setup)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-start-exercises" class="md-nav__link">
+    Quick Start Exercises
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20231122/20231122.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20231122/20231122.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="nephio-a-cloud-native-network-automation-linux-foundation-project">Nephio: a Cloud Native Network Automation Linux Foundation Project</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Brian Chen (陳煜盛)<br />
+Date: 2023/11/08</p>
+</div>
+<p>As a free5GC maintainer, I'm excited to see a Linux Foundation project that utilizes our open-source software. Let's explore what Nephio can do. I will briefly introduce what is Nephio and then demonstrate how to install the free5gc-operator.</p>
+<h2 id="nephios-goal">Nephio's Goal</h2>
+<p>Nephio delivers carrier-grade, simple, open, Kubernetes-based cloud native intent automation and common automation templates that materially simplify the deployment and management of multi-vendor cloud infrastructure and network functions across large-scale edge deployments. It brings zero-touch provisioning of cloud infrastructure and network functions, which can offer increased network availability and resiliency while reducing maintenance downtime.</p>
+<h2 id="what-problem-does-nephio-solve">What Problem Does Nephio Solve?</h2>
+<p>Distributed cloud technologies facilitate edge access through on-demand, API-driven mechanisms. Regrettably, prevailing imperative, fragile, and fire-and-forget orchestration techniques face challenges in fully exploiting the dynamic capabilities inherent in these innovative infrastructure platforms. To achieve success in this domain, Nephio employs novel methodologies capable of navigating the intricacies associated with provisioning and overseeing a <strong>distributed, multi-vendor, multi-site deployment of interconnected network functions within on-demand distributed cloud environments</strong>.</p>
+<p>The objective of the solution is to handle the initial provisioning of network functions and the underlying cloud infrastructure. Additionally, it incorporates <strong>Kubernetes-enabled</strong> reconciliation to ensure network resilience amid failures, scaling occurrences, and alterations within the distributed cloud.</p>
+<h2 id="benefits-of-kubernetes-based-cloud-native-automation">Benefits of Kubernetes Based Cloud Native Automation</h2>
+<p>It enables multi-vendor support, faster onboarding, easier lifecycle management, embedded control-loop, active reconciliation, and service assurance, reducing costs through efficiency and agility. A common cloud-based automation framework, based on well-proven Kubernetes technology, minimizes the need for custom automation solutions for each application. Multi-vendor integration is enabled, improving customer experience.</p>
+<h2 id="kubernetes-as-a-uniform-automation-control-plane">Kubernetes as a Uniform Automation Control Plane</h2>
+<p>We can broadly think of three layers in the stack:</p>
+<ol>
+<li>
+<p>cloud infrastructure<br />
+Nephio releases <strong>Custom Resource Definitions (CRDs)</strong> and operators built on Kubernetes for automation in both public and private cloud infrastructures, aligning with industry standards like the <strong>O-RAN O2 interface</strong>. These CRDs and operators have the capability to leverage established projects within the Kubernetes ecosystem as interchangeable southbound interfaces (such as <strong>Google Config Connector</strong>, <strong>AWS Controllers</strong> for Kubernetes, and <strong>Azure Service Operator</strong>). This establishes an open integration point, ensuring a more consistent approach to automation across various service providers.</p>
+</li>
+<li>
+<p>workload (network function) resources<br />
+It covers configuring the provisioning of network function containers and the associated requirements for nodes and network fabric. This encompasses native Kubernetes primitives and industry extensions like <strong>multi-network Pods</strong>, <strong>SR-IOV</strong>, and similar technologies.<br />
+Currently, efficient utilization of these features demands intricate <strong>Infrastructure-as-Code</strong> templates tailored to specific network functions. Nephio aims to simplify this process by adopting a <strong>Configuration-as-Data</strong> approach, utilizing Kubernetes CRDs and well-structured schemas to enable robust, standards-based automation for network function configuration.</p>
+</li>
+<li>
+<p>workload (network function) configuration.<br />
+Nephio starts by offering tools and libraries to support vendors in merging their current <strong>Yang</strong> and other industry models with Nephio, complying with standards (e.g., 01, 3GPP interface specs). To completely grasp the advantages of cloud-native automation, these models must transition to Kubernetes CRDs since these configurations are closely linked to those elucidated in (2). Nephio furnishes identical tooling across each stratum, facilitating the automation of interconnected configurations amidst these layers.</p>
+</li>
+</ol>
+<p><img alt="image" src="../001.png" /></p>
+<blockquote>
+<p>Configuration Layers</p>
+</blockquote>
+<h2 id="nephio-release-1">Nephio Release 1</h2>
+<p>Project Nephio announced the availability of Release 1 (R1) on August, 2023.</p>
+<p>Nephio R1 brings revolutionary advancements in deployment, life cycle management and scaling of telecom cloud infrastructure and network functions by using Kubernetes cloud native technologies and intent-based automation.</p>
+<p>For more details, see <a href="https://wiki.nephio.org/display/HOME/Learning+with+Nephio+R1">Learning Nephio R1</a>.</p>
+<p>Release 1 highlights:</p>
+<ul>
+<li>A framework to orchestrate <strong>cloud native network functions (CNF)</strong>, infrastructure, and cross-domain lifecycle management</li>
+<li>Core Nephio principles and Kubernetes integration with <strong>custom resource definitions (CRDs)</strong>.</li>
+<li>Enhanced user experience and sandbox environment.</li>
+</ul>
+<h2 id="prove-of-concept-free5gc-operator">Prove-of-Concept: free5gc-operator</h2>
+<p>You can refer to the <a href="https://docs.google.com/presentation/d/1IIrKVZYXXuNqCD8BSNNqYNu92TtzwvRoEzKWadLrgWQ/edit?usp=sharing">PowerPoint presentations</a> and <a href="https://www.youtube.com/watch?v=dUJopjY5F08">YouTube videos</a> they have posted to fully grasp the entire concept and architecture. Here, I attach some architectural diagrams of <strong>free5gc-operator</strong> below, but for more detailed information, I recommend watching the videos.</p>
+<p><img alt="image" src="../002.png" /></p>
+<p>Nephio project utilizes <a href="https://kpt.dev/guides/rationale">KPT</a>, a toolkit develop by Google, which help you manage, manipulate, customize, and apply Kubernetes Resource configuration data files. KPT supports management of Configuration as Data, which is an approach to management of configuration which</p>
+<ul>
+<li>makes configuration data the <strong>source of truth</strong>, stored separately from the live state</li>
+<li>uses a uniform, serializable data model to represent configuration</li>
+<li>separates code that acts on the configuration from the data and from packages / bundles of the data</li>
+<li>abstracts configuration file structure and storage from operations that act upon the configuration data; clients manipulating configuration data don't need to directly interact with storage (git, container images)</li>
+</ul>
+<p><img alt="image" src="../003.png" /></p>
+<p><img alt="image" src="../004.png" /></p>
+<h3 id="what-does-nephio-free5gc-operator-do">What does Nephio free5gc-operator do?</h3>
+<ol>
+<li>Reconciles <strong>{AMF,SMF,UPF}Deployment CustomResources (CRs)</strong></li>
+<li>For all three NFs, they each have a <strong>Deployment</strong> and a <strong>ConfigMap</strong> Kubernetes object, and for AMF and SMF, they also have a <strong>Service resource</strong><ul>
+<li>Determines resource needs based on capacity input</li>
+<li>Builds these K8s objects with XXXDeployment CRs fields as input</li>
+</ul>
+</li>
+<li>Manages dependencies<ul>
+<li>Ensures that the corresponding <strong>NADs</strong> exist in namespace</li>
+<li>Creates <strong>ConfigMap</strong> before applying <strong>Deployment</strong></li>
+</ul>
+</li>
+<li>Associates objects with CR</li>
+<li>Updates status for XXXDeployment</li>
+<li>Ensures <strong>ConfigMap</strong> updates will lead to <strong>Deployment</strong> update</li>
+</ol>
+<h3 id="environment-setup">Environment Setup</h3>
+<p>Before cloning and launching a free5gc-operator, you need to setup an environment which matches the official demonstration. The official recommendation includes two installation methods:</p>
+<ul>
+<li>through the <strong>Google Compute Engine (GCE)</strong> to set up the environment with an account of Google Cloud Platform,</li>
+<li>directly preparing a Pre-Provisioned <strong>VM</strong> to set up the environment required for free5gc-operator.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to the mandatory hardware resource requirements set by the official guidelines, which include an <strong>8-core CPU, 16 GB of memory, 200 GB disk</strong>, the resources needed are quite &gt;substantial. If you operate on the Google Cloud Native platform, you may incur significant charges on your credit card. Therefore, I recommend installing the environment on a virtual &gt;machine (VM) on your local machine for follow-on exercises.</p>
+</div>
+<h3 id="installation-on-pre-provisioned-vm">Installation on Pre-Provisioned VM</h3>
+<p>After completing the Ubuntu 20.04 focal installation, you need to get a sudo passwordless permissions. Edit <code>/etc/sudoers</code>:<br />
+<div class="highlight"><pre><span></span><code>$ sudo vim /etc/sudoers
+</code></pre></div></p>
+<p>Add 2 lines:</p>
+<div class="highlight"><pre><span></span><code>&lt;linux username&gt;   ALL=(ALL:ALL) NOPASSWD:ALL
+sudo    ALL=(ALL:ALL) NOPASSWD:ALL
+</code></pre></div>
+<h4 id="kick-off-an-installation-on-vm">Kick Off an Installation on VM:</h4>
+<p><div class="highlight"><pre><span></span><code>wget -O - https://raw.githubusercontent.com/nephio-project/test-infra/v1.0.1/e2e/provision/init.sh |  \
+sudo NEPHIO_DEBUG=false   \
+     NEPHIO_BRANCH=v1.0.1 \
+     NEPHIO_USER=&lt;linux username&gt;   \
+     bash
+</code></pre></div><br />
+The next step is to wait for <strong>Ansible</strong> to automatically set up the environment. The entire process may take approximately 10 minutes, so please be patient. Once it is completed, ssh in and port forward the port to the UI (7007) and to Gitea's HTTP interface, if desired (3000):</p>
+<p><div class="highlight"><pre><span></span><code>ssh &lt;user&gt;@&lt;vm-address&gt; \
+                -L 7007:localhost:7007 \
+                -L 3000:172.18.0.200:3000 \
+                kubectl port-forward --namespace=nephio-webui svc/nephio-webui 7007
+</code></pre></div><br />
+You can now navigate to:</p>
+<ul>
+<li>
+<p><a href="http://localhost:7007/config-as-data">http://localhost:7007/config-as-data</a> to browse the Nephio Web UI<br />
+<img alt="image" src="../005.png" /></p>
+</li>
+<li>
+<p><a href="http://localhost:3000/nephio">http://localhost:3000/nephio</a> to browse the Gitea UI<br />
+<img alt="image" src="../006.png" /></p>
+</li>
+</ul>
+<h3 id="free5gc-amfsmfupf-deployments-prerequisite-automatically-done-in-environment-setup">free5GC AMF/SMF/UPF Deployment's Prerequisite (automatically done in environment setup)</h3>
+<ol>
+<li>Install <strong>multus</strong></li>
+<li>Install <strong>CNI binary (macvlan)</strong> on all hosts that can possibly run free5gc AMF, SMF, or UPF</li>
+<li>Install <strong>gtp5g</strong> on nodes that could run UPF</li>
+<li>Install <strong>sctp</strong> on nodes that could run AMF</li>
+<li>Connectivity:<br />
+    a. IP address allocation and reachability</li>
+<li><strong>Network Attachment Definitions (NADs)</strong> for all the secondary interfaces</li>
+<li>3GPP related configs (PLMN, S-NSSAI info)</li>
+<li>free5gc SMF config requires connected UPF information</li>
+<li>Client (such as <strong>UERANSIM</strong>) set up with corresponding IP addresses and 3GPP info</li>
+</ol>
+<h3 id="quick-start-exercises">Quick Start Exercises</h3>
+<p>You can follow the tutorial steps in this <a href="https://github.com/nephio-project/docs/blob/main/user-guide/exercises.md">page</a>. I won't show all detail in this article. I only list the action of all steps:</p>
+<ul>
+<li>Step 1: Create the Regional cluster</li>
+<li>Step 2: Check the Regional cluster installation</li>
+<li>Step 3: Deploy two Edge clusters</li>
+<li>Step 4: Deploy Free5GC Control Plane Functions</li>
+<li>Step 5: Deploy Free5GC Operator in the Workload clusters</li>
+<li>Step 6: Check Free5GC Operator Deployment</li>
+<li>Step 7: Deploy the AMF, SMF and UPF NFs</li>
+<li>Step 8: Deploy UERANSIM</li>
+<li>Step 9: Change the Capacities of the UPF and SMF NFs</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://nephio.org/">https://nephio.org/</a></li>
+<li><a href="https://nephio.org/about/">https://nephio.org/about/</a></li>
+<li><a href="https://github.com/nephio-project/docs/blob/main/install-guide/README.md#demonstration-environment-installation">https://github.com/nephio-project/docs/blob/main/install-guide/README.md#demonstration-environment-installation</a></li>
+<li><a href="https://github.com/nephio-project/docs/blob/main/user-guide/exercises.md">https://github.com/nephio-project/docs/blob/main/user-guide/exercises.md</a></li>
+<li><a href="https://pkg.go.dev/github.com/GoogleContainerTools/kpt#section-readme">https://pkg.go.dev/github.com/GoogleContainerTools/kpt#section-readme</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello everyone, I'm Brian Chen (陳煜盛). Currently, I am pursuing a master's degree and have been interning at Saviah for 10 months. My current role involves maintaining free5GC and reviewing issues and PR. Additionally, I am researching Kubernetes with the aim of improving the efficiency of deployment experiences for free5GC. There is still a lot of knowledge for me to acquire, so please feel free to contact me if you have any questions or would like to discuss anything.</p>
+<ul>
+<li><a href="https://github.com/brianchennn">My GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/brianchennn/">LinkedIn</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

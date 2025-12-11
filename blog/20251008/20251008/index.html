@@ -1,0 +1,1591 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Getting Started with ns-3: A Guide to Network Simulation and 5G Modeling - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started-with-ns-3-a-guide-to-network-simulation-and-5g-modeling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started with ns-3: A Guide to Network Simulation and 5G Modeling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-discrete-event-simulation" class="md-nav__link">
+    What is Discrete-Event Simulation?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    Key Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    Use Cases
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-installation-and-environment-setup" class="md-nav__link">
+    2. Installation and Environment Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Installation and Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    System Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-steps" class="md-nav__link">
+    Installation Steps
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-install-dependencies" class="md-nav__link">
+    Step 1: Install Dependencies:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-download-ns-3-source-code-using-version-342-as-an-example" class="md-nav__link">
+    Step 2: Download ns-3 Source Code (using version 3.42 as an example)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-configure-and-build" class="md-nav__link">
+    Step 3: Configure and Build:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-verify-installation" class="md-nav__link">
+    Step 4: Verify Installation:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-installation-notes" class="md-nav__link">
+    macOS Installation Notes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-understanding-ns-3-directory-structure" class="md-nav__link">
+    3. Understanding ns-3 Directory Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-compiling-and-running-simulations" class="md-nav__link">
+    4. Compiling and Running Simulations
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Compiling and Running Simulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-a-scratch-program" class="md-nav__link">
+    Running a Scratch Program
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-an-example" class="md-nav__link">
+    Running an Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-parameters" class="md-nav__link">
+    Adding Parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-example-the-3gpp-channel-model-simulation" class="md-nav__link">
+    5. Example: The 3GPP Channel Model Simulation
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Example: The 3GPP Channel Model Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-example" class="md-nav__link">
+    Code Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-components-explained" class="md-nav__link">
+    Key Components Explained
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Components Explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#node-and-mobility-setup" class="md-nav__link">
+    Node and Mobility Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helper-classes" class="md-nav__link">
+    Helper Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epc-and-internet-configuration" class="md-nav__link">
+    EPC and Internet Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applications" class="md-nav__link">
+    Applications
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    Visualization
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-qt-required-for-netanim-gui" class="md-nav__link">
+    Install Qt (required for NetAnim GUI):
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-netanim" class="md-nav__link">
+    Compile NetAnim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-netanim" class="md-nav__link">
+    Run NetAnim:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About me
+  </a>
+  
+    <nav class="md-nav" aria-label="About me">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251008/20251008.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251008/20251008.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="getting-started-with-ns-3-a-guide-to-network-simulation-and-5g-modeling">Getting Started with ns-3: A Guide to Network Simulation and 5G Modeling</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Pei-Chi, Cheng<br />
+Date: 2025/10/08</p>
+</div>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>ns-3 is a discrete-event network simulator designed primarily for academic research and education. Unlike network emulation tools that mimic real-world networks, ns-3 focuses on simulating network behavior in a controlled, virtual environment. It is widely used to study network protocols, evaluate performance, and test network designs.</p>
+<h3 id="what-is-discrete-event-simulation">What is Discrete-Event Simulation?</h3>
+<p>Discrete-event simulation processes events (e.g., packet transmission, node movement) at specific time points, making it efficient for modeling complex network scenarios without continuous computation.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li>Modular Design: ns-3 is highly modular, allowing users to customize and extend its functionality.</li>
+<li>Protocol Support: Supports a wide range of protocols including IPv4/IPv6, TCP/UDP, LTE/5G, Wi-Fi, and more.</li>
+<li>Event-Driven: Operates as a discrete-event simulator, processing events in a time-based sequence.</li>
+<li>Programming APIs: Provides APIs for both C++ and Python, catering to different user preferences.</li>
+</ul>
+<h3 id="use-cases">Use Cases</h3>
+<ul>
+<li>Researching and developing network protocols.</li>
+<li>Designing and testing network topologies.</li>
+<li>Simulating wireless, satellite, or mobile networks.</li>
+<li>Educational demonstrations for networking concepts.</li>
+</ul>
+<h2 id="2-installation-and-environment-setup">2. Installation and Environment Setup</h2>
+<h3 id="system-requirements">System Requirements</h3>
+<p>ns-3 is primarily developed for Linux environments, with Ubuntu being the most commonly used platform. Required tools include:</p>
+<ul>
+<li>g++: C++ compiler.</li>
+<li>Python: For scripting and PyBind support.</li>
+<li>CMake: For build configuration.</li>
+<li>Additional dependencies like libxml2, sqlite, and others may be needed depending on modules.</li>
+</ul>
+<h3 id="installation-steps">Installation Steps</h3>
+<h4 id="step-1-install-dependencies">Step 1: Install Dependencies:</h4>
+<div class="highlight"><pre><span></span><code>sudo apt update
+sudo apt install -y git g++ python3 python3-dev \
+  cmake ninja-build pkg-config sqlite3 \
+  libsqlite3-dev libboost-all-dev \
+  libgsl-dev libgtk-3-dev
+</code></pre></div>
+<h4 id="step-2-download-ns-3-source-code-using-version-342-as-an-example">Step 2: Download ns-3 Source Code (using version 3.42 as an example)</h4>
+<div class="highlight"><pre><span></span><code>wget https://www.nsnam.org/releases/ns-allinone-3.42.tar.bz2
+tar xfj ns-allinone-3.42.tar.bz2
+cd ns-allinone-3.42/ns-3.42
+</code></pre></div>
+<h4 id="step-3-configure-and-build">Step 3: Configure and Build:</h4>
+<div class="highlight"><pre><span></span><code>./ns3 configure --enable-examples --enable-tests
+./ns3 build
+</code></pre></div>
+<p>Upon successful compilation, the terminal will display the configured modules, indicating which packages are included in your ns-3 simulator.<br />
+<img alt="image" src="../config.png" /></p>
+<h4 id="step-4-verify-installation">Step 4: Verify Installation:</h4>
+<p>Run a sample program to confirm the setup:<br />
+<div class="highlight"><pre><span></span><code>./ns3 run hello-simulator
+</code></pre></div><br />
+A successful run will produce output confirming the simulator is operational.<br />
+<img alt="image" src="../verify.png" /></p>
+<h4 id="macos-installation-notes">macOS Installation Notes</h4>
+<p>For macOS, install dependencies using Homebrew:<br />
+<div class="highlight"><pre><span></span><code>brew install git python3 cmake ninja pkg-config sqlite boost gsl gtk+3
+</code></pre></div><br />
+For Windows, use WSL2 with Ubuntu or a Docker container.</p>
+<h2 id="3-understanding-ns-3-directory-structure">3. Understanding ns-3 Directory Structure</h2>
+<p>To navigate ns-3 effectively, understanding its directory structure is crucial. Below are key folders and their purposes:</p>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scratch/</code></td>
+<td>User-written test scripts for quick experiments</td>
+</tr>
+<tr>
+<td><code>examples/</code></td>
+<td>Official example programs demonstrating built-in features</td>
+</tr>
+<tr>
+<td><code>src/</code></td>
+<td>Core protocol modules (e.g., Wi-Fi, LTE, TCP/IP stack)</td>
+</tr>
+<tr>
+<td><code>utils/</code></td>
+<td>Utility tools for trace analysis and data collection</td>
+</tr>
+<tr>
+<td><code>contrib/</code></td>
+<td>Community-contributed extensions (e.g., 5G LENA)</td>
+</tr>
+<tr>
+<td><code>build/</code></td>
+<td>Compiled binaries and output files</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-compiling-and-running-simulations">4. Compiling and Running Simulations</h2>
+<h3 id="running-a-scratch-program">Running a Scratch Program</h3>
+<p>To execute a user-written script (e.g., mytest) in the <code>scratch/</code> directory:<br />
+<div class="highlight"><pre><span></span><code>./ns3 run scratch/mytest
+</code></pre></div><br />
+Note: In older ns-3 versions, use <code>./waf</code> instead of <code>./ns3</code>:<br />
+<div class="highlight"><pre><span></span><code>./waf run scratch/mytest
+</code></pre></div></p>
+<h3 id="running-an-example">Running an Example</h3>
+<p>To execute an official example:<br />
+<div class="highlight"><pre><span></span><code>./ns3 run examples/tutorial/first.cc
+</code></pre></div></p>
+<h3 id="adding-parameters">Adding Parameters</h3>
+<p>Pass custom parameters to simulations:<br />
+<div class="highlight"><pre><span></span><code>./ns3 run &quot;scratch/mytest --param=5 --duration=10s&quot;
+</code></pre></div></p>
+<h2 id="5-example-the-3gpp-channel-model-simulation">5. Example: The 3GPP Channel Model Simulation</h2>
+<h3 id="overview">Overview</h3>
+<p>The <code>cttc-3gpp-channel-example.cc</code> from the 5G LENA module simulates a 5G NR network with:</p>
+<ul>
+<li>RemoteHost: Sends UDP traffic to user equipment (UEs).</li>
+<li>PGW: Connects UEs to the external network.</li>
+<li>gNB1, gNB2: 5G base stations.</li>
+<li>UE1, UE2: User equipment nodes.</li>
+</ul>
+<p>The simulation configures:</p>
+<ul>
+<li>3GPP TR 38.901 channel model.</li>
+<li>Antennas, beamforming, and TDMA-RR scheduler.</li>
+<li>UDP downlink traffic (10 packets per UE).</li>
+</ul>
+<p>The TR 38.901 model provides realistic channel characteristics for 5G, supporting scenarios like:</p>
+<ul>
+<li>UMa (Urban Macro): High base stations in urban areas.</li>
+<li>RMa (Rural Macro): Wide coverage in rural settings.</li>
+<li>UMi-StreetCanyon: Urban street-level environments.</li>
+</ul>
+<h3 id="code-example">Code Example</h3>
+<p>Below is the core code for <code>cttc-3gpp-channel-example.cc</code>. It leverages ns-3 Helper classes to simplify the setup of complex network components.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Copyright (c) 2019 Centre Tecnologic de Telecomunicacions de Catalunya (CTTC)</span>
+<span class="c1">//</span>
+<span class="c1">// SPDX-License-Identifier: GPL-2.0-only</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * \file cttc-3gpp-channel-example.cc</span>
+<span class="cm"> * \ingroup examples</span>
+<span class="cm"> * \brief Channel Example</span>
+<span class="cm"> *</span>
+<span class="cm"> * This example describes how to setup a simulation using the 3GPP channel model</span>
+<span class="cm"> * from TR 38.901. Topology consists by default of 2 UEs and 2 gNbs, and can be</span>
+<span class="cm"> * configured to be either mobile or static scenario.</span>
+<span class="cm"> *</span>
+<span class="cm"> * The output of this example are default NR trace files that can be found in</span>
+<span class="cm"> * the root ns-3 project folder.</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/applications-module.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/config-store.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/core-module.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/internet-module.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/ipv4-global-routing-helper.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/log.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/mobility-module.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/nr-helper.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/nr-mac-scheduler-tdma-rr.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/nr-module.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/nr-point-to-point-epc-helper.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/point-to-point-helper.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ns3/antenna-module.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ns3/buildings-helper.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ns3/netanim-module.h&quot;</span>
+
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">ns3</span><span class="p">;</span>
+
+<span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">scenario</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;UMa&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// scenario</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">28e9</span><span class="p">;</span><span class="w">      </span><span class="c1">// central frequency</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">bandwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100e6</span><span class="p">;</span><span class="w">     </span><span class="c1">// bandwidth</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">mobility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">      </span><span class="c1">// whether to enable mobility</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">simTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">           </span><span class="c1">// in second</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">             </span><span class="c1">// in m/s for walking UT.</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">logging</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// whether to enable logging from the simulation, another option is by</span>
+<span class="w">                         </span><span class="c1">// exporting the NS_LOG environment variable</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">hBS</span><span class="p">;</span><span class="w">          </span><span class="c1">// base station antenna height in meters</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">hUT</span><span class="p">;</span><span class="w">          </span><span class="c1">// user antenna height in meters</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">txPower</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">40</span><span class="p">;</span><span class="w"> </span><span class="c1">// txPower</span>
+<span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">BandwidthPartInfo</span><span class="o">::</span><span class="n">Scenario</span><span class="w"> </span><span class="n">scenarioEnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BandwidthPartInfo</span><span class="o">::</span><span class="n">UMa</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">CommandLine</span><span class="w"> </span><span class="n">cmd</span><span class="p">(</span><span class="n">__FILE__</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cmd</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="s">&quot;scenario&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="s">&quot;The scenario for the simulation. Choose among &#39;RMa&#39;, &#39;UMa&#39;, &#39;UMi-StreetCanyon&#39;, &quot;</span>
+<span class="w">                 </span><span class="s">&quot;&#39;InH-OfficeMixed&#39;, &#39;InH-OfficeOpen&#39;.&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="n">scenario</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cmd</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="s">&quot;frequency&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The central carrier frequency in Hz.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">frequency</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cmd</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="s">&quot;mobility&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="s">&quot;If set to 1 UEs will be mobile, when set to 0 UE will be static. By default, &quot;</span>
+<span class="w">                 </span><span class="s">&quot;they are mobile.&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="n">mobility</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cmd</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="s">&quot;logging&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;If set to 0, log components will be disabled.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">logging</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cmd</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// enable logging</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logging</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;ThreeGppSpectrumPropagationLossModel&quot;, LOG_LEVEL_ALL);</span>
+<span class="w">        </span><span class="n">LogComponentEnable</span><span class="p">(</span><span class="s">&quot;ThreeGppPropagationLossModel&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LOG_LEVEL_ALL</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;ThreeGppChannelModel&quot;, LOG_LEVEL_ALL);</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;ChannelConditionModel&quot;, LOG_LEVEL_ALL);</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;UdpClient&quot;, LOG_LEVEL_INFO);</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;UdpServer&quot;, LOG_LEVEL_INFO);</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;NrRlcUm&quot;, LOG_LEVEL_LOGIC);</span>
+<span class="w">        </span><span class="c1">// LogComponentEnable (&quot;NrPdcp&quot;, LOG_LEVEL_INFO);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">     * Default values for the simulation. We are progressively removing all</span>
+<span class="cm">     * the instances of SetDefault, but we need it for legacy code (LTE)</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="n">Config</span><span class="o">::</span><span class="n">SetDefault</span><span class="p">(</span><span class="s">&quot;ns3::NrRlcUm::MaxTxBufferSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">999999999</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// set mobile device and base station antenna heights in meters, according to the chosen</span>
+<span class="w">    </span><span class="c1">// scenario</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scenario</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;RMa&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">hBS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">35</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="p">;</span>
+<span class="w">        </span><span class="n">scenarioEnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BandwidthPartInfo</span><span class="o">::</span><span class="n">RMa</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scenario</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;UMa&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">hBS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">25</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="p">;</span>
+<span class="w">        </span><span class="n">scenarioEnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BandwidthPartInfo</span><span class="o">::</span><span class="n">UMa</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scenario</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;UMi-StreetCanyon&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">hBS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="p">;</span>
+<span class="w">        </span><span class="n">scenarioEnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BandwidthPartInfo</span><span class="o">::</span><span class="n">UMi_StreetCanyon</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scenario</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;InH-OfficeMixed&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">hBS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="n">scenarioEnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BandwidthPartInfo</span><span class="o">::</span><span class="n">InH_OfficeMixed</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scenario</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;InH-OfficeOpen&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">hBS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="n">scenarioEnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BandwidthPartInfo</span><span class="o">::</span><span class="n">InH_OfficeOpen</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">NS_ABORT_MSG</span><span class="p">(</span><span class="s">&quot;Scenario not supported. Choose among &#39;RMa&#39;, &#39;UMa&#39;, &#39;UMi-StreetCanyon&#39;, &quot;</span>
+<span class="w">                     </span><span class="s">&quot;&#39;InH-OfficeMixed&#39;, and &#39;InH-OfficeOpen&#39;.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// create base stations and mobile terminals</span>
+<span class="w">    </span><span class="n">NodeContainer</span><span class="w"> </span><span class="n">gnbNodes</span><span class="p">;</span>
+<span class="w">    </span><span class="n">NodeContainer</span><span class="w"> </span><span class="n">ueNodes</span><span class="p">;</span>
+<span class="w">    </span><span class="n">gnbNodes</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// position the base stations</span>
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">ListPositionAllocator</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gnbPositionAlloc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">ListPositionAllocator</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">gnbPositionAlloc</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">hBS</span><span class="p">));</span>
+<span class="w">    </span><span class="n">gnbPositionAlloc</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">,</span><span class="w"> </span><span class="n">hBS</span><span class="p">));</span>
+<span class="w">    </span><span class="n">MobilityHelper</span><span class="w"> </span><span class="n">gnbMobility</span><span class="p">;</span>
+<span class="w">    </span><span class="n">gnbMobility</span><span class="p">.</span><span class="n">SetMobilityModel</span><span class="p">(</span><span class="s">&quot;ns3::ConstantPositionMobilityModel&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">gnbMobility</span><span class="p">.</span><span class="n">SetPositionAllocator</span><span class="p">(</span><span class="n">gnbPositionAlloc</span><span class="p">);</span>
+<span class="w">    </span><span class="n">gnbMobility</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">gnbNodes</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// position the mobile terminals and enable the mobility</span>
+<span class="w">    </span><span class="n">MobilityHelper</span><span class="w"> </span><span class="n">uemobility</span><span class="p">;</span>
+<span class="w">    </span><span class="n">uemobility</span><span class="p">.</span><span class="n">SetMobilityModel</span><span class="p">(</span><span class="s">&quot;ns3::ConstantVelocityMobilityModel&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">uemobility</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">ueNodes</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mobility</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">MobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetPosition</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Vector</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">hUT</span><span class="p">));</span><span class="w"> </span><span class="c1">// (x, y, z) in m</span>
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">ConstantVelocityMobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetVelocity</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="c1">// move UE1 along the y axis</span>
+
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">MobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetPosition</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Vector</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mf">50.0</span><span class="p">,</span><span class="w"> </span><span class="n">hUT</span><span class="p">));</span><span class="w"> </span><span class="c1">// (x, y, z) in m</span>
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">ConstantVelocityMobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetVelocity</span><span class="p">(</span>
+<span class="w">            </span><span class="n">Vector</span><span class="p">(</span><span class="o">-</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="c1">// move UE2 along the x axis</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">MobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">hUT</span><span class="p">));</span>
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">ConstantVelocityMobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetVelocity</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">MobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mf">50.0</span><span class="p">,</span><span class="w"> </span><span class="n">hUT</span><span class="p">));</span>
+<span class="w">        </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">ConstantVelocityMobilityModel</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetVelocity</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">     * Create NR simulation helpers</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">NrPointToPointEpcHelper</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nrEpcHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">NrPointToPointEpcHelper</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">IdealBeamformingHelper</span><span class="o">&gt;</span><span class="w"> </span><span class="n">idealBeamformingHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">IdealBeamformingHelper</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">NrHelper</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nrHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">NrHelper</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetBeamformingHelper</span><span class="p">(</span><span class="n">idealBeamformingHelper</span><span class="p">);</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetEpcHelper</span><span class="p">(</span><span class="n">nrEpcHelper</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">     * Spectrum configuration. We create a single operational band and configure the scenario.</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="n">BandwidthPartInfoPtrVector</span><span class="w"> </span><span class="n">allBwps</span><span class="p">;</span>
+<span class="w">    </span><span class="n">CcBwpCreator</span><span class="w"> </span><span class="n">ccBwpCreator</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">numCcPerBand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// in this example we have a single band, and that band is</span>
+<span class="w">                                    </span><span class="c1">// composed of a single component carrier</span>
+
+<span class="w">    </span><span class="cm">/* Create the configuration for the CcBwpHelper. SimpleOperationBandConf creates</span>
+<span class="cm">     * a single BWP per CC and a single BWP in CC.</span>
+<span class="cm">     *</span>
+<span class="cm">     * Hence, the configured spectrum is:</span>
+<span class="cm">     *</span>
+<span class="cm">     * |---------------Band---------------|</span>
+<span class="cm">     * |---------------CC-----------------|</span>
+<span class="cm">     * |---------------BWP----------------|</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="n">CcBwpCreator</span><span class="o">::</span><span class="n">SimpleOperationBandConf</span><span class="w"> </span><span class="n">bandConf</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span>
+<span class="w">                                                   </span><span class="n">bandwidth</span><span class="p">,</span>
+<span class="w">                                                   </span><span class="n">numCcPerBand</span><span class="p">,</span>
+<span class="w">                                                   </span><span class="n">scenarioEnum</span><span class="p">);</span>
+<span class="w">    </span><span class="n">OperationBandInfo</span><span class="w"> </span><span class="n">band</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ccBwpCreator</span><span class="p">.</span><span class="n">CreateOperationBandContiguousCc</span><span class="p">(</span><span class="n">bandConf</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Initialize channel and pathloss, plus other things inside band.</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">InitializeOperationBand</span><span class="p">(</span><span class="o">&amp;</span><span class="n">band</span><span class="p">);</span>
+<span class="w">    </span><span class="n">allBwps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CcBwpCreator</span><span class="o">::</span><span class="n">GetAllBwps</span><span class="p">({</span><span class="n">band</span><span class="p">});</span>
+
+<span class="w">    </span><span class="c1">// Configure ideal beamforming method</span>
+<span class="w">    </span><span class="n">idealBeamformingHelper</span><span class="o">-&gt;</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&quot;BeamformingMethod&quot;</span><span class="p">,</span>
+<span class="w">                                         </span><span class="n">TypeIdValue</span><span class="p">(</span><span class="n">DirectPathBeamforming</span><span class="o">::</span><span class="n">GetTypeId</span><span class="p">()));</span>
+
+<span class="w">    </span><span class="c1">// Configure scheduler</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetSchedulerTypeId</span><span class="p">(</span><span class="n">NrMacSchedulerTdmaRR</span><span class="o">::</span><span class="n">GetTypeId</span><span class="p">());</span>
+
+<span class="w">    </span><span class="c1">// Antennas for the UEs</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetUeAntennaAttribute</span><span class="p">(</span><span class="s">&quot;NumRows&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetUeAntennaAttribute</span><span class="p">(</span><span class="s">&quot;NumColumns&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetUeAntennaAttribute</span><span class="p">(</span><span class="s">&quot;AntennaElement&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">PointerValue</span><span class="p">(</span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">IsotropicAntennaModel</span><span class="o">&gt;</span><span class="p">()));</span>
+
+<span class="w">    </span><span class="c1">// Antennas for the gNbs</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetGnbAntennaAttribute</span><span class="p">(</span><span class="s">&quot;NumRows&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">8</span><span class="p">));</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetGnbAntennaAttribute</span><span class="p">(</span><span class="s">&quot;NumColumns&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">8</span><span class="p">));</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">SetGnbAntennaAttribute</span><span class="p">(</span><span class="s">&quot;AntennaElement&quot;</span><span class="p">,</span>
+<span class="w">                                     </span><span class="n">PointerValue</span><span class="p">(</span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">IsotropicAntennaModel</span><span class="o">&gt;</span><span class="p">()));</span>
+
+<span class="w">    </span><span class="c1">// install nr net devices</span>
+<span class="w">    </span><span class="n">NetDeviceContainer</span><span class="w"> </span><span class="n">gnbNetDev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">InstallGnbDevice</span><span class="p">(</span><span class="n">gnbNodes</span><span class="p">,</span><span class="w"> </span><span class="n">allBwps</span><span class="p">);</span>
+<span class="w">    </span><span class="n">NetDeviceContainer</span><span class="w"> </span><span class="n">ueNetDev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">InstallUeDevice</span><span class="p">(</span><span class="n">ueNodes</span><span class="p">,</span><span class="w"> </span><span class="n">allBwps</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">randomStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">randomStream</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">AssignStreams</span><span class="p">(</span><span class="n">gnbNetDev</span><span class="p">,</span><span class="w"> </span><span class="n">randomStream</span><span class="p">);</span>
+<span class="w">    </span><span class="n">randomStream</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">AssignStreams</span><span class="p">(</span><span class="n">ueNetDev</span><span class="p">,</span><span class="w"> </span><span class="n">randomStream</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">GetGnbPhy</span><span class="p">(</span><span class="n">gnbNetDev</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SetTxPower</span><span class="p">(</span><span class="n">txPower</span><span class="p">);</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">GetGnbPhy</span><span class="p">(</span><span class="n">gnbNetDev</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SetTxPower</span><span class="p">(</span><span class="n">txPower</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// When all the configuration is done, explicitly call UpdateConfig ()</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gnbNetDev</span><span class="p">.</span><span class="n">Begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">gnbNetDev</span><span class="p">.</span><span class="n">End</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">DynamicCast</span><span class="o">&lt;</span><span class="n">NrGnbNetDevice</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">UpdateConfig</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ueNetDev</span><span class="p">.</span><span class="n">Begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ueNetDev</span><span class="p">.</span><span class="n">End</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">DynamicCast</span><span class="o">&lt;</span><span class="n">NrUeNetDevice</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">UpdateConfig</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// create the internet and install the IP stack on the UEs</span>
+<span class="w">    </span><span class="c1">// get SGW/PGW and create a single RemoteHost</span>
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pgw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrEpcHelper</span><span class="o">-&gt;</span><span class="n">GetPgwNode</span><span class="p">();</span>
+<span class="w">    </span><span class="n">NodeContainer</span><span class="w"> </span><span class="n">remoteHostContainer</span><span class="p">;</span>
+<span class="w">    </span><span class="n">remoteHostContainer</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="w"> </span><span class="n">remoteHost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remoteHostContainer</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">InternetStackHelper</span><span class="w"> </span><span class="n">internet</span><span class="p">;</span>
+<span class="w">    </span><span class="n">internet</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">remoteHostContainer</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// connect a remoteHost to pgw. Setup routing too</span>
+<span class="w">    </span><span class="n">PointToPointHelper</span><span class="w"> </span><span class="n">p2ph</span><span class="p">;</span>
+<span class="w">    </span><span class="n">p2ph</span><span class="p">.</span><span class="n">SetDeviceAttribute</span><span class="p">(</span><span class="s">&quot;DataRate&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DataRateValue</span><span class="p">(</span><span class="n">DataRate</span><span class="p">(</span><span class="s">&quot;100Gb/s&quot;</span><span class="p">)));</span>
+<span class="w">    </span><span class="n">p2ph</span><span class="p">.</span><span class="n">SetDeviceAttribute</span><span class="p">(</span><span class="s">&quot;Mtu&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">2500</span><span class="p">));</span>
+<span class="w">    </span><span class="n">p2ph</span><span class="p">.</span><span class="n">SetChannelAttribute</span><span class="p">(</span><span class="s">&quot;Delay&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">TimeValue</span><span class="p">(</span><span class="n">Seconds</span><span class="p">(</span><span class="mf">0.010</span><span class="p">)));</span>
+<span class="w">    </span><span class="n">NetDeviceContainer</span><span class="w"> </span><span class="n">internetDevices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2ph</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">pgw</span><span class="p">,</span><span class="w"> </span><span class="n">remoteHost</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Ipv4AddressHelper</span><span class="w"> </span><span class="n">ipv4h</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ipv4h</span><span class="p">.</span><span class="n">SetBase</span><span class="p">(</span><span class="s">&quot;1.0.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;255.0.0.0&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Ipv4InterfaceContainer</span><span class="w"> </span><span class="n">internetIpIfaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipv4h</span><span class="p">.</span><span class="n">Assign</span><span class="p">(</span><span class="n">internetDevices</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Ipv4StaticRoutingHelper</span><span class="w"> </span><span class="n">ipv4RoutingHelper</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">Ipv4StaticRouting</span><span class="o">&gt;</span><span class="w"> </span><span class="n">remoteHostStaticRouting</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">ipv4RoutingHelper</span><span class="p">.</span><span class="n">GetStaticRouting</span><span class="p">(</span><span class="n">remoteHost</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">Ipv4</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="w">    </span><span class="n">remoteHostStaticRouting</span><span class="o">-&gt;</span><span class="n">AddNetworkRouteTo</span><span class="p">(</span><span class="n">Ipv4Address</span><span class="p">(</span><span class="s">&quot;7.0.0.0&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">Ipv4Mask</span><span class="p">(</span><span class="s">&quot;255.0.0.0&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">internet</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">ueNodes</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Ipv4InterfaceContainer</span><span class="w"> </span><span class="n">ueIpIface</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ueIpIface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrEpcHelper</span><span class="o">-&gt;</span><span class="n">AssignUeIpv4Address</span><span class="p">(</span><span class="n">NetDeviceContainer</span><span class="p">(</span><span class="n">ueNetDev</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// assign IP address to UEs, and install UDP downlink applications</span>
+<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">dlPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ApplicationContainer</span><span class="w"> </span><span class="n">clientApps</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ApplicationContainer</span><span class="w"> </span><span class="n">serverApps</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">GetN</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">u</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ueNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Set the default gateway for the UE</span>
+<span class="w">        </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">Ipv4StaticRouting</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ueStaticRouting</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">ipv4RoutingHelper</span><span class="p">.</span><span class="n">GetStaticRouting</span><span class="p">(</span><span class="n">ueNode</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">Ipv4</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">ueStaticRouting</span><span class="o">-&gt;</span><span class="n">SetDefaultRoute</span><span class="p">(</span><span class="n">nrEpcHelper</span><span class="o">-&gt;</span><span class="n">GetUeDefaultGatewayAddress</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">UdpServerHelper</span><span class="w"> </span><span class="n">dlPacketSinkHelper</span><span class="p">(</span><span class="n">dlPort</span><span class="p">);</span>
+<span class="w">        </span><span class="n">serverApps</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">dlPacketSinkHelper</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">ueNodes</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="n">u</span><span class="p">)));</span>
+
+<span class="w">        </span><span class="n">UdpClientHelper</span><span class="w"> </span><span class="n">dlClient</span><span class="p">(</span><span class="n">ueIpIface</span><span class="p">.</span><span class="n">GetAddress</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">dlPort</span><span class="p">);</span>
+<span class="w">        </span><span class="n">dlClient</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&quot;Interval&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">TimeValue</span><span class="p">(</span><span class="n">MicroSeconds</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+<span class="w">        </span><span class="c1">// dlClient.SetAttribute (&quot;MaxPackets&quot;, UintegerValue(0xFFFFFFFF));</span>
+<span class="w">        </span><span class="n">dlClient</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&quot;MaxPackets&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+<span class="w">        </span><span class="n">dlClient</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&quot;PacketSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">1500</span><span class="p">));</span>
+<span class="w">        </span><span class="n">clientApps</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">dlClient</span><span class="p">.</span><span class="n">Install</span><span class="p">(</span><span class="n">remoteHost</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// attach UEs to the closest gNB</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">AttachToClosestGnb</span><span class="p">(</span><span class="n">ueNetDev</span><span class="p">,</span><span class="w"> </span><span class="n">gnbNetDev</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// start server and client apps</span>
+<span class="w">    </span><span class="n">serverApps</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">Seconds</span><span class="p">(</span><span class="mf">0.4</span><span class="p">));</span>
+<span class="w">    </span><span class="n">clientApps</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">Seconds</span><span class="p">(</span><span class="mf">0.4</span><span class="p">));</span>
+<span class="w">    </span><span class="n">serverApps</span><span class="p">.</span><span class="n">Stop</span><span class="p">(</span><span class="n">Seconds</span><span class="p">(</span><span class="n">simTime</span><span class="p">));</span>
+<span class="w">    </span><span class="n">clientApps</span><span class="p">.</span><span class="n">Stop</span><span class="p">(</span><span class="n">Seconds</span><span class="p">(</span><span class="n">simTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.2</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// enable the traces provided by the nr module</span>
+<span class="w">    </span><span class="n">nrHelper</span><span class="o">-&gt;</span><span class="n">EnableTraces</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">AnimationInterface</span><span class="w"> </span><span class="n">anim</span><span class="p">(</span><span class="s">&quot;3gpp-channel.xml&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Simulator</span><span class="o">::</span><span class="n">Stop</span><span class="p">(</span><span class="n">Seconds</span><span class="p">(</span><span class="n">simTime</span><span class="p">));</span>
+<span class="w">    </span><span class="n">Simulator</span><span class="o">::</span><span class="n">Run</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">UdpServer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">serverApp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serverApps</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetObject</span><span class="o">&lt;</span><span class="n">UdpServer</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">receivedPackets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serverApp</span><span class="o">-&gt;</span><span class="n">GetReceived</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">Simulator</span><span class="o">::</span><span class="n">Destroy</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">receivedPackets</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="key-components-explained">Key Components Explained</h3>
+<h4 id="node-and-mobility-setup">Node and Mobility Setup</h4>
+<div class="highlight"><pre><span></span><code><span class="n">NodeContainer</span><span class="w"> </span><span class="n">gnbNodes</span><span class="p">;</span>
+<span class="n">NodeContainer</span><span class="w"> </span><span class="n">ueNodes</span><span class="p">;</span>
+<span class="n">gnbNodes</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">ueNodes</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div>
+<p>Nodes are placed using <code>ListPositionAllocator</code> and controlled by <code>MobilityHelper</code>, which determines if the UEs are static or moving.</p>
+<h4 id="helper-classes">Helper Classes</h4>
+<p>Helpers simplify the creation of complex ns-3 objects.<br />
+In this example:</p>
+<table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NodeContainer</code></td>
+<td>Creates and manages multiple nodes.</td>
+</tr>
+<tr>
+<td><code>MobilityHelper</code></td>
+<td>Assigns mobility or static positions to nodes.</td>
+</tr>
+<tr>
+<td><code>NrHelper</code></td>
+<td>Installs 5G gNB/UE devices and configures PHY/MAC layers.</td>
+</tr>
+<tr>
+<td><code>NrPointToPointEpcHelper</code></td>
+<td>Sets up the EPC (core) network and connects to the Internet.</td>
+</tr>
+<tr>
+<td><code>IdealBeamformingHelper</code></td>
+<td>Simulates 5G directional beamforming.</td>
+</tr>
+<tr>
+<td><code>CcBwpCreator</code></td>
+<td>Defines carrier bandwidth parts (BWPs) and frequency bands.</td>
+</tr>
+<tr>
+<td><code>ThreeGppChannelHelper</code></td>
+<td>Models 3GPP channel propagation characteristics.</td>
+</tr>
+</tbody>
+</table>
+<p>These helpers abstract away internal complexity, allowing you to focus on system-level design instead of wiring individual components.</p>
+<h4 id="epc-and-internet-configuration">EPC and Internet Configuration</h4>
+<div class="highlight"><pre><span></span><code><span class="n">Ptr</span><span class="o">&lt;</span><span class="n">NrPointToPointEpcHelper</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nrEpcHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateObject</span><span class="o">&lt;</span><span class="n">NrPointToPointEpcHelper</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">Ptr</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pgw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrEpcHelper</span><span class="o">-&gt;</span><span class="n">GetPgwNode</span><span class="p">();</span>
+</code></pre></div>
+<p>A Point-to-Point link connects the PGW to a remote host, simulating the Internet backbone. The IPv4 stack and static routing are configured for connectivity.</p>
+<h4 id="applications">Applications</h4>
+<p>Each UE runs a UDP server, and the remote host sends 10 packets:<br />
+<div class="highlight"><pre><span></span><code><span class="n">UdpClientHelper</span><span class="w"> </span><span class="nf">dlClient</span><span class="p">(</span><span class="n">ueIpIface</span><span class="p">.</span><span class="n">GetAddress</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">dlPort</span><span class="p">);</span>
+<span class="n">dlClient</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&quot;MaxPackets&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+<span class="n">dlClient</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&quot;PacketSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UintegerValue</span><span class="p">(</span><span class="mi">1500</span><span class="p">));</span>
+</code></pre></div><br />
+This allows performance evaluation (throughput, delay, etc.) across the simulated 5G channel.</p>
+<h4 id="visualization">Visualization</h4>
+<p><div class="highlight"><pre><span></span><code><span class="n">AnimationInterface</span><span class="w"> </span><span class="n">anim</span><span class="p">(</span><span class="s">&quot;3gpp-channel.xml&quot;</span><span class="p">);</span>
+</code></pre></div><br />
+The AnimationInterface exports simulation data for NetAnim, allowing visual inspection of node mobility and packet exchanges. <br />
+NetAnim provides a graphical way to analyze your ns-3 simulation. Once your script generates <code>3gpp-channel.xml</code>, follow these steps:</p>
+<h5 id="install-qt-required-for-netanim-gui">Install Qt (required for NetAnim GUI):</h5>
+<div class="highlight"><pre><span></span><code>brew install qt
+</code></pre></div>
+<h5 id="compile-netanim">Compile NetAnim</h5>
+<div class="highlight"><pre><span></span><code>cd netanim-3.42
+qmake NetAnim.pro
+make
+</code></pre></div>
+<h5 id="run-netanim">Run NetAnim:</h5>
+<div class="highlight"><pre><span></span><code>./NetAnim
+</code></pre></div>
+<p>Launch NetAnim, and you’ll see the initial interface. <br />
+<img alt="image" src="../netanim.png" /></p>
+<p>NetAnim provides three different views of the simulation:</p>
+<ul>
+<li>
+<p>Animator: Displays node positions, movements, and packet animations. The network topology, including nodes and their links, becomes visible.<br />
+Click the file icon (top-left) and select 3gpp-channel.xml, you can see as following.<br />
+<img alt="image" src="../animator.png" /></p>
+</li>
+<li>
+<p>Stats: Shows statistics for nodes.<br />
+<img alt="image" src="../stats.png" /></p>
+</li>
+<li>
+<p>Packets: Visualizes packet flows between nodes.<br />
+<img alt="image" src="../packet.png" /></p>
+</li>
+</ul>
+<p>NetAnim allows you to confirm topology correctness and visually inspect the packet flow throughout the simulation.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>ns-3 is a powerful and flexible simulation framework capable of modeling a wide range of network technologies. Its modular architecture allows researchers and developers to easily combine different layers of the protocol stack, experiment with realistic mobility and propagation models, and evaluate system performance under diverse scenarios.</p>
+<p>In this guide, we introduced the fundamentals of ns-3 and also explored a practical example using the 5G LENA module to simulate a 3GPP-compliant 5G network, complete with EPC integration, beamforming, and traffic modeling.</p>
+<p>To deepen your understanding, explore the official <code>examples/</code> directory, which contains well-documented sample scripts covering various protocols and use cases. You can also explore the <code>contrib/</code> directory to clone and integrate additional modules such as 5G LENA or mmWave.</p>
+<p>By experimenting with these examples and modules, you’ll discover how ns-3 can serve as a robust research and prototyping platform for next-generation communication systems.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://hackmd.io/@2liyUFHsSVW_BKU-MqZ2Ow/S1Hg9Lg4Jg">[ns-3] mac安裝指南及基本介紹</a></li>
+<li><a href="https://www.nsnam.org/docs/release/3.42/tutorial/singlehtml/index.html">ns-3 Tutorial</a></li>
+<li><a href="https://cttc-lena.gitlab.io/nr/html/cttc-3gpp-channel-example_8cc.html">cttc-3gpp-channel-example.cc File Reference</a></li>
+</ul>
+<h2 id="about-me">About me</h2>
+<p>Hi, I'm Peggy Cheng, a newcomer to 5G and the free5GC community. Feel free to tell me if there's any mistake in the article.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<p>GitHub: <a href="https://github.com/HiImPeggy">HiImPeggy</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
