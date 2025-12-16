@@ -15,9 +15,9 @@
 </div>
 
 <div class="announcement-box">
-  <h2>The 1st free5GC World Forum 2025 Call For Papers</h2>
-  <p>We are excited to announce the 1st free5GC World Forum 2025, which will be held in Taipei, Taiwan, October 13, 2025. This event aims to bring together researchers, developers, and industry professionals to share their insights and advancements in the field of 5G core networks.</p>
-  <p>For more details, please visit the <a href="https://www.free5gc.org/forum/" target="_blank">forum website</a>.</p>
+  <h2>Your Roadmap to 5G Expertise Starts Here — And It’s Free!</h2>
+  <p>Linux Foundation Education has launched Introduction to free5GC (LFS114), a free, self-paced course designed for developers, network engineers, and technologists who want to deepen their 5G expertise and work directly with modern 5G Core architecture. In just a few focused hours, you’ll learn how free5GC is built, how its core functions operate, and how to navigate and engage with the codebase — giving you a real advantage in today’s cloud native networking landscape.</p>
+  <p>For more details, please visit the <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" target="_blank">Introduction to free5GC (LFS114)</a>.</p>
   <h2>Latest News: free5GC v4.1.0 Released!</h2>
   <p>We have fixed a series of bugs in version 4.1.0 to improve stability and introduce a new feature: <strong>NR-DC</strong>.</p>
   <p>For more details, please see the history page.</p>
