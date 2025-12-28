@@ -1,0 +1,2052 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>GTP5G Netlink Protocol Decoder: Implementation and Message Analysis - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gtp5g-netlink-protocol-decoder-implementation-and-message-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GTP5G Netlink Protocol Decoder: Implementation and Message Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-overview" class="md-nav__link">
+    1.1 Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-understanding-netlink-communication" class="md-nav__link">
+    1.2 Understanding Netlink Communication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-why-not-just-use-strace" class="md-nav__link">
+    1.3 Why Not Just Use strace?
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Why Not Just Use strace?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limitations-of-raw-strace-output" class="md-nav__link">
+    Limitations of Raw strace Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-raw-strace-vs-decoded-output" class="md-nav__link">
+    Example: Raw strace vs. Decoded Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-architecture-overview" class="md-nav__link">
+    2. Architecture Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-implementation-details" class="md-nav__link">
+    3. Implementation Details
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-generic-netlink-protocol-structure" class="md-nav__link">
+    3.1 Generic Netlink Protocol Structure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-gtp5g-family-id-detection" class="md-nav__link">
+    3.2 GTP5G Family ID Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-parsing-strace-output" class="md-nav__link">
+    3.3 Parsing strace Output
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Parsing strace Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-strace-output-format" class="md-nav__link">
+    The strace Output Format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-detect-gtp5g-messages" class="md-nav__link">
+    Step 1: Detect GTP5G Messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-extract-the-netlink-header" class="md-nav__link">
+    Step 2: Extract the Netlink Header
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-parse-netlink-flags" class="md-nav__link">
+    Step 3: Parse Netlink Flags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-extract-hex-payloads" class="md-nav__link">
+    Step 4: Extract Hex Payloads
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-combine-and-decode" class="md-nav__link">
+    Step 5: Combine and Decode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handling-edge-cases" class="md-nav__link">
+    Handling Edge Cases
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-command-specific-attribute-mapping" class="md-nav__link">
+    3.4 Command-Specific Attribute Mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-attribute-value-decoding" class="md-nav__link">
+    3.5 Attribute Value Decoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-nested-attribute-handling" class="md-nav__link">
+    3.6 Nested Attribute Handling
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Nested Attribute Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-parse_attributes-implementation" class="md-nav__link">
+    The parse_attributes Implementation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-command-reference" class="md-nav__link">
+    4. Command Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-analyzing-common-gtp5g-messages" class="md-nav__link">
+    5. Analyzing Common GTP5G Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Analyzing Common GTP5G Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-message-flow-overview" class="md-nav__link">
+    5.1 Message Flow Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-creating-a-far-forwarding-action-rule" class="md-nav__link">
+    5.2 Creating a FAR (Forwarding Action Rule)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-creating-a-pdr-packet-detection-rule" class="md-nav__link">
+    5.3 Creating a PDR (Packet Detection Rule)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-creating-a-qer-qos-enforcement-rule" class="md-nav__link">
+    5.4 Creating a QER (QoS Enforcement Rule)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-deleting-rules-session-teardown" class="md-nav__link">
+    5.5 Deleting Rules (Session Teardown)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-uplink-vs-downlink-pdr-patterns" class="md-nav__link">
+    5.6 Uplink vs Downlink PDR Patterns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-far-with-forwarding-parameters-gtp-u-encapsulation" class="md-nav__link">
+    5.7 FAR with Forwarding Parameters (GTP-U Encapsulation)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58-usage-reporting-get_report" class="md-nav__link">
+    5.8 Usage Reporting (GET_REPORT)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#59-querying-existing-rules-get_far" class="md-nav__link">
+    5.9 Querying Existing Rules (GET_FAR)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#510-common-debugging-scenarios" class="md-nav__link">
+    5.10 Common Debugging Scenarios
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-conclusion" class="md-nav__link">
+    6. Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251210/20251210.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251210/20251210.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="gtp5g-netlink-protocol-decoder-implementation-and-message-analysis">GTP5G Netlink Protocol Decoder: Implementation and Message Analysis</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: CHEN, KUAN-LIN<br />
+Date: 2025/12/10</p>
+</div>
+<h2 id="1-introduction">1. Introduction</h2>
+<h3 id="11-overview">1.1 Overview</h3>
+<p>When debugging or analyzing the free5GC User Plane Function (UPF), understanding the communication between userspace applications and the kernel's GTP5G module is essential. This article explains the implementation of a Python protocol analyzer that decodes Generic Netlink messages exchanged between the UPF and the gtp5g kernel module.</p>
+<p>The decoder intercepts <code>strace</code> output and translates raw hexadecimal data into human-readable GTP5G protocol information, enabling developers to observe PDR (Packet Detection Rule), FAR (Forwarding Action Rule), QER (QoS Enforcement Rule), and URR (Usage Reporting Rule) operations in real-time.</p>
+<h3 id="12-understanding-netlink-communication">1.2 Understanding Netlink Communication</h3>
+<p><strong>Netlink</strong> is Linux's mechanism for kernel-userspace communication. Unlike traditional system calls that are synchronous and limited in data size, Netlink provides:</p>
+<ul>
+<li><strong>Asynchronous message passing</strong>: Applications send requests and receive responses independently</li>
+<li><strong>Multicast capabilities</strong>: Kernel can notify multiple processes of events</li>
+<li><strong>Extensible protocol families</strong>: Each subsystem defines its own message types</li>
+</ul>
+<p><strong>Generic Netlink (genetlink)</strong> extends this by providing a dynamic registration mechanism. Instead of hardcoding protocol numbers, kernel modules register a "family name" (e.g., <code>gtp5g</code>) and receive a dynamically assigned family ID at load time.</p>
+<p>For the GTP5G module, the message flow works as follows:<br />
+<img alt="" src="../blog1.png" /></p>
+<h3 id="13-why-not-just-use-strace">1.3 Why Not Just Use strace?</h3>
+<p>While <code>strace</code> is an excellent tool for tracing system calls, it has significant limitations when analyzing GTP5G Netlink messages:</p>
+<h4 id="limitations-of-raw-strace-output">Limitations of Raw strace Output</h4>
+<ol>
+<li>
+<p><strong>No Protocol Awareness</strong>: strace displays Netlink messages as raw hexadecimal bytes without understanding the GTP5G protocol semantics. You see <code>\x05\x00\x00\x00</code> instead of <code>Command: GTP5G_CMD_ADD_PDR</code>.</p>
+</li>
+<li>
+<p><strong>Dynamic Family ID</strong>: Generic Netlink assigns family IDs dynamically at module load time. strace shows <code>type=gtp5g</code> but cannot correlate the numeric type with the actual protocol family or decode the command codes.</p>
+</li>
+<li>
+<p><strong>Fragmented I/O Vectors</strong>: strace splits <code>sendmsg</code> data across multiple <code>iov_base</code> entries. The first entry shows a structured Netlink header, while subsequent entries contain raw hex - making manual correlation extremely difficult.</p>
+</li>
+<li>
+<p><strong>No Attribute Interpretation</strong>: TLV (Type-Length-Value) attributes are displayed as hex dumps. Understanding that <code>\x0c\x00\x07\x00</code> means "12-byte attribute of type SEID" requires manual calculation.</p>
+</li>
+<li>
+<p><strong>Context-Dependent Semantics</strong>: The same attribute type number has different meanings depending on the command (e.g., attribute 3 is <code>PRECEDENCE</code> for PDR but <code>APPLY_ACTION</code> for FAR). strace cannot provide this context.</p>
+</li>
+</ol>
+<h4 id="example-raw-strace-vs-decoded-output">Example: Raw strace vs. Decoded Output</h4>
+<p><strong>Raw strace output:</strong><br />
+<div class="highlight"><pre><span></span><code>sendmsg(13, {msg_iov=[{iov_base={len=48, type=gtp5g, flags=NLM_F_REQUEST|NLM_F_ACK, 
+seq=25, pid=0}, iov_len=16}, {iov_base=&quot;\x05\x00\x00\x00&quot;, iov_len=4}, 
+{iov_base=&quot;\x0c\x00\x07\x00\x01\x00\x00\x00\x00\x00\x00\x00&quot;, iov_len=12}], ...}, 0)
+</code></pre></div></p>
+<p><strong>Decoded output from python program:</strong><br />
+<div class="highlight"><pre><span></span><code>=== GTP5G Message ===
+Direction: SEND
+Command: GTP5G_CMD_ADD_PDR (5)
+Attributes:
+  - SEID: 1
+</code></pre></div></p>
+<hr />
+<h2 id="2-architecture-overview">2. Architecture Overview</h2>
+<p><img alt="" src="../blog2.png" /></p>
+<hr />
+<h2 id="3-implementation-details">3. Implementation Details</h2>
+<h3 id="31-generic-netlink-protocol-structure">3.1 Generic Netlink Protocol Structure</h3>
+<p>The GTP5G module uses Generic Netlink (genetlink) for kernel-userspace communication. Each message follows this structure:</p>
+<p><img alt="" src="../blog3.png" /></p>
+<h3 id="32-gtp5g-family-id-detection">3.2 GTP5G Family ID Detection</h3>
+<p>Generic Netlink families are dynamically assigned IDs at module load time. The decoder must discover the correct family ID:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_gtp5g_family_id</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get gtp5g Generic Netlink family ID using &#39;genl&#39; command.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;genl&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;gtp5g&quot;</span><span class="p">],</span> 
+            <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+            <span class="n">text</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">found_name</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;Name: gtp5g&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">found_name</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">found_name</span> <span class="ow">and</span> <span class="s2">&quot;ID:&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ID:\s+(0x[0-9a-fA-F]+)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="n">hex_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">fam_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hex_id</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Init] Detected gtp5g Family ID: </span><span class="si">{</span><span class="n">fam_id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">hex_id</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">fam_id</span>
+            <span class="k">if</span> <span class="n">found_name</span> <span class="ow">and</span> <span class="s2">&quot;Name:&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="c1"># Fallback: try single-line pattern</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Name:\s+gtp5g\s+ID:\s+(0x[0-9a-fA-F]+)&#39;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">hex_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">fam_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hex_id</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Init] Detected gtp5g Family ID: </span><span class="si">{</span><span class="n">fam_id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">hex_id</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">fam_id</span>
+
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Init] Error: &#39;genl&#39; command not found&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Init] Warning: Could not detect gtp5g family: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+<p>This approach is more portable than using Python libraries like pyroute2, which may have version compatibility issues. The function handles multiple output formats from the <code>genl</code> command and provides graceful error handling.</p>
+<h3 id="33-parsing-strace-output">3.3 Parsing strace Output</h3>
+<p>Parsing strace output is the most challenging part of the decoder. The <code>strace</code> utility displays <code>sendmsg</code> calls in a complex format with multiple I/O vectors, and understanding this format is essential for correct decoding.</p>
+<h4 id="the-strace-output-format">The strace Output Format</h4>
+<p>When strace traces a <code>sendmsg</code> system call on a Netlink socket, it produces output like this:</p>
+<div class="highlight"><pre><span></span><code>sendmsg(13, {msg_name=..., msg_namelen=12, msg_iov=[
+    {iov_base={len=48, type=gtp5g, flags=NLM_F_REQUEST|NLM_F_ACK, seq=25, pid=0}, iov_len=16},
+    {iov_base=&quot;\x05\x00\x00\x00&quot;, iov_len=4},
+    {iov_base=&quot;\x0c\x00\x07\x00\x01\x00\x00\x00\x00\x00\x00\x00&quot;, iov_len=12}
+], msg_iovlen=3, ...}, 0) = 48
+</code></pre></div>
+<p><strong>Key observations:</strong></p>
+<ol>
+<li>
+<p><strong>First iov_base is structured</strong>: strace recognizes Netlink headers and displays them in a human-readable format <code>{len=48, type=gtp5g, flags=..., seq=25, pid=0}</code> instead of raw hex.</p>
+</li>
+<li>
+<p><strong>Subsequent iov_base entries are hex</strong>: The Generic Netlink header (4 bytes) and attributes appear as escaped hex strings like <code>"\x05\x00\x00\x00"</code>.</p>
+</li>
+<li>
+<p><strong>Multiple fragments</strong>: The message is split across multiple <code>iov_base</code> entries that must be concatenated.</p>
+</li>
+</ol>
+<h4 id="step-1-detect-gtp5g-messages">Step 1: Detect GTP5G Messages</h4>
+<p>First, we identify lines containing GTP5G Netlink messages:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_gtp5g_message</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the line contains a GTP5G netlink message.&quot;&quot;&quot;</span>
+    <span class="c1"># Look for structured header with type=gtp5g</span>
+    <span class="k">if</span> <span class="s1">&#39;type=gtp5g&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="c1"># Also check for the numeric family ID (e.g., type=0x1f)</span>
+    <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;type=0x</span><span class="si">{</span><span class="n">gtp5g_family_id</span><span class="si">:</span><span class="s1">x</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+<h4 id="step-2-extract-the-netlink-header">Step 2: Extract the Netlink Header</h4>
+<p>The structured header contains all fields of the 16-byte Netlink header. The decoder extracts these fields using regex pattern matching:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Extract Netlink message header fields from strace output</span>
+<span class="n">header_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s1">&#39;iov_base=\{len=(\d+),\s*type=([^,]+),\s*flags=([^,]+),\s*seq=(\d+),\s*pid=(\d+)\}&#39;</span><span class="p">,</span>
+    <span class="n">line</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">header_match</span><span class="p">:</span>
+    <span class="k">return</span>
+
+<span class="n">msg_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>       <span class="c1"># Total message length</span>
+<span class="n">msg_type_str</span> <span class="o">=</span> <span class="n">header_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># &quot;gtp5g&quot; or numeric</span>
+<span class="n">flags_str</span> <span class="o">=</span> <span class="n">header_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>     <span class="c1"># &quot;NLM_F_REQUEST|NLM_F_ACK&quot;</span>
+<span class="n">seq</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>              <span class="c1"># Sequence number</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>              <span class="c1"># Port ID (usually 0)</span>
+
+<span class="c1"># Parse message type (Generic Netlink family ID)</span>
+<span class="k">if</span> <span class="s1">&#39;gtp5g&#39;</span> <span class="ow">in</span> <span class="n">msg_type_str</span><span class="p">:</span>
+    <span class="n">msg_type</span> <span class="o">=</span> <span class="n">CURRENT_GTP5G_FAMILY_ID</span> <span class="k">if</span> <span class="n">CURRENT_GTP5G_FAMILY_ID</span> <span class="k">else</span> <span class="mi">31</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">type_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;0x([0-9a-fA-F]+)&#39;</span><span class="p">,</span> <span class="n">msg_type_str</span><span class="p">)</span>
+    <span class="n">msg_type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">type_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="k">if</span> <span class="n">type_match</span> <span class="k">else</span> <span class="mi">0</span>
+
+<span class="c1"># Filter out non-gtp5g messages</span>
+<span class="k">if</span> <span class="n">CURRENT_GTP5G_FAMILY_ID</span> <span class="ow">and</span> <span class="n">msg_type</span> <span class="o">!=</span> <span class="n">CURRENT_GTP5G_FAMILY_ID</span><span class="p">:</span>
+    <span class="k">return</span>
+</code></pre></div>
+<h4 id="step-3-parse-netlink-flags">Step 3: Parse Netlink Flags</h4>
+<p>The flags field requires special handling to convert symbolic names to numeric values:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Parse Netlink message flags from strace symbolic output</span>
+<span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">if</span> <span class="s1">&#39;NLM_F_REQUEST&#39;</span> <span class="ow">in</span> <span class="n">flags_str</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">|=</span> <span class="mh">0x0001</span>
+<span class="k">if</span> <span class="s1">&#39;NLM_F_ACK&#39;</span> <span class="ow">in</span> <span class="n">flags_str</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">|=</span> <span class="mh">0x0004</span>
+<span class="k">if</span> <span class="s1">&#39;0x200&#39;</span> <span class="ow">in</span> <span class="n">flags_str</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">|=</span> <span class="mh">0x0200</span>
+<span class="k">if</span> <span class="s1">&#39;0x100&#39;</span> <span class="ow">in</span> <span class="n">flags_str</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">|=</span> <span class="mh">0x0100</span>
+</code></pre></div>
+<p>The decoder focuses on the most commonly used flags in GTP5G communication rather than maintaining a complete mapping.</p>
+<h4 id="step-4-extract-hex-payloads">Step 4: Extract Hex Payloads</h4>
+<p>The remaining iov_base entries contain raw hex data. The decoder handles multiple strace output formats:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Extract payload data from iov_base fields in order of appearance</span>
+<span class="c1"># strace may output iov data in different formats depending on content</span>
+<span class="n">iov_patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Pattern 1: Simple hex string iov_base=&quot;\x...&quot;</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;iov_base=&quot;((?:</span><span class="se">\\</span><span class="s1">x[0-9a-fA-F]</span><span class="si">{2}</span><span class="s1">)+)&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;hex&#39;</span><span class="p">),</span>
+    <span class="c1"># Pattern 2: Nested structure where strace decoded first 16 bytes as nlmsghdr</span>
+    <span class="c1"># Format: iov_base={{len=N, type=X, flags=N, seq=N, pid=N}, &quot;\x...&quot;}</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;iov_base=\{\{len=(\d+),\s*type=([^,]+),\s*flags=(\d+),\s*seq=(\d+),\s*pid=(\d+)\},\s*&quot;((?:</span><span class="se">\\</span><span class="s1">x[0-9a-fA-F]</span><span class="si">{2}</span><span class="s1">)+)&quot;\}&#39;</span><span class="p">,</span> <span class="s1">&#39;nested_full&#39;</span><span class="p">),</span>
+    <span class="c1"># Pattern 3: Standalone decoded nlmsghdr without trailing hex data</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;iov_base=\{len=(\d+),\s*type=([^,]+),\s*flags=(\d+),\s*seq=(\d+),\s*pid=(\d+)\}(?!,\s*&quot;)&#39;</span><span class="p">,</span> <span class="s1">&#39;fake_header&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># Collect all iov data segments with their positions</span>
+<span class="n">iov_items</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="n">iov_patterns</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="c1"># Skip the real Netlink header (contains &#39;gtp5g&#39; family name)</span>
+        <span class="k">if</span> <span class="n">ptype</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;fake_header&#39;</span><span class="p">,</span> <span class="s1">&#39;nested_full&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;gtp5g&#39;</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">iov_items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">ptype</span><span class="p">,</span> <span class="n">match</span><span class="p">))</span>
+
+<span class="c1"># Sort by position to maintain correct byte order</span>
+<span class="n">iov_items</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+<p>This multi-pattern approach handles various strace output formats, including cases where strace partially decodes nested Netlink messages.</p>
+<h4 id="step-5-combine-and-decode">Step 5: Combine and Decode</h4>
+<p>Finally, assemble the payload from collected segments and parse:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Assemble payload from collected iov segments</span>
+<span class="n">payload_bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ptype</span><span class="p">,</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">iov_items</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ptype</span> <span class="o">==</span> <span class="s1">&#39;hex&#39;</span><span class="p">:</span>
+            <span class="n">hex_str</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">payload_bytes</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">hex_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">x&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">ptype</span> <span class="o">==</span> <span class="s1">&#39;nested_full&#39;</span><span class="p">:</span>
+            <span class="c1"># Handle nested structure: rebuild the 16-byte header then append hex data</span>
+            <span class="n">len_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">type_str</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">flags_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+            <span class="n">seq_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+            <span class="n">pid_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+            <span class="n">hex_str</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+
+            <span class="c1"># Parse type value from type_str (e.g., &quot;0x1f&quot; or numeric)</span>
+            <span class="n">type_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">type_str</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">type_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+
+            <span class="c1"># Rebuild 16-byte nlmsghdr structure</span>
+            <span class="n">rebuilt</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=I&quot;</span><span class="p">,</span> <span class="n">len_val</span><span class="p">)</span>
+            <span class="n">rebuilt</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=HH&quot;</span><span class="p">,</span> <span class="n">type_val</span><span class="p">,</span> <span class="n">flags_val</span><span class="p">)</span>
+            <span class="n">rebuilt</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=I&quot;</span><span class="p">,</span> <span class="n">seq_val</span><span class="p">)</span>
+            <span class="n">rebuilt</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=I&quot;</span><span class="p">,</span> <span class="n">pid_val</span><span class="p">)</span>
+            <span class="n">payload_bytes</span> <span class="o">+=</span> <span class="n">rebuilt</span>
+            <span class="n">payload_bytes</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">hex_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">x&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">error</span><span class="p">):</span>
+        <span class="k">continue</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">return</span>
+
+<span class="c1"># Parse Generic Netlink header (4 bytes: cmd, version, reserved)</span>
+<span class="n">cmd</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">reserved</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=BBH&quot;</span><span class="p">,</span> <span class="n">payload_bytes</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">cmd_str</span> <span class="o">=</span> <span class="n">GTP5G_CMDS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;UNKNOWN_CMD_</span><span class="si">{</span><span class="n">cmd</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Select attribute mapping based on command type</span>
+<span class="n">attr_mappings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="n">GTP5G_PDR_ATTRS</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="n">GTP5G_PDR_ATTRS</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="n">GTP5G_PDR_ATTRS</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">GTP5G_FAR_ATTRS</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="n">GTP5G_FAR_ATTRS</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="n">GTP5G_FAR_ATTRS</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="n">GTP5G_QER_ATTRS</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="n">GTP5G_QER_ATTRS</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="n">GTP5G_QER_ATTRS</span><span class="p">,</span>
+    <span class="mi">10</span><span class="p">:</span> <span class="n">GTP5G_URR_ATTRS</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span> <span class="n">GTP5G_URR_ATTRS</span><span class="p">,</span> <span class="mi">14</span><span class="p">:</span> <span class="n">GTP5G_URR_ATTRS</span><span class="p">,</span>
+    <span class="mi">11</span><span class="p">:</span> <span class="n">GTP5G_BAR_ATTRS</span><span class="p">,</span> <span class="mi">13</span><span class="p">:</span> <span class="n">GTP5G_BAR_ATTRS</span><span class="p">,</span> <span class="mi">15</span><span class="p">:</span> <span class="n">GTP5G_BAR_ATTRS</span><span class="p">,</span>
+    <span class="mi">17</span><span class="p">:</span> <span class="n">GTP5G_URR_ATTRS</span><span class="p">,</span>  <span class="c1"># GET_REPORT uses URR attrs</span>
+    <span class="mi">19</span><span class="p">:</span> <span class="n">GTP5G_MULTI_REPORT_ATTRS</span><span class="p">,</span>
+    <span class="mi">20</span><span class="p">:</span> <span class="n">GTP5G_USAGE_STATISTIC_ATTRS</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">attr_mapping</span> <span class="o">=</span> <span class="n">attr_mappings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">GTP5G_COMMON_ATTRS</span><span class="p">)</span>
+
+<span class="c1"># Parse attributes from payload (skip 4-byte GenL header)</span>
+<span class="n">attrs_data</span> <span class="o">=</span> <span class="n">payload_bytes</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="n">attributes</span> <span class="o">=</span> <span class="n">parse_attributes</span><span class="p">(</span><span class="n">attrs_data</span><span class="p">,</span> <span class="n">attr_mapping</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="handling-edge-cases">Handling Edge Cases</h4>
+<p>The parser must handle several edge cases:</p>
+<ol>
+<li><strong>Multi-line output</strong>: strace may split long lines; accumulate until <code>) =</code> is seen</li>
+<li><strong>Non-hex iov_base</strong>: Some entries may contain printable ASCII mixed with hex</li>
+<li><strong>Truncated output</strong>: Use <code>-s 65535</code> with strace to avoid truncation</li>
+<li><strong>Multiple messages</strong>: A single <code>sendmsg</code> may contain batched requests</li>
+</ol>
+<h3 id="34-command-specific-attribute-mapping">3.4 Command-Specific Attribute Mapping</h3>
+<p>A critical design decision is that <strong>attribute IDs are command-specific</strong>. The same attribute ID (e.g., 3) means different things for different commands:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute ID</th>
+<th>PDR Command</th>
+<th>FAR Command</th>
+<th>QER Command</th>
+<th>URR Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>PDR_ID (U16)</td>
+<td>FAR_ID (U32)</td>
+<td>QER_ID (U32)</td>
+<td>URR_ID (U32)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>PRECEDENCE</td>
+<td>APPLY_ACTION</td>
+<td>GATE</td>
+<td>MEASUREMENT_METHOD</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PDI (nested)</td>
+<td>FORWARDING_PARAM</td>
+<td>MBR (nested)</td>
+<td>REPORTING_TRIGGER</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>The decoder selects the appropriate mapping based on the command:</p>
+<div class="highlight"><pre><span></span><code><span class="n">cmd</span> <span class="o">=</span> <span class="n">genl_hdr</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">]:</span>    <span class="c1"># ADD_PDR, DEL_PDR, GET_PDR</span>
+    <span class="n">attr_mapping</span> <span class="o">=</span> <span class="n">GTP5G_PDR_ATTRS</span>
+<span class="k">elif</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]:</span>  <span class="c1"># ADD_FAR, DEL_FAR, GET_FAR</span>
+    <span class="n">attr_mapping</span> <span class="o">=</span> <span class="n">GTP5G_FAR_ATTRS</span>
+<span class="k">elif</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]:</span>  <span class="c1"># ADD_QER, DEL_QER, GET_QER</span>
+    <span class="n">attr_mapping</span> <span class="o">=</span> <span class="n">GTP5G_QER_ATTRS</span>
+<span class="c1"># ... and so on</span>
+</code></pre></div>
+<h3 id="35-attribute-value-decoding">3.5 Attribute Value Decoding</h3>
+<p>Different attributes require different decoding strategies based on their data types:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">decode_value</span><span class="p">(</span><span class="n">attr_name</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decode attribute value based on attribute name and data type.</span>
+
+<span class="sd">    Returns the decoded value (int, string, or IP address).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># IPv4 addresses (network byte order / big-endian)</span>
+        <span class="k">if</span> <span class="s2">&quot;IPV4&quot;</span> <span class="ow">in</span> <span class="n">attr_name</span> <span class="ow">or</span> <span class="s2">&quot;ADDR_IPV4&quot;</span> <span class="ow">in</span> <span class="n">attr_name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># SEID and timestamps (U64)</span>
+        <span class="k">if</span> <span class="s2">&quot;SEID&quot;</span> <span class="ow">in</span> <span class="n">attr_name</span> <span class="ow">or</span> <span class="s2">&quot;TIME&quot;</span> <span class="ow">in</span> <span class="n">attr_name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=Q&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">8</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># U32 values (IDs, TEIDs, counters, etc.)</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;GTP5G_LINK&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_FAR_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_QER_ID&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;GTP5G_PDR_FAR_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_PDR_QER_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_PDR_URR_ID&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;GTP5G_URR_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_PDR_PRECEDENCE&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_F_TEID_I_TEID&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;GTP5G_OUTER_HEADER_CREATION_O_TEID&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=I&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># PDR_ID (U16)</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="o">==</span> <span class="s2">&quot;GTP5G_PDR_ID&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=H&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># U16 values (ports, action flags)</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;GTP5G_FAR_APPLY_ACTION&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_OUTER_HEADER_CREATION_PORT&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=H&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># U8 values (flags, QFI, gate status)</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;GTP5G_PDI_SRC_INTF&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_QER_GATE&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;GTP5G_QER_QFI&quot;</span><span class="p">,</span> <span class="s2">&quot;GTP5G_OUTER_HEADER_REMOVAL&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=B&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># String values (paths, policies)</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;GTP5G_PDR_UNIX_SOCKET_PATH&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;GTP5G_FORWARDING_PARAMETER_FORWARDING_POLICY&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Fallback: return hex string for unknown types</span>
+    <span class="k">return</span> <span class="s2">&quot;0x&quot;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span> <span class="k">if</span> <span class="n">data</span> <span class="k">else</span> <span class="s2">&quot;(empty)&quot;</span>
+</code></pre></div>
+<p>The decoder handles various data types including U8, U16, U32, U64, IPv4 addresses, and strings. Nested structures are handled separately in <code>parse_attributes</code> using the <code>nested_mappings</code> dictionary.</p>
+<h3 id="36-nested-attribute-handling">3.6 Nested Attribute Handling</h3>
+<p>GTP5G uses nested attributes for complex structures like PDI (Packet Detection Information):</p>
+<div class="highlight"><pre><span></span><code>GTP5G_PDR_PDI (nested)
+├── GTP5G_PDI_UE_ADDR_IPV4 (IPv4)
+├── GTP5G_PDI_F_TEID (nested)
+│   ├── GTP5G_F_TEID_I_TEID (U32)
+│   └── GTP5G_F_TEID_GTPU_ADDR_IPV4 (IPv4)
+├── GTP5G_PDI_SDF_FILTER (nested)
+│   ├── GTP5G_SDF_FILTER_FLOW_DESCRIPTION (nested or string)
+│   └── GTP5G_SDF_FILTER_SDF_FILTER_ID (U32)
+└── GTP5G_PDI_SRC_INTF (U8)
+</code></pre></div>
+<p>The decoder maintains a mapping of nested attribute types to their sub-mappings:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Nested attribute type to sub-mapping lookup</span>
+<span class="n">nested_mappings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;GTP5G_PDR_PDI&quot;</span><span class="p">:</span> <span class="n">GTP5G_PDI_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_PDI_F_TEID&quot;</span><span class="p">:</span> <span class="n">GTP5G_F_TEID_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_PDI_SDF_FILTER&quot;</span><span class="p">:</span> <span class="n">GTP5G_SDF_FILTER_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_SDF_FILTER_FLOW_DESCRIPTION&quot;</span><span class="p">:</span> <span class="n">GTP5G_FLOW_DESCRIPTION_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_FAR_FORWARDING_PARAMETER&quot;</span><span class="p">:</span> <span class="n">GTP5G_FAR_FP_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_FORWARDING_PARAMETER_OUTER_HEADER_CREATION&quot;</span><span class="p">:</span> <span class="n">GTP5G_OHC_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_QER_MBR&quot;</span><span class="p">:</span> <span class="n">GTP5G_QER_MBR_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_QER_GBR&quot;</span><span class="p">:</span> <span class="n">GTP5G_QER_GBR_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_URR_VOLUME_THRESHOLD&quot;</span><span class="p">:</span> <span class="n">GTP5G_URR_VOLUME_THRESHOLD_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_URR_VOLUME_QUOTA&quot;</span><span class="p">:</span> <span class="n">GTP5G_URR_VOLUME_QUOTA_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_UR_VOLUME_MEASUREMENT&quot;</span><span class="p">:</span> <span class="n">GTP5G_UR_VOLUME_MEASUREMENT_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_UR&quot;</span><span class="p">:</span> <span class="n">GTP5G_REPORT_ATTRS</span><span class="p">,</span>
+    <span class="s2">&quot;GTP5G_URR_MULTI_SEID_URRID&quot;</span><span class="p">:</span> <span class="n">GTP5G_URR_MULTI_SEID_URRID_ATTRS</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>When a known nested attribute is encountered, the parser recursively processes its contents with the appropriate sub-mapping.</p>
+<h4 id="the-parse_attributes-implementation">The <code>parse_attributes</code> Implementation</h4>
+<p>The core of TLV parsing is the <code>parse_attributes</code> function. It iterates through the raw bytes, extracting each attribute's length, type, and value while respecting 4-byte alignment:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parse_attributes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse Netlink attributes from binary data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Raw bytes containing Netlink attributes</span>
+<span class="sd">        mapping: Dictionary mapping attribute type IDs to names</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary of parsed attributes with decoded values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Nested attribute type to sub-mapping lookup</span>
+    <span class="n">nested_mappings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;GTP5G_PDR_PDI&quot;</span><span class="p">:</span> <span class="n">GTP5G_PDI_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_PDI_F_TEID&quot;</span><span class="p">:</span> <span class="n">GTP5G_F_TEID_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_PDI_SDF_FILTER&quot;</span><span class="p">:</span> <span class="n">GTP5G_SDF_FILTER_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_SDF_FILTER_FLOW_DESCRIPTION&quot;</span><span class="p">:</span> <span class="n">GTP5G_FLOW_DESCRIPTION_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_FAR_FORWARDING_PARAMETER&quot;</span><span class="p">:</span> <span class="n">GTP5G_FAR_FP_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_FORWARDING_PARAMETER_OUTER_HEADER_CREATION&quot;</span><span class="p">:</span> <span class="n">GTP5G_OHC_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_QER_MBR&quot;</span><span class="p">:</span> <span class="n">GTP5G_QER_MBR_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_QER_GBR&quot;</span><span class="p">:</span> <span class="n">GTP5G_QER_GBR_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_URR_VOLUME_THRESHOLD&quot;</span><span class="p">:</span> <span class="n">GTP5G_URR_VOLUME_THRESHOLD_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_URR_VOLUME_QUOTA&quot;</span><span class="p">:</span> <span class="n">GTP5G_URR_VOLUME_QUOTA_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_UR_VOLUME_MEASUREMENT&quot;</span><span class="p">:</span> <span class="n">GTP5G_UR_VOLUME_MEASUREMENT_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_UR&quot;</span><span class="p">:</span> <span class="n">GTP5G_REPORT_ATTRS</span><span class="p">,</span>
+        <span class="s2">&quot;GTP5G_URR_MULTI_SEID_URRID&quot;</span><span class="p">:</span> <span class="n">GTP5G_URR_MULTI_SEID_URRID_ATTRS</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">:</span>
+        <span class="c1"># Need at least 4 bytes for NLA header (len + type)</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">nla_len</span><span class="p">,</span> <span class="n">nla_type</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=HH&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="mi">4</span><span class="p">])</span>
+
+        <span class="c1"># Skip invalid attributes</span>
+        <span class="k">if</span> <span class="n">nla_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="mi">4</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">nla_len</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">nla_len</span> <span class="o">&gt;</span> <span class="n">length</span> <span class="o">-</span> <span class="n">offset</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="c1"># Extract type ID (mask out NLA_F_NESTED and NLA_F_NET_BYTEORDER flags)</span>
+        <span class="n">type_id</span> <span class="o">=</span> <span class="n">nla_type</span> <span class="o">&amp;</span> <span class="mh">0x3FFF</span>
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">type_id</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;UNKNOWN_ATTR_</span><span class="si">{</span><span class="n">type_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Type 0 is a container: expand its contents with same mapping</span>
+        <span class="k">if</span> <span class="n">type_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">container_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="mi">4</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">nla_len</span><span class="p">]</span>
+            <span class="n">nested_attrs</span> <span class="o">=</span> <span class="n">parse_attributes</span><span class="p">(</span><span class="n">container_data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
+            <span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">nested_attrs</span><span class="p">)</span>
+            <span class="n">aligned_len</span> <span class="o">=</span> <span class="p">(</span><span class="n">nla_len</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mi">3</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="n">aligned_len</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Known nested attributes: recursively parse with appropriate sub-mapping</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">nested_mappings</span><span class="p">:</span>
+            <span class="n">nested_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="mi">4</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">nla_len</span><span class="p">]</span>
+            <span class="n">sub_mapping</span> <span class="o">=</span> <span class="n">nested_mappings</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span>
+            <span class="n">nested_attrs</span> <span class="o">=</span> <span class="n">parse_attributes</span><span class="p">(</span><span class="n">nested_data</span><span class="p">,</span> <span class="n">sub_mapping</span><span class="p">)</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">nested_attrs</span>
+            <span class="n">aligned_len</span> <span class="o">=</span> <span class="p">(</span><span class="n">nla_len</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mi">3</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="n">aligned_len</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Regular attribute: decode value based on type</span>
+        <span class="n">val_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="mi">4</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">nla_len</span><span class="p">]</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">decode_value</span><span class="p">(</span><span class="n">attr_name</span><span class="p">,</span> <span class="n">val_data</span><span class="p">)</span>
+
+        <span class="n">aligned_len</span> <span class="o">=</span> <span class="p">(</span><span class="n">nla_len</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mi">3</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="n">aligned_len</span>
+
+    <span class="k">return</span> <span class="n">attrs</span>
+</code></pre></div>
+<p><strong>Key insights</strong></p>
+<ol>
+<li>
+<p><strong>4-Byte Alignment</strong>: Netlink requires all attributes to be aligned on 4-byte boundaries. The formula <code>(nla_len + 3) &amp; ~3</code> rounds up to the next multiple of 4.</p>
+</li>
+<li>
+<p><strong>NLA Flag Masking</strong>: The type field may contain flags (<code>NLA_F_NESTED = 0x8000</code>, <code>NLA_F_NET_BYTEORDER = 0x4000</code>). We mask with <code>0x3FFF</code> to get the actual type ID.</p>
+</li>
+<li>
+<p><strong>Container Handling</strong>: Type 0 acts as a container that groups related attributes. Its contents are expanded into the parent dictionary.</p>
+</li>
+<li>
+<p><strong>Recursive Parsing</strong>: When an attribute is in <code>nested_mappings</code>, the function calls itself recursively with the appropriate sub-mapping.</p>
+</li>
+<li>
+<p><strong>Graceful Degradation</strong>: Unknown attribute types are labeled as <code>UNKNOWN_ATTR_N</code> rather than causing parse failures, allowing partial decoding of messages with new or unsupported attributes.</p>
+</li>
+</ol>
+<hr />
+<h2 id="4-command-reference">4. Command Reference</h2>
+<p>Based on the gtp5g kernel module source (<code>include/genl.h</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Command ID</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CMD_ADD_PDR</td>
+<td>Create Packet Detection Rule</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CMD_ADD_FAR</td>
+<td>Create Forwarding Action Rule</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CMD_ADD_QER</td>
+<td>Create QoS Enforcement Rule</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CMD_DEL_PDR</td>
+<td>Delete PDR</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CMD_DEL_FAR</td>
+<td>Delete FAR</td>
+</tr>
+<tr>
+<td>6</td>
+<td>CMD_DEL_QER</td>
+<td>Delete QER</td>
+</tr>
+<tr>
+<td>7</td>
+<td>CMD_GET_PDR</td>
+<td>Query PDR</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CMD_GET_FAR</td>
+<td>Query FAR</td>
+</tr>
+<tr>
+<td>9</td>
+<td>CMD_GET_QER</td>
+<td>Query QER</td>
+</tr>
+<tr>
+<td>10</td>
+<td>CMD_ADD_URR</td>
+<td>Create Usage Reporting Rule</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CMD_ADD_BAR</td>
+<td>Create Buffering Action Rule</td>
+</tr>
+<tr>
+<td>12</td>
+<td>CMD_DEL_URR</td>
+<td>Delete URR</td>
+</tr>
+<tr>
+<td>13</td>
+<td>CMD_DEL_BAR</td>
+<td>Delete BAR</td>
+</tr>
+<tr>
+<td>14</td>
+<td>CMD_GET_URR</td>
+<td>Query URR</td>
+</tr>
+<tr>
+<td>15</td>
+<td>CMD_GET_BAR</td>
+<td>Query BAR</td>
+</tr>
+<tr>
+<td>16</td>
+<td>CMD_GET_VERSION</td>
+<td>Get module version</td>
+</tr>
+<tr>
+<td>17</td>
+<td>CMD_GET_REPORT</td>
+<td>Get usage report</td>
+</tr>
+<tr>
+<td>18</td>
+<td>CMD_BUFFER_GTPU</td>
+<td>Buffer GTP-U packets</td>
+</tr>
+<tr>
+<td>19</td>
+<td>CMD_GET_MULTI_REPORTS</td>
+<td>Batch get reports</td>
+</tr>
+<tr>
+<td>20</td>
+<td>CMD_GET_USAGE_STATISTIC</td>
+<td>Get statistics</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-analyzing-common-gtp5g-messages">5. Analyzing Common GTP5G Messages</h2>
+<p>This section walks through real-world GTP5G messages captured during a UERANSIM UE registration and PDU session establishment. Understanding these message patterns helps debug 5G core network issues.</p>
+<h3 id="51-message-flow-overview">5.1 Message Flow Overview</h3>
+<p>When a UE connects and establishes a PDU session, the SMF instructs the UPF to create the following rules. The typical creation sequence is:</p>
+<ol>
+<li>Create FAR (Forwarding Action Rule) - defines how to forward packets</li>
+<li>Create QER (QoS Enforcement Rule) - defines QoS parameters  </li>
+<li>Create URR (Usage Reporting Rule) - defines usage reporting</li>
+<li>Create PDR (Packet Detection Rule) - defines which packets to match and references FAR/QER/URR</li>
+</ol>
+<blockquote>
+<p>Note: PDRs are created last because they reference the other rules by ID.</p>
+</blockquote>
+<h3 id="52-creating-a-far-forwarding-action-rule">5.2 Creating a FAR (Forwarding Action Rule)</h3>
+<p><strong>Decoded Output:</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 56, FamilyID: 31, Seq: 84
+Command: GTP5G_CMD_ADD_FAR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_FAR_ID: 9
+  GTP5G_FAR_SEID: 1
+  GTP5G_FAR_APPLY_ACTION: 2
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><strong>Command</strong>: <code>GTP5G_CMD_ADD_FAR</code> (command ID 2) - Creates a new Forwarding Action Rule</li>
+<li><strong>LINK</strong>: <code>4</code> - Network interface index (the gtp5g tunnel device, e.g., <code>upfgtp</code>)</li>
+<li><strong>FAR_ID</strong>: <code>9</code> - Unique identifier for this FAR within the session</li>
+<li><strong>SEID</strong>: <code>1</code> - Session Endpoint Identifier linking this rule to a PFCP session</li>
+<li>
+<p><strong>APPLY_ACTION</strong>: <code>2</code> - Bitmask defining the action:</p>
+<ul>
+<li>Bit 0 (0x01): DROP</li>
+<li>Bit 1 (0x02): FORW (Forward) ← This FAR forwards packets</li>
+<li>Bit 2 (0x04): BUFF (Buffer)</li>
+<li>Bit 3 (0x08): NOCP (Notify CP)</li>
+<li>Bit 4 (0x10): DUPL (Duplicate)</li>
+</ul>
+</li>
+</ul>
+<h3 id="53-creating-a-pdr-packet-detection-rule">5.3 Creating a PDR (Packet Detection Rule)</h3>
+<p>PDRs define which packets to match and what actions to apply. Modern PDRs often include SDF (Service Data Flow) filters for fine-grained traffic classification.</p>
+<p><strong>Decoded Output (Uplink PDR with SDF Filter):</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 264, FamilyID: 31, Seq: 95
+Command: GTP5G_CMD_ADD_PDR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_PDR_ID: 9
+  GTP5G_PDR_SEID: 1
+  GTP5G_PDR_PRECEDENCE: 128
+  GTP5G_PDR_PDI:
+    GTP5G_PDI_SRC_INTF: 0
+    GTP5G_PDI_F_TEID:
+      GTP5G_F_TEID_I_TEID: 6
+      GTP5G_F_TEID_GTPU_ADDR_IPV4: 192.168.11.130
+    GTP5G_PDI_UE_ADDR_IPV4: 10.60.0.100
+    GTP5G_PDI_SDF_FILTER:
+      GTP5G_SDF_FILTER_FLOW_DESCRIPTION:
+        GTP5G_FLOW_DESCRIPTION_ACTION: 1
+        GTP5G_FLOW_DESCRIPTION_DIRECTION: 2
+        GTP5G_FLOW_DESCRIPTION_PROTOCOL: 255
+        GTP5G_FLOW_DESCRIPTION_SRC_IPV4: 0.0.0.0
+        GTP5G_FLOW_DESCRIPTION_SRC_MASK: 0.0.0.0
+        GTP5G_FLOW_DESCRIPTION_DEST_IPV4: 1.1.1.1
+        GTP5G_FLOW_DESCRIPTION_DEST_MASK: 255.255.255.255
+        GTP5G_FLOW_DESCRIPTION_SRC_PORT: (none)
+        GTP5G_FLOW_DESCRIPTION_DEST_PORT: (none)
+  GTP5G_OUTER_HEADER_REMOVAL: 0
+  GTP5G_PDR_FAR_ID: 9
+  GTP5G_PDR_URR_ID: 8
+  GTP5G_PDR_QER_ID: 8
+  GTP5G_PDR_UNIX_SOCKET_PATH: /
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><strong>Command</strong>: <code>GTP5G_CMD_ADD_PDR</code> (command ID 1) - Creates a Packet Detection Rule</li>
+<li><strong>PDR_ID</strong>: <code>9</code> - Unique identifier for this PDR</li>
+<li><strong>PRECEDENCE</strong>: <code>128</code> - Priority (lower = higher priority). When multiple PDRs match, the one with lowest precedence wins</li>
+<li><strong>PDI (Packet Detection Information)</strong>: Nested structure defining match criteria:<ul>
+<li><strong>SRC_INTF</strong>: <code>0</code> - Source interface (0=Access/N3, indicating uplink traffic)</li>
+<li><strong>F_TEID</strong>: Fully-qualified Tunnel Endpoint ID:<ul>
+<li><strong>I_TEID</strong>: <code>6</code> - Local TEID allocated by UPF</li>
+<li><strong>GTPU_ADDR_IPV4</strong>: <code>192.168.11.130</code> - UPF's N3 interface IP</li>
+</ul>
+</li>
+<li><strong>UE_ADDR_IPV4</strong>: <code>10.60.0.100</code> - Match packets from this UE IP</li>
+<li><strong>SDF_FILTER</strong>: Service Data Flow filter for traffic classification:<ul>
+<li><strong>FLOW_DESCRIPTION</strong>: Defines the IP flow to match:</li>
+<li><strong>ACTION</strong>: <code>1</code> (permit)</li>
+<li><strong>DIRECTION</strong>: <code>2</code> (bidirectional)</li>
+<li><strong>PROTOCOL</strong>: <code>255</code> (any protocol)</li>
+<li><strong>DEST_IPV4/MASK</strong>: <code>1.1.1.1/255.255.255.255</code> - Match traffic to specific destination</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>OUTER_HEADER_REMOVAL</strong>: <code>0</code> - Remove GTP-U header (for uplink traffic)</li>
+<li><strong>FAR_ID</strong>: <code>9</code> - References the FAR to execute when this PDR matches</li>
+<li><strong>URR_ID</strong>: <code>8</code> - References the Usage Reporting Rule for traffic accounting</li>
+<li><strong>QER_ID</strong>: <code>8</code> - References the QoS Enforcement Rule</li>
+</ul>
+<h3 id="54-creating-a-qer-qos-enforcement-rule">5.4 Creating a QER (QoS Enforcement Rule)</h3>
+<p>QERs define QoS parameters including gate status, QoS Flow Identifier (QFI), and Maximum Bit Rate (MBR) limits.</p>
+<p><strong>Decoded Output (QER with MBR):</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 100, FamilyID: 31, Seq: 88
+Command: GTP5G_CMD_ADD_QER (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_QER_ID: 7
+  GTP5G_QER_SEID: 1
+  GTP5G_QER_GATE: 0
+  GTP5G_QER_MBR:
+    GTP5G_QER_MBR_UL_HIGH32: 3906
+    GTP5G_QER_MBR_UL_LOW8: 64
+    GTP5G_QER_MBR_DL_HIGH32: 3906
+    GTP5G_QER_MBR_DL_LOW8: 64
+  GTP5G_QER_QFI: 1
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><strong>Command</strong>: <code>GTP5G_CMD_ADD_QER</code> (command ID 3) - Creates a QoS Enforcement Rule</li>
+<li><strong>QER_ID</strong>: <code>7</code> - Unique identifier for this QER</li>
+<li><strong>GATE</strong>: <code>0</code> - Gate status (0=OPEN, allowing traffic to pass; 1=CLOSED)</li>
+<li><strong>MBR (Maximum Bit Rate)</strong>: Nested structure defining rate limits:<ul>
+<li><strong>UL_HIGH32/LOW8</strong>: Uplink rate = <code>(3906 &lt;&lt; 8) | 64</code> = 999,488 kbps ≈ 1 Gbps</li>
+<li><strong>DL_HIGH32/LOW8</strong>: Downlink rate = <code>(3906 &lt;&lt; 8) | 64</code> = 999,488 kbps ≈ 1 Gbps</li>
+<li>The bit rate is encoded as a 40-bit value split across HIGH32 and LOW8 fields</li>
+</ul>
+</li>
+<li><strong>QFI</strong>: <code>1</code> - QoS Flow Identifier (values 1-63 map to different 5QI classes)</li>
+<li><strong>SEID</strong>: <code>1</code> - Links to the PFCP session</li>
+</ul>
+<p><strong>Decoded Output (Simple QER without MBR):</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 64, FamilyID: 31, Seq: 90
+Command: GTP5G_CMD_ADD_QER (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_QER_ID: 9
+  GTP5G_QER_SEID: 1
+  GTP5G_QER_GATE: 0
+  GTP5G_QER_QFI: 1
+------------------------------------------------------------
+</code></pre></div></p>
+<p>This simpler QER only sets the gate status and QFI without rate limiting.</p>
+<h3 id="55-deleting-rules-session-teardown">5.5 Deleting Rules (Session Teardown)</h3>
+<p>When a PDU session ends or rules are updated, the UPF removes associated rules. The deletion sequence typically follows: FAR → QER → URR → PDR.</p>
+<p><strong>Decoded Output:</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 65
+Command: GTP5G_CMD_DEL_FAR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_FAR_ID: 5
+  GTP5G_FAR_SEID: 1
+------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 69
+Command: GTP5G_CMD_DEL_QER (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_QER_ID: 5
+  GTP5G_QER_SEID: 1
+------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 72
+Command: GTP5G_CMD_DEL_URR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_URR_ID: 8
+  GTP5G_URR_SEID: 1
+------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 76
+Command: GTP5G_CMD_DEL_PDR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_PDR_ID: 7
+  GTP5G_PDR_SEID: 1
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li>Delete commands identify specific rules by their ID and SEID</li>
+<li><strong>FAR deletion</strong>: Removes forwarding rule FAR_ID=5 from session SEID=1</li>
+<li><strong>QER deletion</strong>: Removes QoS rule QER_ID=5</li>
+<li><strong>URR deletion</strong>: Removes usage reporting rule URR_ID=8</li>
+<li><strong>PDR deletion</strong>: Removes packet detection rule PDR_ID=7</li>
+<li>The sequence matters: forwarding rules should be deleted before detection rules to prevent packet loss</li>
+</ul>
+<h3 id="56-uplink-vs-downlink-pdr-patterns">5.6 Uplink vs Downlink PDR Patterns</h3>
+<p><strong>Uplink PDR</strong> (N3 → N6, packets from UE to internet):<br />
+<div class="highlight"><pre><span></span><code>GTP5G_PDR_PDI:
+  GTP5G_PDI_SRC_INTF: 0              # Source = Access (N3)
+  GTP5G_PDI_F_TEID:                  # Match on incoming GTP-U tunnel
+    GTP5G_F_TEID_I_TEID: 6
+    GTP5G_F_TEID_GTPU_ADDR_IPV4: 192.168.11.130
+  GTP5G_PDI_UE_ADDR_IPV4: 10.60.0.100
+GTP5G_OUTER_HEADER_REMOVAL: 0        # Remove GTP-U header
+</code></pre></div></p>
+<p><strong>Downlink PDR</strong> (N6 → N3, packets from internet to UE):<br />
+<div class="highlight"><pre><span></span><code>GTP5G_PDR_PDI:
+  GTP5G_PDI_SRC_INTF: 1              # Source = Core (N6)
+  GTP5G_PDI_UE_ADDR_IPV4: 10.60.0.100  # Match on UE destination IP
+  GTP5G_PDI_SDF_FILTER:              # Optional: filter specific traffic
+    GTP5G_SDF_FILTER_FLOW_DESCRIPTION:
+      GTP5G_FLOW_DESCRIPTION_SRC_IPV4: 1.1.1.1
+      GTP5G_FLOW_DESCRIPTION_SRC_MASK: 255.255.255.255
+# No OUTER_HEADER_REMOVAL (FAR will add GTP-U header)
+</code></pre></div></p>
+<p>The key differences:</p>
+<ul>
+<li><strong>Uplink</strong> uses <code>SRC_INTF: 0</code> (Access) and includes <code>F_TEID</code> for tunnel matching</li>
+<li><strong>Downlink</strong> uses <code>SRC_INTF: 1</code> (Core) and matches on <code>UE_ADDR_IPV4</code></li>
+<li><strong>Uplink</strong> includes <code>OUTER_HEADER_REMOVAL</code> to decapsulate GTP-U</li>
+<li><strong>Downlink</strong> FAR will include <code>OUTER_HEADER_CREATION</code> for encapsulation</li>
+</ul>
+<h3 id="57-far-with-forwarding-parameters-gtp-u-encapsulation">5.7 FAR with Forwarding Parameters (GTP-U Encapsulation)</h3>
+<p>For downlink traffic, the FAR includes GTP-U encapsulation parameters:</p>
+<p><strong>Decoded Output:</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 96, FamilyID: 31, Seq: 156
+Command: GTP5G_CMD_ADD_FAR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_FAR_ID: 2
+  GTP5G_FAR_SEID: 1
+  GTP5G_FAR_APPLY_ACTION: 2
+  GTP5G_FAR_FORWARDING_PARAMETER:
+    GTP5G_FORWARDING_PARAMETER_OUTER_HEADER_CREATION:
+      GTP5G_OUTER_HEADER_CREATION_O_TEID: 1
+      GTP5G_OUTER_HEADER_CREATION_PEER_ADDR_IPV4: 10.200.200.1
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><strong>FORWARDING_PARAMETER</strong>: Nested structure for packet encapsulation</li>
+<li><strong>OUTER_HEADER_CREATION</strong>: Defines GTP-U tunnel parameters for outgoing packets:<ul>
+<li><strong>O_TEID</strong>: <code>1</code> - Outgoing TEID assigned by the gNB</li>
+<li><strong>PEER_ADDR_IPV4</strong>: <code>10.200.200.1</code> - gNB's N3 interface IP address</li>
+</ul>
+</li>
+</ul>
+<h3 id="58-usage-reporting-get_report">5.8 Usage Reporting (GET_REPORT)</h3>
+<p>The UPF can query usage reports from URRs to collect traffic statistics:</p>
+<p><strong>Decoded Output:</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 78
+Command: GTP5G_CMD_GET_REPORT (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_URR_ID: 8
+  GTP5G_URR_SEID: 1
+------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 81
+Command: GTP5G_CMD_GET_REPORT (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_URR_ID: 7
+  GTP5G_URR_SEID: 1
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><strong>Command</strong>: <code>GTP5G_CMD_GET_REPORT</code> (command ID 17) - Queries usage statistics</li>
+<li><strong>URR_ID</strong>: Identifies which Usage Reporting Rule to query</li>
+<li><strong>SEID</strong>: Session Endpoint Identifier</li>
+<li>The kernel module responds with volume measurements (bytes/packets sent/received)</li>
+<li>GET_REPORT is typically called before deleting URRs to collect final statistics</li>
+</ul>
+<h3 id="59-querying-existing-rules-get_far">5.9 Querying Existing Rules (GET_FAR)</h3>
+<p>The UPF can query existing rules to verify their state:</p>
+<p><strong>Decoded Output:</strong><br />
+<div class="highlight"><pre><span></span><code>------------------------------------------------------------
+GTP5G MESSAGE
+Len: 48, FamilyID: 31, Seq: 99
+Command: GTP5G_CMD_GET_FAR (v0)
+Attributes:
+  GTP5G_LINK: 4
+  GTP5G_FAR_ID: 10
+  GTP5G_FAR_SEID: 1
+------------------------------------------------------------
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li><strong>Command</strong>: <code>GTP5G_CMD_GET_FAR</code> (command ID 8) - Queries an existing FAR</li>
+<li>This is often used to check if a FAR exists before updating or to verify rule installation</li>
+<li>Similar GET commands exist for PDR, QER, URR, and BAR</li>
+</ul>
+<h3 id="510-common-debugging-scenarios">5.10 Common Debugging Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>What to Check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UE cannot reach internet</td>
+<td>Check uplink PDR exists with correct F_TEID and SRC_INTF=0</td>
+</tr>
+<tr>
+<td>Internet cannot reach UE</td>
+<td>Check downlink PDR exists with UE_ADDR_IPV4 and SRC_INTF=1</td>
+</tr>
+<tr>
+<td>Packets dropped silently</td>
+<td>Verify FAR APPLY_ACTION is FORW (0x02), not DROP (0x01)</td>
+</tr>
+<tr>
+<td>Wrong destination</td>
+<td>Check FAR OUTER_HDR_CREATION has correct O_TEID and PEER_ADDR</td>
+</tr>
+<tr>
+<td>QoS not applied</td>
+<td>Verify QER exists, check GATE=0 (OPEN), and PDR has correct QER_ID</td>
+</tr>
+<tr>
+<td>Rate limiting not working</td>
+<td>Check QER MBR values (UL_HIGH32/LOW8, DL_HIGH32/LOW8)</td>
+</tr>
+<tr>
+<td>Traffic not matching PDR</td>
+<td>Verify SDF_FILTER FLOW_DESCRIPTION matches expected traffic pattern</td>
+</tr>
+<tr>
+<td>Usage stats missing</td>
+<td>Ensure URR exists and PDR references correct URR_ID</td>
+</tr>
+<tr>
+<td>Session cleanup issues</td>
+<td>Ensure DEL commands include correct ID and SEID</td>
+</tr>
+<tr>
+<td>Rule update failures</td>
+<td>Use GET commands to verify rule state before modification</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-conclusion">6. Conclusion</h2>
+<p>This deep dive into GTP5G Netlink message decoding illustrates how to bridge the gap between low-level kernel communication and high-level protocol understanding. By leveraging <code>strace</code> output and a custom decoder, developers can gain real-time insights into the 5G User Plane's behavior.</p>
+<p>From a protocol analysis perspective, Generic Netlink provides a structured, extensible mechanism for kernel-userspace IPC. The key insight is that <strong>Netlink is essentially a message-passing system with typed payloads</strong>. Once you understand the 16-byte header structure and 4-byte aligned TLV attributes, any Netlink-based protocol becomes parseable.</p>
+<p>For GTP5G specifically, the message flow reveals how the 5G User Plane operates: the SMF orchestrates session rules via PFCP, which the UPF translates into kernel-level PDR/FAR/QER rules through Netlink. By intercepting these messages, we gain visibility into the exact packet matching and forwarding logic installed in the data plane. This visibility is invaluable for understanding and debugging complex 5G core network issues.</p>
+<hr />
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://github.com/free5gc/free5gc">free5GC Project</a></li>
+<li><a href="https://github.com/free5gc/gtp5g">gtp5g Kernel Module</a></li>
+<li><a href="https://wiki.linuxfoundation.org/networking/generic_netlink_howto">Linux Generic Netlink HOWTO</a></li>
+<li><a href="https://www.3gpp.org/specifications">3GPP TS 29.244 - PFCP Protocol</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/netlink.7.html">Linux Netlink Manual</a></li>
+</ul>
+<p><strong>About Me</strong></p>
+<p>My name is Chen, Kuan-Lin. I've recently started diving into the world of 5G Core Networks and contributing to the free5GC project. My future research direction is focused on Network Slicing. I hope this article was helpful to you! If you have any questions or just want to chat about this topic, feel free to reach out and connect with our lab team.</p>
+<ul>
+<li>GitHub: <a href="https://github.com/DBGR18">DBGR18</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
