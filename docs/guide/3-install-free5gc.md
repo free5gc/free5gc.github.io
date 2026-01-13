@@ -17,26 +17,26 @@ You will not be able to run most of the tests in [Test](./4-test-free5gc.md) pag
 
 2\. Golang Version
 
-* As noted above, free5gc is built and tested with Go 1.24.5
+* As noted above, free5gc is built and tested with Go 1.25.5
 * To check the version of Go on your system, from a command prompt:
 ```bash
 go version
 ```
 
-* If another version of Go is installed, remove the existing version and install Go 1.24.5:
+* If another version of Go is installed, remove the existing version and install Go 1.25.5:
 
 ```bash
 # this assumes your current version of Go is in the default location:
 sudo rm -rf /usr/local/go
-wget https://dl.google.com/go/go1.24.5.linux-amd64.tar.gz
-sudo tar -C /usr/local -zxvf go1.24.5.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -zxvf go1.25.5.linux-amd64.tar.gz
 ```
 
 * If Go is not installed on your system:
 
 ```bash
-wget https://dl.google.com/go/go1.24.5.linux-amd64.tar.gz
-sudo tar -C /usr/local -zxvf go1.24.5.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -zxvf go1.25.5.linux-amd64.tar.gz
 mkdir -p ~/go/{bin,pkg,src}
 # The following assume that your shell is bash:
 echo 'export GOPATH=$HOME/go' >> ~/.bashrc
@@ -126,11 +126,11 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
-    * To install the latest stable build (v4.1.0):
+    * To install the latest stable build (v4.2.0):
 
         ```bash
         cd ~
-        git clone --recursive -b v4.1.0 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b v4.2.0 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
         ```
 
