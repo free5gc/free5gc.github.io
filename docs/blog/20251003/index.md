@@ -56,7 +56,7 @@ There are some metrics we can track in free5GC:
     - The total number of outbound SBI requests sent by an NF.
 
 ## A Practical Guide: Integrating with free5gc-helm
-Starting from v4.1.0, free5GC includes support for Prometheus, which can be used with both [free5gc-compose](https://github.com/free5gc/free5gc-compose) and [free5gc-helm](https://github.com/free5gc/free5gc-helm).
+Starting from v4.2.0, free5GC includes support for Prometheus, which can be used with both [free5gc-compose](https://github.com/free5gc/free5gc-compose) and [free5gc-helm](https://github.com/free5gc/free5gc-helm).
 
 In the following example, we will demonstrate how to set up and integrate Prometheus and Grafana with free5GC using `free5gc-helm`.
 
