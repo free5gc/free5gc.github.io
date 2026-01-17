@@ -1,0 +1,42 @@
+name: MkDocs Build
+
+on:
+  pull_request:
+
+jobs:
+  mkdocs-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Test MkDocs build
+        run: |
+          mkdocs build --verbose
+      
+      - name: Check build output
+        run: |
+          if [ ! -d "site" ]; then
+            echo "Error: site directory was not created"
+            exit 1
+          fi
+          if [ ! -f "site/index.html" ]; then
+            echo "Error: index.html was not generated"
+            exit 1
+          fi
+          echo "MkDocs build completed successfully"
+          echo "Build statistics:"
+          du -sh site/
+          find site/ -type f | wc -l | xargs echo "Total files:"
