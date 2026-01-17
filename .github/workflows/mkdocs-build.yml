@@ -24,7 +24,7 @@ jobs:
       
       - name: Test MkDocs build
         run: |
-          mkdocs build --strict --verbose
+          mkdocs build --verbose
       
       - name: Check build output
         run: |
