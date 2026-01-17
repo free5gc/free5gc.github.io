@@ -12,11 +12,11 @@ editables==0.3
 exceptiongroup==1.1.1
 filelock==3.20.3
 ghp-import==2.1.0
-h11==0.14.0
+h11==0.16.0
 hatch==1.7.0
 hatchling==1.17.1
-httpcore==0.17.2
-httpx==0.24.1
+httpcore>=1.0.9
+httpx>=0.28.1
 hyperlink==21.0.0
 idna==3.7
 importlib-metadata==6.6.0
