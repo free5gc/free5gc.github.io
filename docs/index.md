@@ -18,8 +18,8 @@
   <h2>Your Roadmap to 5G Expertise Starts Here — And It’s Free!</h2>
   <p>Linux Foundation Education has launched Introduction to free5GC (LFS114), a free, self-paced course designed for developers, network engineers, and technologists who want to deepen their 5G expertise and work directly with modern 5G Core architecture. In just a few focused hours, you’ll learn how free5GC is built, how its core functions operate, and how to navigate and engage with the codebase — giving you a real advantage in today’s cloud native networking landscape.</p>
   <p>For more details, please visit the <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" target="_blank">Introduction to free5GC (LFS114)</a>.</p>
-  <h2>Latest News: free5GC v4.1.0 Released!</h2>
-  <p>We have fixed a series of bugs in version 4.1.0 to improve stability and introduce a new feature: <strong>NR-DC</strong>.</p>
+  <h2>Latest News: free5GC v4.2.0 Released!</h2>
+  <p>We have fixed a series of bugs in version 4.2.0 to improve stability and introduce a new feature: <strong>BSF</strong>.</p>
   <p>For more details, please see the history page.</p>
   <a href="./history" class="announcement-link">View Version History →</a>
 </div>
@@ -63,12 +63,12 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 ### Connecting to the Future!
 
 <div class="roadmap-container">
-  <img src="./assets/roadmap-202508.png" alt="free5GC Roadmap" class="roadmap-image"/>
+  <img src="./assets/roadmap-202601.png" alt="free5GC Roadmap" class="roadmap-image"/>
   <div class="roadmap-text">
     <p>We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:</p>
     <ul class="roadmap-list">
-      <li>NR-DC</li>
-      <li>Roaming</li>
+      <li>CNTi</li>
+      <li>UE Parallel Registratioin</li>
     </ul>
     <a href="#" class="roadmap-button">Learn More About free5GC Development Plans</a>
   </div>
