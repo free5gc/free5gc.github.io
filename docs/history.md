@@ -1,5 +1,15 @@
 # History
 
+## 2026 Roadmap
+
+![free5gc-roadmp-2026](./assets/free5gc-roadmap-2026.png)
+
+## January 13, 2026: v4.2.0
+
+In the release v4.2.0 of free5GC, we have fixed s series of bugs, upgrade go versioin to 1.25.5, and also introduce new features:
+
+- [BSF](https://github.com/free5gc/free5gc/pull/711)
+
 ## 2025 Roadmap
 
 ![free5gc-roadmp-2025](./assets/free5gc-roadmap-2025.png)
