@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2026/01/28: Network Function NSSF Introduction](./20260128/20260128.md)
 - [2026/01/21: Analyzing NF Discovery Requests:  Step-by-Step Trace of NFSelect Queries](./20260121/20260121.md)
 - [2026/01/14: Introduction of iperf3 and iftop  ](./20260114/20260114.md)
 - [2026/01/07: MCP Server Integration with free5GC: Architecture and Use Cases](./20260107/20260107.md)
