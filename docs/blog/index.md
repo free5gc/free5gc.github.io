@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2026/02/11: 5G-DPOP: eBPF-Based UPF Data Plane Observability Platform](./20260211/20260211.md)
 - [2026/02/04: PFCP Session Lifecycle in free5GC: Establish, Modify, and Release Explained](./20260204/20260204.md)
 - [2026/01/28: Network Function NSSF Introduction](./20260128/20260128.md)
 - [2026/01/21: Analyzing NF Discovery Requests:  Step-by-Step Trace of NFSelect Queries](./20260121/20260121.md)
