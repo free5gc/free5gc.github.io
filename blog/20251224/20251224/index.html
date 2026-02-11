@@ -1,0 +1,1708 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Tracing the latency of the 5G Registration Procedure with eBPF - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tracing-the-latency-of-the-5g-registration-procedure-with-ebpf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tracing the latency of the 5G Registration Procedure with eBPF
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-ebpf" class="md-nav__link">
+    Why eBPF?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ebpf-and-the-mechanics-of-uprobes" class="md-nav__link">
+    eBPF and the Mechanics of Uprobes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#challenges-in-tracing-go-applications" class="md-nav__link">
+    Challenges in Tracing Go Applications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    Methodology
+  </a>
+  
+    <nav class="md-nav" aria-label="Methodology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#locating-the-entry-and-exit-points-of-the-function" class="md-nav__link">
+    Locating the Entry and Exit Points of the function
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-information-from-register-abiinternal" class="md-nav__link">
+    Get information from Register (ABIInternal)
+  </a>
+  
+    <nav class="md-nav" aria-label="Get information from Register (ABIInternal)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-goid" class="md-nav__link">
+    Get goid
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tracing-state-transitions-capturing-casgstatus-arguments" class="md-nav__link">
+    Tracing State Transitions: Capturing casgstatus Arguments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    Implementation
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-code" class="md-nav__link">
+    Source Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    How to use
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    Result
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251224/20251224.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251224/20251224.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="tracing-the-latency-of-the-5g-registration-procedure-with-ebpf">Tracing the latency of the 5G Registration Procedure with eBPF</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Chia-Hui, Chen<br />
+Date: 2025/12/24</p>
+</div>
+<hr />
+<h2 id="overview"><strong>Overview</strong></h2>
+<p>In modern cloud-native architectures, system complexity has reached unprecedented levels. When performance bottlenecks occur in high-performance, high-concurrency systems, developers need tools that can reach deep into the system's lower layers to pinpoint the exact sources of latency. This is where eBPF (extended Berkeley Packet Filter) comes into play.</p>
+<h3 id="why-ebpf">Why eBPF?</h3>
+<p>eBPF allows us to dynamically inject "probes" into both the kernel and user space without modifying the target program's source code or performing a recompilation. For many debugging and optimization scenarios, eBPF serves as an excellent diagnostic tool, offering the following core advantages:</p>
+<ul>
+<li>
+<p><strong>Non-intrusive Observation</strong><br />
+    It transparently collects performance data without interfering with the business logic. This means we can perform deep-dive analysis directly in a production environment without worrying about modifying code.</p>
+</li>
+<li>
+<p><strong>A Bridge Between Kernel and User</strong> <br />
+    It doesn't just track user-space function calls via Uprobes; it simultaneously monitors Kprobes (kernel probes) and scheduling events. This cross-layer observability allows for "complete" monitoring of a function's lifecycle — capturing not only its active execution time but also any instances where it was descheduled or blocked by the kernel.</p>
+</li>
+</ul>
+<p>In this article, we will apply these eBPF capabilities to a real-world high-concurrency scenario: Tracing the latency of the 5G Registration Procedure. By monitoring key functions within the 5G Registration Procedure in free5GC, we will demonstrate how to pinpoint bottlenecks that traditional tools miss, providing a transparent view of a 5G NAS message's journey through the Go runtime.</p>
+<h2 id="background"><strong>Background</strong></h2>
+<p>Before diving into performance bottleneck analysis, we must understand two key technical areas: how eBPF enables tracing and how Go’s low-level design makes this task exceptionally challenging.</p>
+<h3 id="ebpf-and-the-mechanics-of-uprobes">eBPF and the Mechanics of Uprobes</h3>
+<p>eBPF is a Linux kernel technology that allows us to execute custom programs within a sandboxed environment inside the kernel without modifying the kernel source code.<br />
+Through Uprobes (User-level Probes), we can attach directly to specific memory addresses within a binary. When the program reaches that point, the eBPF program is triggered to collect register and memory information. This allows us to observe the internal state of a program without modifying its source code and with minimal overhead.</p>
+<h3 id="challenges-in-tracing-go-applications">Challenges in Tracing Go Applications</h3>
+<ol>
+<li>
+<p>ABIInternal: The Hidden Register Trap</p>
+<p>Since Go 1.17, Go has utilized a Register-based Calling Convention (ABIInternal). Unlike the standard C ABI or older Go versions that passed arguments on the stack, parameters are now distributed across registers like RAX, RBX, and RCX.</p>
+<ul>
+<li><strong>Impact:</strong> Generic eBPF tools that do not account for Go’s register mapping will capture meaningless data. We must manually locate these registers to extract correct information.</li>
+</ul>
+</li>
+<li>
+<p>Stack Growth and the Risks of uretprobe</p>
+<p>Goroutine stacks are dynamic. When a function detects insufficient stack space, it calls runtime.morestack to expand, "moving" the entire stack content to a larger memory segment.</p>
+<ul>
+<li>
+<p><strong>Impact:</strong> eBPF's uretprobe relies on modifying the return address upon function entry. If a stack move occurs mid-execution, the recorded return address becomes invalid, potentially causing the tracer to fail or, worse, crashing the application.</p>
+</li>
+<li>
+<p><strong>Solution:</strong> To ensure safety, we can replace uretprobe with manual calculations of function exit offsets, utilizing standard Uprobes to capture exit events accurately.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Invisibility of the G-M-P Scheduler</p>
+<p>The Linux kernel recognizes Threads, but remains unaware of Goroutines.</p>
+<ul>
+<li><strong>Impact:</strong> Measuring time at the thread level makes it impossible to distinguish which Goroutine is consuming resources or to account for kernel scheduling interference.</li>
+<li><strong>Solution:</strong> Instead of blind kernel-level tracing, we target the internal state transition point of the Go Runtime: runtime.casgstatus. By monitoring when a Goroutine enters _Grunning or _Gwaiting, we obtain actual CPU execution time from a "Goroutine-centric perspective.</li>
+</ul>
+</li>
+<li>
+<p>Goroutine Migration Between Threads</p>
+<p>In Go's G-M-P scheduling model, a Goroutine is not pinned to a specific OS thread. A Goroutine might start executing on Thread A, get descheduled, and later resume on Thread B.</p>
+<ul>
+<li><strong>The Impact:</strong> Traditional eBPF tools often use the Thread ID (TID) as a key to store timestamps. If a Goroutine migrates during function execution, the exit probe on Thread B will fail to find the start time recorded by the entry probe on Thread A, leading to broken traces or corrupted data.</li>
+<li><strong>Solution:</strong> Instead of relying on TID, we extract the Goid (Goroutine ID) directly from the Go runtime. On x86_64, the g pointer is stored in the R14 register. By reading the goid field from the g struct, we obtain a persistent identifier that follows the Goroutine across different threads. Using Goid as our primary key ensures that our timing remains accurate regardless of thread migration.</li>
+</ul>
+</li>
+</ol>
+<h2 id="methodology"><strong>Methodology</strong></h2>
+<h3 id="locating-the-entry-and-exit-points-of-the-function">Locating the Entry and Exit Points of the function</h3>
+<p>To capture the Entry and Exit Points of the function, we can use <code>objdump</code> command to analyze the disassembled binary.</p>
+<blockquote>
+<p>Note: Function addresses are not fixed and will change every time the program is recompiled. Always re-verify the offsets for your current binary.</p>
+</blockquote>
+<p>Example Command:</p>
+<p><div class="highlight"><pre><span></span><code>objdump<span class="w"> </span>-d<span class="w"> </span>./amf<span class="w"> </span>--disassemble<span class="o">=</span><span class="s2">&quot;github.com/free5gc/amf/internal/gmm.HandleRegistrationRequest&quot;</span>
+</code></pre></div><br />
+The output will be like<br />
+<img alt="" src="../objdump1.png" /><br />
+We can use <code>grep</code> to quickly find all ret instruction addresses.<br />
+<div class="highlight"><pre><span></span><code>objdump<span class="w"> </span>-d<span class="w"> </span>./amf<span class="w"> </span>--disassemble<span class="o">=</span><span class="s2">&quot;github.com/free5gc/amf/internal/gmm.HandleRegistrationRequest&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ret
+</code></pre></div><br />
+<img alt="" src="../objdump2.png" /><br />
+<code>0xcac2a6</code> is one of the ret instruction address.</p>
+<blockquote>
+<p>Note: Every ret instruction within the function must be traced to ensure the exit event is captured regardless of the execution path.</p>
+</blockquote>
+<p>We can use <code>head -n 10</code> to find the entry.<br />
+<div class="highlight"><pre><span></span><code>objdump<span class="w"> </span>-d<span class="w"> </span>./amf<span class="w"> </span>--disassemble<span class="o">=</span><span class="s2">&quot;github.com/free5gc/amf/internal/gmm.HandleRegistrationRequest&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
+</code></pre></div><br />
+<img alt="" src="../objdump3.png" /><br />
+<code>0xcabf80</code> is the entry address.</p>
+<p><code>nm</code> can also be used to find the entry.<br />
+<div class="highlight"><pre><span></span><code>nm<span class="w"> </span>./amf<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;github.com/free5gc/amf/internal/gmm.HandleRegistrationRequest&quot;</span>
+</code></pre></div><br />
+<img alt="" src="../nm.png" /></p>
+<blockquote>
+<p>Note: Go's compiler may "inline" small functions for performance. If a function is inlined, it loses its unique symbol and address, making it untraceable via eBPF. To prevent this, you must add the //go:noinline compiler directive directly above the function definition:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">//go:noinline</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">YourFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+</blockquote>
+<h3 id="get-information-from-register-abiinternal">Get information from Register (ABIInternal)</h3>
+<h4 id="get-goid">Get goid</h4>
+<p>To trace Go applications effectively, we need a persistent way to identify a Goroutine as it moves across different OS threads. This is where the Goid comes in. Extracting it requires two pieces of information: the location of the "g" pointer and the memory offset of the goid field.</p>
+<ol>
+<li>Finding the G-Pointer via R14 <br />
+    In the x86_64 architecture, Go’s ABIInternal convention stores the pointer to the current Goroutine structure (runtime.g) in the R14 register.<ul>
+<li><strong>The Logic:</strong> Whenever an eBPF probe is triggered, we read the value of R14 to get the memory address of the current Goroutine's "home" in memory.</li>
+</ul>
+</li>
+<li>Using <code>pahole</code> to Locate the Offset<br />
+    <div class="highlight"><pre><span></span><code>pahole<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;runtime.g&quot;</span><span class="w"> </span>./amf
+</code></pre></div><br />
+    the output will be like:<br />
+    <div class="highlight"><pre><span></span><code><span class="w">        </span>struct<span class="w"> </span>runtime.g<span class="w"> </span><span class="o">{</span>
+<span class="w">            </span>runtime.stack<span class="w">              </span>stack<span class="p">;</span><span class="w">                </span>/*<span class="w">     </span><span class="m">0</span><span class="w">    </span><span class="m">16</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>stackguard0<span class="p">;</span><span class="w">          </span>/*<span class="w">    </span><span class="m">16</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>stackguard1<span class="p">;</span><span class="w">          </span>/*<span class="w">    </span><span class="m">24</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime._panic<span class="w"> </span>*<span class="w">           </span>_panic<span class="p">;</span><span class="w">               </span>/*<span class="w">    </span><span class="m">32</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime._defer<span class="w"> </span>*<span class="w">           </span>_defer<span class="p">;</span><span class="w">               </span>/*<span class="w">    </span><span class="m">40</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime.m<span class="w"> </span>*<span class="w">                </span>m<span class="p">;</span><span class="w">                    </span>/*<span class="w">    </span><span class="m">48</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime.gobuf<span class="w">              </span>sched<span class="p">;</span><span class="w">                </span>/*<span class="w">    </span><span class="m">56</span><span class="w">    </span><span class="m">48</span><span class="w"> </span>*/
+<span class="w">            </span>/*<span class="w"> </span>---<span class="w"> </span>cacheline<span class="w"> </span><span class="m">1</span><span class="w"> </span>boundary<span class="w"> </span><span class="o">(</span><span class="m">64</span><span class="w"> </span>bytes<span class="o">)</span><span class="w"> </span>was<span class="w"> </span><span class="m">40</span><span class="w"> </span>bytes<span class="w"> </span>ago<span class="w"> </span>---<span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>syscallsp<span class="p">;</span><span class="w">            </span>/*<span class="w">   </span><span class="m">104</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>syscallpc<span class="p">;</span><span class="w">            </span>/*<span class="w">   </span><span class="m">112</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>syscallbp<span class="p">;</span><span class="w">            </span>/*<span class="w">   </span><span class="m">120</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>/*<span class="w"> </span>---<span class="w"> </span>cacheline<span class="w"> </span><span class="m">2</span><span class="w"> </span>boundary<span class="w"> </span><span class="o">(</span><span class="m">128</span><span class="w"> </span>bytes<span class="o">)</span><span class="w"> </span>---<span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>stktopsp<span class="p">;</span><span class="w">             </span>/*<span class="w">   </span><span class="m">128</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>void<span class="w"> </span>*<span class="w">                     </span>param<span class="p">;</span><span class="w">                </span>/*<span class="w">   </span><span class="m">136</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>internal/runtime/atomic.Uint32<span class="w"> </span>atomicstatus<span class="p">;</span><span class="w">     </span>/*<span class="w">   </span><span class="m">144</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>*/
+<span class="w">            </span>uint32<span class="w">                     </span>stackLock<span class="p">;</span><span class="w">            </span>/*<span class="w">   </span><span class="m">148</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>*/
+<span class="w">            </span>uint64<span class="w">                     </span>goid<span class="p">;</span><span class="w">                 </span>/*<span class="w">   </span><span class="m">152</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime.guintptr<span class="w">           </span>schedlink<span class="p">;</span><span class="w">            </span>/*<span class="w">   </span><span class="m">160</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>int64<span class="w">                      </span>waitsince<span class="p">;</span><span class="w">            </span>/*<span class="w">   </span><span class="m">168</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime.waitReason<span class="w">         </span>waitreason<span class="p">;</span><span class="w">           </span>/*<span class="w">   </span><span class="m">176</span><span class="w">     </span><span class="m">1</span><span class="w"> </span>*/
+<span class="w">            </span>bool<span class="w">                       </span>preempt<span class="p">;</span><span class="w">              </span>/*<span class="w">   </span><span class="m">177</span><span class="w">     </span><span class="m">1</span><span class="w"> </span>*/
+<span class="w">            </span>bool<span class="w">                       </span>preemptStop<span class="p">;</span><span class="w">          </span>/*<span class="w">   </span><span class="m">178</span><span class="w">     </span><span class="m">1</span><span class="w"> </span>*/
+<span class="w">                                        </span>.
+<span class="w">                                        </span>.
+<span class="w">                                        </span>.
+<span class="w">            </span>uint32<span class="w">                     </span>sig<span class="p">;</span><span class="w">                  </span>/*<span class="w">   </span><span class="m">220</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>*/
+<span class="w">            </span>struct<span class="w"> </span><span class="o">[]</span>uint8<span class="w">             </span>writebuf<span class="p">;</span><span class="w">             </span>/*<span class="w">   </span><span class="m">224</span><span class="w">    </span><span class="m">24</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>sigcode0<span class="p">;</span><span class="w">             </span>/*<span class="w">   </span><span class="m">248</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>/*<span class="w"> </span>---<span class="w"> </span>cacheline<span class="w"> </span><span class="m">4</span><span class="w"> </span>boundary<span class="w"> </span><span class="o">(</span><span class="m">256</span><span class="w"> </span>bytes<span class="o">)</span><span class="w"> </span>---<span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>sigcode1<span class="p">;</span><span class="w">             </span>/*<span class="w">   </span><span class="m">256</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>sigpc<span class="p">;</span><span class="w">                </span>/*<span class="w">   </span><span class="m">264</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uint64<span class="w">                     </span>parentGoid<span class="p">;</span><span class="w">           </span>/*<span class="w">   </span><span class="m">272</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>gopc<span class="p">;</span><span class="w">                 </span>/*<span class="w">   </span><span class="m">280</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">                                        </span>.
+<span class="w">                                        </span>.
+<span class="w">                                        </span>.
+<span class="w">            </span>/*<span class="w"> </span>---<span class="w"> </span>cacheline<span class="w"> </span><span class="m">6</span><span class="w"> </span>boundary<span class="w"> </span><span class="o">(</span><span class="m">384</span><span class="w"> </span>bytes<span class="o">)</span><span class="w"> </span>---<span class="w"> </span>*/
+<span class="w">            </span>runtime.synctestBubble<span class="w"> </span>*<span class="w">   </span>bubble<span class="p">;</span><span class="w">               </span>/*<span class="w">   </span><span class="m">384</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>runtime.gTraceState<span class="w">        </span>trace<span class="p">;</span><span class="w">                </span>/*<span class="w">   </span><span class="m">392</span><span class="w">    </span><span class="m">32</span><span class="w"> </span>*/
+<span class="w">            </span>int64<span class="w">                      </span>gcAssistBytes<span class="p">;</span><span class="w">        </span>/*<span class="w">   </span><span class="m">424</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+<span class="w">            </span>uintptr<span class="w">                    </span>valgrindStackID<span class="p">;</span><span class="w">      </span>/*<span class="w">   </span><span class="m">432</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+
+<span class="w">            </span>/*<span class="w"> </span>size:<span class="w"> </span><span class="m">440</span>,<span class="w"> </span>cachelines:<span class="w"> </span><span class="m">7</span>,<span class="w"> </span>members:<span class="w"> </span><span class="m">61</span><span class="w"> </span>*/
+<span class="w">            </span>/*<span class="w"> </span>sum<span class="w"> </span>members:<span class="w"> </span><span class="m">439</span>,<span class="w"> </span>holes:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>sum<span class="w"> </span>holes:<span class="w"> </span><span class="m">1</span><span class="w"> </span>*/
+<span class="w">            </span>/*<span class="w"> </span>last<span class="w"> </span>cacheline:<span class="w"> </span><span class="m">56</span><span class="w"> </span>bytes<span class="w"> </span>*/
+<span class="w">    </span><span class="o">}</span><span class="p">;</span>
+</code></pre></div><br />
+    We can find that the offset of goid is 152<br />
+    <div class="highlight"><pre><span></span><code>uint64<span class="w">                     </span>goid<span class="p">;</span><span class="w">                 </span>/*<span class="w">   </span><span class="m">152</span><span class="w">     </span><span class="m">8</span><span class="w"> </span>*/
+</code></pre></div><br />
+    &gt; Note: This offset is version-dependent and should be verified using pahole for your specific Go runtime.<br />
+    This tells us that goid is located 152 bytes from the start of the g struct. Therefore, the logic for our BPF program is:<script type="math/tex; mode=display">\text{Goid} = \text{Value at } (R14 + 152)</script>
+<br />
+    <div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="n">__always_inline</span><span class="w"> </span><span class="n">u64</span><span class="w"> </span><span class="n">get_goid</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">g_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">r14</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">    </span><span class="n">bpf_probe_read_user</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">goid</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">g_ptr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">152</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>Note: Go Runtime and all its Goroutines operate entirely in User Space. So we should use <code>bpf_probe_read_user</code> to ensures that the data is copied safely from the User Space process into a kernel buffer before we attempt to analyze it.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="tracing-state-transitions-capturing-casgstatus-arguments">Tracing State Transitions: Capturing casgstatus Arguments</h4>
+<p>To calculate the actual "CPU Time" spent on a task, we must know when a Goroutine is actively running (_Grunning) and when it switch to other state like _Gwaiting. This transition is handled by the internal function runtime.casgstatus.</p>
+<ol>
+<li>
+<p>Function Signature and Register Mapping<br />
+    The function is defined in the Go runtime as:<br />
+    <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">casgstatus</span><span class="p">(</span><span class="nx">gp</span><span class="w"> </span><span class="o">*</span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">oldval</span><span class="p">,</span><span class="w"> </span><span class="nx">newval</span><span class="w"> </span><span class="kt">uint32</span><span class="p">)</span>
+</code></pre></div><br />
+    Because Go uses a Register-based ABI, these arguments are not on the stack but are passed through CPU registers. On x86_64, the mapping is as follows:</p>
+<p><code>gp</code> (The G being modified): Stored in <strong>RAX</strong>.<br />
+<code>oldval</code> (The previous state): Stored in <strong>RBX</strong>.<br />
+<code>newval</code> (The target state): Stored in <strong>RCX</strong>.<br />
+2. The Implementation Method<br />
+When we attach a Uprobe to runtime.casgstatus, our BPF C code uses specific macros to pull these values directly from the registers:<br />
+<div class="highlight"><pre><span></span><code><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;uprobe/runtime.casgstatus&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">uprobe_casgstatus</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">gp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">ax</span><span class="p">;;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">oldval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u32</span><span class="p">)</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">bx</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">newval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u32</span><span class="p">)</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cx</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">target_goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_probe_read_user</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">goid</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)((</span><span class="n">u64</span><span class="p">)</span><span class="n">gp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">152</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// handle logic</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><br />
+By monitoring these transitions, we can distinguish between Wall Time and CPU Time (the time actually spent processing), providing a much clearer picture of where the function is struggling.</p>
+</li>
+</ol>
+<h2 id="implementation"><strong>Implementation</strong></h2>
+<p>The following is the source code to trace the latency of  5G Registration Procedure.</p>
+<blockquote>
+<p>Note: all the following contents are based on x86_64.</p>
+</blockquote>
+<h3 id="source-code">Source Code</h3>
+<p>The header file of eBPF<br />
+<div class="highlight"><pre><span></span><code><span class="c1">//trace.h</span>
+<span class="cp">#ifndef __TRACER_H__</span>
+<span class="cp">#define __TRACER_H__</span>
+
+<span class="cp">#define user_pt_regs pt_regs</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf/bpf_helpers.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf/bpf_tracing.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf/bpf_core_read.h&gt;</span>
+
+<span class="c1">// Go runtime status</span>
+<span class="cp">#define G_IDLE 0</span>
+<span class="cp">#define G_RUNNABLE 1</span>
+<span class="cp">#define G_RUNNING 2</span>
+<span class="cp">#define G_SYSCALL 3</span>
+<span class="cp">#define G_WAITING 4</span>
+<span class="cp">#define G_MORIBUND_UNUSED 5</span>
+<span class="cp">#define G_DEAD 6</span>
+<span class="cp">#define G_ENQUEUE_UNUSED 7</span>
+<span class="cp">#define G_COPYSTACK 8</span>
+<span class="cp">#define G_PREEMPTED 9</span>
+
+<span class="c1">// Offset</span>
+<span class="cp">#define OFFSET_GOID    152</span>
+<span class="cp">#define OFFSET_STARTPC 296</span>
+<span class="cp">#define OFFSET_GOPC    280</span>
+
+<span class="c1">// Register (x86-64 Go ABI)</span>
+<span class="cp">#define GO_G_REG(ctx) (ctx-&gt;r14)</span>
+<span class="cp">#define GO_ARG1(ctx)  (ctx-&gt;ax)</span>
+<span class="cp">#define GO_ARG2(ctx)  (ctx-&gt;bx)</span>
+<span class="cp">#define GO_ARG3(ctx)  (ctx-&gt;cx)</span>
+<span class="cp">#define GO_ARG4(ctx)  (ctx-&gt;di)</span>
+<span class="cp">#define GO_ARG5(ctx)  (ctx-&gt;si)</span>
+
+<span class="cp">#endif </span>
+</code></pre></div><br />
+The eBPF tracer source code<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// tracer.bpf.c</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;vmlinux.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf/bpf_helpers.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf/bpf_tracing.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bpf/bpf_core_read.h&gt;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="n">__u64</span><span class="w"> </span><span class="n">u64</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__u32</span><span class="w"> </span><span class="n">u32</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">__u8</span><span class="w">  </span><span class="n">u8</span><span class="p">;</span>
+
+<span class="c1">// key for tracking function calls per goroutine</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">proc_key</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">func_id</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// goroutine CPU time tracking structure</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">goid_clock</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">total_cpu_ns</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">last_start_ns</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w">  </span><span class="n">is_on_cpu</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// event structure for ring buffer</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">event_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">total_cpu_ns</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">event_type</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">func_id</span><span class="p">;</span><span class="w"> </span>
+<span class="p">};</span>
+
+<span class="cp">#define EVENT_ENTER 1</span>
+<span class="cp">#define EVENT_EXIT  2</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;tracer.h&quot;</span><span class="c1"> </span>
+
+<span class="c1">// global map to track goid CPU time</span>
+<span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">BPF_MAP_TYPE_HASH</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">max_entries</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__type</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">u64</span><span class="p">);</span><span class="w"> </span><span class="c1">// goid</span>
+<span class="w">    </span><span class="n">__type</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">goid_clock</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="n">goid_clocks</span><span class="w"> </span><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;.maps&quot;</span><span class="p">);</span>
+
+<span class="c1">// map to store entry snapshots</span>
+<span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">BPF_MAP_TYPE_HASH</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">max_entries</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__type</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">proc_key</span><span class="p">);</span><span class="w"> </span><span class="c1">// goid + func_id </span>
+<span class="w">    </span><span class="n">__type</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">u64</span><span class="p">);</span><span class="w">           </span><span class="c1">// snapshot vtime</span>
+<span class="p">}</span><span class="w"> </span><span class="n">g_stats</span><span class="w"> </span><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;.maps&quot;</span><span class="p">);</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">BPF_MAP_TYPE_RINGBUF</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">max_entries</span><span class="p">,</span><span class="w"> </span><span class="mi">256</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;.maps&quot;</span><span class="p">);</span>
+
+<span class="c1">// calculate accumulated vtime for a given goid</span>
+<span class="k">static</span><span class="w"> </span><span class="n">__always_inline</span><span class="w"> </span><span class="n">u64</span><span class="w"> </span><span class="n">get_accumulated_vtime</span><span class="p">(</span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">goid_clock</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_map_lookup_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid_clocks</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">goid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">total_cpu_ns</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_on_cpu</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">bpf_ktime_get_ns</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">last_start_ns</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// get goid from pt_regs</span>
+<span class="k">static</span><span class="w"> </span><span class="n">__always_inline</span><span class="w"> </span><span class="n">u64</span><span class="w"> </span><span class="n">get_goid</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">g_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">GO_G_REG</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">    </span><span class="n">bpf_probe_read_user</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">goid</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">g_ptr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">OFFSET_GOID</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// get goid from gp pointer</span>
+<span class="k">static</span><span class="w"> </span><span class="n">__always_inline</span><span class="w"> </span><span class="n">u64</span><span class="w"> </span><span class="n">get_goid_from_gp</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">gp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">    </span><span class="n">bpf_probe_read_user</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">goid</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)((</span><span class="n">u64</span><span class="p">)</span><span class="n">gp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">OFFSET_GOID</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// enter uprobe</span>
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;uprobe/handle_entry&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">handle_entry</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_goid</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_ktime_get_ns</span><span class="p">();</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_attach_cookie</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span><span class="w"> </span>
+
+<span class="w">    </span><span class="c1">// initialize goid tracking map if not exists</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">goid_clock</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_map_lookup_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid_clocks</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">goid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">goid_clock</span><span class="w"> </span><span class="n">init_c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">last_start_ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">is_on_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">total_cpu_ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="n">bpf_map_update_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid_clocks</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">init_c</span><span class="p">,</span><span class="w"> </span><span class="n">BPF_ANY</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// store entry snapshot</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">proc_key</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">func_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">vtime_snapshot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_accumulated_vtime</span><span class="p">(</span><span class="n">goid</span><span class="p">);</span>
+<span class="w">    </span><span class="n">bpf_map_update_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_stats</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vtime_snapshot</span><span class="p">,</span><span class="w"> </span><span class="n">BPF_ANY</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// submit event</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">event_t</span><span class="w"> </span><span class="o">*</span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_ringbuf_reserve</span><span class="p">(</span><span class="o">&amp;</span><span class="n">events</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">e</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EVENT_ENTER</span><span class="p">;</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">total_cpu_ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">func_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookie</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="n">bpf_ringbuf_submit</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// enter uprobe for runtime.casgstatus</span>
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;uprobe/runtime.casgstatus&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">uprobe_casgstatus</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">gp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">GO_ARG1</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">oldval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u32</span><span class="p">)</span><span class="n">GO_ARG2</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">newval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u32</span><span class="p">)</span><span class="n">GO_ARG3</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_ktime_get_ns</span><span class="p">();</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">target_goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_goid_from_gp</span><span class="p">(</span><span class="n">gp</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// lookup the goid tracking map</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">goid_clock</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_map_lookup_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">goid_clocks</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">target_goid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// update CPU time tracking based on state transition</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">oldval</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">G_RUNNING</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">newval</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">G_RUNNING</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_on_cpu</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">total_cpu_ns</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">last_start_ns</span><span class="p">);</span>
+<span class="w">            </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_on_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">oldval</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">G_RUNNING</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">newval</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">G_RUNNING</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">last_start_ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="p">;</span>
+<span class="w">        </span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_on_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// exit uprobe</span>
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;uprobe/handle_exit&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">handle_exit</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pt_regs</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_goid</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_attach_cookie</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">proc_key</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">goid</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">func_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// retrieve the entry snapshot</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="o">*</span><span class="n">entry_vtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_map_lookup_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_stats</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">key</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">entry_vtime</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// calculate CPU usage</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">current_vtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_accumulated_vtime</span><span class="p">(</span><span class="n">goid</span><span class="p">);</span>
+<span class="w">    </span><span class="n">u64</span><span class="w"> </span><span class="n">cpu_usage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_vtime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">*</span><span class="n">entry_vtime</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// submit event</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">event_t</span><span class="w"> </span><span class="o">*</span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_ringbuf_reserve</span><span class="p">(</span><span class="o">&amp;</span><span class="n">events</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">e</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">goid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">goid</span><span class="p">;</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">total_cpu_ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cpu_usage</span><span class="p">;</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EVENT_EXIT</span><span class="p">;</span>
+<span class="w">        </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">func_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookie</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="n">bpf_ringbuf_submit</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// delete the snapshot</span>
+<span class="w">    </span><span class="n">bpf_map_delete_elem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_stats</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">key</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">char</span><span class="w"> </span><span class="n">LICENSE</span><span class="p">[]</span><span class="w"> </span><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;license&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GPL&quot;</span><span class="p">;</span>
+</code></pre></div><br />
+The sample yaml file. Only some key functions are shown here for illustrative purposes.<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># config.yaml</span>
+<span class="nt">binaries</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;../../free5gc/bin/amf&quot;</span><span class="w">  </span><span class="c1"># binary path</span>
+<span class="w">    </span><span class="nt">symbols</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm.HandleRegistrationRequest&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">101</span><span class="w"> </span><span class="c1"># use as cookie</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcabf80</span><span class="w"> </span><span class="c1"># entry address   </span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span><span class="w"> </span><span class="c1"># return addresses</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac2a6</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac2af</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac3e5</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac4fd</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac6c4</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac852</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac8d2</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcac9db</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcacb13</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad326</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad385</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad3a6</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad3c7</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad59d</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad5fa</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad64f</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm.HandleAuthenticationResponse&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">102</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb71a0</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7422</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7443</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7464</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb75e3</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7765</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7b1a</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7b74</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7b83</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7ba4</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7bb1</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7d91</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb7f05</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb8063</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb81db</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb84d0</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb852a</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb8539</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm/message.SendRegistrationAccept&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">103</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8440</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8938</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca89d8</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8a4e</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8ac4</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8ad2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm/message.SendDeregistrationAccept&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">104</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca80a0</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8232</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca826b</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca82d2</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca8340</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca83b0</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xca83be</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm.handleRequestedNssai&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb06e0</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb080d</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb0c19</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb0ec5</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb1a7d</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb1a8a</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb1b37</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm.HandleInitialRegistration&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">106</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcadae0</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcadf77</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcadfc4</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcae019</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcae022</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcae512</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm.AuthenticationProcedure&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">107</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb4e60</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb4f98</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb50bc</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb5113</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb5354</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb541b</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb554e</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcb561c</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/amf/internal/gmm.contextTransferFromOldAmf&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">108</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad6c0</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad99a</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcad9db</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcada2d</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcada73</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xcada7c</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;../../free5gc/bin/ausf&quot;</span>
+<span class="w">    </span><span class="nt">symbols</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github.com/free5gc/ausf/internal/sbi/processor.(*Processor).UeAuthPostRequestProcedure&quot;</span>
+<span class="w">        </span><span class="nt">fun_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">203</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb8fda0</span>
+<span class="w">        </span><span class="nt">rets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb902ce</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb90a57</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb90b6d</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb90c14</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb90e9e</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0xb911b7</span>
+</code></pre></div></p>
+<blockquote>
+<p>Note: In a real production environment, this list can be expanded to a large number of functions across all 5GC NFs (SMF, UPF, PCF, etc.).</p>
+</blockquote>
+<p>Python script for configuration generation.<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># gen_config.py</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="k">def</span> <span class="nf">get_offsets</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">search_pattern</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">nm_cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;nm -n </span><span class="si">{</span><span class="n">binary</span><span class="si">}</span><span class="s2"> | grep </span><span class="si">{</span><span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">search_pattern</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">nm_output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">nm_cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nm_output</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Symbol matching &#39;</span><span class="si">{</span><span class="n">search_pattern</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">target_line</span> <span class="o">=</span> <span class="n">nm_output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">entry_addr_hex</span> <span class="o">=</span> <span class="n">target_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">full_symbol_name</span> <span class="o">=</span> <span class="n">target_line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">entry_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry_addr_hex</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[*] Found Full Symbol: </span><span class="si">{</span><span class="n">full_symbol_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[*] Entry Address: 0x</span><span class="si">{</span><span class="n">entry_addr</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">obj_cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;objdump -d </span><span class="si">{</span><span class="n">binary</span><span class="si">}</span><span class="s2"> --disassemble=</span><span class="si">{</span><span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">full_symbol_name</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">dump_out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">obj_cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">rets</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\s*([0-9a-f]+):\s+(?:c3|c2|cb|ca)\s+ret&#39;</span><span class="p">,</span> <span class="n">dump_out</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+
+        <span class="n">ret_addrs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rets</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">entry_addr</span><span class="p">,</span> <span class="n">ret_addrs</span><span class="p">,</span> <span class="n">full_symbol_name</span>
+
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exec error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="n">binary_path</span> <span class="o">=</span> <span class="s2">&quot;~/free5gc/bin/ausf&quot;</span> <span class="c1"># binary path</span>
+<span class="n">target_function</span> <span class="o">=</span> <span class="s2">&quot;UeAuthPostRequestProcedure&quot;</span> <span class="c1"># function name to search</span>
+<span class="n">fun_id</span> <span class="o">=</span> <span class="mi">103</span>  <span class="c1"># function ID for tracing</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">get_offsets</span><span class="p">(</span><span class="n">binary_path</span><span class="p">,</span> <span class="n">target_function</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="n">entry</span><span class="p">,</span> <span class="n">rets</span><span class="p">,</span> <span class="n">full_name</span> <span class="o">=</span> <span class="n">result</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- name: </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">full_name</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  fun_id: </span><span class="si">{</span><span class="n">fun_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  entry: 0x</span><span class="si">{</span><span class="n">entry</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  rets:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rets</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    - 0x</span><span class="si">{</span><span class="n">r</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div><br />
+A Go-based eBPF loader for probe orchestration and event processing.<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// main.go</span>
+<span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+<span class="c1">//go:generate bpf2go -target amd64 bpf ../tracer.bpf.c</span>
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;bytes&quot;</span>
+<span class="w">    </span><span class="s">&quot;encoding/binary&quot;</span>
+<span class="w">    </span><span class="s">&quot;errors&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="w">    </span><span class="s">&quot;os&quot;</span>
+<span class="w">    </span><span class="s">&quot;os/signal&quot;</span>
+<span class="w">    </span><span class="s">&quot;syscall&quot;</span>
+
+<span class="w">    </span><span class="s">&quot;github.com/cilium/ebpf/link&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/cilium/ebpf/ringbuf&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/cilium/ebpf/rlimit&quot;</span>
+<span class="w">    </span><span class="s">&quot;gopkg.in/yaml.v3&quot;</span><span class="w"> </span>
+<span class="p">)</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">Config</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Binaries</span><span class="w"> </span><span class="p">[]</span><span class="nx">BinaryConfig</span><span class="w"> </span><span class="s">`yaml:&quot;binaries&quot;`</span>
+<span class="p">}</span>
+<span class="c1">// BinaryConfig defines a binary to trace and its symbols.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">BinaryConfig</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Path</span><span class="w">    </span><span class="kt">string</span><span class="w">         </span><span class="s">`yaml:&quot;path&quot;`</span>
+<span class="w">    </span><span class="nx">Symbols</span><span class="w"> </span><span class="p">[]</span><span class="nx">SymbolConfig</span><span class="w"> </span><span class="s">`yaml:&quot;symbols&quot;`</span>
+<span class="p">}</span>
+<span class="c1">// SymbolConfig defines a function to trace within a binary.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">SymbolConfig</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="w">  </span><span class="kt">string</span><span class="w">   </span><span class="s">`yaml:&quot;name&quot;`</span>
+<span class="w">    </span><span class="nx">FunID</span><span class="w"> </span><span class="kt">uint64</span><span class="w">   </span><span class="s">`yaml:&quot;fun_id&quot;`</span>
+<span class="w">    </span><span class="nx">Entry</span><span class="w"> </span><span class="kt">uint64</span><span class="w">   </span><span class="s">`yaml:&quot;entry&quot;`</span>
+<span class="w">    </span><span class="nx">Rets</span><span class="w">  </span><span class="p">[]</span><span class="kt">uint64</span><span class="w"> </span><span class="s">`yaml:&quot;rets&quot;`</span>
+<span class="p">}</span>
+<span class="c1">// Event types</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">bpfEventT</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Goid</span><span class="w">       </span><span class="kt">uint64</span><span class="w"> </span><span class="c1">// Goroutine ID</span>
+<span class="w">    </span><span class="nx">TotalCpuNs</span><span class="w"> </span><span class="kt">uint64</span><span class="w"> </span><span class="c1">// valid only for exit events</span>
+<span class="w">    </span><span class="nx">EventType</span><span class="w">  </span><span class="kt">uint32</span><span class="w"> </span><span class="c1">// 1 for enter, 2 for exit</span>
+<span class="w">    </span><span class="nx">_</span><span class="w">          </span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="kt">byte</span><span class="w"> </span><span class="c1">// Padding to align to 8 bytes</span>
+<span class="w">    </span><span class="nx">FuncId</span><span class="w">     </span><span class="kt">uint64</span><span class="w">  </span><span class="c1">// Function ID</span>
+<span class="p">}</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">EventEnter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="nx">EventExit</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">rlimit</span><span class="p">.</span><span class="nx">RemoveMemlock</span><span class="p">();</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// load config.yaml</span>
+<span class="w">    </span><span class="nx">configFile</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">ReadFile</span><span class="p">(</span><span class="s">&quot;config.yaml&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// path to your config file</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;failed to read config: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="nx">Config</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">yaml</span><span class="p">.</span><span class="nx">Unmarshal</span><span class="p">(</span><span class="nx">configFile</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">config</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;failed to parse yaml: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// load BPF Objects</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">objs</span><span class="w"> </span><span class="nx">bpfObjects</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loadBpfObjects</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">objs</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;loading objects: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">objs</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// create function ID to name map</span>
+<span class="w">    </span><span class="nx">idToName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">uint64</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">links</span><span class="w"> </span><span class="p">[]</span><span class="nx">link</span><span class="p">.</span><span class="nx">Link</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">links</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">l</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}()</span>
+
+<span class="w">    </span><span class="c1">// loop through binaries and symbols to attach uprobes</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">bin</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">config</span><span class="p">.</span><span class="nx">Binaries</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">ex</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">OpenExecutable</span><span class="p">(</span><span class="nx">bin</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Warning: opening executable %s failed: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bin</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">sym</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">bin</span><span class="p">.</span><span class="nx">Symbols</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// create function ID to name mapping</span>
+<span class="w">            </span><span class="nx">idToName</span><span class="p">[</span><span class="nx">sym</span><span class="p">.</span><span class="nx">FunID</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">Name</span>
+
+<span class="w">            </span><span class="c1">// attach Entry Uprobe with Cookie</span>
+<span class="w">            </span><span class="nx">enL</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ex</span><span class="p">.</span><span class="nx">Uprobe</span><span class="p">(</span><span class="nx">sym</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="w"> </span><span class="nx">objs</span><span class="p">.</span><span class="nx">HandleEntry</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">link</span><span class="p">.</span><span class="nx">UprobeOptions</span><span class="p">{</span>
+<span class="w">                </span><span class="nx">Offset</span><span class="p">:</span><span class="w"> </span><span class="mh">0x0</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Cookie</span><span class="p">:</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">FunID</span><span class="p">,</span>
+<span class="w">            </span><span class="p">})</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;failed to attach entry for %s: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="nx">links</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">links</span><span class="p">,</span><span class="w"> </span><span class="nx">enL</span><span class="p">)</span>
+
+<span class="w">            </span><span class="c1">// attach Exit Uprobes with Cookie</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">retAddr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">Rets</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">retOffset</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">retAddr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">Entry</span>
+<span class="w">                </span><span class="nx">exL</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ex</span><span class="p">.</span><span class="nx">Uprobe</span><span class="p">(</span><span class="nx">sym</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="w"> </span><span class="nx">objs</span><span class="p">.</span><span class="nx">HandleExit</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">link</span><span class="p">.</span><span class="nx">UprobeOptions</span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">Offset</span><span class="p">:</span><span class="w"> </span><span class="nx">retOffset</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">Cookie</span><span class="p">:</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">FunID</span><span class="p">,</span>
+<span class="w">                </span><span class="p">})</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;failed to attach exit at 0x%x for %s: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">retOffset</span><span class="p">,</span><span class="w"> </span><span class="nx">sym</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="nx">links</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">links</span><span class="p">,</span><span class="w"> </span><span class="nx">exL</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// attach casgstatus uprobe</span>
+<span class="w">        </span><span class="nx">casgL</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ex</span><span class="p">.</span><span class="nx">Uprobe</span><span class="p">(</span><span class="s">&quot;runtime.casgstatus&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">objs</span><span class="p">.</span><span class="nx">UprobeCasgstatus</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Warning: casgstatus attach failed for %s: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bin</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">links</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">links</span><span class="p">,</span><span class="w"> </span><span class="nx">casgL</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Tracing 5G Core... Listening for events (Ctrl+C to stop)&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// read events from ring buffer</span>
+<span class="w">    </span><span class="nx">rd</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ringbuf</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">objs</span><span class="p">.</span><span class="nx">Events</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;creating ringbuf reader: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">rd</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">sig</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Signal</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">signal</span><span class="p">.</span><span class="nx">Notify</span><span class="p">(</span><span class="nx">sig</span><span class="p">,</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Interrupt</span><span class="p">,</span><span class="w"> </span><span class="nx">syscall</span><span class="p">.</span><span class="nx">SIGTERM</span><span class="p">)</span>
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="o">&lt;-</span><span class="nx">sig</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Received interrupt, shutting down...&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">rd</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}()</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">record</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">rd</span><span class="p">.</span><span class="nx">Read</span><span class="p">()</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">ringbuf</span><span class="p">.</span><span class="nx">ErrClosed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;reading from ringbuf: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="nx">bpfEventT</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">binary</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">NewBuffer</span><span class="p">(</span><span class="nx">record</span><span class="p">.</span><span class="nx">RawSample</span><span class="p">),</span><span class="w"> </span><span class="nx">binary</span><span class="p">.</span><span class="nx">LittleEndian</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">event</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;parsing event: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// print event info</span>
+<span class="w">        </span><span class="nx">funcName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">idToName</span><span class="p">[</span><span class="nx">event</span><span class="p">.</span><span class="nx">FuncId</span><span class="p">]</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">funcName</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">funcName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Unknown_Function&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">EventType</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nx">EventEnter</span><span class="p">:</span>
+<span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;[%s] ENTER | Goid: %d\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">funcName</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">Goid</span><span class="p">)</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nx">EventExit</span><span class="p">:</span>
+<span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;[%s] EXIT  | Goid: %d | Total CPU: %d ns (%.3f ms)\n&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">funcName</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">Goid</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">TotalCpuNs</span><span class="p">,</span><span class="w"> </span><span class="nb">float64</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">TotalCpuNs</span><span class="p">)</span><span class="o">/</span><span class="mf">1e6</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="how-to-use">How to use</h3>
+<ol>
+<li>Generate vmlinux.h <br />
+<div class="highlight"><pre><span></span><code>bpftool<span class="w"> </span>btf<span class="w"> </span>dump<span class="w"> </span>file<span class="w"> </span>/sys/kernel/btf/vmlinux<span class="w"> </span>format<span class="w"> </span>c<span class="w"> </span>&gt;<span class="w"> </span>vmlinux.h
+</code></pre></div></li>
+<li>
+<p>Generate <code>bpf_bpfel.o</code> and <code>bpf_bpfel.go</code><br />
+    By running go generate, we produce <code>bpf_bpfel.o</code> (the compiled bytecode) and <code>bpf_bpfel.go</code> (the Go bindings). These files act as the bridge, allowing our Go application to load the eBPF program into the kernel.<br />
+<div class="highlight"><pre><span></span><code>go<span class="w"> </span>generate
+</code></pre></div></p>
+</li>
+<li>
+<p>Build eBPF loader<br />
+<div class="highlight"><pre><span></span><code>go<span class="w"> </span>build<span class="w"> </span>-o<span class="w"> </span>tracer
+</code></pre></div></p>
+</li>
+<li>Execute eBPF loader<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>./tracer
+</code></pre></div></li>
+</ol>
+<h2 id="result"><strong>Result</strong></h2>
+<p><img alt="" src="../result.png" /></p>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>In this article, we have navigated the intricate intersection of eBPF technology and the Go runtime to address one of the challenges in 5G core network optimization: transparent, high-precision latency tracing.</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://github.com/free5gc/free5gc">free5GC</a></li>
+<li><a href="https://github.com/ozansz/xgotop">xgotop</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10384032">30 篇文帶你用 eBPF 與 Golang 打造 Linux Scheduler系列 第 10 篇</a></li>
+<li><a href="https://www.cnxct.com/golang-uretprobe-tracing/">golang uretprobe的崩溃与模拟实现</a></li>
+<li><a href="https://alanzhan.dev/post/2022-01-24-golang-goroutine/">Golang Goroutine 與 GMP 原理全面分析</a></li>
+<li><a href="https://ref.gotd.dev/use/runtime..casgstatus%5Ef43d9.html">References: runtime.casgstatus</a></li>
+</ul>
+<p><strong>About Me</strong><br />
+Hi, I'm Chia-Hui Chen. I'm currently diving into 5G technology and the free5gc project. I hope you find this blog valuable! Feel free to reach out if you have any feedback or would like to discuss anything further.</p>
+<ul>
+<li>GitHub: <a href="https://github.com/chchen7">chchen7</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

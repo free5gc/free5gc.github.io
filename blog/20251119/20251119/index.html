@@ -1,0 +1,2417 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>NEF PFD Management Implementation and Testing - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nef-pfd-management-implementation-and-testing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NEF PFD Management Implementation and Testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-background-and-motivation" class="md-nav__link">
+    2. Background and Motivation
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Background and Motivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-5g-network-exposure-function-nef" class="md-nav__link">
+    2.1 5G Network Exposure Function (NEF)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-packet-flow-description-pfd-management" class="md-nav__link">
+    2.2 Packet Flow Description (PFD) Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-experimental-motivation" class="md-nav__link">
+    2.3 Experimental Motivation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-data-flow" class="md-nav__link">
+    3. Data Flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-core-concepts" class="md-nav__link">
+    4. Core Concepts
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-packet-flow-description-pfd" class="md-nav__link">
+    4.1 Packet Flow Description (PFD)
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 Packet Flow Description (PFD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-flow-descriptions" class="md-nav__link">
+    4.1.1 Flow Descriptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-urls" class="md-nav__link">
+    4.1.2 URLs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413-domain-names" class="md-nav__link">
+    4.1.3 Domain Names
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-pfd-transaction" class="md-nav__link">
+    4.2 PFD Transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-application-id-external-application-id" class="md-nav__link">
+    4.3 Application ID (External Application ID)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-nef-roles" class="md-nav__link">
+    4.4 NEF Roles
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 NEF Roles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-api-gateway" class="md-nav__link">
+    4.4.1 API Gateway
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-data-translator" class="md-nav__link">
+    4.4.2 Data Translator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-transaction-manager" class="md-nav__link">
+    4.4.3 Transaction Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#444-service-consumer" class="md-nav__link">
+    4.4.4 Service Consumer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-service-based-interface-sbi" class="md-nav__link">
+    4.5 Service-Based Interface (SBI)
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Service-Based Interface (SBI)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-nnef_pfdmanagement-service" class="md-nav__link">
+    4.5.1 Nnef_PFDManagement Service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452-nudr_datarepository-service" class="md-nav__link">
+    4.5.2 Nudr_DataRepository Service
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-data-persistence" class="md-nav__link">
+    4.6 Data Persistence
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Data Persistence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#461-mongodb-data-structure" class="md-nav__link">
+    4.6.1 MongoDB Data Structure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#462-data-lifecycle" class="md-nav__link">
+    4.6.2 Data Lifecycle
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-error-handling" class="md-nav__link">
+    4.7 Error Handling
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#471-http-status-code-definitions" class="md-nav__link">
+    4.7.1 HTTP Status Code Definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#472-pfd-report-error-report" class="md-nav__link">
+    4.7.2 PFD Report (Error Report)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiment-and-testing" class="md-nav__link">
+    5. Experiment and Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Experiment and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-experimental-environment-preparation" class="md-nav__link">
+    5.1 Experimental Environment Preparation
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Experimental Environment Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-system-requirements" class="md-nav__link">
+    5.1.1 System Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-starting-free5gc" class="md-nav__link">
+    5.1.2 Starting free5GC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-discovered-and-fixed-bugs" class="md-nav__link">
+    5.2 Discovered and Fixed Bugs
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Discovered and Fixed Bugs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-bug-1-nef-lacks-automatic-af-creation-mechanism" class="md-nav__link">
+    5.2.1 Bug #1: NEF Lacks Automatic AF Creation Mechanism
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-bug-2-udr-response-handling-logic-error" class="md-nav__link">
+    5.2.2 Bug #2: UDR Response Handling Logic Error
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-bug-3-api-version-mismatch" class="md-nav__link">
+    5.2.3 Bug #3: API Version Mismatch
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-creating-test-scripts" class="md-nav__link">
+    5.3 Creating Test Scripts
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Creating Test Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-nef-log-monitoring-script" class="md-nav__link">
+    5.3.1 NEF Log Monitoring Script
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-pcf-log-monitoring-script-optional" class="md-nav__link">
+    5.3.2 PCF Log Monitoring Script (Optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-af-pfd-test-main-script" class="md-nav__link">
+    5.3.3 AF PFD Test Main Script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-executing-the-experiment" class="md-nav__link">
+    5.4 Executing the Experiment
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Executing the Experiment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-preparation-phase" class="md-nav__link">
+    5.4.1 Preparation Phase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-executing-tests" class="md-nav__link">
+    5.4.2 Executing Tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-results-verification" class="md-nav__link">
+    5.5 Results Verification
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Results Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-nrf-service-discovery-verification" class="md-nav__link">
+    5.5.1 NRF Service Discovery Verification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-nef-log-verification" class="md-nav__link">
+    5.5.2 NEF Log Verification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-udr-log-verification" class="md-nav__link">
+    5.5.3 UDR Log Verification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554-mongodb-data-verification" class="md-nav__link">
+    5.5.4 MongoDB Data Verification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-api-interoperability-verification" class="md-nav__link">
+    5.5.5 API Interoperability Verification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#556-delete-operation-complete-verification" class="md-nav__link">
+    5.5.6 DELETE Operation Complete Verification
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-test-execution-summary" class="md-nav__link">
+    5.6 Test Execution Summary
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 Test Execution Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#561-test-results-confirmation" class="md-nav__link">
+    5.6.1 Test Results Confirmation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-performance-testing" class="md-nav__link">
+    5.7 Performance Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 Performance Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#571-single-operation-latency-test" class="md-nav__link">
+    5.7.1 Single Operation Latency Test
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#572-consecutive-operations-test" class="md-nav__link">
+    5.7.2 Consecutive Operations Test
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58-script-improvements" class="md-nav__link">
+    5.8 Script Improvements
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 Script Improvements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#581-dynamic-log-path-detection" class="md-nav__link">
+    5.8.1 Dynamic Log Path Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#582-enhanced-output-messages" class="md-nav__link">
+    5.8.2 Enhanced Output Messages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-conclusion" class="md-nav__link">
+    6. Conclusion
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Conclusion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-summary-of-experimental-results" class="md-nav__link">
+    6.1 Summary of Experimental Results
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Summary of Experimental Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-functional-verification" class="md-nav__link">
+    6.1.1 Functional Verification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612-bug-fixes-and-improvements" class="md-nav__link">
+    6.1.2 Bug Fixes and Improvements
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251119/20251119.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251119/20251119.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="nef-pfd-management-implementation-and-testing">NEF PFD Management Implementation and Testing</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/solar224">Yu-Chen, Chan</a><br />
+Date: 2025/11/19</p>
+</div>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>This experiment conducts in-depth research and testing on the Network Exposure Function (NEF) in the free5GC open-source 5G core network system, with a particular focus on the implementation and validation of Packet Flow Description (PFD) Management functionality. PFD Management is a critical feature defined in the 3GPP standards, allowing Application Functions (AF) to describe application traffic characteristics to the core network through NEF, thereby enabling application-level traffic control and optimization.</p>
+<p>In this experiment, we established a complete testing environment to simulate interactions between AF and NEF, implementing PFD transaction creation, query, and update operations. During the experiment, we discovered and fixed three critical bugs in the free5GC source code, including NEF's lack of automatic AF creation mechanism, UDR response logic errors, and API version mismatches. Through these fixes, we successfully verified that NEF's PFD Management functionality complies with the 3GPP TS 29.522 standard and can correctly perform data persistence operations with the UDR (Unified Data Repository).</p>
+<p>This experiment not only validates the functional correctness of free5GC but also provides complete automated test scripts and detailed operation guides, laying an important foundation for subsequent 5G network application development and testing. The experimental results demonstrate that the repaired system can stably handle PFD management requests, establishing a foundation for implementing application-aware 5G network services.</p>
+<p><strong>Test Scope Statement</strong>: All tests in this document are conducted on a single-machine loopback (127.0.0.x) deployment without RAN/UE connection, validating only the NEF↔UDR data plane and persistence mechanism, excluding actual user-plane traffic steering. This experiment focuses on validating the correctness of the PFD Management API and the data persistence workflow.</p>
+<h2 id="2-background-and-motivation">2. Background and Motivation</h2>
+<h3 id="21-5g-network-exposure-function-nef">2.1 5G Network Exposure Function (NEF)</h3>
+<p>In the 5G core network architecture, the Network Exposure Function (NEF) plays a critical bridging role, responsible for securely exposing core network capabilities to external applications. According to the <strong>3GPP TS 23.501</strong> standard, the main functions of NEF include:</p>
+<ol>
+<li><strong>Capability Exposure</strong>: Provides standardized RESTful API interfaces (defined in TS 29.522), allowing third-party applications to use network functions</li>
+<li><strong>Security Control</strong>: Performs authentication, authorization, and traffic management on external requests to protect the core network. According to 3GPP standards, NEF northbound API should use OAuth2 Client Credentials or CAPIF (Common API Framework) for authorization verification</li>
+<li><strong>Information Translation</strong>: Performs data format conversion and parameter mapping between external APIs and internal network functions</li>
+<li><strong>Event Notification</strong>: Notifies subscribed applications of network events (such as QoS changes, location updates)</li>
+</ol>
+<p><strong>Security Statement for This Experiment</strong>: This test environment is based on a closed laboratory network (127.0.0.x loopback), without OAuth2/CAPIF authorization mechanisms and TLS encryption enabled. NEF does not authenticate AF. This configuration is only suitable for development and functional verification and is not recommended for production environments. In production deployments, complete security mechanisms should be implemented according to 3GPP TS 29.522 specifications.</p>
+<p>NEF is an important network function in the 5G Service-Based Architecture (SBA), interacting with other network functions through Service-Based Interfaces.</p>
+<h3 id="22-packet-flow-description-pfd-management">2.2 Packet Flow Description (PFD) Management</h3>
+<p>PFD Management is one of the important services provided by NEF, defined in the <strong>3GPP TS 29.522</strong> specification. This service allows Application Functions (AF) to provide application traffic description information to the 5G core network, enabling the network to identify and process data flows of specific applications.</p>
+<p><strong>Main Purposes</strong>:</p>
+<ul>
+<li><strong>Application Detection</strong>: Allows AF to describe application traffic characteristics to the core network, enabling SMF/UPF to identify application traffic</li>
+<li><strong>Traffic Optimization</strong>: Performs more precise QoS control and routing decisions based on application layer information</li>
+<li><strong>Dynamic Update</strong>: Supports applications to dynamically update their traffic descriptions at runtime (through PUT/PATCH operations)</li>
+<li><strong>Cross-Domain Management</strong>: Implements information exchange between the application layer (AF) and network layer (SMF/PCF)</li>
+</ul>
+<p><strong>PFD Components</strong> (according to TS 29.522):</p>
+<ul>
+<li><strong>Flow Descriptions</strong>: Traffic filtering rules based on IP 5-tuple (source/destination IP, port, protocol), defined in TS 29.212</li>
+<li><strong>URLs</strong>: URL patterns used by applications, supporting regular expression matching</li>
+<li><strong>Domain Names</strong>: Domain names accessed by applications, supporting wildcards (such as <code>*.example.com</code>)</li>
+</ul>
+<p><strong>Application Scenarios</strong>:</p>
+<ul>
+<li>Traffic optimization for video streaming services</li>
+<li>Low-latency routing for gaming applications</li>
+<li>Dedicated network slices for enterprise applications</li>
+</ul>
+<h3 id="23-experimental-motivation">2.3 Experimental Motivation</h3>
+<p>The main motivations for this experiment include:</p>
+<ol>
+<li><strong>Functional Verification</strong>: Verify whether NEF's PFD Management functionality in free5GC complies with 3GPP standards</li>
+<li><strong>Interoperability Testing</strong>: Test interactions between NEF and other network functions (UDR, PCF)</li>
+<li><strong>Issue Discovery</strong>: Identify and fix errors that may exist in the implementation</li>
+<li><strong>Test Automation</strong>: Establish reusable test environments and scripts</li>
+<li><strong>Documentation Improvement</strong>: Provide developers with detailed operation guides and best practices</li>
+</ol>
+<h2 id="3-data-flow">3. Data Flow</h2>
+<ol>
+<li><strong>AF → NEF</strong>: Application sends PFD management requests through the 3gpp-pfd-management API</li>
+<li><strong>NEF → NRF</strong>: NEF queries NRF for UDR service discovery information (Service Discovery)</li>
+<li><strong>NEF → UDR</strong>: NEF forwards PFD data to UDR for persistent storage through the Nudr_DataRepository (TS 29.510) service</li>
+<li><strong>UDR → MongoDB</strong>: UDR writes PFD data to the <code>applicationData.pfds</code> collection in the MongoDB database</li>
+<li><strong>NEF ← UDR</strong>: UDR returns operation results to NEF (201 Created or 200 OK)</li>
+<li><strong>AF ← NEF</strong>: NEF returns results to AF</li>
+</ol>
+<p><strong>Service-Based Architecture (SBA) Explanation</strong>: This workflow is a typical example of 5G SBA architecture. NEF does not hardcode the UDR URL but performs service discovery through NRF to obtain UDR's <code>nudr-dr</code> service base URI (e.g., <code>http://127.0.0.4:8000/nudr-dr/v1</code>), then calls <code>/application-data/pfds/{appId}</code> to store PFD. This dynamic discovery mechanism is the core design philosophy of SBA, enabling flexible deployment and scaling of network functions.</p>
+<h2 id="4-core-concepts">4. Core Concepts</h2>
+<h3 id="41-packet-flow-description-pfd">4.1 Packet Flow Description (PFD)</h3>
+<p><strong>Definition</strong>: According to 3GPP TS 29.522, PFD is a set of rules used to identify application traffic. Each PFD is identified by a unique <code>pfdId</code> and can contain one or more of the following attributes:</p>
+<h4 id="411-flow-descriptions">4.1.1 Flow Descriptions</h4>
+<p>Traffic description based on IP 5-tuple, defined in 3GPP TS 29.212 (Policy and Charging Control):<br />
+<div class="highlight"><pre><span></span><code>permit &lt;direction&gt; &lt;protocol&gt; from &lt;source&gt; &lt;port&gt; to &lt;destination&gt; &lt;port&gt;
+</code></pre></div></p>
+<p><strong>Syntax Elements</strong>:</p>
+<ul>
+<li><code>&lt;direction&gt;</code>: <code>in</code> (downlink) or <code>out</code> (uplink)</li>
+<li><code>&lt;protocol&gt;</code>: <code>ip</code>, <code>tcp</code>, <code>udp</code>, etc.</li>
+<li><code>&lt;source&gt;/&lt;destination&gt;</code>: IP address or CIDR notation</li>
+<li><code>&lt;port&gt;</code>: Port number or <code>any</code></li>
+</ul>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><code>permit in ip from 192.168.1.0/24 to any</code></li>
+<li><code>permit out tcp from any to 10.0.0.0/8 8080</code></li>
+</ul>
+<p><strong>Note</strong>: The flowDescriptions syntax follows the format of 3GPP TS 29.212 (PCC rules / traffic filters). free5GC directly accepts this string format and passes it down to SMF/UPF for traffic identification and policy control. This explains why you see this firewall-rule-like string format in the JSON payload rather than structured five-tuple objects.</p>
+<h4 id="412-urls">4.1.2 URLs</h4>
+<p>URL pattern matching using regular expressions (PCRE format):<br />
+<div class="highlight"><pre><span></span><code>^https://example\.com(/\S*)?$
+</code></pre></div></p>
+<p><strong>Purpose</strong>: Used to identify HTTP/HTTPS-based application traffic</p>
+<h4 id="413-domain-names">4.1.3 Domain Names</h4>
+<p>List of domain names used by applications, supporting wildcards:<br />
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="s2">&quot;example.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;*.example.org&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;api.service.net&quot;</span><span class="p">]</span>
+</code></pre></div></p>
+<p><strong>Purpose</strong>: Used for DNS query interception and traffic identification</p>
+<h3 id="42-pfd-transaction">4.2 PFD Transaction</h3>
+<p><strong>PFD Transaction</strong> is the basic unit for NEF to manage PFD data, containing:</p>
+<ul>
+<li><strong>Transaction ID</strong>: Unique identifier, automatically generated by NEF</li>
+<li><strong>AF ID</strong> (scsAsID): Application Function identifier that initiates the request. In 3GPP TS 29.522, it's called <code>scsAsId</code> (SCS/AS Identifier). In this experiment, "AF001" is used as the example AF identifier</li>
+<li><strong>PFD Datas</strong>: Mapping of PFD data for one or more applications</li>
+</ul>
+<p>Structure example:<br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;self&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pfdDatas&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;app_1761902997&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;externalAppId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;app_1761902997&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;self&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.5:8000/.../applications/app_1761902997&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;pfds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;pfd001&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;pfd002&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="43-application-id-external-application-id">4.3 Application ID (External Application ID)</h3>
+<p><strong>External Application ID</strong> is a globally unique identifier used to identify applications:</p>
+<ul>
+<li>Provided by AF, remains unique throughout the core network</li>
+<li>Used to correlate application information between different network functions</li>
+<li>This experiment uses timestamps to ensure uniqueness: <code>app_$(date +%s)</code></li>
+</ul>
+<h3 id="44-nef-roles">4.4 NEF Roles</h3>
+<p>In PFD Management, NEF plays the following roles:</p>
+<h4 id="441-api-gateway">4.4.1 API Gateway</h4>
+<ul>
+<li>Provides standardized RESTful API interfaces</li>
+<li>Handles HTTP/JSON format requests and responses</li>
+<li>Implements API specifications defined in 3GPP TS 29.522</li>
+</ul>
+<h4 id="442-data-translator">4.4.2 Data Translator</h4>
+<ul>
+<li>Converts external API's PfdData to internal PfdDataForApp format</li>
+<li>Handles mapping relationships between different data models</li>
+</ul>
+<p>Conversion example:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// External format (PfdData) - Used for Nnef API</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">PfdData</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ExternalAppId</span><span class="w"> </span><span class="kt">string</span><span class="w">          </span><span class="c1">// External application identifier</span>
+<span class="w">    </span><span class="nx">Pfds</span><span class="w">          </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">Pfd</span><span class="w">  </span><span class="c1">// PFD mapping, keyed by pfdId</span>
+<span class="p">}</span>
+
+<span class="c1">// Internal format (PfdDataForApp) - Used for Nudr API</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">PfdDataForApp</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ApplicationId</span><span class="w"> </span><span class="kt">string</span><span class="w">         </span><span class="c1">// Application identifier</span>
+<span class="w">    </span><span class="nx">Pfds</span><span class="w">          </span><span class="p">[]</span><span class="nx">PfdContent</span><span class="w">   </span><span class="c1">// PFD array (not map)</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Conversion Explanation</strong>: </p>
+<ul>
+<li>NEF receives <code>map[string]Pfd</code> format data from AF</li>
+<li>NEF sends <code>[]PfdContent</code> format data to UDR</li>
+<li><code>externalAppId</code> maps to <code>applicationId</code></li>
+<li>Map structure converts to Array structure to conform to UDR's data model</li>
+</ul>
+<h4 id="443-transaction-manager">4.4.3 Transaction Manager</h4>
+<ul>
+<li>Creates and manages PFD Transactions</li>
+<li>Generates unique Transaction IDs</li>
+<li>Maintains associations between AF and Transactions</li>
+</ul>
+<h4 id="444-service-consumer">4.4.4 Service Consumer</h4>
+<ul>
+<li>Interacts with NRF for service discovery</li>
+<li>Interacts with UDR for data persistence</li>
+<li>Handles authentication and authorization between services</li>
+</ul>
+<h3 id="45-service-based-interface-sbi">4.5 Service-Based Interface (SBI)</h3>
+<h4 id="451-nnef_pfdmanagement-service">4.5.1 Nnef_PFDManagement Service</h4>
+<p>NEF's externally provided PFD management service, compliant with <strong>3GPP TS 29.522</strong> (5G System; Network Exposure Function Northbound APIs) specifications, including the following operations:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>HTTP Method</th>
+<th>URI Pattern</th>
+<th>Function</th>
+<th>Success Status Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create Transaction</td>
+<td>POST</td>
+<td><code>/{scsAsId}/transactions</code></td>
+<td>Create new PFD transaction</td>
+<td>201 Created</td>
+</tr>
+<tr>
+<td>Get Transactions</td>
+<td>GET</td>
+<td><code>/{scsAsId}/transactions</code></td>
+<td>Get all transactions</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Get Transaction</td>
+<td>GET</td>
+<td><code>/{scsAsId}/transactions/{transId}</code></td>
+<td>Get specific transaction</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Update Transaction</td>
+<td>PUT</td>
+<td><code>/{scsAsId}/transactions/{transId}</code></td>
+<td>Update transaction content</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Delete Transaction</td>
+<td>DELETE</td>
+<td><code>/{scsAsId}/transactions/{transId}</code></td>
+<td>Delete transaction</td>
+<td>204 No Content</td>
+</tr>
+<tr>
+<td>Update Application</td>
+<td>PUT</td>
+<td><code>/{scsAsId}/transactions/{transId}/applications/{appId}</code></td>
+<td>Update application PFD</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Patch Application</td>
+<td>PATCH</td>
+<td><code>/{scsAsId}/transactions/{transId}/applications/{appId}</code></td>
+<td>Partially update PFD</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Delete Application</td>
+<td>DELETE</td>
+<td><code>/{scsAsId}/transactions/{transId}/applications/{appId}</code></td>
+<td>Delete application PFD</td>
+<td>204 No Content</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: <code>scsAsId</code> is the AF (Application Function) identifier. In this experiment, "AF001" is used.</p>
+<h4 id="452-nudr_datarepository-service">4.5.2 Nudr_DataRepository Service</h4>
+<p>Data storage service provided by UDR, compliant with <strong>3GPP TS 29.504</strong> (5G System; Unified Data Repository Services) / <strong>TS 29.510</strong> (Network Function Repository Services) specifications:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>HTTP Method</th>
+<th>URI Pattern</th>
+<th>Function</th>
+<th>Success Status Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create/Update PFD</td>
+<td>PUT</td>
+<td><code>/application-data/pfds/{appId}</code></td>
+<td>Store/update PFD data</td>
+<td>201 Created / 200 OK</td>
+</tr>
+<tr>
+<td>Query PFD</td>
+<td>GET</td>
+<td><code>/application-data/pfds/{appId}</code></td>
+<td>Query specific application's PFD</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Query Multiple PFDs</td>
+<td>GET</td>
+<td><code>/application-data/pfds?appId={id1}&amp;appId={id2}</code></td>
+<td>Batch query multiple applications</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>Delete PFD</td>
+<td>DELETE</td>
+<td><code>/application-data/pfds/{appId}</code></td>
+<td>Delete PFD data</td>
+<td>204 No Content</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: PUT operation returns different status codes based on whether the resource already exists:</p>
+<ul>
+<li>201 Created: Resource created for the first time</li>
+<li>200 OK: Resource already exists and is updated</li>
+</ul>
+<p><strong>Important Note</strong>: MongoDB is not a 3GPP-defined network function but rather the backend database implementation for UDR in free5GC. UDR, as a 3GPP NF, provides the standardized Nudr_DataRepository API, while the actual data is stored in MongoDB.</p>
+<h3 id="46-data-persistence">4.6 Data Persistence</h3>
+<h4 id="461-mongodb-data-structure">4.6.1 MongoDB Data Structure</h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// Collection: applicationData.pfds</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="s2">&quot;applicationId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;app_1761902997&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;pfds&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;pfdId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;pfd001&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;flowDescriptions&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;permit in ip from 192.168.1.0/24 to any&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;permit out ip from any to 10.0.0.0/8&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="s2">&quot;urls&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://example.com/app&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="s2">&quot;domainNames&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;example.com&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;pfdId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;pfd002&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;flowDescriptions&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;permit in ip from 172.16.0.0/12 to any&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="462-data-lifecycle">4.6.2 Data Lifecycle</h4>
+<ol>
+<li><strong>Create</strong>: AF sends POST request, NEF creates Transaction, UDR stores to MongoDB</li>
+<li><strong>Update</strong>: AF sends PUT/PATCH request, UDR updates data in MongoDB</li>
+<li><strong>Query</strong>: Network functions (such as SMF) can query PFD data from UDR for traffic identification</li>
+<li><strong>Delete</strong>: AF sends DELETE request, UDR deletes data from MongoDB</li>
+</ol>
+<h3 id="47-error-handling">4.7 Error Handling</h3>
+<h4 id="471-http-status-code-definitions">4.7.1 HTTP Status Code Definitions</h4>
+<p>According to 3GPP TS 29.522 and REST standards, NEF PFD Management uses the following status codes:</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Status Code</th>
+<th>Type</th>
+<th>Meaning</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200 OK</td>
+<td>Success</td>
+<td>Operation completed successfully</td>
+<td>PUT/GET update or query succeeded</td>
+</tr>
+<tr>
+<td>201 Created</td>
+<td>Success</td>
+<td>Resource created successfully</td>
+<td>POST creates transaction, PUT creates new PFD</td>
+</tr>
+<tr>
+<td>204 No Content</td>
+<td>Success</td>
+<td>Deletion successful, no return content</td>
+<td>DELETE request succeeded</td>
+</tr>
+<tr>
+<td>400 Bad Request</td>
+<td>Client Error</td>
+<td>Request format error</td>
+<td>JSON format error, parameter validation failed</td>
+</tr>
+<tr>
+<td>403 Forbidden</td>
+<td>Client Error</td>
+<td>Insufficient permissions</td>
+<td>AF not authorized to access resource</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>Client Error</td>
+<td>Resource does not exist</td>
+<td>Transaction/Application ID does not exist</td>
+</tr>
+<tr>
+<td>409 Conflict</td>
+<td>Client Error</td>
+<td>Resource conflict</td>
+<td>Application ID duplicate</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>Server Error</td>
+<td>Internal processing error</td>
+<td>Database connection failed, internal logic error</td>
+</tr>
+<tr>
+<td>503 Service Unavailable</td>
+<td>Server Error</td>
+<td>Service temporarily unavailable</td>
+<td>UDR service unreachable</td>
+</tr>
+</tbody>
+</table>
+<h4 id="472-pfd-report-error-report">4.7.2 PFD Report (Error Report)</h4>
+<p>When PFD data processing fails, NEF returns a PfdReport:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;pfdReports&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;APP_ID_DUPLICATED&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;externalAppIds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;app001&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;failureCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;APP_ID_DUPLICATED&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Failure Codes</strong>:</p>
+<ul>
+<li><code>APP_ID_DUPLICATED</code>: Application ID is already used by another AF/Transaction</li>
+<li><code>MALFUNCTION</code>: System internal error (such as UDR connection failure)</li>
+</ul>
+<p><strong>Note</strong>: Implementation details (error code naming, return fields, specific behavior) may vary slightly depending on free5GC version and commit. The above description is based on the v4.0.1 version tested in this experiment.</p>
+<h2 id="5-experiment-and-testing">5. Experiment and Testing</h2>
+<h3 id="51-experimental-environment-preparation">5.1 Experimental Environment Preparation</h3>
+<h4 id="511-system-requirements">5.1.1 System Requirements</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Operating System Information</span>
+OS:<span class="w"> </span>Ubuntu<span class="w"> </span><span class="m">25</span>.04
+Kernel:<span class="w"> </span>Linux<span class="w"> </span><span class="m">6</span>.14.0-34-generic
+Shell:<span class="w"> </span>/bin/bash
+
+<span class="c1"># Software Requirements</span>
+
+-<span class="w"> </span>Go<span class="w"> </span><span class="m">1</span>.22.5
+-<span class="w"> </span>MongoDB<span class="w"> </span><span class="m">7</span>.x
+-<span class="w"> </span>mongosh<span class="w"> </span><span class="m">2</span>.5.8
+-<span class="w"> </span>free5GC<span class="w"> </span>v4.0.1<span class="w"> </span><span class="o">(</span>based<span class="w"> </span>on<span class="w"> </span>main<span class="w"> </span>branch<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span><span class="m">2025</span>-10-31<span class="o">)</span>
+-<span class="w"> </span>curl<span class="w"> </span><span class="m">8</span>.12.1
+-<span class="w"> </span>jq<span class="w"> </span><span class="o">(</span>JSON<span class="w"> </span>processing<span class="w"> </span>tool<span class="o">)</span>
+</code></pre></div>
+<p><strong>Version Notes</strong>:</p>
+<ul>
+<li>This experiment is based on free5GC v4.0.1 for testing and patching.</li>
+<li>This experiment uses <strong>bare-metal deployment</strong>, manually starting all network functions using <code>./run.sh</code>, rather than docker-compose or free5gc-compose containerized deployment.</li>
+<li>If readers use different versions or deployment methods, they may need to adjust relevant configurations and scripts.</li>
+</ul>
+<h4 id="512-starting-free5gc">5.1.2 Starting free5GC</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enter free5GC directory</span>
+<span class="nb">cd</span><span class="w"> </span>/free5gc
+
+<span class="c1"># Start all network functions</span>
+./run.sh
+
+<span class="c1"># Verify service status</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;nef|pcf|udr|nrf&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>grep
+</code></pre></div>
+<p><strong>Expected Output</strong>:<br />
+<div class="highlight"><pre><span></span><code>ubuntu25   65043  0.0  0.2 1244292 22048 ?  Sl  09:04  0:00 ./bin/nrf -c ./config/nrfcfg.yaml
+ubuntu25   65100  0.0  0.2 1246576 22408 ?  Sl  09:04  0:00 ./bin/pcf -c ./config/pcfcfg.yaml
+ubuntu25   65184  0.0  0.1 1239492 16412 ?  Sl  09:04  0:00 ./bin/nef -c ./config/nefcfg.yaml
+ubuntu25   65200  0.2  0.2 1244400 21588 ?  Sl  09:04  0:00 ./bin/udr -c ./config/udrcfg.yaml
+</code></pre></div></p>
+<h3 id="52-discovered-and-fixed-bugs">5.2 Discovered and Fixed Bugs</h3>
+<h4 id="521-bug-1-nef-lacks-automatic-af-creation-mechanism">5.2.1 Bug #1: NEF Lacks Automatic AF Creation Mechanism</h4>
+<p><strong>Problem Description</strong>:<br />
+In the original code, NEF checks whether the AF exists when processing POST requests. If it doesn't exist, it directly returns a 404 error, preventing first-time AFs from creating PFD Transactions.</p>
+<p><strong>File Location</strong>: <code>nef/internal/sbi/processor/pfd.go</code></p>
+<p><strong>Original Code</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="nx">af</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nefCtx</span><span class="p">.</span><span class="nx">GetAf</span><span class="p">(</span><span class="nx">scsAsID</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">af</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">HandlerResponse</span><span class="p">{</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">openapi</span><span class="p">.</span><span class="nx">ProblemDetailsDataNotFound</span><span class="p">(</span><span class="nx">DetailNoAF</span><span class="p">)}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Problem Analysis</strong>:</p>
+<ul>
+<li>AF should be automatically created on first use, not pre-registered</li>
+<li>This does not align with the design philosophy of 3GPP standards</li>
+<li>Requires manual pre-creation of AF during testing</li>
+</ul>
+<p><strong>Fixed Code</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="nx">af</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nefCtx</span><span class="p">.</span><span class="nx">GetAf</span><span class="p">(</span><span class="nx">scsAsID</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">af</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Auto-create AF if it doesn&#39;t exist</span>
+<span class="w">    </span><span class="nx">af</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nefCtx</span><span class="p">.</span><span class="nx">NewAf</span><span class="p">(</span><span class="nx">scsAsID</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">nefCtx</span><span class="p">.</span><span class="nx">AddAf</span><span class="p">(</span><span class="nx">af</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Reasons for Fix</strong>:</p>
+<ol>
+<li><strong>Compliant with Standards</strong>: 3GPP TS 29.522 does not require AF pre-registration</li>
+<li><strong>Simplified Operations</strong>: Reduces testing and deployment complexity</li>
+<li><strong>Improved Usability</strong>: AF can dynamically start using NEF services</li>
+</ol>
+<p><strong>Considerations</strong>:</p>
+<ul>
+<li>This fix is suitable for development and testing environments, simplifying the AF usage workflow</li>
+<li>In production environments, the following issues need to be considered:</li>
+<li><strong>Concurrency Safety</strong>: If two POST requests are initiated for the same AF ID almost simultaneously, there may be a race condition</li>
+<li><strong>State Persistence</strong>: AF context may be lost after NEF restart, requiring database persistence or AF re-registration mechanism</li>
+<li><strong>Authorization Control</strong>: Should be combined with OAuth2/CAPIF mechanisms to ensure only legitimate AFs can create transactions</li>
+</ul>
+<h4 id="522-bug-2-udr-response-handling-logic-error">5.2.2 Bug #2: UDR Response Handling Logic Error</h4>
+<p><strong>Problem Description</strong>:<br />
+The UDR's <code>PutApplicationDataIndividualPfdToDBProcedure</code> function, when processing PUT requests, executes <code>c.JSON()</code> call twice regardless of whether the data is newly created or updated, causing the second call to fail (because the HTTP response has already been sent).</p>
+<p><strong>File Location</strong>: <code>udr/internal/sbi/processor/default.go</code></p>
+<p><strong>Original Code</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">existed</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusCreated</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w">  </span><span class="c1">// ← Always executes, causing error</span>
+</code></pre></div></p>
+<p><strong>Problem Analysis</strong>:</p>
+<ul>
+<li>Missing <code>else</code> branch, causing logic error</li>
+<li>When data already exists, it first returns 200 OK, then attempts to return 201 Created again</li>
+<li>Go's gin framework generates a warning on the second <code>c.JSON()</code> call: <code>[GIN] Headers were already written</code></li>
+<li>Although the response has been sent to the client, the gin framework logs the error, affecting log readability</li>
+<li>The second call does not change the sent HTTP response but violates correct programming practices</li>
+</ul>
+<p><strong>Fixed Code</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">existed</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusCreated</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Reasons for Fix</strong>:</p>
+<ol>
+<li><strong>Compliant with HTTP Semantics</strong>: Newly created resource returns 201, updated existing resource returns 200</li>
+<li><strong>Fixes Response Error</strong>: Avoids errors caused by double responses</li>
+<li><strong>Compliant with REST Standards</strong>: Correct behavior for PUT requests</li>
+</ol>
+<h4 id="523-bug-3-api-version-mismatch">5.2.3 Bug #3: API Version Mismatch</h4>
+<p><strong>Problem Description</strong>:<br />
+UDR uses the API path prefix <code>/nudr-dr/v2</code>, while NEF as a UDR client uses <code>/nudr-dr/v1</code>, causing all API calls to UDR to return 404.</p>
+<p><strong>File Location</strong>: <code>udr/pkg/factory/config.go</code></p>
+<p><strong>Original Code</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="nx">UdrDrResUriPrefix</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/nudr-dr/v2&quot;</span>
+</code></pre></div></p>
+<p><strong>Problem Analysis</strong>:</p>
+<ul>
+<li>NEF's OpenAPI client generated code uses v1 version</li>
+<li>UDR's routing configuration uses v2 version</li>
+<li>Version mismatch causes route not found, returning 404</li>
+<li>This is a configuration inconsistency issue</li>
+</ul>
+<p><strong>Verifying the Problem</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Test v1 endpoint (fails)</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://127.0.0.4:8000/nudr-dr/v1/application-data/pfds
+<span class="c1"># Returns: 404 page not found</span>
+
+<span class="c1"># Test v2 endpoint (succeeds)</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://127.0.0.4:8000/nudr-dr/v2/application-data/pfds
+<span class="c1"># Returns: []</span>
+</code></pre></div></p>
+<p><strong>Fixed Code</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="nx">UdrDrResUriPrefix</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/nudr-dr/v1&quot;</span><span class="w">  </span><span class="c1">// Changed to v1 to match NEF</span>
+</code></pre></div></p>
+<p><strong>Reasons for Fix</strong>:</p>
+<ol>
+<li><strong>Maintain Consistency</strong>: All components use the same API version</li>
+<li><strong>Match OpenAPI Specifications</strong>: NEF's client code is generated based on v1 specifications</li>
+<li><strong>Avoid Regenerating Code</strong>: Modifying UDR's configuration is simpler than regenerating NEF's client code</li>
+</ol>
+<p><strong>Important Notes</strong>:</p>
+<ul>
+<li>The spirit of this fix is "to make UDR compatible with the current NEF-generated v1 API client implementation", not to indicate that v2 API is definitely wrong</li>
+<li>In the future, free5GC may uniformly upgrade all components to v2 API, which may require reverse adjustment or synchronous upgrade</li>
+<li>This is a temporary measure during the version transition period; ultimately, the free5GC project should uniformly decide which API version to use</li>
+</ul>
+<p><strong>Verifying the Fix</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Test v1 endpoint (should succeed now)</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://127.0.0.4:8000/nudr-dr/v1/application-data/pfds
+<span class="c1"># Returns: []</span>
+</code></pre></div></p>
+<h3 id="53-creating-test-scripts">5.3 Creating Test Scripts</h3>
+<h4 id="531-nef-log-monitoring-script">5.3.1 NEF Log Monitoring Script</h4>
+<p><strong>File</strong>: <code>/monitor_nef.sh</code></p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># NEF Log Monitor Script</span>
+<span class="c1"># Automatically find the latest log file</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-td<span class="w"> </span>/home/ubuntu25/free5gc/log/*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">free5gc.log&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Monitoring NEF Logs&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Log File: </span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Waiting for NEF activity...&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="c1"># Monitor NEF logs in real-time</span>
+tail<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;NEF|nnef-pfdmanagement|PFD&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[</span><span class="k">$(</span>date<span class="w"> </span><span class="s1">&#39;+%Y-%m-%d %H:%M:%S&#39;</span><span class="k">)</span><span class="s2">] </span><span class="nv">$line</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<p><strong>Usage</strong>:<br />
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>/monitor_nef.sh
+
+<span class="c1"># Execute in a new terminal window</span>
+/monitor_nef.sh
+</code></pre></div></p>
+<p><strong>Functional Description</strong>:</p>
+<ul>
+<li>Real-time monitoring of NEF log output</li>
+<li>Filters out logs related to PFD Management</li>
+<li>Adds timestamps for easier analysis</li>
+</ul>
+<h4 id="532-pcf-log-monitoring-script-optional">5.3.2 PCF Log Monitoring Script (Optional)</h4>
+<p><strong>Important Note</strong>: PCF is not involved in this experiment's PFD Management workflow. PCF is primarily used for NEF's another service: <strong>Traffic Influence</strong> (traffic routing control for specific UEs), interacting with NEF through the <code>Npcf_PolicyAuthorization</code> interface. This experiment only focuses on PFD Management + UDR persistence, so no related activity will be seen in PCF logs.</p>
+<p>The following script is for reference only, applicable for future expansion of the experiment to per-UE traffic influence scenarios.</p>
+<p><strong>File</strong>: <code>/monitor_pcf.sh</code></p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># PCF Log Monitor Script</span>
+<span class="c1"># Automatically find the latest log file</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-td<span class="w"> </span>/home/ubuntu25/free5gc/log/*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">free5gc.log&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Monitoring PCF Logs&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Log File: </span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Waiting for PCF activity...&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="c1"># Monitor PCF logs in real-time</span>
+tail<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;PCF|npcf-policyauthorization|PolicyAuthorization&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[</span><span class="k">$(</span>date<span class="w"> </span><span class="s1">&#39;+%Y-%m-%d %H:%M:%S&#39;</span><span class="k">)</span><span class="s2">] </span><span class="nv">$line</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<p><strong>Usage</strong>:<br />
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>/monitor_pcf.sh
+
+<span class="c1"># Execute in a new terminal window (only for traffic influence experiments)</span>
+/monitor_pcf.sh
+</code></pre></div></p>
+<h4 id="533-af-pfd-test-main-script">5.3.3 AF PFD Test Main Script</h4>
+<p><strong>File</strong>: <code>/af_pfd_test.sh</code></p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># AF PFD Management Test Script</span>
+<span class="c1"># This script demonstrates the PFD transaction creation and data upload via NEF</span>
+
+<span class="nv">NEF_BASE_URL</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.5:8000&quot;</span>
+<span class="nv">AF_ID</span><span class="o">=</span><span class="s2">&quot;AF001&quot;</span>
+<span class="nv">APP_ID</span><span class="o">=</span><span class="s2">&quot;app_</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># Use timestamp to make it unique</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;AF PFD Management Experiment&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;App ID: </span><span class="nv">$APP_ID</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="c1"># Step 2: Create PFD Transaction (POST)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[Step 2] Creating PFD Transaction...&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Endpoint: POST </span><span class="si">${</span><span class="nv">NEF_BASE_URL</span><span class="si">}</span><span class="s2">/3gpp-pfd-management/v1/</span><span class="si">${</span><span class="nv">AF_ID</span><span class="si">}</span><span class="s2">/transactions&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="nv">POST_RESPONSE</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;\nHTTP_STATUS:%{http_code}&quot;</span><span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">NEF_BASE_URL</span><span class="si">}</span><span class="s2">/3gpp-pfd-management/v1/</span><span class="si">${</span><span class="nv">AF_ID</span><span class="si">}</span><span class="s2">/transactions&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;{</span>
+<span class="s2">    \&quot;pfdDatas\&quot;: {</span>
+<span class="s2">      \&quot;</span><span class="nv">$APP_ID</span><span class="s2">\&quot;: {</span>
+<span class="s2">        \&quot;externalAppId\&quot;: \&quot;</span><span class="nv">$APP_ID</span><span class="s2">\&quot;,</span>
+<span class="s2">        \&quot;pfds\&quot;: {</span>
+<span class="s2">          \&quot;pfd001\&quot;: {</span>
+<span class="s2">            \&quot;pfdId\&quot;: \&quot;pfd001\&quot;,</span>
+<span class="s2">            \&quot;flowDescriptions\&quot;: [</span>
+<span class="s2">              \&quot;permit in ip from 192.168.1.0/24 to any\&quot;</span>
+<span class="s2">            ]</span>
+<span class="s2">          }</span>
+<span class="s2">        }</span>
+<span class="s2">      }</span>
+<span class="s2">    }</span>
+<span class="s2">  }&quot;</span><span class="k">)</span>
+
+<span class="nv">HTTP_STATUS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$POST_RESPONSE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;HTTP_STATUS&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d:<span class="w"> </span>-f2<span class="k">)</span>
+<span class="nv">POST_BODY</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$POST_RESPONSE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;/HTTP_STATUS/d&#39;</span><span class="k">)</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Response Status: </span><span class="nv">$HTTP_STATUS</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Response Body:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$POST_BODY</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$POST_BODY</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HTTP_STATUS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;201&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HTTP_STATUS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;200&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; POST Transaction Created Successfully!&quot;</span>
+<span class="w">    </span><span class="c1"># Extract transaction ID from the self URI</span>
+<span class="w">    </span><span class="nv">TRANSACTION_ID</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$POST_BODY</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.self&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;/transactions/\K[^/]+$&#39;</span><span class="k">)</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Transaction ID: </span><span class="nv">$TRANSACTION_ID</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; POST Transaction Failed!&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="c1"># Step 3: Upload PFD Data (PUT)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[Step 3] Uploading PFD Data...&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Endpoint: PUT </span><span class="si">${</span><span class="nv">NEF_BASE_URL</span><span class="si">}</span><span class="s2">/3gpp-pfd-management/v1/</span><span class="si">${</span><span class="nv">AF_ID</span><span class="si">}</span><span class="s2">/transactions/</span><span class="si">${</span><span class="nv">TRANSACTION_ID</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="nv">PUT_RESPONSE</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;\nHTTP_STATUS:%{http_code}&quot;</span><span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">NEF_BASE_URL</span><span class="si">}</span><span class="s2">/3gpp-pfd-management/v1/</span><span class="si">${</span><span class="nv">AF_ID</span><span class="si">}</span><span class="s2">/transactions/</span><span class="si">${</span><span class="nv">TRANSACTION_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;{</span>
+<span class="s2">    \&quot;pfdDatas\&quot;: {</span>
+<span class="s2">      \&quot;</span><span class="nv">$APP_ID</span><span class="s2">\&quot;: {</span>
+<span class="s2">        \&quot;externalAppId\&quot;: \&quot;</span><span class="nv">$APP_ID</span><span class="s2">\&quot;,</span>
+<span class="s2">        \&quot;pfds\&quot;: {</span>
+<span class="s2">          \&quot;pfd001\&quot;: {</span>
+<span class="s2">            \&quot;pfdId\&quot;: \&quot;pfd001\&quot;,</span>
+<span class="s2">            \&quot;flowDescriptions\&quot;: [</span>
+<span class="s2">              \&quot;permit in ip from 192.168.1.0/24 to any\&quot;,</span>
+<span class="s2">              \&quot;permit out ip from any to 10.0.0.0/8\&quot;</span>
+<span class="s2">            ],</span>
+<span class="s2">            \&quot;urls\&quot;: [</span>
+<span class="s2">              \&quot;https://example.com/app\&quot;</span>
+<span class="s2">            ],</span>
+<span class="s2">            \&quot;domainNames\&quot;: [</span>
+<span class="s2">              \&quot;example.com\&quot;</span>
+<span class="s2">            ]</span>
+<span class="s2">          },</span>
+<span class="s2">          \&quot;pfd002\&quot;: {</span>
+<span class="s2">            \&quot;pfdId\&quot;: \&quot;pfd002\&quot;,</span>
+<span class="s2">            \&quot;flowDescriptions\&quot;: [</span>
+<span class="s2">              \&quot;permit in ip from 172.16.0.0/12 to any\&quot;</span>
+<span class="s2">            ]</span>
+<span class="s2">          }</span>
+<span class="s2">        }</span>
+<span class="s2">      }</span>
+<span class="s2">    }</span>
+<span class="s2">  }&quot;</span><span class="k">)</span>
+
+<span class="nv">HTTP_STATUS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUT_RESPONSE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;HTTP_STATUS&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d:<span class="w"> </span>-f2<span class="k">)</span>
+<span class="nv">PUT_BODY</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUT_RESPONSE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;/HTTP_STATUS/d&#39;</span><span class="k">)</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Response Status: </span><span class="nv">$HTTP_STATUS</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Response Body:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUT_BODY</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUT_BODY</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HTTP_STATUS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;200&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HTTP_STATUS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;204&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; PUT Data Uploaded Successfully!&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; PUT Data Upload Failed!&quot;</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Experiment Completed!&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==========================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-td<span class="w"> </span>/home/ubuntu25/free5gc/log/*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">free5gc.log&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Please check the following logs:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  - Log File: </span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  - You can use: tail -100 </span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2"> | grep -E &#39;NEF|UDR&#39;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;To verify data in MongoDB:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  mongosh --eval \&quot;use free5gc; db.getCollection(&#39;applicationData.pfds&#39;).find({applicationId: &#39;</span><span class="nv">$APP_ID</span><span class="s2">&#39;}).pretty();\&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+</code></pre></div>
+<p><strong>Usage</strong>:<br />
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>/af_pfd_test.sh
+/af_pfd_test.sh
+</code></pre></div></p>
+<h3 id="54-executing-the-experiment">5.4 Executing the Experiment</h3>
+<h4 id="541-preparation-phase">5.4.1 Preparation Phase</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Ensure free5GC is running</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;nef|udr|nrf&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>grep
+
+<span class="c1"># 2. Ensure MongoDB is running</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>mongod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>grep
+
+<span class="c1"># 3. Start log monitoring (open new terminal windows)</span>
+<span class="c1"># Terminal 2:</span>
+/monitor_nef.sh<span class="w"> </span>&gt;<span class="w"> </span>/tmp/nef_monitor.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">&amp;</span>
+
+<span class="c1"># Note: PCF monitoring is not needed in this experiment (PCF is not involved in PFD Management workflow)</span>
+<span class="c1"># For subsequent traffic influence experiments, optionally use:</span>
+<span class="c1"># /monitor_pcf.sh &gt; /tmp/pcf_monitor.log 2&gt;&amp;1 &amp;</span>
+</code></pre></div>
+<h4 id="542-executing-tests">5.4.2 Executing Tests</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Terminal 1: Execute test script</span>
+/af_pfd_test.sh
+</code></pre></div>
+<p><strong>Expected Output</strong>:<br />
+<div class="highlight"><pre><span></span><code>==========================================
+AF PFD Management Experiment
+==========================================
+App ID: app_1761902997
+[Step 2] Creating PFD Transaction...
+Endpoint: POST http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions
+Response Status: 201
+Response Body:
+{
+  &quot;self&quot;: &quot;http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6&quot;,
+  &quot;pfdDatas&quot;: {
+    &quot;app_1761902997&quot;: {
+      &quot;externalAppId&quot;: &quot;app_1761902997&quot;,
+      &quot;self&quot;: &quot;http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6/applications/app_1761902997&quot;,
+      &quot;pfds&quot;: {
+        &quot;pfd001&quot;: {
+          &quot;pfdId&quot;: &quot;pfd001&quot;,
+          &quot;flowDescriptions&quot;: [
+            &quot;permit in ip from 192.168.1.0/24 to any&quot;
+          ]
+        }
+      }
+    }
+  }
+}
+ POST Transaction Created Successfully!
+Transaction ID: 6
+==========================================
+[Step 3] Uploading PFD Data...
+Endpoint: PUT http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6
+Response Status: 200
+Response Body:
+{
+  &quot;self&quot;: &quot;http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6&quot;,
+  &quot;pfdDatas&quot;: {
+    &quot;app_1761902997&quot;: {
+      &quot;externalAppId&quot;: &quot;app_1761902997&quot;,
+      &quot;self&quot;: &quot;http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6/applications/app_1761902997&quot;,
+      &quot;pfds&quot;: {
+        &quot;pfd001&quot;: {
+          &quot;pfdId&quot;: &quot;pfd001&quot;,
+          &quot;flowDescriptions&quot;: [
+            &quot;permit in ip from 192.168.1.0/24 to any&quot;,
+            &quot;permit out ip from any to 10.0.0.0/8&quot;
+          ],
+          &quot;urls&quot;: [
+            &quot;https://example.com/app&quot;
+          ],
+          &quot;domainNames&quot;: [
+            &quot;example.com&quot;
+          ]
+        },
+        &quot;pfd002&quot;: {
+          &quot;pfdId&quot;: &quot;pfd002&quot;,
+          &quot;flowDescriptions&quot;: [
+            &quot;permit in ip from 172.16.0.0/12 to any&quot;
+          ]
+        }
+      }
+    }
+  }
+}
+ PUT Data Uploaded Successfully!
+==========================================
+Experiment Completed!
+==========================================
+</code></pre></div></p>
+<h3 id="55-results-verification">5.5 Results Verification</h3>
+<h4 id="551-nrf-service-discovery-verification">5.5.1 NRF Service Discovery Verification</h4>
+<p>Before NEF processes PFD Management requests, NEF first queries NRF for UDR service endpoints. This is a core mechanism of 5G SBA architecture.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># View NEF and NRF interaction logs</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-t<span class="w"> </span>/home/ubuntu25/free5gc/log/*/free5gc.log<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+tail<span class="w"> </span>-100<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;NEF.*Discovery|NEF.*Nnrf|SearchNFInstances.*UDR&quot;</span>
+</code></pre></div>
+<p><strong>Key Log Examples</strong>:<br />
+<div class="highlight"><pre><span></span><code>time=&quot;...&quot; level=&quot;info&quot; msg=&quot;SearchNFInstances with nfType[UDR]&quot; CAT=&quot;Nnrf&quot; NF=&quot;NEF&quot;
+time=&quot;...&quot; level=&quot;debug&quot; msg=&quot;URI from NRF: http://127.0.0.4:8000&quot; NF=&quot;NEF&quot;
+</code></pre></div></p>
+<p>These logs prove that NEF doesn't hardcode UDR's URL but dynamically discovers UDR's <code>nudr-dr</code> service endpoint through NRF.</p>
+<h4 id="552-nef-log-verification">5.5.2 NEF Log Verification</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># View NEF logs for processing POST requests</span>
+<span class="c1"># Automatically get the latest log file</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-t<span class="w"> </span>/home/ubuntu25/free5gc/log/*/free5gc.log<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+tail<span class="w"> </span>-100<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;PostPFDManagementTransactions&quot;</span>
+</code></pre></div>
+<p><strong>Key Logs</strong>:<br />
+<div class="highlight"><pre><span></span><code>time=&quot;2025-10-31T09:29:57.449161053Z&quot; level=&quot;info&quot; msg=&quot;PostPFDManagementTransactions - scsAsID[AF001]&quot; CAT=&quot;PFDMng&quot; NF=&quot;NEF&quot;
+time=&quot;2025-10-31T09:29:57.449259200Z&quot; level=&quot;info&quot; msg=&quot;New pfd transcation&quot; AFID=&quot;AF:AF001&quot; CAT=&quot;CTX&quot; NF=&quot;NEF&quot; PfdTRID=&quot;PFDT:6&quot;
+time=&quot;2025-10-31T09:29:57.449273884Z&quot; level=&quot;info&quot; msg=&quot;appID[app_1761902997] is added&quot; AFID=&quot;AF:AF001&quot; CAT=&quot;CTX&quot; NF=&quot;NEF&quot; PfdTRID=&quot;PFDT:6&quot;
+time=&quot;2025-10-31T09:29:57.453961420Z&quot; level=&quot;info&quot; msg=&quot;PFD Management Transaction is added&quot; AFID=&quot;AF:AF001&quot; CAT=&quot;CTX&quot; NF=&quot;NEF&quot; PfdTRID=&quot;PFDT:6&quot;
+time=&quot;2025-10-31T09:29:57.454032294Z&quot; level=&quot;info&quot; msg=&quot;AF is added&quot; AFID=&quot;AF:AF001&quot; CAT=&quot;CTX&quot; NF=&quot;NEF&quot;
+time=&quot;2025-10-31T09:29:57.454071110Z&quot; level=&quot;info&quot; msg=&quot;| 201 |       127.0.0.1 | POST    | /3gpp-pfd-management/v1/AF001/transactions | &quot; CAT=&quot;GIN&quot; NF=&quot;NEF&quot;
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># View NEF logs for processing PUT requests</span>
+<span class="c1"># Automatically get the latest log file</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-t<span class="w"> </span>/home/ubuntu25/free5gc/log/*/free5gc.log<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+tail<span class="w"> </span>-100<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="s2">&quot;PutIndividualPFDManagementTransaction&quot;</span>
+</code></pre></div>
+<p><strong>Key Logs</strong>:<br />
+<div class="highlight"><pre><span></span><code>time=&quot;2025-10-31T09:29:57.466704798Z&quot; level=&quot;info&quot; msg=&quot;PutIndividualPFDManagementTransaction - scsAsID[AF001], transID[6]&quot; CAT=&quot;PFDMng&quot; NF=&quot;NEF&quot;
+time=&quot;2025-10-31T09:29:57.466762809Z&quot; level=&quot;info&quot; msg=&quot;appID[app_1761902997] is added&quot; AFID=&quot;AF:AF001&quot; CAT=&quot;CTX&quot; NF=&quot;NEF&quot; PfdTRID=&quot;PFDT:6&quot;
+time=&quot;2025-10-31T09:29:57.472831410Z&quot; level=&quot;info&quot; msg=&quot;| 200 |       127.0.0.1 | PUT     | /3gpp-pfd-management/v1/AF001/transactions/6 | &quot; CAT=&quot;GIN&quot; NF=&quot;NEF&quot;
+</code></pre></div></p>
+<h4 id="553-udr-log-verification">5.5.3 UDR Log Verification</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># View UDR logs for processing PFD storage requests</span>
+<span class="c1"># Automatically get the latest log file</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-t<span class="w"> </span>/home/ubuntu25/free5gc/log/*/free5gc.log<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+tail<span class="w"> </span>-100<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;UDR.*application-data/pfds&quot;</span>
+</code></pre></div>
+<p><strong>Key Logs</strong>:<br />
+<div class="highlight"><pre><span></span><code>time=&quot;2025-10-31T09:29:57.453494418Z&quot; level=&quot;info&quot; msg=&quot;| 201 |       127.0.0.1 | PUT     | /nudr-dr/v1/application-data/pfds/app_1761902997 | &quot; CAT=&quot;GIN&quot; NF=&quot;UDR&quot;
+time=&quot;2025-10-31T09:29:57.472671073Z&quot; level=&quot;info&quot; msg=&quot;| 200 |       127.0.0.1 | PUT     | /nudr-dr/v1/application-data/pfds/app_1761902997 | &quot; CAT=&quot;GIN&quot; NF=&quot;UDR&quot;
+</code></pre></div></p>
+<p><strong>Explanation</strong>: The first PUT returns 201 Created (new resource), the second PUT returns 200 OK (updated existing resource), compliant with REST PUT semantics.</p>
+<h4 id="554-mongodb-data-verification">5.5.4 MongoDB Data Verification</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Connect to MongoDB and query PFD data</span>
+mongosh<span class="w"> </span>--eval<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">  use free5gc;</span>
+<span class="s2">  db.getCollection(&#39;applicationData.pfds&#39;).find(</span>
+<span class="s2">    {applicationId: &#39;app_1761902997&#39;}</span>
+<span class="s2">  ).pretty();</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<p><strong>Expected Output</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nx">_id</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;67237f2d8c8a9f0001234567&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">applicationId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app_1761902997&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">pfds</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">pfdId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;pfd001&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">flowDescriptions</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s1">&#39;permit in ip from 192.168.1.0/24 to any&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="s1">&#39;permit out ip from any to 10.0.0.0/8&#39;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nx">urls</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s1">&#39;https://example.com/app&#39;</span><span class="w"> </span><span class="p">],</span>
+<span class="w">      </span><span class="nx">domainNames</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s1">&#39;example.com&#39;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">pfdId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;pfd002&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">flowDescriptions</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s1">&#39;permit in ip from 172.16.0.0/12 to any&#39;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h4 id="555-api-interoperability-verification">5.5.5 API Interoperability Verification</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Test GET operation: Query PFD Transaction</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div>
+<p><strong>Expected Response</strong>: 200 OK, containing complete PFD data</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Test GET operation: Query specific application&#39;s PFD</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6/applications/app_1761902997&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div>
+<p><strong>Expected Response</strong>: 200 OK, containing that application's PFD data</p>
+<h4 id="556-delete-operation-complete-verification">5.5.6 DELETE Operation Complete Verification</h4>
+<p>This section verifies the completeness of PFD Transaction deletion operations, including data consistency across NEF, UDR, and MongoDB.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Delete PFD Transaction</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=== Step 1: Delete Transaction ===&quot;</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions/6
+</code></pre></div>
+<p><strong>Expected Response</strong>: 204 No Content</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 2: Check NEF logs</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=== Step 2: Check NEF deletion logs ===&quot;</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-t<span class="w"> </span>/home/ubuntu25/free5gc/log/*/free5gc.log<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+tail<span class="w"> </span>-50<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;DELETE.*transactions/6&quot;</span>
+</code></pre></div>
+<p><strong>Expected Logs</strong>:<br />
+<div class="highlight"><pre><span></span><code>time=&quot;...&quot; level=&quot;info&quot; msg=&quot;| 204 |  127.0.0.1 | DELETE  | /3gpp-pfd-management/v1/AF001/transactions/6 | &quot; CAT=&quot;GIN&quot; NF=&quot;NEF&quot;
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 3: Check if UDR executed DELETE operation</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=== Step 3: Check UDR deletion logs ===&quot;</span>
+tail<span class="w"> </span>-50<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;DELETE.*application-data/pfds/app_1761902997&quot;</span>
+</code></pre></div>
+<p><strong>Expected Logs</strong>:<br />
+<div class="highlight"><pre><span></span><code>time=&quot;...&quot; level=&quot;info&quot; msg=&quot;| 204 |  127.0.0.1 | DELETE  | /nudr-dr/v1/application-data/pfds/app_1761902997 | &quot; CAT=&quot;GIN&quot; NF=&quot;UDR&quot;
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 4: Verify data has been deleted from MongoDB</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=== Step 4: Verify MongoDB data cleanup ===&quot;</span>
+mongosh<span class="w"> </span>--eval<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">  use free5gc;</span>
+<span class="s2">  const count = db.getCollection(&#39;applicationData.pfds&#39;).countDocuments(</span>
+<span class="s2">    {applicationId: &#39;app_1761902997&#39;}</span>
+<span class="s2">  );</span>
+<span class="s2">  print(&#39;Records found: &#39; + count);</span>
+<span class="s2">  if (count === 0) {</span>
+<span class="s2">    print(&#39; DELETE operation successful: MongoDB data cleaned&#39;);</span>
+<span class="s2">  } else {</span>
+<span class="s2">    print(&#39; DELETE operation failed: MongoDB still has residual data&#39;);</span>
+<span class="s2">  }</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<p><strong>Expected Output</strong>:<br />
+<div class="highlight"><pre><span></span><code>Records found: 0
+ DELETE operation successful: MongoDB data cleaned
+</code></pre></div></p>
+<p><strong>Verification Explanation</strong>:</p>
+<ul>
+<li>After NEF receives a DELETE request, it sends a corresponding DELETE request to UDR</li>
+<li>UDR deletes the corresponding <code>applicationData.pfds</code> record from MongoDB</li>
+<li>The entire deletion workflow ensures data consistency between NEF Transaction and UDR/MongoDB</li>
+</ul>
+<p><strong>Note</strong>: In MongoDB 5.0+, <code>.count()</code> has been deprecated; <code>.countDocuments()</code> method should be used instead.</p>
+<h3 id="56-test-execution-summary">5.6 Test Execution Summary</h3>
+<h4 id="561-test-results-confirmation">5.6.1 Test Results Confirmation</h4>
+<p><strong>Actual Test Output</strong>:<br />
+<div class="highlight"><pre><span></span><code>==========================================
+AF PFD Management Experiment
+==========================================
+App ID: app_1761922382
+[Step 2] Creating PFD Transaction...
+Response Status: 201
+ POST Transaction Created Successfully!
+Transaction ID: 17
+[Step 3] Uploading PFD Data...
+Response Status: 200
+ PUT Data Uploaded Successfully!
+==========================================
+</code></pre></div></p>
+<h3 id="57-performance-testing">5.7 Performance Testing</h3>
+<p><strong>Important Note</strong>: The following performance test results are based on a single-machine loopback (127.0.0.x) environment, without TLS or OAuth2 verification enabled, and without connection to actual RAN/UE or generation of real user traffic. This test is only for verifying the basic response time of NEF↔UDR↔MongoDB and cannot be directly used as a production environment SLA reference.</p>
+<h4 id="571-single-operation-latency-test">5.7.1 Single Operation Latency Test</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Test POST operation latency</span>
+<span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;pfdDatas&quot;:{&quot;test_app&quot;:{&quot;externalAppId&quot;:&quot;test_app&quot;,&quot;pfds&quot;:{&quot;pfd1&quot;:{&quot;pfdId&quot;:&quot;pfd1&quot;,&quot;flowDescriptions&quot;:[&quot;permit in ip from any to any&quot;]}}}}}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&gt;<span class="w"> </span>/dev/null
+</code></pre></div>
+<p><strong>Measured Results</strong>:<br />
+<div class="highlight"><pre><span></span><code>real    0m0.015s
+user    0m0.003s
+sys     0m0.003s
+</code></pre></div></p>
+<p><strong>Analysis</strong>: POST operation average latency is approximately 15ms, as expected</p>
+<h4 id="572-consecutive-operations-test">5.7.2 Consecutive Operations Test</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Test creating 10 Transactions consecutively</span>
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..10<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">APP_ID</span><span class="o">=</span><span class="s2">&quot;perf_test_</span><span class="nv">$i</span><span class="s2">&quot;</span>
+<span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.5:8000/3gpp-pfd-management/v1/AF001/transactions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;{\&quot;pfdDatas\&quot;:{\&quot;</span><span class="nv">$APP_ID</span><span class="s2">\&quot;:{\&quot;externalAppId\&quot;:\&quot;</span><span class="nv">$APP_ID</span><span class="s2">\&quot;,\&quot;pfds\&quot;:{\&quot;pfd1\&quot;:{\&quot;pfdId\&quot;:\&quot;pfd1\&quot;,\&quot;flowDescriptions\&quot;:[\&quot;permit in ip from any to any\&quot;]}}}}}&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.self&#39;</span>
+<span class="k">done</span>
+</code></pre></div>
+<p><strong>Results</strong>: All 10 requests succeeded, average response time 20ms</p>
+<h3 id="58-script-improvements">5.8 Script Improvements</h3>
+<p>During actual testing, the following improvements were made to the original scripts:</p>
+<h4 id="581-dynamic-log-path-detection">5.8.1 Dynamic Log Path Detection</h4>
+<p>The original script used hardcoded log paths, unsuitable for different execution times. The improved script automatically detects the latest log directory:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Before improvement</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&quot;/free5gc/log/20251031_090404/free5gc.log&quot;</span>
+
+<span class="c1"># After improvement</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-td<span class="w"> </span>/home/ubuntu25/free5gc/log/*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+<span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">free5gc.log&quot;</span>
+</code></pre></div>
+<p><strong>Advantages</strong>:</p>
+<ul>
+<li>No need to manually modify log paths</li>
+<li>Automatically uses the latest log file</li>
+<li>Improves script reusability</li>
+</ul>
+<h4 id="582-enhanced-output-messages">5.8.2 Enhanced Output Messages</h4>
+<p>More detailed verification instructions were added at the end of the test script:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;To verify data in MongoDB:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  mongosh --eval \&quot;use free5gc; db.getCollection(&#39;applicationData.pfds&#39;).find({applicationId: &#39;</span><span class="nv">$APP_ID</span><span class="s2">&#39;}).pretty();\&quot;&quot;</span>
+</code></pre></div>
+<p>This allows users to immediately verify whether data is correctly stored.</p>
+<h2 id="6-conclusion">6. Conclusion</h2>
+<h3 id="61-summary-of-experimental-results">6.1 Summary of Experimental Results</h3>
+<p>This experiment successfully implemented complete testing and verification of NEF PFD Management functionality in free5GC, achieving the following important results:</p>
+<h4 id="611-functional-verification">6.1.1 Functional Verification</h4>
+<ul>
+<li>Verified that NEF's PFD Management API complies with 3GPP TS 29.522 standards</li>
+<li>Confirmed correct data interaction workflow between NEF and UDR</li>
+<li>Verified PFD data persistence mechanism in MongoDB</li>
+<li>Tested complete CRUD operations (Create, Read, Update, Delete)</li>
+</ul>
+<h4 id="612-bug-fixes-and-improvements">6.1.2 Bug Fixes and Improvements</h4>
+<ul>
+<li><strong>Bug #1</strong>: Fixed NEF's lack of automatic AF creation mechanism</li>
+<li><strong>Bug #2</strong>: Fixed UDR response handling logic error</li>
+<li><strong>Bug #3</strong>: Resolved API version mismatch between NEF and UDR</li>
+</ul>
+<p>These three bug fixes make free5GC's NEF functionality more complete and user-friendly, improving overall system stability.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/123500_123599/123501/18.10.00_60/ts_123501v181000p.pdf">3GPP TS 23.501</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129522/18.10.00_60/ts_129522v181000p.pdf">3GPP TS 29.522</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129519/16.05.00_60/ts_129519v160500p.pdf">3GPP TS 29.519</a> </li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129507/18.07.00_60/ts_129507v180700p.pdf">3GPP TS 29.507</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129510/18.06.00_60/ts_129510v180600p.pdf">3GPP TS 29.510</a></li>
+<li>References to implementation:<ul>
+<li><a href="https://github.com/free5gc/nef/blob/1c27f8f42cc8f574b31895ab34632d185d8c1627/internal/sbi/processor/pfd.go">nef/internal/sbi/processor/pfd.go</a></li>
+<li><a href="https://github.com/free5gc/udr/blob/985dccc730609bb302055c532111fe50ae50d4da/internal/sbi/processor/default.go">udr/internal/sbi/processor/default.go</a></li>
+<li><a href="https://github.com/free5gc/udr/blob/985dccc730609bb302055c532111fe50ae50d4da/pkg/factory/config.go">udr/pkg/factory/config.go</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Yu-Chen Chan, and I've recently started exploring 5G technology and engaging with the free5GC community. I hope you find this blog post useful, and don't hesitate to reach out if you spot any mistakes or have recommendations for improvement.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/solar224">Yu-Chen, Chan</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

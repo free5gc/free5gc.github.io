@@ -1,0 +1,1325 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Beyond Standard Networking: Implementing 5G VRF Isolation in Go - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#beyond-standard-networking-implementing-5g-vrf-isolation-in-go" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Beyond Standard Networking: Implementing 5G VRF Isolation in Go
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-definition-and-functional-role" class="md-nav__link">
+    1.1. Definition and Functional Role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-protocol-stack-and-interface" class="md-nav__link">
+    1.2. Protocol Stack and Interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-significance-and-practical-use-cases" class="md-nav__link">
+    1.3. Significance and Practical Use Cases
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-routing-black-hole-default-route-hijacks-and-the-case-of-disappearing-management-traffic" class="md-nav__link">
+    2. The Routing Black Hole — Default Route Hijacks and the Case of Disappearing Management Traffic
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The Routing Black Hole — Default Route Hijacks and the Case of Disappearing Management Traffic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-the-aggressive-default-route" class="md-nav__link">
+    2.1. The "Aggressive" Default Route
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-the-practical-disaster-the-ssh-black-hole" class="md-nav__link">
+    2.2. The Practical Disaster: The SSH "Black Hole"
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2. The Practical Disaster: The SSH "Black Hole"">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-happened-to-the-packets" class="md-nav__link">
+    What happened to the packets?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-the-multi-access-paradox" class="md-nav__link">
+    2.3. The Multi-Access Paradox
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-conclusion-we-need-parallel-universes" class="md-nav__link">
+    2.4. Conclusion: We Need "Parallel Universes"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-building-parallel-universes-the-architecture-of-vrf-isolation" class="md-nav__link">
+    3. Building Parallel Universes — The Architecture of VRF Isolation
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Building Parallel Universes — The Architecture of VRF Isolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-what-is-vrf-virtual-routing-and-forwarding" class="md-nav__link">
+    3.1. What is VRF? (Virtual Routing and Forwarding)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-key-concepts-l3mdev-and-policy-routing" class="md-nav__link">
+    3.2. Key Concepts: L3mdev and Policy Routing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-why-vrf-is-the-perfect-match-for-n3iwue" class="md-nav__link">
+    3.3. Why VRF is the Perfect Match for N3IWUE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-the-hierarchy-of-isolation-vrf-gre-and-xfrm" class="md-nav__link">
+    3.4. The Hierarchy of Isolation: VRF, GRE, and XFRM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-orchestrating-parallel-universes-the-go-implementation" class="md-nav__link">
+    4. Orchestrating Parallel Universes — The Go Implementation
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Orchestrating Parallel Universes — The Go Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-the-vrf-factory-dynamic-creation-and-lifecycle" class="md-nav__link">
+    4.1. The VRF Factory: Dynamic Creation and Lifecycle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-the-trigger-handling-pdu-session-establishment" class="md-nav__link">
+    4.2. The Trigger: Handling PDU Session Establishment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-implementation-highlights" class="md-nav__link">
+    4.3. Implementation Highlights
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mission-accomplished-verifying-the-parallel-universe" class="md-nav__link">
+    5. Mission Accomplished — Verifying the Parallel Universe
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Mission Accomplished — Verifying the Parallel Universe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-verifying-the-master-slave-relationship" class="md-nav__link">
+    5.1. Verifying the Master-Slave Relationship
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-auditing-the-isolated-routing-table" class="md-nav__link">
+    5.2. Auditing the Isolated Routing Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-testing-end-to-end-connectivity" class="md-nav__link">
+    5.3. Testing End-to-End Connectivity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgments" class="md-nav__link">
+    Acknowledgments
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251231/20251231.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251231/20251231.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="beyond-standard-networking-implementing-5g-vrf-isolation-in-go">Beyond Standard Networking: Implementing 5G VRF Isolation in Go</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: HUANG, YUAN-CHUN<br />
+Date: 2025/12/31</p>
+</div>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>According to 3GPP TS 23.501, the 5G System (5GS) is designed to be access-agnostic, allowing User Equipment (UE) to connect to the 5G Core Network (5GC) via Non-3GPP Access Networks (e.g., untrusted Wi-Fi or wired networks).</p>
+<h3 id="11-definition-and-functional-role">1.1. Definition and Functional Role</h3>
+<p>An <strong>N3IWUE</strong> (Non-3GPP Interworking UE) is a UE that utilizes the NWu reference point to communicate with the <strong>N3IWF</strong> (Non-3GPP Interworking Function). Its primary role is to establish a secure connection over an untrusted non-3GPP access to reach the 5GC.</p>
+<p><img alt="image" src="../1-1.png" /></p>
+<h3 id="12-protocol-stack-and-interface">1.2. Protocol Stack and Interface</h3>
+<p>Per 3GPP specifications, the N3IWUE must implement a specific dual-stack architecture to separate signaling from data:</p>
+<ul>
+<li>
+<p>Control Plane (CP): The UE establishes an IKEv2 security association with the N3IWF to create a Signaling IPsec SA. NAS (Non-Access Stratum) messages are then encapsulated and transmitted over this secure tunnel to the AMF (Access and Mobility Management Function).</p>
+</li>
+<li>
+<p>User Plane (UP): For each established PDU Session, the UE creates a separate Data IPsec SA. User data is encapsulated using GRE (Generic Routing Encapsulation) (as per TS 24.502) before being encrypted by IPsec and sent to the N3IWF, which forwards it to the UPF (User Plane Function).</p>
+</li>
+</ul>
+<p><img alt="image" src="../1-2.png" /></p>
+<h3 id="13-significance-and-practical-use-cases">1.3. Significance and Practical Use Cases</h3>
+<ol>
+<li>
+<p>Untrusted Non-3GPP Access (TS 23.501 §4.2.8)<br />
+N3IWUE allows for the extension of 5G services to any IP-based network. The significance lies in Security Termination: the N3IWF acts as a security gateway, terminating the IPsec tunnels from the UE and interfacing with the 5GC via standard N2 (CP) and N3 (UP) interfaces.</p>
+</li>
+<li>
+<p>PDU Session Resource Isolation<br />
+3GPP defines that a UE may support multiple PDU Sessions over non-3GPP access. Each PDU Session is associated with a specific QFI (QoS Flow Identifier).</p>
+</li>
+<li>
+<p>Regulatory and Emergency Services<br />
+3GPP specifies procedures for Emergency Services over non-3GPP access, ensuring that even without a SIM card or cellular coverage, an N3IWUE can reach the 5GC for emergency calls if an N3IWF is reachable via Wi-Fi.</p>
+</li>
+</ol>
+<h2 id="2-the-routing-black-hole-default-route-hijacks-and-the-case-of-disappearing-management-traffic">2. The Routing Black Hole — Default Route Hijacks and the Case of Disappearing Management Traffic</h2>
+<p>In the process of implementing the User Plane for an free5GC N3IWUE, we eventually reach the milestone where data starts flowing. Following the 3GPP TS 24.502 specification, the UE establishes multiple GRE tunnels based on the QoS Flow Identifier (QFI) assigned by the 5G Core (5GC).</p>
+<p>However, as soon as the first tunnel—the Default QFI (QFI=1)—is activated, a silent but devastating networking conflict begins to brew.</p>
+<h3 id="21-the-aggressive-default-route">2.1. The "Aggressive" Default Route</h3>
+<p>To ensure that the UE's general data traffic is steered into the 5G network, a common implementation practice is to inject a default route pointing to the GRE interface. For example:<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># A typical routing entry for QFI=1</span>
+ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w"> </span>dev<span class="w"> </span>gre-tun-1<span class="w"> </span>priority<span class="w"> </span><span class="m">7</span>
+</code></pre></div><br />
+In the Linux routing world, a <code>priority</code> (or <code>metric</code>) of 7 is exceptionally low, giving it massive precedence over other routes. The logic seems sound: <strong>"Unless there is a more specific path, send everything through the 5G tunnel."</strong></p>
+<h3 id="22-the-practical-disaster-the-ssh-black-hole">2.2. The Practical Disaster: The SSH "Black Hole"</h3>
+<p>Imagine your development setup: Your N3IWUE software is running on a Linux machine connected to your lab’s Wi-Fi. You are remotely managing this device via SSH from your laptop.</p>
+<p>The moment your N3IWUE successfully establishes the PDU Session and injects that <code>priority 7</code> default route, the disaster strikes: <strong>Your SSH session instantly freezes and disconnects.</strong></p>
+<h4 id="what-happened-to-the-packets">What happened to the packets?</h4>
+<p>Let’s trace the journey of a single SSH response packet:</p>
+<ol>
+<li>
+<p><strong>Request Inbound:</strong> Your laptop sends an SSH request to the N3IWUE via the Wi-Fi interface.</p>
+</li>
+<li>
+<p><strong>Response Generated:</strong> The N3IWUE generates a response packet. The Source IP is the Wi-Fi IP, and the Destination IP is your laptop’s IP.</p>
+</li>
+<li>
+<p><strong>The Fatal Routing Decision:</strong> The Linux kernel looks at the routing table.</p>
+<ul>
+<li>
+<p>It sees <code>0.0.0.0/0 dev gre-tun-1 priority 7</code>.</p>
+</li>
+<li>
+<p>Because your laptop’s IP isn't on the same local subnet as the Wi-Fi, the kernel decides this "external" packet must follow the highest-priority default route.</p>
+</li>
+<li>
+<p>The Result: The SSH response packet, carrying a Wi-Fi Source IP, is forcefully pushed into the GRE Tunnel.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>The Black Hole:</strong> The 5G Core receives a packet originating from a "Local Wi-Fi IP." Since this IP is completely unknown to the 5G internal routing domain, the 5GC drops the packet immediately.</p>
+</li>
+</ol>
+<p>Your management traffic has been hijacked by your own 5G data plane.<br />
+<img alt="image" src="../2-2.png" /></p>
+<h3 id="23-the-multi-access-paradox">2.3. The Multi-Access Paradox</h3>
+<p>This scenario highlights a fundamental conflict in N3IWUE design: <strong>Multi-access does not mean simple aggregation</strong>.</p>
+<p>According to 3GPP's vision, an N3IWUE must be "Multi-homed," meaning it should handle:</p>
+<ul>
+<li>
+<p>5G Service Traffic: Which must traverse the GRE/IPsec tunnels.</p>
+</li>
+<li>
+<p>Non-3GPP Management Traffic: Which must remain on the local Wi-Fi or Ethernet (e.g., SSH, DNS lookups, or OS updates).</p>
+</li>
+</ul>
+<p>If we rely on a single, global routing table (the <code>main</code> table), these two types of traffic will always fight for the default route. No matter how you tweak the <code>priority</code> values, one connection will inevitably break.</p>
+<h3 id="24-conclusion-we-need-parallel-universes">2.4. Conclusion: We Need "Parallel Universes"</h3>
+<p>Relying on a single "brain" (routing table) makes the N3IWUE implementation extremely fragile and practically impossible to manage remotely. To satisfy 3GPP's isolation requirements while keeping the device reachable, we need a way to isolate the 5G PDU Session traffic into its own world.</p>
+<p>In the next chapter, we will explore how <strong>Linux VRF (Virtual Routing and Forwarding)</strong> allows us to create these "parallel universes," ensuring that 5G tunnels and local management traffic never cross paths.</p>
+<h2 id="3-building-parallel-universes-the-architecture-of-vrf-isolation">3. Building Parallel Universes — The Architecture of VRF Isolation</h2>
+<p>Before we dive into the Go implementation, we must understand the "magic" that allows Linux to handle conflicting routes without breaking a sweat. To solve the SSH disconnection and PDU Session routing traps we encountered in Chapter 2, we rely on a powerful Linux kernel feature: <strong>VRF</strong>.</p>
+<h3 id="31-what-is-vrf-virtual-routing-and-forwarding">3.1. What is VRF? (Virtual Routing and Forwarding)</h3>
+<p>At its core, VRF is a Layer 3 (L3) isolation technology. If you are familiar with VLANs, you can think of VRF as the L3 equivalent.</p>
+<ul>
+<li>
+<p>VLAN (L2): Partitions a single physical switch into multiple logical switches by isolating Broadcast Domains.</p>
+</li>
+<li>
+<p>VRF (L3): Partitions a single physical router (your Linux host) into multiple logical routers by isolating Routing Tables.</p>
+</li>
+</ul>
+<p>When an interface is assigned to a VRF, it no longer looks at the system's "Main" routing table. Instead, it operates within its own private FIB (Forwarding Information Base).</p>
+<h3 id="32-key-concepts-l3mdev-and-policy-routing">3.2. Key Concepts: L3mdev and Policy Routing</h3>
+<p>To implement VRF, modern Linux (Kernel 4.8+) uses a mechanism called L3mdev (Layer 3 Master Device).</p>
+<ul>
+<li>
+<p><strong>The Master Device:</strong> The VRF itself is a virtual network interface (e.g., <code>vrf-pdu-1</code>). It acts as a "Master" to other interfaces.</p>
+</li>
+<li>
+<p><strong>Enslavement:</strong> When you "enslave" a GRE tunnel or an Ethernet port to a VRF, you are telling the kernel: "Any packet entering or leaving this interface must use the routing table associated with this VRF Master."</p>
+</li>
+<li>
+<p><strong>The "Rule" of Priority:</strong> By default, Linux queries routing tables in a specific order (Policy Routing). VRF automates this by creating a high-priority rule that redirects traffic based on the incoming interface.</p>
+</li>
+</ul>
+<p><img alt="image" src="../3-2.png" /></p>
+<h3 id="33-why-vrf-is-the-perfect-match-for-n3iwue">3.3. Why VRF is the Perfect Match for N3IWUE</h3>
+<p>Why can't we just use standard routing? Here is why VRF is indispensable for 5G N3IWUE implementations:</p>
+<ol>
+<li>
+<p>Solving the Default Route Conflict<br />
+As we saw, when the 5G User Plane needs a <code>0.0.0.0/0</code> route, it hijacks the whole system. By putting the 5G GRE tunnel into a VRF, that Default Route stays inside the VRF table. The "Main" table (used by your Wi-Fi and SSH) remains untouched and clean.</p>
+</li>
+<li>
+<p>Support for Overlapping IP Addresses<br />
+In 5G, it is common for different PDU Sessions to be assigned the same or overlapping private IP ranges (e.g., two different customers both using <code>10.0.0.1</code>). Without VRF, the kernel would be confused. With VRF, each <code>10.0.0.1</code> lives in its own "Parallel Universe" (separate table), so they never collide.</p>
+</li>
+<li>
+<p>Maintaining Management Reachability<br />
+With VRF, your SSH, NTP, and DNS traffic can continue to use the Main Routing Table via the physical Wi-Fi/Ethernet interface. The 5G data traffic is isolated in the VRF Table. This ensures the device remains manageable even when high-priority 5G tunnels are active.</p>
+</li>
+</ol>
+<h3 id="34-the-hierarchy-of-isolation-vrf-gre-and-xfrm">3.4. The Hierarchy of Isolation: VRF, GRE, and XFRM</h3>
+<p>In the N3IWUE architecture, we implement the 5G User Plane using a Master-Slave hierarchy within the Linux kernel. This layered approach ensures that 5G data traffic remains strictly isolated from local management services.</p>
+<p><strong>The Logical Roles</strong><br />
++ <strong>VRF (The Master Container):</strong> Acts as the foundational "Parallel Universe." It provides a dedicated L3 Routing Context (FIB), ensuring that 5G default routes do not conflict with the system's main table.</p>
+<ul>
+<li>
+<p><strong>GRE (The Tunneling Slave):</strong> Handles 5G-specific encapsulation (QFI mapping). It is "enslaved" to the VRF master, inheriting its routing isolation.</p>
+</li>
+<li>
+<p><strong>XFRM (The Security Engine):</strong> The IPsec transformation layer. It monitors traffic leaving the GRE interface and encrypts it into ESP (Encapsulated Security Payload) before physical transmission.</p>
+</li>
+</ul>
+<p><strong>The Packet Journey (Egress Flow)</strong><br />
+To understand how these components interact in real-time, follow the path of an outgoing 5G data packet:</p>
+<ol>
+<li>
+<p>Selection: A socket bound to the VRF initiates a request.</p>
+</li>
+<li>
+<p>Routing: The kernel queries the VRF Table, directing the packet to the GRE interface.</p>
+</li>
+<li>
+<p>Encapsulation: The GRE layer wraps the packet (Adding the GRE header).</p>
+</li>
+<li>
+<p>Encryption: The XFRM engine intercepts the GRE packet and encrypts it (Adding the ESP header).</p>
+</li>
+<li>
+<p>Transmission: The final encrypted packet is sent via the Physical Interface (e.g., Wi-Fi) to the N3IWF.</p>
+</li>
+</ol>
+<h2 id="4-orchestrating-parallel-universes-the-go-implementation">4. Orchestrating Parallel Universes — The Go Implementation</h2>
+<p>In the previous chapters, we analyzed the routing conflicts inherent in 5G N3IWUE and how <strong>VRF</strong> provides the logical isolation required to solve them. Now, let’s look at the actual Go implementation. We will break this down into two parts: the <strong>VRF Factory</strong> and the <strong>NAS Event Handler</strong>.</p>
+<h3 id="41-the-vrf-factory-dynamic-creation-and-lifecycle">4.1. The VRF Factory: Dynamic Creation and Lifecycle</h3>
+<p>To manage VRF devices dynamically, we implement a robust utility function. This function ensures idempotency (checking if the VRF already exists) and registers the interface for automatic cleanup to prevent resource leaks.<br />
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">vrf</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/vishvananda/netlink&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/free5gc/n3iwue/pkg/context&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">CreateOrGetVRF</span><span class="p">(</span><span class="nx">vrfName</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">tableID</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">netlink</span><span class="p">.</span><span class="nx">Link</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Step 1: Check if the VRF device already exists</span>
+<span class="w">    </span><span class="nx">link</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">LinkByName</span><span class="p">(</span><span class="nx">vrfName</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">vrf</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">link</span><span class="p">.(</span><span class="o">*</span><span class="nx">netlink</span><span class="p">.</span><span class="nx">Vrf</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">vrf</span><span class="p">.</span><span class="nx">Table</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">uint32</span><span class="p">(</span><span class="nx">tableID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">vrf</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="c1">// VRF exists and matches the Table ID</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;VRF %s mismatch: need Table %d, got %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfName</span><span class="p">,</span><span class="w"> </span><span class="nx">tableID</span><span class="p">,</span><span class="w"> </span><span class="nx">vrf</span><span class="p">.</span><span class="nx">Table</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Device %s exists but is not a VRF&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfName</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 2: Define and Create the L3mdev (VRF) device</span>
+<span class="w">    </span><span class="nx">vrfLink</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">netlink</span><span class="p">.</span><span class="nx">Vrf</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">LinkAttrs</span><span class="p">:</span><span class="w"> </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">LinkAttrs</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">vrfName</span><span class="p">},</span>
+<span class="w">        </span><span class="nx">Table</span><span class="p">:</span><span class="w">     </span><span class="nb">uint32</span><span class="p">(</span><span class="nx">tableID</span><span class="p">),</span><span class="w"> </span><span class="c1">// Link to a dedicated Routing Table</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">LinkAdd</span><span class="p">(</span><span class="nx">vrfLink</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Failed to add VRF %s: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfName</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 3: Bring the interface UP</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">LinkSetUp</span><span class="p">(</span><span class="nx">vrfLink</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Failed to set VRF %s UP: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfName</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 4: Register for automatic cleanup</span>
+<span class="w">    </span><span class="nx">n3ueSelf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">N3UESelf</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">createdLink</span><span class="w"> </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">Link</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">vrfLink</span>
+<span class="w">    </span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">CreatedIface</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">CreatedIface</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">createdLink</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">vrfLink</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="42-the-trigger-handling-pdu-session-establishment">4.2. The Trigger: Handling PDU Session Establishment</h3>
+<p>The most critical moment in the N3IWUE lifecycle is when the 5G Core sends a <code>PDUSessionEstablishmentAccept</code>. This NAS message contains the UE's assigned IP and QoS information.<br />
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="p">)</span><span class="w"> </span><span class="nx">handleDLNASTransport</span><span class="p">(</span><span class="nx">evt</span><span class="w"> </span><span class="o">*</span><span class="nx">context</span><span class="p">.</span><span class="nx">HandleDLNASTransportEvt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">nwucpLog</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">logger</span><span class="p">.</span><span class="nx">NWuCPLog</span>
+<span class="w">    </span><span class="nx">n3ueSelf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Context</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">nasMsg</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">evt</span><span class="p">.</span><span class="nx">NasMsg</span>
+
+<span class="w">    </span><span class="c1">// ... [NAS Decoding Logic] ...</span>
+
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="nx">nasMsg</span><span class="p">.</span><span class="nx">GsmMessage</span><span class="p">.</span><span class="nx">GetMessageType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">nas</span><span class="p">.</span><span class="nx">MsgTypePDUSessionEstablishmentAccept</span><span class="p">:</span>
+<span class="w">        </span><span class="c1">// 1. Extract PDU Address assigned by 5GC</span>
+<span class="w">        </span><span class="nx">pduAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nasPacket</span><span class="p">.</span><span class="nx">GetPDUAddress</span><span class="p">(</span><span class="nx">nasMsg</span><span class="p">.</span><span class="nx">GsmMessage</span><span class="p">.</span><span class="nx">PDUSessionEstablishmentAccept</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">N3ueInfo</span><span class="p">.</span><span class="nx">DnIPAddr</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">pduAddress</span><span class="p">.</span><span class="nx">String</span><span class="p">()</span>
+
+<span class="w">        </span><span class="c1">// 2. Dynamically define VRF parameters</span>
+<span class="w">        </span><span class="nx">vrfName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;vrf-pdu-%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">PduSessionCount</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">vrfTableID</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">PduSessionCount</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// 3. Create the VRF (The Parallel Universe)</span>
+<span class="w">        </span><span class="nx">vrfLink</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">vrf</span><span class="p">.</span><span class="nx">CreateOrGetVRF</span><span class="p">(</span><span class="nx">vrfName</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfTableID</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">nwucpLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;VRF setup failed: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// 4. Setup GRE Tunnels (The Transport Layer)</span>
+<span class="w">        </span><span class="nx">newGREName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%s-id-%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">N3ueInfo</span><span class="p">.</span><span class="nx">GreIfaceName</span><span class="p">,</span><span class="w"> </span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">N3ueInfo</span><span class="p">.</span><span class="nx">XfrmiId</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">linkGREs</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">gre</span><span class="p">.</span><span class="nx">SetupGreTunnels</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// 5. Enslave and Route</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">qfi</span><span class="p">,</span><span class="w"> </span><span class="nx">link</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">linkGREs</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">tunnel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">*</span><span class="nx">link</span>
+
+<span class="w">            </span><span class="c1">// KEY STEP: Bind the GRE interface to the VRF Master</span>
+<span class="w">            </span><span class="c1">// This ensures all ingress/egress on this tunnel use the VRF context</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">LinkSetMaster</span><span class="p">(</span><span class="nx">tunnel</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfLink</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">nwucpLog</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Failed to bind %s to VRF %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">tunnel</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">().</span><span class="nx">Name</span><span class="p">,</span><span class="w"> </span><span class="nx">vrfName</span><span class="p">)</span>
+<span class="w">                </span><span class="k">continue</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// 6. Inject routes into the VRF&#39;s private Routing Table</span>
+<span class="w">            </span><span class="nx">priority</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">qfi</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">uint8</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">priority</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Default QFI route</span>
+
+<span class="w">            </span><span class="nx">upRoute</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">netlink</span><span class="p">.</span><span class="nx">Route</span><span class="p">{</span>
+<span class="w">                </span><span class="nx">LinkIndex</span><span class="p">:</span><span class="w"> </span><span class="nx">tunnel</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">().</span><span class="nx">Index</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Dst</span><span class="p">:</span><span class="w">       </span><span class="o">&amp;</span><span class="nx">net</span><span class="p">.</span><span class="nx">IPNet</span><span class="p">{</span><span class="nx">IP</span><span class="p">:</span><span class="w"> </span><span class="nx">targetAddr</span><span class="p">,</span><span class="w"> </span><span class="nx">Mask</span><span class="p">:</span><span class="w"> </span><span class="nx">targetMask</span><span class="p">},</span>
+<span class="w">                </span><span class="nx">Priority</span><span class="p">:</span><span class="w">  </span><span class="nx">priority</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Table</span><span class="p">:</span><span class="w">     </span><span class="nx">vrfTableID</span><span class="p">,</span><span class="w"> </span><span class="c1">// Target the isolated table, not &#39;main&#39;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="nx">netlink</span><span class="p">.</span><span class="nx">RouteAdd</span><span class="p">(</span><span class="nx">upRoute</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">n3ueSelf</span><span class="p">.</span><span class="nx">PduSessionCount</span><span class="o">++</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="43-implementation-highlights">4.3. Implementation Highlights</h3>
+<ol>
+<li>
+<p>Dynamic L3 Isolation via VRF<br />
+Instead of a static routing configuration, our Go implementation utilizes the vishvananda/netlink library to orchestrate VRF devices on-the-fly. By assigning each PDU Session a unique VRF Table ID (e.g., 100+), we create a dedicated Forwarding Information Base (FIB), effectively isolating 5G User Plane traffic from the host’s management plane.</p>
+</li>
+<li>
+<p>The "Enslavement" Mechanism (LinkSetMaster)<br />
+The core of our implementation lies in the "enslavement" of GRE tunnels. By programmatically calling LinkSetMaster(greLink, vrfLink), we bind the 5G User Plane (UP) interfaces to the VRF Master. This critical step ensures that any packet originating from or arriving at the tunnel is processed within the context of the VRF's private routing table, not the system's main table.</p>
+</li>
+<li>
+<p>Explicit Table-Targeted Routing<br />
+To resolve the Default Route Hijacking issue (which previously caused SSH disconnections), we explicitly define the target table in our netlink.Route structures.</p>
+<ul>
+<li>
+<p>Main Table: Remains untouched, preserving local management connectivity (SSH, DNS).</p>
+</li>
+<li>
+<p>VRF Table: Contains the 0.0.0.0/0 route for the 5G PDU Session. This granular control ensures that the high-priority 5G default route exists only within its own "Parallel Universe."</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Automated Interface Lifecycle Management<br />
+Following software engineering best practices, we implemented an automatic cleanup mechanism. By registering every dynamically created VRF and GRE interface into a centralized CreatedIface slice within the UE context, the system can gracefully tear down all virtual resources during de-registration or unexpected crashes, preventing "interface leaks" in the Linux kernel.</p>
+</li>
+</ol>
+<h2 id="5-mission-accomplished-verifying-the-parallel-universe">5. Mission Accomplished — Verifying the Parallel Universe</h2>
+<p>After running our Go-based N3IWUE, we need to ensure that the infrastructure was built correctly and that the routing isolation actually works. In this chapter, we use standard Linux networking tools to audit our "Parallel Universe."</p>
+<h3 id="51-verifying-the-master-slave-relationship">5.1. Verifying the Master-Slave Relationship</h3>
+<p>First, we check if the VRF device was created and if the GRE tunnels were successfully "enslaved" to it.<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Check the status of the VRF device</span>
+ip<span class="w"> </span>-d<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>vrf-pdu-1
+</code></pre></div><br />
+<img alt="image" src="../5-1.png" /></p>
+<p><strong>What to look for</strong>: You should see <code>type vrf table 100</code>.<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify that the GRE interface is a slave to the VRF</span>
+ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>gretun-id-2-1
+</code></pre></div><br />
+<img alt="image" src="../5-1-2.png" /></p>
+<p><strong>What to look for</strong>: Look for <code>master vrf-pdu-0</code> in the output. This confirms that the "Enslavement" we performed in Go (<code>LinkSetMaster</code>) was successful.</p>
+<h3 id="52-auditing-the-isolated-routing-table">5.2. Auditing the Isolated Routing Table</h3>
+<p>The most critical part of our implementation is the separation of routing tables. We want to ensure the <code>0.0.0.0/0</code> route exists <strong>only</strong> in the VRF table, not the main table.<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Inspect the VRF-specific routing table</span>
+ip<span class="w"> </span>route<span class="w"> </span>show<span class="w"> </span>table<span class="w"> </span><span class="m">100</span>
+</code></pre></div><br />
+<img alt="image" src="../5-2.png" /><br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Inspect the Main routing table</span>
+ip<span class="w"> </span>route<span class="w"> </span>show<span class="w"> </span>table<span class="w"> </span>main
+</code></pre></div><br />
+<img alt="image" src="../5-2-2.png" /></p>
+<h3 id="53-testing-end-to-end-connectivity">5.3. Testing End-to-End Connectivity</h3>
+<p>Now, let's perform the ultimate test: Sending data through the 5G PDU Session while maintaining local connectivity.<br />
+1. Test 5G Connectivity (Inside the VRF)<br />
+We use the ip vrf exec command to force a process to run within the VRF context.<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Ping a public DNS through the 5G PDU Session</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>vrf<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vrf-pdu-0<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">8</span>.8.8.8
+</code></pre></div><br />
+2. Test Local Connectivity (Main Table)<br />
+Simultaneously, open a new terminal and ping the same address:<br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Ping a public DNS through the 5G PDU Session</span>
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">8</span>.8.8.8
+</code></pre></div><br />
+<img alt="image" src="../5-3.png" /></p>
+<ol>
+<li>Test Specific gre tunnel<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>vrf<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vrf-pdu-0<span class="w"> </span>ping<span class="w"> </span>-I<span class="w"> </span><span class="m">10</span>.60.0.1<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">8</span>.8.8.8
+</code></pre></div><br />
+<img alt="image" src="../5-3-2.png" /></li>
+</ol>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Building this N3IWUE implementation has been an intense but rewarding journey. This blog series would not have been possible without the mentorship of <strong>Ian Chen</strong> and <strong>Alonza Tu</strong>, whose guidance was instrumental in navigating the complexities of 5G networking and Linux kernel internals.</p>
+<p>The code modifications and the VRF-based isolation logic discussed in this blog have been submitted as a Pull Request to the official repository: 👉 <a href="https://github.com/free5gc/n3iwue/pull/21">Check out the PR on GitHub</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

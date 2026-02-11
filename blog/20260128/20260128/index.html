@@ -1,0 +1,1455 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Network Function NSSF Introduction - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#network-function-nssf-introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network Function NSSF Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-nssf" class="md-nav__link">
+    What is NSSF?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nssf-services" class="md-nav__link">
+    NSSF Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nnssf_nsselection-service" class="md-nav__link">
+    Nnssf_NSSelection Service
+  </a>
+  
+    <nav class="md-nav" aria-label="Nnssf_NSSelection Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-nsselection-for-registration" class="md-nav__link">
+    Workflow: NSSelection for Registration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-analysis-free5gc-nsselection_network_slice_informationgo" class="md-nav__link">
+    Code Analysis (free5GC): nsselection_network_slice_information.go
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nnssf_nssaiavailability-service" class="md-nav__link">
+    Nnssf_NSSAIAvailability Service
+  </a>
+  
+    <nav class="md-nav" aria-label="Nnssf_NSSAIAvailability Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-1-update-nssai-availability-put" class="md-nav__link">
+    Workflow 1: Update NSSAI Availability (PUT)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-2-subscribe-to-nssai-availability-changes-post" class="md-nav__link">
+    Workflow 2: Subscribe to NSSAI Availability Changes (POST)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-analysis-free5gc-nssaiavailability_storego-nssaiavailability_subscriptiongo" class="md-nav__link">
+    Code Analysis (free5GC): nssaiavailability_store.go &amp; nssaiavailability_subscription.go
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capturing-nssf-requests-and-responses-in-free5gc-with-tcpdump" class="md-nav__link">
+    Capturing NSSF Requests and Responses in free5GC with tcpdump
+  </a>
+  
+    <nav class="md-nav" aria-label="Capturing NSSF Requests and Responses in free5GC with tcpdump">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-tcpdump" class="md-nav__link">
+    Start tcpdump
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trigger-nssf-requests" class="md-nav__link">
+    Trigger NSSF Requests
+  </a>
+  
+    <nav class="md-nav" aria-label="Trigger NSSF Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-case-1-nsselectionget-network-slice-selection" class="md-nav__link">
+    Test Case 1: NSSelectionGet (Network Slice Selection)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-2-nssaiavailabilityput-update-nssai-availability" class="md-nav__link">
+    Test Case 2: NSSAIAvailabilityPut (Update NSSAI Availability)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-3-nssaiavailabilitypost-subscribe-to-nssai-availability" class="md-nav__link">
+    Test Case 3: NSSAIAvailabilityPost (Subscribe to NSSAI Availability)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analyze-the-capture-packets" class="md-nav__link">
+    Analyze the Capture packets
+  </a>
+  
+    <nav class="md-nav" aria-label="Analyze the Capture packets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-case-1-nsselectionget-network-slice-selection_1" class="md-nav__link">
+    Test Case 1: NSSelectionGet (Network Slice Selection)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-2-nssaiavailabilityput-update-nssai-availability_1" class="md-nav__link">
+    Test Case 2: NSSAIAvailabilityPut (Update NSSAI Availability)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-3-nssaiavailabilitypost-subscribe-to-nssai-availability_1" class="md-nav__link">
+    Test Case 3: NSSAIAvailabilityPost (Subscribe to NSSAI Availability)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260128/20260128.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260128/20260128.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="network-function-nssf-introduction">Network Function NSSF Introduction</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Kai-Hung, Hu<br />
+Date: 2026/01/28</p>
+</div>
+<h2 id="overview">Overview</h2>
+<p>In this article, we will introduce the Network Slice Selection Function (NSSF), a key component in the 5G Core (5GC) network architecture. NSSF is responsible for enabling and managing network slicing, one of the most significant innovations brought by 5G. We will explore its role, its two primary services — <code>Nnssf_NSSelection</code> and <code>Nnssf_NSSAIAvailability</code> — and analyze the corresponding implementation within the free5GC project.</p>
+<p>Network slicing allows operators to create multiple virtual networks on top of a shared physical infrastructure. Each slice can be tailored to specific service requirements, such as enhanced Mobile Broadband (eMBB), Ultra-Reliable Low Latency Communications (URLLC), or massive Machine-Type Communications (mMTC). The NSSF plays a central role in selecting the appropriate network slice for a given User Equipment (UE) and ensuring that the right resources are allocated.</p>
+<h2 id="what-is-nssf">What is NSSF?</h2>
+<p>The Network Slice Selection Function (NSSF) is defined in 3GPP TS 29.531. Its primary responsibilities include:</p>
+<ol>
+<li><strong>Selecting the set of Network Slice instances</strong>: Based on the UE's subscription, requested NSSAI (Network Slice Selection Assistance Information), and operator policies, the NSSF determines which slice instances should serve the UE.</li>
+<li>
+<p><strong>Determining the Allowed NSSAI and Configured NSSAI Mappings</strong>: The NSSF determines which S-NSSAIs are permitted for the UE based on the UE's subscription (subscribed S-NSSAIs from UDM), requested NSSAI, current serving area (TA/PLMN), operator policies, and network constraints. Specifically, the NSSF:</p>
+<ul>
+<li><strong>Computes the Allowed NSSAI</strong>: The set of S-NSSAIs from the requested or subscribed list that are authorized for the UE in the current serving PLMN and registration area.</li>
+<li><strong>Provides mapping information for the Configured NSSAI</strong>: The NSSF returns the Configured NSSAI mapping for the serving PLMN, which the AMF then communicates to the UE via the Registration Accept or UE Configuration Update message.</li>
+<li><strong>In roaming scenarios</strong>, provides S-NSSAI mappings between VPLMN and HPLMN to ensure slice compatibility.</li>
+<li><strong>Determining the AMF Set</strong>: In some scenarios, the NSSF can also help determine the appropriate AMF (Access and Mobility Management Function) set to serve the UE, especially when AMF re-allocation is needed.</li>
+</ul>
+</li>
+</ol>
+<h2 id="nssf-services">NSSF Services</h2>
+<p>Within the 5GC, the NSSF offers services to the AMF, SMF, NWDAF and NSSF in a different PLMN via the Nnssf service based interface (SBI). The main roles of NSSF is to provide Network Slice Information to AMF. NSSF exposes two main services via the SBI:</p>
+<ul>
+<li><strong>Nnssf_NSSelection</strong>: Used by the AMF to retrieve network slice selection information.</li>
+<li><strong>Nnssf_NSSAIAvailability</strong>: Used by the AMF to update the NSSF with information about which S-NSSAIs it supports per Tracking Area (TA) and to subscribe to availability change notifications.</li>
+</ul>
+<p><img alt="NSSF Services" src="../image/nssf-in-5g.png" /><br />
+<strong>Figure 1.</strong> NSSF Services (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">3GPP TS 29.531</a>)</p>
+<h2 id="nnssf_nsselection-service">Nnssf_NSSelection Service</h2>
+<p>The <code>Nnssf_NSSelection</code> service is the cornerstone service for slice selection. It is invoked by the AMF (and in roaming scenarios, by NSSF from a different PLMN) during UE registration, PDU session establishment, or UE configuration update to query the NSSF for the allowed slices and related network slice information.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the AMF is not the only NF that can consume this service (as shown in the diagram above), this article focuses primarily on the AMF as the NF service consumer.</p>
+</div>
+<h3 id="workflow-nsselection-for-registration">Workflow: NSSelection for Registration</h3>
+<p>The following diagram illustrates the high-level workflow when the AMF queries NSSF during UE initial registration:</p>
+<div class="highlight"><pre><span></span><code>+----+              +-----+                                    +------+
+| UE |              | AMF |                                    | NSSF |
++----+              +-----+                                    +------+
+   |                   |                                           |
+   | 1. Registration   |                                           |
+   |   Request         |                                           |
+   |------------------&gt;|                                           |
+   |                   |                                           |
+   |                   | 2. GET /nnssf-nsselection/v2/             |
+   |                   |    network-slice-information              |
+   |                   |------------------------------------------&gt;|
+   |                   |                                           |
+   |                   |                                           | 3. NSSF validates consumer,
+   |                   |                                           |    checks TAI/PLMN, processes
+   |                   |                                           |    Requested NSSAI vs Subscribed.
+   |                   |                                           |
+   |                   | 4. 2a. 200 OK (AuthorizedNetworkSliceInfo)|
+   |                   |    2b. 403 Forbidden (ProblemDetails)     |
+   |                   |    Or 4xx/5xx (ProblemDetails) Or 3xx     |
+   |                   |&lt;------------------------------------------|
+   |                   |                                           |
+</code></pre></div>
+<p><strong>Step-by-Step Breakdown:</strong></p>
+<ol>
+<li>
+<p><strong>UE sends Registration Request</strong>: The UE initiates a registration request with the AMF. This request may include a Requested NSSAI, indicating the slices the UE wishes to use.</p>
+</li>
+<li>
+<p><strong>AMF queries NSSF via GET Request</strong>: The AMF sends an HTTP <code>GET</code> request to the NSSF's <code>Nnssf_NSSelection</code> service endpoint at:</p>
+<ul>
+<li>Mandatory query parameters:<ul>
+<li><code>nf-type</code>: The type of the calling NF (e.g., AMF)</li>
+<li><code>nf-id</code>: The NF instance identifier</li>
+</ul>
+</li>
+<li>Conditional query parameters (depending on the use case):<ul>
+<li><code>slice-info-request-for-registration</code>: Contains <code>RequestedNssai</code>, <code>SubscribedNssai</code>, <code>DefaultConfiguredSnssaiIndication</code>, etc. (used during registration or EPS to 5GS handover)</li>
+<li><code>tai</code> (Tracking Area Identifier): Required for requests in the serving PLMN</li>
+<li><code>home-plmn-id</code>: Required for roaming scenarios to identify the UE's Home PLMN</li>
+<li><code>supported-features</code>: Optional feature support indication</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>NSSF Processes the Request</strong>: The NSSF performs several validation and decision steps:</p>
+<ul>
+<li>Verifies the NF service consumer is authorized (only AMF and NSSF from a different PLMN are allowed)</li>
+<li>Validates that required parameters (<code>tai</code> or <code>home-plmn-id</code> for roamers) are provided</li>
+<li>Checks if the requested S-NSSAIs are supported in the TAI and PLMN</li>
+<li>Compares <code>RequestedNssai</code> against <code>SubscribedNssai</code> (obtained from UDM) to compute the <code>AllowedNssai</code></li>
+<li>Determines the <code>ConfiguredNssai</code> mapping for the serving PLMN</li>
+<li>For roaming scenarios, computes the S-NSSAI mappings between VPLMN and HPLMN</li>
+<li>Identifies NSI IDs and associated NRF addresses for the allowed slices</li>
+</ul>
+</li>
+<li>
+<p><strong>NSSF Returns HTTP 200 OK with AuthorizedNetworkSliceInfo</strong>: The NSSF responds with a <code>200 OK</code> status code and an <code>AuthorizedNetworkSliceInfo</code> object, which includes:</p>
+<ul>
+<li><code>AllowedNssaiList</code>: Array of S-NSSAIs permitted for the UE in the serving PLMN and current TA, organized by access type</li>
+<li><code>ConfiguredNssai</code>: The Configured NSSAI (list of <code>ConfiguredSnssai</code> objects) for the serving PLMN (max 16 S-NSSAIs per PLMN)</li>
+<li><code>RejectedNssaiInPlmn</code>: S-NSSAIs rejected due to PLMN-level restrictions</li>
+<li><code>RejectedNssaiInTa</code>: S-NSSAIs rejected due to TA-level restrictions</li>
+<li><code>NsiInformation</code>: Network Slice Instance information including NRF URIs and NSI IDs for service discovery within slices</li>
+<li><code>TargetAmfSet</code> or <code>CandidateAmfList</code>: For scenarios requiring AMF re-allocation</li>
+<li><code>MappingOfAllowedNssai</code> and <code>MappingOfConfiguredNssai</code>: S-NSSAI mappings between VPLMN and HPLMN (for roaming scenarios)</li>
+<li><code>NrfAmfSet</code>: NRF URI to use for discovering candidate AMFs from the target AMF Set</li>
+</ul>
+</li>
+</ol>
+<p><strong>Key Technical Details:</strong></p>
+<ul>
+<li><strong>HTTP Method</strong>: The Nnssf_NSSelection service uses the <strong>GET</strong> method for the <code>network-slice-information</code> resource (standard query operation per REST principles)</li>
+<li><strong>API Versioning</strong>: The URI includes <code>{apiVersion}</code> placeholder, typically <code>/v1/</code> or <code>/v2/</code> depending on 3GPP Release</li>
+<li><strong>Content Type</strong>: Responses use <code>application/json</code> format as defined in 3GPP TS 29.531</li>
+<li><strong>Error Responses</strong>: On failure (e.g., no authorized slices available), NSSF returns <code>HTTP 403 Forbidden</code> with application error <code>SNSSAI_NOT_SUPPORTED</code> or <code>NOT_AUTHORIZED</code></li>
+</ul>
+<h3 id="code-analysis-free5gc-nsselection_network_slice_informationgo">Code Analysis (free5GC): <code>nsselection_network_slice_information.go</code></h3>
+<p>The core logic for the NSSelection service in free5GC is located in:<br />
+<code>nssf/internal/sbi/processor/nsselection_network_slice_information.go</code></p>
+<p><strong>Entry Point: <code>NSSelectionSliceInformationGet</code></strong></p>
+<p>This function is the handler for the <code>GET</code> request. It performs initial validation and then dispatches to either <code>nsselectionForRegistration</code> or <code>nsselectionForPduSession</code> based on the query parameters.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Processor</span><span class="p">)</span><span class="w"> </span><span class="nx">NSSelectionSliceInformationGet</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">param</span><span class="w"> </span><span class="nx">NetworkSliceInformationGetQuery</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ... (validation code omitted for brevity)</span>
+
+<span class="w">    </span><span class="c1">// Check permission of NF service consumer</span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">checkNfServiceConsumer</span><span class="p">(</span><span class="nx">param</span><span class="p">.</span><span class="nx">NfType</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Return 403 Forbidden</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">HomePlmnId</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Return 400 Bad Request - Missing mandatory IE</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Network slice information is requested during the Registration procedure</span>
+<span class="w">        </span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">,</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nsselectionForRegistration</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Network slice information is requested during the PDU session establishment procedure</span>
+<span class="w">        </span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">,</span><span class="w"> </span><span class="nx">problemDetails</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nsselectionForPduSession</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">status</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Core Logic: <code>nsselectionForRegistration</code></strong></p>
+<p>This function handles the slice selection logic for UE registration. Here's a simplified view of its key steps:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">nsselectionForRegistration</span><span class="p">(</span><span class="nx">param</span><span class="w"> </span><span class="nx">NetworkSliceInformationGetQuery</span><span class="p">)</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">models</span><span class="p">.</span><span class="nx">AuthorizedNetworkSliceInfo</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">models</span><span class="p">.</span><span class="nx">ProblemDetails</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">authorizedNetworkSliceInfo</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">AuthorizedNetworkSliceInfo</span><span class="p">{}</span>
+
+<span class="w">    </span><span class="c1">// 1. Check if Home PLMN is supported (for roamers)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">HomePlmnId</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckSupportedHplmn</span><span class="p">(</span><span class="o">*</span><span class="nx">param</span><span class="p">.</span><span class="nx">HomePlmnId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Reject all requested NSSAIs</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 2. Check if TAI is supported</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckSupportedTa</span><span class="p">(</span><span class="o">*</span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Reject all requested NSSAIs in TA</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 3. Iterate through Requested NSSAIs</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">requestedSnssai</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">RequestedNssai</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Check if supported in TAI</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckSupportedSnssaiInTa</span><span class="p">(</span><span class="nx">requestedSnssai</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">param</span><span class="p">.</span><span class="nx">Tai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">.</span><span class="nx">RejectedNssaiInTa</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Compare with Subscribed NSSAIs</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">subscribedSnssai</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">param</span><span class="p">.</span><span class="nx">SliceInfoRequestForRegistration</span><span class="p">.</span><span class="nx">SubscribedNssai</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">openapi</span><span class="p">.</span><span class="nx">SnssaiEqualFold</span><span class="p">(</span><span class="nx">mappingOfRequestedSnssai</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">subscribedSnssai</span><span class="p">.</span><span class="nx">SubscribedSnssai</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Match found! Add to Allowed NSSAI</span>
+<span class="w">                </span><span class="kd">var</span><span class="w"> </span><span class="nx">allowedSnssaiElement</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">AllowedSnssai</span>
+<span class="w">                </span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">AllowedSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">models</span><span class="p">.</span><span class="nx">Snssai</span><span class="p">)</span>
+<span class="w">                </span><span class="o">*</span><span class="nx">allowedSnssaiElement</span><span class="p">.</span><span class="nx">AllowedSnssai</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">requestedSnssai</span>
+<span class="w">                </span><span class="c1">// ... add NsiInformationList, MappedHomeSnssai if applicable</span>
+<span class="w">                </span><span class="nx">util</span><span class="p">.</span><span class="nx">AddAllowedSnssai</span><span class="p">(</span><span class="nx">allowedSnssaiElement</span><span class="p">,</span><span class="w"> </span><span class="nx">accessType</span><span class="p">,</span><span class="w"> </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">)</span>
+<span class="w">                </span><span class="k">break</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 4. If no requested NSSAI is allowed, use default subscribed NSSAIs</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">checkIfRequestAllowed</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">useDefaultSubscribedSnssai</span><span class="p">(</span><span class="nx">param</span><span class="p">,</span><span class="w"> </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">authorizedNetworkSliceInfo</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Key Takeaways:</strong></p>
+<ul>
+<li>The NSSF validates each requested S-NSSAI against the subscribed S-NSSAIs.</li>
+<li>If a match is found, it's added to the <code>AllowedNssai</code> list.</li>
+<li>S-NSSAIs not matching are added to <code>RejectedNssaiInPlmn</code> or <code>RejectedNssaiInTa</code>.</li>
+<li>If no requested S-NSSAIs are allowed, the NSSF falls back to using default subscribed <br />
+    S-NSSAIs.</li>
+</ul>
+<h2 id="nnssf_nssaiavailability-service">Nnssf_NSSAIAvailability Service</h2>
+<p>The <code>Nnssf_NSSAIAvailability</code> service allows the AMF to inform the NSSF about which <br />
+S-NSSAIs it supports in each Tracking Area. This is crucial because the availability of slices can vary by geographic location. Additionally, AMFs can subscribe to receive notifications when the NSSAI availability changes.</p>
+<p>The following HTTP methods are supported for this service:</p>
+<ul>
+<li><strong>PUT</strong>: Used by the AMF to update (register) the S-NSSAIs it supports per TA.</li>
+<li><strong>PATCH</strong>: Used to partially update the supported S-NSSAIs.</li>
+<li><strong>DELETE</strong>: Used to delete the NSSAI availability information for a specific NF instance.</li>
+<li><strong>POST</strong>: Used to create a subscription for NSSAI availability event notifications.</li>
+<li><strong>DELETE</strong> (on subscription): Used to unsubscribe from notifications.</li>
+</ul>
+<p>In this section, we will primarily focus on the <strong>PUT</strong> and <strong>POST</strong> methods for the <code>Nnssf_NSSAIAvailability</code> service.</p>
+<h3 id="workflow-1-update-nssai-availability-put">Workflow 1: Update NSSAI Availability (PUT)</h3>
+<div class="highlight"><pre><span></span><code>+-----+                                       +------+
+| AMF |                                       | NSSF |
++-----+                                       +------+
+   |                                              |
+   | 1. PUT /nnssf-nssaiavailability/             |
+   |    v1/nssai-availability/{nfId}              |
+   |---------------------------------------------&gt;|
+   |                                              |
+   |                                              | 2. NSSF validates S-NSSAIs,
+   |                                              |    updates internal store.
+   |                                              |
+   | 3. 204 No content /                          |
+   |    200 OK (AuthorizedNssai-AvailabilityInfo) |
+   |    or 4xx / 5xx (ProblemDetails)             |
+   |    or 3xx                                    |
+   |&lt;---------------------------------------------|
+   |                                              |
+</code></pre></div>
+<p><strong>Step-by-Step Breakdown:</strong></p>
+<ol>
+<li><strong>AMF sends PUT request</strong>: The AMF sends an HTTP <code>PUT</code> request to the NSSF's <code>Nnssf_NSSAIAvailability</code> service. The request body contains <code>NssaiAvailabilityInfo</code>, which specifies the S-NSSAIs supported by this AMF for each TAI. According to TS 29.531, this method fully replaces any existing availability information for the NF instance. If the entry does not exist, it is created.</li>
+<li><strong>NSSF validates and stores</strong>: The NSSF validates that the provided S-NSSAIs are supported in the respective PLMNs. It then updates its internal configuration store (<code>factory.NssfConfig.Configuration.AmfList</code> in free5GC) with the AMF's supported NSSAI availability data. If the AMF is new, it creates a new entry.</li>
+<li><strong>NSSF returns authorized data</strong>: The NSSF responds with <code>AuthorizedNssaiAvailabilityInfo</code>, containing the authorized availability data for the TAIs that were updated.</li>
+</ol>
+<h3 id="workflow-2-subscribe-to-nssai-availability-changes-post">Workflow 2: Subscribe to NSSAI Availability Changes (POST)</h3>
+<div class="highlight"><pre><span></span><code>+-----+                                            +------+
+| AMF |                                            | NSSF |
++-----+                                            +------+
+   |                                                   |
+   | 1. POST /nnssf-nssaiavailability/                 |
+   |    v1/nssai-availability/subscriptions           |
+   |--------------------------------------------------&gt;|
+   |                                                   |
+   |                                                   | 2. NSSF generates a
+   |                                                   |    subscriptionId, stores
+   |                                                   |    subscription data.
+   |                                                   |
+   | 3. 201 Created (NssfEventSubscriptionCreatedData) |
+   |    or 4xx/5xx (ProblemDetails)                    |
+   |    or 3xx                                         |
+   |&lt;--------------------------------------------------|
+   |                                                   |
+</code></pre></div>
+<p><strong>Step-by-Step Breakdown:</strong></p>
+<ol>
+<li><strong>AMF sends POST request</strong>: The AMF sends an HTTP <code>POST</code> request to subscribe to NSSAI availability event notifications. The request body contains <code>NssfEventSubscriptionCreateData</code>, which includes the list of TAIs the AMF is interested in and optionally an expiry time for the subscription. This creates a new subscription resource.</li>
+<li><strong>NSSF creates subscription</strong>: The NSSF generates a unique <code>SubscriptionId</code> and stores the subscription data.</li>
+<li><strong>NSSF returns subscription data</strong>: The NSSF responds with <code>NssfEventSubscriptionCreatedData</code>, which includes the <code>SubscriptionId</code>, the expiry time (if set), and the current <code>AuthorizedNssaiAvailabilityData</code> for the subscribed TAIs.</li>
+</ol>
+<h3 id="code-analysis-free5gc-nssaiavailability_storego-nssaiavailability_subscriptiongo">Code Analysis (free5GC): <code>nssaiavailability_store.go</code> &amp; <code>nssaiavailability_subscription.go</code></h3>
+<p><strong><code>NssaiAvailabilityNfInstanceUpdate</code> (PUT Handler)</strong></p>
+<p>Located in <code>nssf/internal/sbi/processor/nssaiavailability_store.go</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Processor</span><span class="p">)</span><span class="w"> </span><span class="nx">NssaiAvailabilityNfInstanceUpdate</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">nssaiAvailabilityInfo</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NssaiAvailabilityInfo</span><span class="p">,</span><span class="w"> </span><span class="nx">nfId</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Validate that S-NSSAIs are supported in PLMN</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">nssaiAvailabilityInfo</span><span class="p">.</span><span class="nx">SupportedNssaiAvailabilityData</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">CheckSupportedNssaiInPlmn</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">SupportedSnssaiList</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">s</span><span class="p">.</span><span class="nx">Tai</span><span class="p">.</span><span class="nx">PlmnId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Return 403 Forbidden - SNSSAI_NOT_SUPPORTED</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Find AMF configuration of given NfId</span>
+<span class="w">    </span><span class="c1">// If found, then update the SupportedNssaiAvailabilityData</span>
+<span class="w">    </span><span class="nx">hitAmf</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Lock</span><span class="p">()</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="nx">amfConfig</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Configuration</span><span class="p">.</span><span class="nx">AmfList</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">amfConfig</span><span class="p">.</span><span class="nx">NfId</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">nfId</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Configuration</span><span class="p">.</span><span class="nx">AmfList</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">SupportedNssaiAvailabilityData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span>
+<span class="w">                </span><span class="nx">nssaiAvailabilityInfo</span><span class="p">.</span><span class="nx">SupportedNssaiAvailabilityData</span>
+<span class="w">            </span><span class="nx">hitAmf</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Unlock</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// If no AMF record is found, create a new one</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">hitAmf</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">amfConfig</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nx">AmfConfig</span>
+<span class="w">        </span><span class="nx">amfConfig</span><span class="p">.</span><span class="nx">NfId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nfId</span>
+<span class="w">        </span><span class="nx">amfConfig</span><span class="p">.</span><span class="nx">SupportedNssaiAvailabilityData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nssaiAvailabilityInfo</span><span class="p">.</span><span class="nx">SupportedNssaiAvailabilityData</span>
+<span class="w">        </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Lock</span><span class="p">()</span>
+<span class="w">        </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Configuration</span><span class="p">.</span><span class="nx">AmfList</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Configuration</span><span class="p">.</span><span class="nx">AmfList</span><span class="p">,</span><span class="w"> </span><span class="nx">amfConfig</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Unlock</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Return authorized NSSAI availability info</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong><code>NssaiAvailabilitySubscriptionCreate</code> (POST Handler)</strong></p>
+<p>Located in <code>nssf/internal/sbi/processor/nssaiavailability_subscription.go</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Processor</span><span class="p">)</span><span class="w"> </span><span class="nx">NssaiAvailabilitySubscriptionCreate</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">createData</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NssfEventSubscriptionCreateData</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">subscription</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nx">Subscription</span>
+
+<span class="w">    </span><span class="c1">// Get an unused subscription ID</span>
+<span class="w">    </span><span class="nx">tempID</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">getUnusedSubscriptionID</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Return error</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">tempID</span>
+<span class="w">    </span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">models</span><span class="p">.</span><span class="nx">NssfEventSubscriptionCreateData</span><span class="p">)</span>
+<span class="w">    </span><span class="o">*</span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">createData</span>
+
+<span class="w">    </span><span class="c1">// Store the subscription</span>
+<span class="w">    </span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Subscriptions</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">factory</span><span class="p">.</span><span class="nx">NssfConfig</span><span class="p">.</span><span class="nx">Subscriptions</span><span class="p">,</span><span class="w"> </span><span class="nx">subscription</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// Prepare response</span>
+<span class="w">    </span><span class="nx">response</span><span class="p">.</span><span class="nx">SubscriptionId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionId</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionData</span><span class="p">.</span><span class="nx">Expiry</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">!</span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionData</span><span class="p">.</span><span class="nx">Expiry</span><span class="p">.</span><span class="nx">IsZero</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">response</span><span class="p">.</span><span class="nx">Expiry</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span>
+<span class="w">        </span><span class="o">*</span><span class="nx">response</span><span class="p">.</span><span class="nx">Expiry</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">*</span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionData</span><span class="p">.</span><span class="nx">Expiry</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">response</span><span class="p">.</span><span class="nx">AuthorizedNssaiAvailabilityData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">util</span><span class="p">.</span><span class="nx">AuthorizeOfTaListFromConfig</span><span class="p">(</span><span class="nx">subscription</span><span class="p">.</span><span class="nx">SubscriptionData</span><span class="p">.</span><span class="nx">TaiList</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">c</span><span class="p">.</span><span class="nx">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Key Takeaways:</strong></p>
+<ul>
+<li>The <code>PUT</code> method allows AMFs to register or update their supported S-NSSAIs per TA.</li>
+<li>The <code>POST</code> subscription method allows AMFs to receive notifications about NSSAI availability changes.</li>
+<li>Internal state is managed via the <code>factory.NssfConfig</code> configuration structure.</li>
+</ul>
+<h2 id="capturing-nssf-requests-and-responses-in-free5gc-with-tcpdump">Capturing NSSF Requests and Responses in free5GC with tcpdump</h2>
+<p>This section demonstrates how to capture and analyze NSSF SBI traffic using <code>tcpdump</code>. We will record packets for the following APIs:</p>
+<ul>
+<li><strong>NSSelectionGet</strong>: <code>GET /nnssf-nsselection/v2/network-slice-information</code></li>
+<li><strong>NSSAIAvailabilityPut</strong>: <code>PUT /nnssf-nssaiavailability/v1/nssai-availability/{nfId}</code></li>
+<li><strong>NSSAIAvailabilityPost</strong>: <code>POST /nnssf-nssaiavailability/v1/nssai-availability/subscriptions</code></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To ensure a successful response from NSSF, I have updated the configurations as follows:</p>
+<ol>
+<li>
+<p><strong>Add new settings in <code>nssfcfg.yaml</code> (新增配置):</strong><br />
+<div class="highlight"><pre><span></span><code><span class="nt">supportedPlmnList</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mcc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">466</span>
+<span class="w">    </span><span class="nt">mnc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">92</span>
+<span class="nt">supportedNssaiInPlmnList</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">plmnId</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">mcc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">466</span>
+<span class="w">      </span><span class="nt">mnc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">92</span>
+<span class="w">    </span><span class="nt">supportedSnssaiList</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">000001</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">000002</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Modify setting in <code>nrfcfg.yaml</code> (修改配置):</strong><br />
+<div class="highlight"><pre><span></span><code><span class="nt">configuration</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ...</span>
+<span class="w">  </span><span class="nt">oauth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Disable OAuth</span>
+</code></pre></div></p>
+</li>
+</ol>
+</div>
+<h3 id="start-tcpdump">Start tcpdump</h3>
+<p>Capture SBI traffic on the NSSF interface:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run free5GC locally</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>lo<span class="w"> </span>-w<span class="w"> </span>nssf.pcap<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">&#39;tcp port 8000 and host 127.0.0.31&#39;</span>
+</code></pre></div>
+<h3 id="trigger-nssf-requests">Trigger NSSF Requests</h3>
+<p>Start free5GC first, then open a new terminal to trigger the API requests:</p>
+<h4 id="test-case-1-nsselectionget-network-slice-selection">Test Case 1: NSSelectionGet (Network Slice Selection)</h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;http://127.0.0.31:8000/nnssf-nsselection/v2/network-slice-information&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s2">&quot;nf-type=AMF&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s2">&quot;nf-id=469de254-2fe5-4ca0-8381-af3f500af77c&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s1">&#39;slice-info-request-for-registration={&quot;requestedNssai&quot;:[{&quot;sst&quot;:1,&quot;sd&quot;:&quot;000002&quot;}],&quot;subscribedNssai&quot;:[{&quot;subscribedSnssai&quot;:{&quot;sst&quot;:1,&quot;sd&quot;:&quot;000002&quot;},&quot;defaultIndication&quot;:true}]}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s1">&#39;tai={&quot;plmnId&quot;:{&quot;mcc&quot;:&quot;466&quot;,&quot;mnc&quot;:&quot;92&quot;},&quot;tac&quot;:&quot;33456&quot;}&#39;</span>
+</code></pre></div>
+<h4 id="test-case-2-nssaiavailabilityput-update-nssai-availability">Test Case 2: NSSAIAvailabilityPut (Update NSSAI Availability)</h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">&quot;http://127.0.0.31:8000/nnssf-nssaiavailability/v1/nssai-availability/469de254-2fe5-4ca0-8381-af3f500af77c&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">        &quot;supportedNssaiAvailabilityData&quot;: [</span>
+<span class="s1">            {</span>
+<span class="s1">                &quot;tai&quot;: {</span>
+<span class="s1">                    &quot;plmnId&quot;: {&quot;mcc&quot;: &quot;466&quot;, &quot;mnc&quot;: &quot;92&quot;},</span>
+<span class="s1">                    &quot;tac&quot;: &quot;33456&quot;</span>
+<span class="s1">                },</span>
+<span class="s1">                &quot;supportedSnssaiList&quot;: [</span>
+<span class="s1">                    {&quot;sst&quot;: 1, &quot;sd&quot;: &quot;000001&quot;},</span>
+<span class="s1">                    {&quot;sst&quot;: 1, &quot;sd&quot;: &quot;000002&quot;}</span>
+<span class="s1">                ]</span>
+<span class="s1">            }</span>
+<span class="s1">        ]</span>
+<span class="s1">    }&#39;</span>
+</code></pre></div>
+<h4 id="test-case-3-nssaiavailabilitypost-subscribe-to-nssai-availability">Test Case 3: NSSAIAvailabilityPost (Subscribe to NSSAI Availability)</h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://127.0.0.31:8000/nnssf-nssaiavailability/v1/nssai-availability/subscriptions&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">        &quot;nfNssaiAvailabilityUri&quot;: &quot;http://127.0.0.1:8080/callback&quot;,</span>
+<span class="s1">        &quot;taiList&quot;: [</span>
+<span class="s1">            {</span>
+<span class="s1">                &quot;plmnId&quot;: {&quot;mcc&quot;: &quot;466&quot;, &quot;mnc&quot;: &quot;92&quot;},</span>
+<span class="s1">                &quot;tac&quot;: &quot;33456&quot;</span>
+<span class="s1">            }</span>
+<span class="s1">        ]</span>
+<span class="s1">    }&#39;</span>
+</code></pre></div>
+<h3 id="analyze-the-capture-packets">Analyze the Capture packets</h3>
+<p>Stop the tcpdump capture with <code>Ctrl+C</code>, then analyze the results:</p>
+<h4 id="test-case-1-nsselectionget-network-slice-selection_1">Test Case 1: NSSelectionGet (Network Slice Selection)</h4>
+<p><img alt="NSSelectionGet" src="../image/NSSelectionGet.png" /><br />
+<strong>Figure 2.</strong> NSSelectionGet</p>
+<p>The response shows that the <code>AuthorizedNetworkSliceInfo</code> contains the attribute <code>allowedNssaiList</code>. We can see the format of <code>allowedNssaiList</code>, which data type is array(AllowedNssai) in 3GPP TS 29.531. Then, we can see that the response body matches the data type of <code>AuthorizedNetworkSliceInfo</code>.</p>
+<p><img alt="AllowedSnssaiList" src="../image/allowedSnssai.png" /><br />
+<strong>Figure 3.</strong> AllowedSnssai (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">TS 29.531</a>)</p>
+<p><img alt="AllowedNssaiList" src="../image/allowedNssai.png" /><br />
+<strong>Figure 4.</strong> AllowedNssai (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">TS 29.531</a>)</p>
+<h4 id="test-case-2-nssaiavailabilityput-update-nssai-availability_1">Test Case 2: NSSAIAvailabilityPut (Update NSSAI Availability)</h4>
+<p><img alt="NSSAIAvailabilityPut" src="../image/NSSAIAvailabilityPut.png" /><br />
+<strong>Figure 5.</strong> NSSAIAvailabilityPut</p>
+<p>The response shows that the <code>AuthorizedNssaiAvailabilityInfo</code> contains the attribute <code>authorizedNssaiAvailabilityData</code>.<br />
+We can see the format of <code>authorizedNssaiAvailabilityData</code>, which data type is array(AuthorizedNssaiAvailabilityData) in 3GPP TS 29.531. Then, we can see that the response body matches the data type of <code>AuthorizedNssaiAvailabilityInfo</code>.</p>
+<p><img alt="AuthorizedNssaiAvailabilityInfo" src="../image/AuthorizedNssaiAvailabilityInfo.png" /><br />
+<strong>Figure 6.</strong> AuthorizedNssaiAvailabilityInfo (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">TS 29.531</a>)</p>
+<p><img alt="AuthorizedNssaiAvailabilityData" src="../image/AuthorizedNssaiAvailabilityData.png" /><br />
+<strong>Figure 7.</strong> AuthorizedNssaiAvailabilityData (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">TS 29.531</a>)</p>
+<h4 id="test-case-3-nssaiavailabilitypost-subscribe-to-nssai-availability_1">Test Case 3: NSSAIAvailabilityPost (Subscribe to NSSAI Availability)</h4>
+<p><img alt="NSSAIAvailabilityPost" src="../image/NSSAIAvailabilityPost.png" /><br />
+<strong>Figure 8.</strong> NSSAIAvailabilityPost</p>
+<p>The successful subscription creation will return <code>NssfEventSubscriptionCreatedData</code>. We can see the format of <code>NssfEventSubscriptionCreatedData</code> in 3GPP TS 29.531. Then, we can see that the response body matches the definition of <code>NssfEventSubscriptionCreatedData</code>.</p>
+<p><img alt="NssfEventSubscription" src="../image/NssfEventSubscription.png" /><br />
+<strong>Figure 9.</strong> NssfEventSubscription Response (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">TS 29.531</a>)</p>
+<p><img alt="NssfEventSubscriptionCreatedData" src="../image/NssfEventSubscriptionCreatedData.png" /><br />
+<strong>Figure 10.</strong> NssfEventSubscriptionCreatedData (source: <a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">TS 29.531</a>)</p>
+<h2 id="summary">Summary</h2>
+<p>The NSSF (Network Slice Selection Function) is a critical component in 5G networks that enables the power of network slicing. By providing services like <code>Nnssf_NSSelection</code> and <code>Nnssf_NSSAIAvailability</code>, it enables:</p>
+<ul>
+<li><strong>Dynamic Slice Selection</strong>: The AMF can query the NSSF to determine which network slices a UE is allowed to use based on subscription, location, and operator policies.</li>
+<li><strong>Slice Availability Management</strong>: AMFs can inform the NSSF about which slices they support in their serving areas, ensuring that the NSSF has accurate, up-to-date information for slice selection decisions.</li>
+<li><strong>Subscription-based Notifications</strong>: AMFs can subscribe to be notified about changes in NSSAI availability, allowing for dynamic adaptation to network conditions.</li>
+</ul>
+<p>In free5GC, the NSSF implementation follows the 3GPP specifications, providing a practical, open-source example of how network slicing can be realized in a 5G core.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129531/17.11.00_60/ts_129531v171100p.pdf">3GPP TS 29.531 - 5G System; Network Slice Selection Services</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/123500_123599/123501/17.15.00_60/ts_123501v171500p.pdf">3GPP TS 23.501 - System architecture for the 5G System (5GS)</a></li>
+<li><a href="https://github.com/free5gc/nssf">free5GC NSSF Repository</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Kai-Hung Hu, and I'm just starting my exploration of 5G technology and the free5GC community. I hope this blog post has been informative. If you have ideas for further discussion, please don't hesitate to get in touch.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/carlhus">carlhus</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1748 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Analyzing NF Discovery Requests: Step-by-Step Trace of NFSelect Queries - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analyzing-nf-discovery-requests-step-by-step-trace-of-nfselect-queries" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Analyzing NF Discovery Requests:  Step-by-Step Trace of NFSelect Queries
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-nf-discovery-architecture" class="md-nav__link">
+    1. NF Discovery Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="1. NF Discovery Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-discovery-endpoint" class="md-nav__link">
+    The Discovery Endpoint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-flow-overview" class="md-nav__link">
+    Request Flow Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-core-processing-functions" class="md-nav__link">
+    The Core Processing Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-query-parameters" class="md-nav__link">
+    2. Query Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Query Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mandatory-parameters" class="md-nav__link">
+    Mandatory Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-optional-parameters" class="md-nav__link">
+    Common Optional Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-parameters-map-to-mongodb-filters" class="md-nav__link">
+    How Parameters Map to MongoDB Filters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-capturing-discovery-with-tcpdump" class="md-nav__link">
+    3. Capturing Discovery with tcpdump
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Capturing Discovery with tcpdump">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-setup-environment" class="md-nav__link">
+    Step 1: Setup Environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-enable-trace-logging" class="md-nav__link">
+    Step 2: Enable Trace Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-start-tcpdump" class="md-nav__link">
+    Step 3: Start tcpdump
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-trigger-a-discovery-request" class="md-nav__link">
+    Step 4: Trigger a Discovery Request
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-analyze-the-capture" class="md-nav__link">
+    Step 5: Analyze the Capture
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actual-packet-capture-results" class="md-nav__link">
+    Actual Packet Capture Results
+  </a>
+  
+    <nav class="md-nav" aria-label="Actual Packet Capture Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tcp-three-way-handshake" class="md-nav__link">
+    TCP Three-Way Handshake
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-request-smf-discovery" class="md-nav__link">
+    HTTP Request (SMF Discovery)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-response-200-ok" class="md-nav__link">
+    HTTP Response (200 OK)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-transaction-timeline" class="md-nav__link">
+    Complete Transaction Timeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-discovery-requests-in-capture" class="md-nav__link">
+    Other Discovery Requests in Capture
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-dump-analysis-sample" class="md-nav__link">
+    Hex Dump Analysis (Sample)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-correlating-with-free5gc-nrf-logs" class="md-nav__link">
+    4. Correlating with free5GC NRF Logs
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Correlating with free5GC NRF Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-trace-level-logging" class="md-nav__link">
+    Enable Trace-Level Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-log-messages-to-look-for" class="md-nav__link">
+    Key Log Messages to Look For
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Log Messages to Look For">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-request-received" class="md-nav__link">
+    1. Request Received
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-query-filter-construction" class="md-nav__link">
+    2. Query Filter Construction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-http-response-logging" class="md-nav__link">
+    3. HTTP Response Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-validation-errors" class="md-nav__link">
+    4. Validation Errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-log-analysis-example" class="md-nav__link">
+    Complete Log Analysis Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-complete-example-amf-discovering-smf-for-pdu-session" class="md-nav__link">
+    5. Complete Example - AMF Discovering SMF for PDU Session
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Complete Example - AMF Discovering SMF for PDU Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-details" class="md-nav__link">
+    Scenario Details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-1-basic-smf-discovery" class="md-nav__link">
+    Test Case 1: Basic SMF Discovery
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-2-discovery-with-plmn-filter" class="md-nav__link">
+    Test Case 2: Discovery with PLMN Filter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-3-discovering-other-nf-types" class="md-nav__link">
+    Test Case 3: Discovering Other NF Types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-case-4-error-handling-missing-mandatory-parameter" class="md-nav__link">
+    Test Case 4: Error Handling - Missing Mandatory Parameter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mongodb-verification" class="md-nav__link">
+    MongoDB Verification
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260121/20260121.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260121/20260121.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="analyzing-nf-discovery-requests-step-by-step-trace-of-nfselect-queries">Analyzing NF Discovery Requests:  Step-by-Step Trace of NFSelect Queries</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Che-Wei Lin<br />
+Date: 2026/1/21</p>
+</div>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>The Network Repository Function (NRF) serves as the service discovery backbone of the 5G Core network, enabling every network function to discover and select peers dynamically. In a Service-Based Architecture (SBA), NFs do not have static configurations for their peers; instead, they rely on the NRF to provide real-time status and endpoint information for available services. </p>
+<p>In this article, we'll walk through underlying architecture of the Nnrf_NFDiscovery service, the specific query parameters required for NF selection, and practical methods for capturing SBI traffic using tcpdump.</p>
+<hr />
+<h2 id="1-nf-discovery-architecture">1. NF Discovery Architecture</h2>
+<h3 id="the-discovery-endpoint">The Discovery Endpoint</h3>
+<p>In free5GC, the NRF exposes the <strong>Nnrf_NFDiscovery</strong> service at: </p>
+<div class="highlight"><pre><span></span><code>GET http://&lt;nrf-ip&gt;:&lt;port&gt;/nnrf-disc/v1/nf-instances
+</code></pre></div>
+<p>This endpoint is implemented in: </p>
+<div class="highlight"><pre><span></span><code><span class="c1">// File: internal/sbi/api_discovery.go</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="p">)</span><span class="w"> </span><span class="nx">getNfDiscoveryRoutes</span><span class="p">()</span><span class="w"> </span><span class="p">[]</span><span class="nx">Route</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[]</span><span class="nx">Route</span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;SearchNFInstances&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">http</span><span class="p">.</span><span class="nx">MethodGet</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;/nf-instances&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">s</span><span class="p">.</span><span class="w"> </span><span class="nx">HTTPSearchNFInstances</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Server</span><span class="p">)</span><span class="w"> </span><span class="nx">HTTPSearchNFInstances</span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="w"> </span><span class="nx">Processor</span><span class="p">().</span><span class="nx">HandleNFDiscoveryRequest</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Query</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="request-flow-overview">Request Flow Overview</h3>
+<div class="highlight"><pre><span></span><code>┌─────────┐      ┌─────────────┐      ┌──────────────┐      ┌─────────┐
+│ NF (e.g.│ GET  │   NRF SBI   │      │  Discovery   │      │ MongoDB │
+│   AMF)  │─────&gt;│   Server    │─────&gt;│  Processor   │─────&gt;│  Query  │
+└─────────┘      └─────────────┘      └──────────────┘      └─────────┘
+    │                   │                      │                   │
+    │                   │                      │                   │
+    │                   │                      │&lt;──────────────────┤
+    │                   │                      │  NF Profiles      │
+    │                   │&lt;─────────────────────┤                   │
+    │&lt;──────────────────┤  200 OK + JSON       │                   │
+    │  NF Profile List  │                      │                   │
+</code></pre></div>
+<h3 id="the-core-processing-functions">The Core Processing Functions</h3>
+<p>The discovery request goes through these key functions:</p>
+<ol>
+<li><strong><code>HandleNFDiscoveryRequest</code></strong> - HTTP handler (entry point)</li>
+<li><strong><code>validateQueryParameters</code></strong> - Validates mandatory parameters</li>
+<li><strong><code>NFDiscoveryProcedure</code></strong> - Main processing logic</li>
+<li><strong><code>buildFilter</code></strong> - Constructs MongoDB filter from query params</li>
+<li><strong><code>mongoapi.RestfulAPIGetMany</code></strong> - Queries the NfProfile collection</li>
+</ol>
+<hr />
+<h2 id="2-query-parameters">2. Query Parameters</h2>
+<p>free5GC NRF supports <strong>32+ query parameters</strong> for fine-grained NF selection.  Here are the most important ones:</p>
+<h3 id="mandatory-parameters">Mandatory Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target-nf-type</code></td>
+<td>string</td>
+<td>Type of NF to discover</td>
+<td><code>SMF</code>, <code>UDM</code>, <code>PCF</code></td>
+</tr>
+<tr>
+<td><code>requester-nf-type</code></td>
+<td>string</td>
+<td>Type of requesting NF</td>
+<td><code>AMF</code>, <code>SMF</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> Both parameters are required.  Missing either will result in HTTP 400 error with "Loss mandatory parameter". </p>
+<h3 id="common-optional-parameters">Common Optional Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Example Query</th>
+<th>MongoDB Filter Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target-plmn-list</code></td>
+<td>PLMN ID for roaming scenarios</td>
+<td><code>[{"mcc":"208","mnc":"93"}]</code></td>
+<td>Adds <code>$elemMatch</code> on <code>plmnList</code></td>
+</tr>
+<tr>
+<td><code>snssais</code></td>
+<td>Network slice selection</td>
+<td><code>[{"sst":1,"sd":"010203"}]</code></td>
+<td>Filters by <code>sNssais</code> array</td>
+</tr>
+<tr>
+<td><code>dnn</code></td>
+<td>Data Network Name</td>
+<td><code>internet</code></td>
+<td>Checks SMF/UPF <code>dnnSmfInfoList</code></td>
+</tr>
+<tr>
+<td><code>preferred-locality</code></td>
+<td>Geographic preference</td>
+<td><code>area1</code></td>
+<td>Filters by <code>locality</code> field</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-parameters-map-to-mongodb-filters">How Parameters Map to MongoDB Filters</h3>
+<p>Based on actual trace logs from our experiments, the <code>buildFilter()</code> function converts query parameters to BSON filters:</p>
+<div class="highlight"><pre><span></span><code>File:<span class="w"> </span>internal/sbi/processor/nf_discovery.go
+</code></pre></div>
+<p><strong>Input Parameters:</strong><br />
+<div class="highlight"><pre><span></span><code>target-nf-type=SMF
+requester-nf-type=AMF
+snssais=[{&quot;sst&quot;:1,&quot;sd&quot;:&quot;010203&quot;}]
+dnn=internet
+</code></pre></div></p>
+<p><strong>Generated MongoDB Filter:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">and</span><span class="p">:[</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="nx">nfType</span><span class="p">:</span><span class="w"> </span><span class="nx">SMF</span><span class="p">]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">or</span><span class="p">:[</span>
+<span class="w">    </span><span class="kd">map</span><span class="p">[</span><span class="nx">allowedNfTypes</span><span class="p">:</span><span class="nx">AMF</span><span class="p">]</span>
+<span class="w">    </span><span class="kd">map</span><span class="p">[</span><span class="nx">allowedNfTypes</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">exists</span><span class="p">:</span><span class="kc">false</span><span class="p">]]</span>
+<span class="w">  </span><span class="p">]]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">or</span><span class="p">:[</span>
+<span class="w">    </span><span class="kd">map</span><span class="p">[</span><span class="nx">sNssais</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="nx">sd</span><span class="p">:</span><span class="mo">010203</span><span class="w"> </span><span class="nx">sst</span><span class="p">:</span><span class="mi">1</span><span class="p">]]]</span>
+<span class="w">    </span><span class="kd">map</span><span class="p">[</span><span class="nx">sNssais</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">exists</span><span class="p">:</span><span class="kc">false</span><span class="p">]]</span>
+<span class="w">  </span><span class="p">]]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="nx">smfInfo</span><span class="p">.</span><span class="w"> </span><span class="nx">sNssaiSmfInfoList</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="nx">dnnSmfInfoList</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="nx">dnn</span><span class="p">:</span><span class="nx">internet</span><span class="p">]]]]]</span>
+<span class="p">]]</span>
+</code></pre></div></p>
+<hr />
+<h2 id="3-capturing-discovery-with-tcpdump">3. Capturing Discovery with tcpdump</h2>
+<h3 id="step-1-setup-environment">Step 1: Setup Environment</h3>
+<p>Ensure your free5GC deployment is running: </p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Start free5GC</span>
+<span class="nb">cd</span><span class="w"> </span>~/free5gc
+./run.<span class="w"> </span>sh
+
+<span class="c1"># Verify NRF is running</span>
+curl<span class="w"> </span>http://127.0.0.10:8000/nnrf-nfm/v1/nf-instances
+</code></pre></div>
+<h3 id="step-2-enable-trace-logging">Step 2: Enable Trace Logging</h3>
+<p><strong>Before running experiments, modify your NRF configuration:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># File: config/nrfcfg.yaml</span>
+
+<span class="nt">logger</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace</span><span class="w">      </span><span class="c1"># Change from &#39;info&#39; to &#39;trace&#39;</span>
+<span class="w">  </span><span class="nt">reportCaller</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Change from &#39;false&#39; to &#39;true&#39;</span>
+</code></pre></div>
+<p><strong>Then restart free5GC to apply changes:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Stop free5GC</span>
+./force_kill.sh
+
+<span class="c1"># Restart</span>
+./run.sh
+</code></pre></div></p>
+<h3 id="step-3-start-tcpdump">Step 3: Start tcpdump</h3>
+<p>Capture SBI traffic on the NRF interface:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Capture on loopback (if running locally)</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>lo<span class="w"> </span>-w<span class="w"> </span>nrf-discovery.pcap<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;tcp port 8000 and host 127.0.0.10&#39;</span>
+
+<span class="c1"># For Docker deployments, capture on bridge network</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>br-&lt;network-id&gt;<span class="w"> </span>-w<span class="w"> </span>nrf-discovery.pcap<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;tcp port 8000&#39;</span>
+</code></pre></div>
+<h3 id="step-4-trigger-a-discovery-request">Step 4: Trigger a Discovery Request</h3>
+<p>Simulate an AMF discovering an SMF:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.10:8000/nnrf-disc/v1/nf-instances?\</span>
+<span class="s2">target-nf-type=SMF&amp;\</span>
+<span class="s2">requester-nf-type=AMF&amp;\</span>
+<span class="s2">snssais=[{\&quot;sst\&quot;:1,\&quot;sd\&quot;: \&quot;010203\&quot;}]&amp;\</span>
+<span class="s2">dnn=internet&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div>
+<h3 id="step-5-analyze-the-capture">Step 5: Analyze the Capture</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Convert to text for analysis</span>
+tcpdump<span class="w"> </span>-r<span class="w"> </span>nrf-discovery.pcap<span class="w"> </span>-A<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+
+<span class="c1"># Or use tshark for better HTTP/2 analysis</span>
+tshark<span class="w"> </span>-r<span class="w"> </span>nrf-discovery.pcap<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;http2&quot;</span><span class="w"> </span>-T<span class="w"> </span>fields<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span>http2.header.name<span class="w"> </span>-e<span class="w"> </span>http2.header.value
+</code></pre></div>
+<h3 id="actual-packet-capture-results">Actual Packet Capture Results</h3>
+<p><strong>Pcap File Statistics:</strong></p>
+<ul>
+<li>Total packets captured: 343</li>
+<li>Capture file size: 53KB</li>
+<li>Discovery requests captured: 12 (including retries)</li>
+<li>Timestamp range: 12:28:30 - 13:57:32</li>
+</ul>
+<h4 id="tcp-three-way-handshake">TCP Three-Way Handshake</h4>
+<div class="highlight"><pre><span></span><code>12:28:30.489378 IP 127.0.0.1.38436 &gt; 127.0.0.10.8000: Flags [S], seq 766027190, win 65495
+12:28:30.489408 IP 127.0.0.10.8000 &gt; 127.0.0.1.38436: Flags [S.], seq 2423474686, ack 766027191
+12:28:30.489418 IP 127.0.0.1.38436 &gt; 127.0.0.10.8000: Flags [.], ack 1, win 512
+</code></pre></div>
+<p><strong>Analysis:</strong> Connection established in <strong>30 microseconds</strong> (489378 → 489408 → 489418)</p>
+<h4 id="http-request-smf-discovery">HTTP Request (SMF Discovery)</h4>
+<div class="highlight"><pre><span></span><code>12:28:30.489529 IP 127.0.0.1.38436 &gt; 127.0.0.10.8000: Flags [P.], seq 1:291, length 290
+
+GET /nnrf-disc/v1/nf-instances?target-nf-type=SMF&amp;requester-nf-type=AMF&amp;snssais=%5B%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%5D&amp;dnn=internet&amp;plmn-id=%7B%22mcc%22%3A%22208%22%2C%22mnc%22%3A%2293%22%7D HTTP/1.1
+Host: 127.0.0.10:8000
+User-Agent: curl/8.12.1
+Accept: application/json
+</code></pre></div>
+<p><strong>Packet Details:</strong></p>
+<ul>
+<li>Source: 127.0.0.1:38436 (Client)</li>
+<li>Destination: 127.0.0.10:8000 (NRF)</li>
+<li>HTTP Method: GET</li>
+<li>Payload length: 290 bytes</li>
+<li>URL-encoded query parameters (note the <code>%5B</code>, <code>%7B</code> encoding)</li>
+</ul>
+<h4 id="http-response-200-ok">HTTP Response (200 OK)</h4>
+<div class="highlight"><pre><span></span><code>12:28:30.493105 IP 127.0.0.10.8000 &gt; 127.0.0.1.38436: Flags [P.], seq 1:1792, length 1791
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Mon, 05 Jan 2026 12:28:30 GMT
+Content-Length: 1666
+
+{&quot;validityPeriod&quot;:100,&quot;nfInstances&quot;:[{&quot;nfInstanceId&quot;:&quot;343aee23-749e-4835-a8b9-fb9174a162ca&quot;,&quot;nfType&quot;:&quot;SMF&quot;,&quot;nfStatus&quot;:&quot;REGISTERED&quot;,&quot;plmnList&quot;:[{&quot;mcc&quot;:&quot;208&quot;,&quot;mnc&quot;:&quot;93&quot;}],&quot;sNssais&quot;:[{&quot;sst&quot;:1,&quot;sd&quot;:&quot;010203&quot;},{&quot;sst&quot;:1,&quot;sd&quot;:&quot;112233&quot;}],&quot;ipv4Addresses&quot;:[&quot;127.0.0.2&quot;],&quot;locality&quot;:&quot;area1&quot;,&quot;smfInfo&quot;:{&quot;sNssaiSmfInfoList&quot;:[{&quot;sNssai&quot;:{&quot;sst&quot;:1,&quot;sd&quot;:&quot;010203&quot;},&quot;dnnSmfInfoList&quot;:[{&quot;dnn&quot;:&quot;internet&quot;}]},{&quot;sNssai&quot;:{&quot;sst&quot;:1,&quot;sd&quot;:&quot;112233&quot;},&quot;dnnSmfInfoList&quot;:[{&quot;dnn&quot;:&quot;internet&quot;}]}]},&quot;customInfo&quot;:{&quot;oauth2&quot;:false},&quot;nfServices&quot;:[...]}]}
+</code></pre></div>
+<p><strong>Response Details:</strong></p>
+<ul>
+<li>HTTP Status: 200 OK</li>
+<li>Content-Type: application/json; charset=utf-8</li>
+<li>Content-Length: 1666 bytes</li>
+<li>Total packet length: 1791 bytes (includes HTTP headers)</li>
+</ul>
+<h4 id="complete-transaction-timeline">Complete Transaction Timeline</h4>
+<table>
+<thead>
+<tr>
+<th>Time (μs)</th>
+<th>Event</th>
+<th>Packet Size</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>489378</td>
+<td>SYN</td>
+<td>60 bytes</td>
+<td>Client → NRF</td>
+</tr>
+<tr>
+<td>489408</td>
+<td>SYN-ACK</td>
+<td>60 bytes</td>
+<td>NRF → Client</td>
+</tr>
+<tr>
+<td>489418</td>
+<td>ACK</td>
+<td>52 bytes</td>
+<td>Client → NRF</td>
+</tr>
+<tr>
+<td>489529</td>
+<td>GET Request</td>
+<td>290 bytes</td>
+<td>Client → NRF</td>
+</tr>
+<tr>
+<td>489533</td>
+<td>ACK</td>
+<td>52 bytes</td>
+<td>NRF → Client</td>
+</tr>
+<tr>
+<td>493105</td>
+<td>HTTP 200 Response</td>
+<td>1791 bytes</td>
+<td>NRF → Client</td>
+</tr>
+<tr>
+<td>493114</td>
+<td>ACK</td>
+<td>52 bytes</td>
+<td>Client → NRF</td>
+</tr>
+<tr>
+<td>493211</td>
+<td>FIN</td>
+<td>52 bytes</td>
+<td>Client → NRF</td>
+</tr>
+<tr>
+<td>493239</td>
+<td>FIN-ACK</td>
+<td>52 bytes</td>
+<td>NRF → Client</td>
+</tr>
+<tr>
+<td>493253</td>
+<td>ACK</td>
+<td>52 bytes</td>
+<td>Client → NRF</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total Transaction Time:</strong> <strong>3.875 milliseconds</strong> (from initial SYN to final ACK)</p>
+<ul>
+<li>Connection setup: 40μs</li>
+<li>Request sent: 111μs after connection</li>
+<li>Response received: 3.576ms after request</li>
+<li>Connection teardown: 148μs</li>
+</ul>
+<h4 id="other-discovery-requests-in-capture">Other Discovery Requests in Capture</h4>
+<p>From analyzing the full pcap file, we captured these distinct discovery requests:</p>
+<div class="highlight"><pre><span></span><code>1. GET /nnrf-disc/v1/nf-instances?target-nf-type=SMF&amp;... → HTTP/1.1 200 OK
+2. GET /nnrf-disc/v1/nf-instances?target-nf-type=SMF&amp;target-plmn-list=... → HTTP/1.1 200 OK
+3. GET /nnrf-disc/v1/nf-instances?target-nf-type=UDM&amp;... → HTTP/1.1 200 OK
+4. GET /nnrf-disc/v1/nf-instances?target-nf-type=AUSF&amp;... → HTTP/1.1 200 OK
+5. GET /nnrf-disc/v1/nf-instances?requester-nf-type=AMF → HTTP/1.1 400 Bad Request
+</code></pre></div>
+<p><strong>Key Observation:</strong> Request #5 returned HTTP 400 because <code>target-nf-type</code> parameter was missing, demonstrating NRF's parameter validation.</p>
+<h4 id="hex-dump-analysis-sample">Hex Dump Analysis (Sample)</h4>
+<p>For deeper packet inspection, here's a hex dump of the HTTP GET request:</p>
+<div class="highlight"><pre><span></span><code>0x0030:  9748 10e0 4754 5420 2f6e 6e72 662d 6469  .H..GET./nnrf-di
+0x0040:  7363 2f76 312f 6e66 2d69 6e73 7461 6e63  sc/v1/nf-instanc
+0x0050:  6573 3f74 6172 6765 742d 6e66 2d74 7970  es?target-nf-typ
+0x0060:  653d 534d 4626 7265 7175 6573 7465 722d  e=SMF&amp;requester-
+0x0070:  6e66 2d74 7970 653d 414d 4626 736e 7373  nf-type=AMF&amp;snss
+0x0080:  6169 733d 2535 4225 3742 2532 3273 7374  ais=%5B%7B%22sst
+</code></pre></div>
+<p>This shows the raw bytes of the HTTP request, with ASCII representation on the right side.</p>
+<hr />
+<h2 id="4-correlating-with-free5gc-nrf-logs">4. Correlating with free5GC NRF Logs</h2>
+<h3 id="enable-trace-level-logging">Enable Trace-Level Logging</h3>
+<p>As shown in Step 2 above, edit your NRF configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># File: config/nrfcfg.yaml</span>
+
+<span class="nt">logger</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace</span><span class="w">  </span><span class="c1"># Critical for seeing MongoDB queries</span>
+<span class="w">  </span><span class="nt">reportCaller</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Shows file paths and line numbers</span>
+</code></pre></div>
+<h3 id="key-log-messages-to-look-for">Key Log Messages to Look For</h3>
+<h4 id="1-request-received">1. <strong>Request Received</strong></h4>
+<div class="highlight"><pre><span></span><code>2026-01-05T10:30:15.456 [INFO][NRF][Disc] Handle NFDiscoveryRequest
+</code></pre></div>
+<p><strong>Code Location:</strong><br />
+<div class="highlight"><pre><span></span><code>File: /home/ubuntu/free5gc/NFs/nrf/internal/sbi/processor/nf_discovery.go
+Function: (*Processor).HandleNFDiscoveryRequest
+</code></pre></div></p>
+<h4 id="2-query-filter-construction">2. <strong>Query Filter Construction</strong></h4>
+<div class="highlight"><pre><span></span><code>2026-01-05T10:30:15.458 [TRACE][NRF][Disc] Query filter: map[$and:[map[nfType: SMF] map[$or:[map[allowedNfTypes:AMF] map[allowedNfTypes:map[$exists:false]]]] map[$or:[map[sNssais:map[$elemMatch:map[sd:010203 sst: 1]]] map[sNssais: map[$exists:false]]]] map[smfInfo.sNssaiSmfInfoList: map[$elemMatch:map[dnnSmfInfoList:map[$elemMatch:map[dnn: internet]]]]]]]
+</code></pre></div>
+<p><strong>Code Location:</strong><br />
+<div class="highlight"><pre><span></span><code>File: /home/ubuntu/free5gc/NFs/nrf/internal/sbi/processor/nf_discovery. go:131
+Function: (*Processor).NFDiscoveryProcedure
+</code></pre></div></p>
+<p>This log line shows the exact MongoDB filter being executed. </p>
+<h4 id="3-http-response-logging">3. <strong>HTTP Response Logging</strong></h4>
+<div class="highlight"><pre><span></span><code>2026-01-05T10:30:15.462 [INFO][NRF][GIN] | 200 |    127.0.0.18 | GET      /nnrf-disc/v1/nf-instances? target-nf-type=SMF&amp;... 
+</code></pre></div>
+<p><strong>Code Location:</strong><br />
+<div class="highlight"><pre><span></span><code>File: /home/ubuntu/free5gc/util/logger/logger.go
+Function: NewGinWithLogrus.ginToLogrus. func1
+</code></pre></div></p>
+<p>Shows the complete HTTP request path, response code, and client IP.</p>
+<h4 id="4-validation-errors">4. <strong>Validation Errors</strong></h4>
+<p>If parameters are invalid:</p>
+<div class="highlight"><pre><span></span><code>[WARN][NRF][Disc] Invalid Parameter: Loss mandatory parameter
+</code></pre></div>
+<p><strong>Returned to client:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid Parameter&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cause&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Loss mandatory parameter&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>This follows RFC 7807 Problem Details format.</p>
+<h3 id="complete-log-analysis-example">Complete Log Analysis Example</h3>
+<p>Here's a complete trace for an AMF→SMF discovery with all parameters:</p>
+<div class="highlight"><pre><span></span><code>2026-01-05T14:23:01.789 [INFO][NRF][GIN] | 200 |    127.0.0.18 | GET      /nnrf-disc/v1/nf-instances?target-nf-type=SMF&amp;requester-nf-type=AMF&amp;snssais=[{&quot;sst&quot;:1,&quot;sd&quot;:&quot;010203&quot;}]&amp;dnn=internet&amp;target-plmn-list=[{&quot;mcc&quot;:&quot;208&quot;,&quot;mnc&quot;:&quot;93&quot;}]
+
+2026-01-05T14:23:01.789 [INFO][NRF][Disc][/home/ubuntu/free5gc/NFs/nrf/internal/sbi/processor/nf_discovery.go:26] Handle NFDiscoveryRequest
+
+2026-01-05T14:23:01.789 [TRACE][NRF][Disc][/home/ubuntu/free5gc/NFs/nrf/internal/sbi/processor/nf_discovery.go:131] Query filter: map[$and:[map[nfType:SMF] map[$or:[map[allowedNfTypes:AMF] map[allowedNfTypes:map[$exists:false]]]] map[$or:[map[plmnList:map[$elemMatch:map[mcc:208 mnc:93]]]]] map[$or:[map[sNssais:map[$elemMatch:map[sd:010203 sst: 1]]] map[sNssais:map[$exists:false]]]] map[smfInfo.sNssaiSmfInfoList: map[$elemMatch:map[dnnSmfInfoList:map[$elemMatch:map[dnn: internet]]]]]]]
+</code></pre></div>
+<p><strong>Analysis of this trace:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Timestamp</th>
+<th>Component</th>
+<th>Message</th>
+<th>Insight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14:23:01.789</td>
+<td>GIN</td>
+<td>HTTP request logged</td>
+<td>Client IP: 127.0.0.18 (AMF), GET request with all params</td>
+</tr>
+<tr>
+<td>14:23:01.789</td>
+<td>Disc</td>
+<td>HandleNFDiscoveryRequest</td>
+<td>Entry point at line 26</td>
+</tr>
+<tr>
+<td>14:23:01.789</td>
+<td>Disc</td>
+<td>Query filter</td>
+<td>MongoDB filter with 5 conditions:  type, authorization, PLMN, slice, DNN</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total processing time:</strong> &lt; 1ms (all logs have same timestamp to millisecond precision)</p>
+<hr />
+<h2 id="5-complete-example-amf-discovering-smf-for-pdu-session">5. Complete Example - AMF Discovering SMF for PDU Session</h2>
+<p>Let's trace a realistic scenario:  An AMF needs to select an SMF to handle a PDU session establishment for a subscriber.</p>
+<h3 id="scenario-details">Scenario Details</h3>
+<ul>
+<li><strong>Requested Slice:</strong> SST=1, SD=010203</li>
+<li><strong>DNN:</strong> internet</li>
+<li><strong>PLMN:</strong> MCC=208, MNC=93</li>
+<li><strong>Registered SMF:</strong> 343aee23-749e-4835-a8b9-fb9174a162ca at 127.0.0.2</li>
+</ul>
+<h3 id="test-case-1-basic-smf-discovery">Test Case 1: Basic SMF Discovery</h3>
+<p><strong>Request:</strong><br />
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.10:8000/nnrf-disc/v1/nf-instances?\</span>
+<span class="s2">target-nf-type=SMF&amp;\</span>
+<span class="s2">requester-nf-type=AMF&amp;\</span>
+<span class="s2">snssais=[{\&quot;sst\&quot;:1,\&quot;sd\&quot;: \&quot;010203\&quot;}]&amp;\</span>
+<span class="s2">dnn=internet&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div></p>
+<p><strong>NRF Log Output:</strong><br />
+<div class="highlight"><pre><span></span><code>[INFO][NRF][Disc] Handle NFDiscoveryRequest
+[TRACE][NRF][Disc] Query filter: map[$and:[map[nfType: SMF] map[$or:[map[allowedNfTypes:AMF] map[allowedNfTypes:map[$exists:false]]]] map[$or:[map[sNssais:map[$elemMatch:map[sd:010203 sst:1]]] map[sNssais:map[$exists:false]]]] map[smfInfo.sNssaiSmfInfoList:map[$elemMatch: map[dnnSmfInfoList:map[$elemMatch:map[dnn:internet]]]]]]]
+</code></pre></div></p>
+<p><strong>Response:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;validityPeriod&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfInstances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;nfInstanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;343aee23-749e-4835-a8b9-fb9174a162ca&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SMF&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REGISTERED&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;locality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;area1&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;sNssais&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112233&quot;</span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div><br />
+<strong>Analysis:</strong></p>
+<ul>
+<li>Discovered 1 SMF instance</li>
+<li>SMF supports multiple slices (010203 and 112233)</li>
+<li>Locality field present:  "area1" (can be used for preferred-locality filtering)</li>
+<li>Validity period: 100 seconds (cache TTL)</li>
+</ul>
+<h3 id="test-case-2-discovery-with-plmn-filter">Test Case 2: Discovery with PLMN Filter</h3>
+<p><strong>Request:</strong><br />
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.10:8000/nnrf-disc/v1/nf-instances?\</span>
+<span class="s2">target-nf-type=SMF&amp;\</span>
+<span class="s2">requester-nf-type=AMF&amp;\</span>
+<span class="s2">snssais=[{\&quot;sst\&quot;:1,\&quot;sd\&quot;:\&quot;010203\&quot;}]&amp;\</span>
+<span class="s2">dnn=internet&amp;\</span>
+<span class="s2">target-plmn-list=[{\&quot;mcc\&quot;:\&quot;208\&quot;,\&quot;mnc\&quot;:\&quot;93\&quot;}]&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div></p>
+<p><strong>NRF MongoDB Filter:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">and</span><span class="p">:[</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="nx">nfType</span><span class="p">:</span><span class="nx">SMF</span><span class="p">]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">or</span><span class="p">:[</span><span class="kd">map</span><span class="p">[</span><span class="nx">allowedNfTypes</span><span class="p">:</span><span class="nx">AMF</span><span class="p">]</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="nx">allowedNfTypes</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">exists</span><span class="p">:</span><span class="kc">false</span><span class="p">]]]]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">or</span><span class="p">:[</span><span class="kd">map</span><span class="p">[</span><span class="nx">plmnList</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="nx">mcc</span><span class="p">:</span><span class="mi">208</span><span class="w"> </span><span class="nx">mnc</span><span class="p">:</span><span class="mi">93</span><span class="p">]]]]]</span><span class="w">  </span><span class="c1">// ← Added PLMN filter</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">or</span><span class="p">:[</span><span class="kd">map</span><span class="p">[</span><span class="nx">sNssais</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="nx">sd</span><span class="p">:</span><span class="mo">010203</span><span class="w"> </span><span class="nx">sst</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">]]]</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="nx">sNssais</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">exists</span><span class="p">:</span><span class="kc">false</span><span class="p">]]]]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="nx">smfInfo</span><span class="p">.</span><span class="nx">sNssaiSmfInfoList</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="nx">dnnSmfInfoList</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">elemMatch</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="nx">dnn</span><span class="p">:</span><span class="nx">internet</span><span class="p">]]]]]</span>
+<span class="p">]]</span>
+</code></pre></div></p>
+<p><strong>Response:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;validityPeriod&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfInstances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;nfInstanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;343aee23-749e-4835-a8b9-fb9174a162ca&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SMF&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;ipv4Addresses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;127.0.0.2&quot;</span><span class="p">]</span><span class="w">  </span><span class="c1">// ← IP address included</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div><br />
+<strong>Analysis:</strong></p>
+<ul>
+<li>Same SMF discovered (PLMN matches)</li>
+<li>Response now includes <code>ipv4Addresses</code> array</li>
+<li>Additional filter condition added (PLMN list matching)</li>
+</ul>
+<h3 id="test-case-3-discovering-other-nf-types">Test Case 3: Discovering Other NF Types</h3>
+<p><strong>UDM Discovery:</strong><br />
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.10:8000/nnrf-disc/v1/nf-instances?\</span>
+<span class="s2">target-nf-type=UDM&amp;\</span>
+<span class="s2">requester-nf-type=AMF&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div></p>
+<p><strong>MongoDB Filter:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">and</span><span class="p">:[</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="nx">nfType</span><span class="p">:</span><span class="nx">UDM</span><span class="p">]</span>
+<span class="w">  </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">or</span><span class="p">:[</span><span class="kd">map</span><span class="p">[</span><span class="nx">allowedNfTypes</span><span class="p">:</span><span class="nx">AMF</span><span class="p">]</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="nx">allowedNfTypes</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="err">$</span><span class="nx">exists</span><span class="p">:</span><span class="kc">false</span><span class="p">]]]]</span>
+<span class="p">]]</span>
+</code></pre></div></p>
+<p><strong>Response:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;validityPeriod&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfInstances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;nfInstanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ed470d29-524f-4beb-9c15-dfa35cb68924&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfType&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;UDM&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REGISTERED&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>AUSF Discovery:</strong><br />
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.10:8000/nnrf-disc/v1/nf-instances?\</span>
+<span class="s2">target-nf-type=AUSF&amp;\</span>
+<span class="s2">requester-nf-type=AMF&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div></p>
+<p><strong>Response:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;validityPeriod&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfInstances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;nfInstanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;23585e14-1f66-4276-8c6e-8ead28de840c&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfType&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;AUSF&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nfStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REGISTERED&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;ipv4Addresses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;127.0.0.9&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li>UDM and AUSF discoveries are simpler (no slice/DNN filtering needed)</li>
+<li>Only type and authorization filters applied</li>
+<li>Both returned successfully with NF instance IDs and status</li>
+</ul>
+<h3 id="test-case-4-error-handling-missing-mandatory-parameter">Test Case 4: Error Handling - Missing Mandatory Parameter</h3>
+<p><strong>Request (intentionally missing target-nf-type):</strong><br />
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;http://127.0.0.10:8000/nnrf-disc/v1/nf-instances?\</span>
+<span class="s2">requester-nf-type=AMF&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div></p>
+<p><strong>Response:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid Parameter&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cause&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Loss mandatory parameter&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>HTTP Status:</strong> 400 Bad Request<br />
+<strong>Analysis:</strong></p>
+<ul>
+<li>Validation happens before database query</li>
+<li>Returns RFC 7807 Problem Details format</li>
+<li>No MongoDB query executed</li>
+</ul>
+<h3 id="mongodb-verification">MongoDB Verification</h3>
+<p>You can manually verify the discovered NF profiles in MongoDB:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Connect to MongoDB</span>
+mongosh<span class="w"> </span>mongodb://127.0.0.1:27017/free5gc
+
+<span class="c1"># Query SMF profiles</span>
+db.NfProfile.find<span class="o">({</span>
+<span class="w">  </span><span class="s2">&quot;nfType&quot;</span>:<span class="w"> </span><span class="s2">&quot;SMF&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;nfStatus&quot;</span>:<span class="w"> </span><span class="s2">&quot;REGISTERED&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;sNssais&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$elemMatch</span><span class="s2">&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;sst&quot;</span>:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="s2">&quot;sd&quot;</span>:<span class="w">  </span><span class="s2">&quot;010203&quot;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="o">}</span>
+<span class="o">})</span>.pretty<span class="o">()</span>
+</code></pre></div>
+<p><strong>Expected Output:</strong><br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;...&quot;</span><span class="err">)</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfInstanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;343aee23-749e-4835-a8b9-fb9174a162ca&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SMF&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nfStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REGISTERED&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;heartBeatTimer&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;plmnList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;mcc&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;208&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mnc&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;93&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;sNssais&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;010203&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;112233&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;ipv4Addresses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;127.0.0.2&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;locality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;area1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;smfInfo&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;sNssaiSmfInfoList&quot;</span><span class="p">:</span><span class="w">  </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;sNssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;dnnSmfInfoList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>In a 5G Service Based Architecture, NF Discovery serves as the critical control mechanism that transforms a collection of isolated microservices into a synchronized, high-performance network. By leveraging the Network Repository Function (NRF) as a centralized service registry, the core evolves beyond static, hard-coded peer-to-peer configurations into a programmable environment. This architecture ensures that service consumers can dynamically bind to the most optimal service producer instance available.</p>
+<p>This analysis shows how free5GC turns high-level NF discovery requests into concrete MongoDB queries inside the NRF discovery pipeline. By enabling trace-level logging, you can clearly see the exact filter conditions used during NF selection, making the discovery process much more transparent.</p>
+<hr />
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129500_129599/129510/18.06.00_60/ts_129510v180600p.pdf">TS 29.510</a></li>
+<li><a href="https://github.com/free5gc">free5GC</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Che Wei, Lin. I’ve recently begun my journey into 5G technology and the free5GC community. I hope you found this blog post helpful, and please feel free to reach out for further discussion.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li><strong>GitHub</strong>: <a href="https://github.com/Zach1113">Zach1113</a></li>
+</ul>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

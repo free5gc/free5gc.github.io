@@ -1,0 +1,1394 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Implementing GTP-driven Automatic Scheduling Optimization with eBPF-based Scheduler - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#implementing-gtp-driven-automatic-scheduling-optimization-with-ebpf-based-scheduler" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementing GTP-driven Automatic Scheduling Optimization with eBPF-based Scheduler
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abstract" class="md-nav__link">
+    Abstract
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance-challenges-in-5g-upf" class="md-nav__link">
+    Performance Challenges in 5G UPF
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution" class="md-nav__link">
+    Solution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-components" class="md-nav__link">
+    System Components
+  </a>
+  
+    <nav class="md-nav" aria-label="System Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gtp5g-tracer-ebpf-tracer" class="md-nav__link">
+    1. gtp5g-tracer (eBPF Tracer)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gtp5g_operator-go-service" class="md-nav__link">
+    2. gtp5g_operator (Go Service)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gthulhu-scheduler-ebpf-based-scheduler-sched_ext" class="md-nav__link">
+    3. Gthulhu Scheduler (eBPF-based Scheduler / sched_ext)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow" class="md-nav__link">
+    Data Flow
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    Implementation Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    System Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-gtp5g-tracer-build-run" class="md-nav__link">
+    Step 1: gtp5g-tracer (build &amp; run)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-build-gthulhu" class="md-nav__link">
+    Step 2: Build Gthulhu
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-guide" class="md-nav__link">
+    Deployment Guide
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startup-sequence" class="md-nav__link">
+    Startup Sequence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-testing" class="md-nav__link">
+    Performance Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-methodology" class="md-nav__link">
+    Test Methodology
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Methodology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseline-unoptimized" class="md-nav__link">
+    Baseline (Unoptimized)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimized" class="md-nav__link">
+    Optimized
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    Test Results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251126/20251126.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251126/20251126.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="implementing-gtp-driven-automatic-scheduling-optimization-with-ebpf-based-scheduler">Implementing GTP-driven Automatic Scheduling Optimization with eBPF-based Scheduler</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/c9274326">Meng-Han, Hsieh</a><br />
+Date: 2025/11/26</p>
+</div>
+<h2 id="abstract">Abstract</h2>
+<p>This article demonstrates how to use eBPF (Extended Berkeley Packet Filter) to trace GTP packet processing in the kernel (via <a href="https://github.com/free5gc/gtp5g-tracer">gtp5g-tracer</a>), and combine it with <a href="https://gthulhu.org/">Gthulhu</a> — a Linux eBPF-based Scheduler (sched_ext) — to automatically adjust scheduling strategies for end-to-end UE (User Equipment) latency optimization.</p>
+<p>Key achievements delivered in this work:</p>
+<ul>
+<li>Automatically identify gNodeB, UE related process ID</li>
+<li>Dynamically adjust related process priority and CPU time slices</li>
+<li>Reduce UE ping latency</li>
+</ul>
+<h2 id="background">Background</h2>
+<h3 id="performance-challenges-in-5g-upf">Performance Challenges in 5G UPF</h3>
+<p>In 5G networks, the UPF handles all user plane traffic, including tasks like GTP encapsulation/decapsulation and routing. UPF usually faces several performance challenges:</p>
+<ol>
+<li>
+<p><strong>Multi-process CPU Competition</strong>:</p>
+<ul>
+<li>gNodeB processes (e.g. nr-gnb)</li>
+<li>UE simulators (e.g. nr-ue) generate test traffic</li>
+<li>GTP5G kernel module processes packets</li>
+<li>Other system services compete for CPU resources</li>
+</ul>
+</li>
+<li>
+<p><strong>Limitations of Linux CFS Scheduler</strong>:</p>
+<ul>
+<li>CFS (Completely Fair Scheduler) pursues fairness</li>
+<li>Lacks application-level awareness — can't automatically prioritize critical 5GC processes based on traffic</li>
+</ul>
+</li>
+<li>
+<p><strong>Manual Optimization Difficulties</strong>:</p>
+<ul>
+<li>PIDs change dynamically (container/process restarts)</li>
+<li>Requires continuous monitoring and adjustment</li>
+</ul>
+</li>
+</ol>
+<h3 id="solution">Solution</h3>
+<p>Combining <strong>eBPF observability</strong> + <strong>eBPF-based scheduler (sched_ext) programmability</strong> to build an automated process scheduling optimization system. Instead of modifying network traffic directly, I trace the <code>gtp5g</code> module to identify <code>nr-ue</code> and <code>nr-gnb</code> related processes and provide them higher CPU priority during high system load:</p>
+<pre class="mermaid"><code>%%{init: { 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, Arial, sans-serif' } } }%%
+flowchart LR
+  subgraph Host[5G Core Host]
+    direction LR
+    UE["UE"] --&gt; gNodeB["gNodeB"] --&gt; UPF["UPF (GTP5G)"] --&gt; Internet["Internet"]
+  end
+
+  subgraph Tracing["Kernel eBPF Tracing"]
+    direction TB
+    gtp5g_tracer["gtp5g-tracer"]
+    trace_pipe["trace_pipe"]
+    gtp5g_tracer --&gt; trace_pipe
+  end
+
+  subgraph Operator["User-space Operator"]
+    direction TB
+    operator["gtp5g_operator\n(Go service)\nParse &amp; Detect"]
+    operator --&gt; gthulhu_api["Gthulhu API"]
+    gthulhu_api_note["K8s service - Strategy Management"]
+    gthulhu_api -.-&gt; gthulhu_api_note
+  end
+
+  gtp5g_tracer --&gt;|events| operator
+  gthulhu_api --&gt;|Update Strategies| gthulhu_sched["Gthulhu Scheduler\n(sched_ext, eBPF-based)"]
+  gthulhu_sched --&gt;|Apply| UPF
+
+  classDef component fill:#f8f9fa,stroke:#333,stroke-width:1px
+  class gtp5g_tracer,trace_pipe,operator,gthulhu_api,gthulhu_sched component
+
+  %% end mermaid</code></pre>
+<hr />
+<h2 id="architecture">Architecture</h2>
+<h3 id="system-components">System Components</h3>
+<h4 id="1-gtp5g-tracer-ebpf-tracer">1. gtp5g-tracer (eBPF Tracer)</h4>
+<p><strong>Function</strong>: Trace critical functions in GTP5G kernel module</p>
+<p><strong>Implementation</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// gtp5g_tracer_kern.c</span>
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;fentry/gtp5g_encap_recv&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">BPF_PROG</span><span class="p">(</span><span class="n">gtp5g_encap_recv_entry</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span>
+<span class="w">             </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_current_pid_tgid</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">tgid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_get_current_pid_tgid</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;fentry/gtp5g_encap_recv: PID=%d, TGID=%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="n">tgid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;fexit/gtp5g_encap_recv&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">BPF_PROG</span><span class="p">(</span><span class="n">gtp5g_encap_recv_exit</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sk_buff</span><span class="w"> </span><span class="o">*</span><span class="n">skb</span><span class="p">,</span><span class="w"> </span>
+<span class="w">             </span><span class="k">struct</span><span class="w"> </span><span class="nc">net_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">bpf_printk</span><span class="p">(</span><span class="s">&quot;fexit/gtp5g_encap_recv: ret=%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Traced Functions</strong>:</p>
+<ul>
+<li><code>gtp5g_encap_recv()</code>: GTP encapsulation receive</li>
+<li><code>gtp5g_handle_skb_ipv4()</code>: IPv4 packet handling</li>
+<li><code>gtp5g_xmit_skb_ipv4()</code>: IPv4 packet transmission</li>
+</ul>
+<p><strong>Output</strong> (<code>/sys/kernel/debug/tracing/trace_pipe</code>):<br />
+<div class="highlight"><pre><span></span><code>nr-gnb-365189 [003] d..31 21039.948599: bpf_trace_printk: fentry/gtp5g_encap_recv: PID=365189, TGID=365162
+nr-ue-365012  [004] d..31 22353.878390: bpf_trace_printk: stop: pid=365012 (nr-ue) cpu=4
+</code></pre></div></p>
+<h4 id="2-gtp5g_operator-go-service">2. gtp5g_operator (Go Service)</h4>
+<p><strong>Function</strong>: Parse trace_pipe, identify critical process IDs, and send scheduling strategies</p>
+<p><strong>Core Modules</strong>:</p>
+<p>2.1 <strong>Trace Parser</strong> (<code>pkg/parser/trace_parser.go</code>)</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">TraceParser</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">nrGnbRegex</span><span class="w"> </span><span class="o">*</span><span class="nx">regexp</span><span class="p">.</span><span class="nx">Regexp</span>
+<span class="w">    </span><span class="nx">nrUeRegex</span><span class="w">  </span><span class="o">*</span><span class="nx">regexp</span><span class="p">.</span><span class="nx">Regexp</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">TraceParser</span><span class="p">)</span><span class="w"> </span><span class="nx">ParsePIDFromLine</span><span class="p">(</span><span class="nx">line</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Priority matching:</span>
+<span class="w">    </span><span class="c1">// 1. TGID= (thread group ID)</span>
+<span class="w">    </span><span class="c1">// 2. nr-gnb-&lt;PID&gt; / nr-ue-&lt;PID&gt;</span>
+<span class="w">    </span><span class="c1">// 3. pid=&lt;num&gt; (procname)</span>
+<span class="w">    </span><span class="c1">// 4. PID= field</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>2.2 <strong>JWT Auth Client</strong> (<code>pkg/auth/client.go</code>)</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Client</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="w">       </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">tokenExpiry</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<span class="w">    </span><span class="nx">mu</span><span class="w">          </span><span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+<span class="p">}</span>
+
+<span class="c1">// Automatic token management:</span>
+<span class="c1">// - Acquire on first request</span>
+<span class="c1">// - Auto-refresh 5 minutes before expiry</span>
+<span class="c1">// - Thread-safe</span>
+</code></pre></div>
+<p>2.3 <strong>API Client</strong> (<code>pkg/api/client.go</code>)</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">SchedulingStrategy</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">PID</span><span class="w">           </span><span class="kt">int</span><span class="w">    </span><span class="s">`json:&quot;pid&quot;`</span>
+<span class="w">    </span><span class="nx">Priority</span><span class="w">      </span><span class="kt">bool</span><span class="w">   </span><span class="s">`json:&quot;priority&quot;`</span>
+<span class="w">    </span><span class="nx">ExecutionTime</span><span class="w"> </span><span class="kt">uint64</span><span class="w"> </span><span class="s">`json:&quot;execution_time&quot;`</span><span class="w">  </span><span class="c1">// nanoseconds</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">Client</span><span class="p">)</span><span class="w"> </span><span class="nx">SendStrategies</span><span class="p">(</span><span class="nx">ctx</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                                </span><span class="nx">pids</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                                </span><span class="nx">priority</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                                </span><span class="nx">executionTime</span><span class="w"> </span><span class="kt">uint64</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Workflow</strong>:<br />
+<div class="highlight"><pre><span></span><code>1. tail -f /sys/kernel/debug/tracing/trace_pipe
+2. Regex matching to extract PIDs (nr-gnb, nr-ue)
+3. POST to Gthulhu API every second
+4. Periodically get JWT token authentication
+</code></pre></div></p>
+<h4 id="3-gthulhu-scheduler-ebpf-based-scheduler-sched_ext">3. Gthulhu Scheduler (eBPF-based Scheduler / sched_ext)</h4>
+<p><strong>Function</strong>: Programmable scheduler based on Linux sched_ext</p>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Receive strategy updates via API</li>
+<li>Dynamically adjust process priority</li>
+<li>Custom CPU time slice allocation</li>
+</ul>
+<p><strong>Strategy Parameters</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;strategies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;pid&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">365162</span><span class="p">,</span><span class="w">           </span><span class="c1">// gNodeB main process</span>
+<span class="w">      </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">        </span><span class="c1">// Boost priority</span>
+<span class="w">      </span><span class="nt">&quot;execution_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20000000</span><span class="w">  </span><span class="c1">// 20ms time slice</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="data-flow">Data Flow</h3>
+<p>To clearly demonstrate the data flow, I divide the process into three phases: <strong>Traffic Tracing</strong>, <strong>Analysis &amp; Decision</strong>, and <strong>Scheduling Optimization</strong>.</p>
+<p><center></p>
+<pre class="mermaid"><code>%%{init: { 'themeVariables': { 'fontSize': '12px', 'fontFamily': 'Inter, Arial, sans-serif' } } }%%
+flowchart TD
+    subgraph Phase1["1. Traffic Tracing (Kernel Space)"]
+        UE[UE Device] --&gt;|GTP Packets| GTP[GTP5G Module]
+        GTP --&gt;|fentry Trigger| Tracer[eBPF Tracer]
+        Tracer --&gt;|Write Event| Pipe[trace_pipe]
+    end
+
+    subgraph Phase2["2. Analysis &amp; Decision (User Space)"]
+        Pipe --&gt;|Read| Operator[gtp5g_operator]
+        Operator --&gt;|Parse PID| Operator
+        Operator --&gt;|HTTP POST| API[Gthulhu API]
+    end
+
+    subgraph Phase3["3. Scheduling Optimization (Scheduler)"]
+        API --&gt;|Update Map| Scheduler[Gthulhu Scheduler]
+        Scheduler --&gt;|Boost Priority| GTP
+    end
+
+    classDef phase fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    class Phase1,Phase2,Phase3 phase;</code></pre>
+<p></center></p>
+<p><strong>Process Detail</strong>:</p>
+<ol>
+<li><strong>Traffic Generation</strong>: UE sends packets, processed by the <code>GTP5G Module</code> in the Kernel.</li>
+<li><strong>Event Capture</strong>: <code>gtp5g-tracer</code> intercepts key functions via eBPF hooks and writes PID information to <code>trace_pipe</code>.</li>
+<li><strong>Data Analysis</strong>: <code>gtp5g_operator</code> reads the pipe in real-time, filtering for key processes (nr-gnb/nr-ue).</li>
+<li><strong>Strategy Dispatch</strong>: The Operator sends the identified PIDs to the <code>Gthulhu API</code>.</li>
+<li><strong>Execution</strong>: <code>Gthulhu Scheduler</code> receives the strategy and immediately adjusts the CPU priority and time slice for that PID.</li>
+</ol>
+<hr />
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="environment-setup">Environment Setup</h3>
+<h4 id="system-requirements">System Requirements</h4>
+<ul>
+<li><strong>OS</strong>: Ubuntu 25.04 (kernel 6.12+)</li>
+<li><strong>Kubernetes</strong>: microk8s or other K8s distributions</li>
+<li><strong>free5GC</strong>: free5GC-helm v4.2.0</li>
+<li><strong>Go</strong>: v1.24.2</li>
+<li><strong>gtp5g</strong>: v0.9.15</li>
+<li><strong>gtp5g-tracer</strong>: x</li>
+</ul>
+<h4 id="step-1-gtp5g-tracer-build-run">Step 1: gtp5g-tracer (build &amp; run)</h4>
+<p>1. Make gtp5g functions visible for fentry/fexit:</p>
+<p>If functions are declared <code>static inline</code> the symbol may not be visible to the tracer. Convert to a visible symbol where needed (example):</p>
+<div class="highlight"><pre><span></span><code>// gtp5g/src/gtpu/gtpu.c
+<span class="gd">- static inline int gtp5g_encap_recv(struct sk_buff *skb, struct net_device *dev)</span>
+<span class="gi">+ __visible noinline int gtp5g_encap_recv(struct sk_buff *skb, struct net_device *dev)</span>
+{
+<span class="w"> </span> // ... function body
+}
+</code></pre></div>
+<p>2. Build &amp; run the tracer</p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/sys/kernel/btf/vmlinux<span class="w"> </span>/usr/lib/modules/<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span>/build/
+<span class="nb">cd</span><span class="w"> </span>&lt;GTP5G&gt;
+make<span class="w"> </span>clean<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make
+sudo<span class="w"> </span>make<span class="w"> </span>install
+<span class="nb">cd</span><span class="w"> </span>&lt;GTP5G-TRACER&gt;
+make<span class="w"> </span>dep
+make<span class="w"> </span>
+</code></pre></div>
+<p>3. Quick verification (development, should have ue traffic):</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/sys/kernel/debug/tracing/trace_pipe<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gtp5g
+<span class="c1"># example output:</span>
+<span class="c1"># nr-gnb-365189 ... bpf_trace_printk: fentry/gtp5g_encap_recv: PID=365189, TGID=365162</span>
+<span class="c1"># nr-ue-365012  ... bpf_trace_printk: stop: pid=365012 (nr-ue) cpu=4</span>
+</code></pre></div>
+<hr />
+<h4 id="step-2-build-gthulhu">Step 2: Build Gthulhu</h4>
+<ul>
+<li>
+<p>Gthulhu (API + Scheduler): <a href="https://gthulhu.org/k8s/">Deploying Gthulhu with Kubernetes</a></p>
+</li>
+<li>
+<p>gtp5g_operator: build the operator binary and make sure it can authenticate against the Gthulhu API</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Gthulhu/gtp5g_operator
+go<span class="w"> </span>build<span class="w"> </span>-o<span class="w"> </span>gtp5g_operator
+</code></pre></div>
+<p>The operator expects configuration for the API endpoint and the Kubernetes JWT public key; see <code>./start_operator.sh</code> for example environment variables.</p>
+<hr />
+<h3 id="deployment-guide">Deployment Guide</h3>
+<div class="highlight"><pre><span></span><code>Host (Ubuntu 25.04)
+├── gtp5g-tracer (running in background)
+│   └── Output to /sys/kernel/debug/tracing/trace_pipe
+│
+├── Kubernetes Cluster (microk8s)
+│   ├── gthulhu-api (Pod)
+│   │   ├── :8080 (API Server)
+│   │   └── /app/jwt_public_key.pem
+│   │
+│   └── gthulhu-scheduler (Pod)
+│       └── eBPF-based Scheduler (sched_ext)
+│
+└── gtp5g_operator (running on host)
+    ├── Read trace_pipe
+    ├── Port-forward → :8081 → K8s :8080
+    └── Send strategies to Gthulhu API
+</code></pre></div>
+<h4 id="startup-sequence">Startup Sequence</h4>
+<ol>
+<li>
+<p><strong>Start free5GC-helm and UERANSIM</strong><br />
+<div class="highlight"><pre><span></span><code><span class="c1"># Install free5GC charts</span>
+<span class="nb">cd</span><span class="w"> </span>free5gc-helm/charts
+helm<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>free5gc<span class="w"> </span>free5gc-helm<span class="w"> </span>./free5gc/<span class="w"> </span>
+
+<span class="c1">#Install UERANSIM chart</span>
+<span class="nb">cd</span><span class="w"> </span>free5gc-helm/charts
+helm<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>free5gc<span class="w"> </span>ueransim<span class="w"> </span>./ueransim/<span class="w"> </span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Start gtp5g-tracer</strong><br />
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/gtp5g-tracer
+sudo<span class="w"> </span>./main
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Start Gthulhu (K8s)</strong><br />
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>Gthulhu/chart
+helm<span class="w"> </span>install<span class="w"> </span>gthulhu<span class="w"> </span>gthulhu
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Setup Port-Forward</strong><br />
+<div class="highlight"><pre><span></span><code><span class="nv">POD_NAME</span><span class="o">=</span>gthulhu-api-xxxxx
+sudo<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="nv">$POD_NAME</span><span class="w"> </span><span class="m">8081</span>:8080
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Start gtp5g_operator</strong><br />
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Gthulhu/gtp5g_operator/
+sudo<span class="w"> </span>go<span class="w"> </span>run<span class="w"> </span>main.go
+</code></pre></div></p>
+</li>
+</ol>
+<hr />
+<h2 id="performance-testing">Performance Testing</h2>
+<h3 id="test-methodology">Test Methodology</h3>
+<h4 id="baseline-unoptimized">Baseline (Unoptimized)</h4>
+<ol>
+<li>Stop gtp5g_operator</li>
+<li>Clear Gthulhu strategies</li>
+<li>UE ping test (Run a short host CPU stress, e.g. <code>stress-ng -c 20 --timeout 120s --metrics-brief</code>):</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># Inside UE POD</span>
+ping<span class="w"> </span>-I<span class="w"> </span>uesimtun0<span class="w"> </span>N6_IP<span class="w"> </span>-c<span class="w"> </span><span class="m">20</span>
+</code></pre></div>
+<h4 id="optimized">Optimized</h4>
+<ol>
+<li>Start gtp5g_operator</li>
+<li>Confirm strategies are applied</li>
+<li>UE ping test (same command, same CPU stress)</li>
+</ol>
+<h3 id="test-results">Test Results</h3>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Baseline</th>
+<th>Optimized</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avg Latency</td>
+<td>88.98 ms</td>
+<td>2.079 ms</td>
+<td>97.66%</td>
+</tr>
+<tr>
+<td>Min Latency</td>
+<td>35.47 ms</td>
+<td>0.679 ms</td>
+<td>98.08%</td>
+</tr>
+<tr>
+<td>Max Latency</td>
+<td>130.95 ms</td>
+<td>8.45 ms</td>
+<td>93.55%</td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p><img alt="baseline" src="../baseline.png" /><br />
+Figure 1: Baseline - without gtp5g-operator</p>
+<p><img alt="optimize" src="../optimized.png" /><br />
+Figure 2: Optimized - automatic apply schduling strategies</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Combining kernel-level eBPF tracing of gtp5g with an eBPF-based scheduler (Gthulhu) provides an efficient, non-invasive way to detect and prioritize critical 5GC processes — Reducing substantial UE latency under CPU contention. While this approach is promising, it requires BTF/function visibility and safe, well-tested strategies to avoid negative trade-offs.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://free5gc.org/blog/20250913/20250913/">GTP5G-Tracer: Detailed Project Explanation</a></li>
+<li><a href="https://ithelp.ithome.com.tw/users/20110850/ironman/8339?page=1">30 篇文帶你用 eBPF 與 Golang 打造 Linux Scheduler 系列</a> </li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Meng-Han Hsieh, and I've recently started exploring 5G technology and engaging with the free5GC community. I hope you find this blog post useful, and don't hesitate to reach out if you have recommendations for improvement.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/c9274326">Meng-Han, Hsieh</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
