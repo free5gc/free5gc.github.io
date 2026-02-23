@@ -8,7 +8,7 @@
     <h1 class="hero-title">Open Source Core Network Implementation</h1>
     <p class="hero-description">free5GC is a Linux Foundation project dedicated to implementing 3GPP Release 15 and beyond core networks</p>
     <div class="hero-buttons">
-      <a href="https://github.com/free5gc/free5gc" class="hero-button primary" target="_blank">Get Started</a>
+      <a href="./guide/quick-setup/" class="hero-button primary" target="_blank">Quick Start</a>
       <a href="./guide/contribute/" class="hero-button secondary">How to Contribute</a>
     </div>
   </div>
