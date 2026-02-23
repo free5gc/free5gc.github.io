@@ -2,6 +2,9 @@
 
 # Installation
 
+> [!Note]
+> For quick setup, please refer to [free5GC Quick Setup](./quick-setup.md).
+
 ## A. Prerequisites
 
 1\. Linux Kernel Version

@@ -15,10 +15,16 @@
 > Otherwise, for normal use/test purposes, we recommend you use the [free5GC Compose](https://github.com/free5gc/free5gc-compose) to launch the free5GC without complicated configuration settings.
 
 ### [Recommended] free5GC compose
+
 - [Installing free5GC Core Network with free5GC-Compose](./0-compose.md)
 
 ### free5GC Helm
+
 - [free5GC Helm Installation](./7-free5gc-helm.md)
+
+### free5GC Single Host Mode
+
+- [free5GC Quick Setup](./quick-setup.md)
 
 ### [Advanced] Build free5GC from scratch
 
@@ -33,13 +39,8 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Enable OAuth2 on SBI](./../doc/OAuth2/oauth2_enable.md)
 - [free5GC Simple Apps](./6-simple-app.md)
 
-<!-- TODO: should update the tutorial videos -->
-<!-- - All of tutorial videos are available at our YouTube channel:
-    - [English](https://www.youtube.com/watch?v=R-9vH_6VJ2Q&list=PLeDUIabcS2_rQd3yVJrBAYb-MbcqNgjC9)
-    - [Chinese](https://www.youtube.com/watch?v=lD5iYvCB4CQ&list=PLeDUIabcS2_pdhCN3sz5gFdT-mTukyX-v)
-    - [Environment setup of multiple SMF, DNN, and UPF](https://www.youtube.com/watch?v=AEMrjKRWarw) --> 
-
 ## Configuration
+
 - [Environment](./Environment.md)
 - [Basic](./Configuration.md)
 - [SMF](./SMF-Config.md)
@@ -67,14 +68,13 @@ For Container deployment:
 
 Here are the features on the roadmap. These items are planned to be supported in the near future:
 
-- Roaming
 - CNTi
-- BSF
-- Grafana
+- Parallel Registration
 
 If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
 
 ## Others
+
 - [Release Note](https://github.com/free5gc/free5gc/releases)
 - [Troubleshooting](./Troubleshooting.md)
 - [Appendix](./Appendix.md)
