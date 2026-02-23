@@ -19,7 +19,7 @@ Before you begin, please ensure your system meets the following requirements:
 
 ---
 
-## Step-by-Step Installation
+## Quick Setup
 
 ### Step 1. Clone the free5GC Repository
 
@@ -44,7 +44,7 @@ ip a
 
 Now, run the setup script and replace `<network interface>` with the name you found in Step 2.
 
-> [!Caution]
+> [!Warning]
 > **CRITICAL:** You **must** use the `source` command. Do not use `./` or `bash` or `sh` to execute the script.
 
 ```bash
