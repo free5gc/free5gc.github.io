@@ -15,7 +15,7 @@ Before you begin, please ensure your system meets the following requirements:
 - **Tools**: The `git` command must be installed on your system.
 
 > [!Warning]
-> **CPU AVX Support:** If your CPU does not support the AUX instruction set, the automated MongoDB installation will fail. In this case, please follow the [Manual Installation Guide](./3-install-free5gc.md) to install a compatible MongoDB version manually.
+> **CPU AVX Support:** If your CPU does not support the AVX instruction set, the automated MongoDB installation will fail. In this case, please follow the [Manual Installation Guide](./3-install-free5gc.md) to install a compatible MongoDB version manually.
 
 ---
 
