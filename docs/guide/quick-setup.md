@@ -10,12 +10,12 @@ This guide uses our `quick-setup.sh` script to automatically install dependencie
 
 Before you begin, please ensure your system meets the following requirements:
 
-- **CPU**: AMD or Intel CPU with **AUX** instruction set support (required for MongoDB).
+- **CPU**: AMD or Intel CPU with **AVX** instruction set support (required for MongoDB).
 - **OS**: Ubuntu 20.04, 22.04, 24.04, or 25.04.
 - **Tools**: The `git` command must be installed on your system.
 
 > [!Warning]
-> **CPU AUX Support:** If your CPU does not support the AUX instruction set, the automated MongoDB installation will fail. In this case, please follow the [Manual Installation Guide](./3-install-free5gc.md) to install a compatible MongoDB version manually.
+> **CPU AVX Support:** If your CPU does not support the AUX instruction set, the automated MongoDB installation will fail. In this case, please follow the [Manual Installation Guide](./3-install-free5gc.md) to install a compatible MongoDB version manually.
 
 ---
 
