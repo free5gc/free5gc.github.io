@@ -135,7 +135,7 @@ microk8s enable hostpath-storage
             storage: 8Gi
           accessModes:
           - ReadWriteOnce
-          persistentVolumeReclaimPolicy: Retain
+          persistentVolumeReclaimPolicy: Delete
           storageClassName: microk8s-hostpath
           local:
             path: <mongo_storage_dir> # edit to your own path, like: /home/use/mongo
