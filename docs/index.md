@@ -63,12 +63,12 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 ### Connecting to the Future!
 
 <div class="roadmap-container">
-  <img src="./assets/roadmap-202601.png" alt="free5GC Roadmap" class="roadmap-image"/>
+  <img src="./assets/roadmap-202603.png" alt="free5GC Roadmap" class="roadmap-image"/>
   <div class="roadmap-text">
     <p>We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:</p>
     <ul class="roadmap-list">
       <li>CNTi</li>
-      <li>UE Parallel Registratioin</li>
+      <li>SCP</li>
     </ul>
     <a href="#" class="roadmap-button">Learn More About free5GC Development Plans</a>
   </div>
