@@ -18,8 +18,8 @@
   <h2>Your Roadmap to 5G Expertise Starts Here — And It’s Free!</h2>
   <p>Linux Foundation Education has launched Introduction to free5GC (LFS114), a free, self-paced course designed for developers, network engineers, and technologists who want to deepen their 5G expertise and work directly with modern 5G Core architecture. In just a few focused hours, you’ll learn how free5GC is built, how its core functions operate, and how to navigate and engage with the codebase — giving you a real advantage in today’s cloud native networking landscape.</p>
   <p>For more details, please visit the <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" target="_blank">Introduction to free5GC (LFS114)</a>.</p>
-  <h2>Latest News: free5GC v4.2.0 Released!</h2>
-  <p>We have fixed a series of bugs in version 4.2.0 to improve stability and introduce a new feature: <strong>BSF</strong>.</p>
+  <h2>Latest News: free5GC v4.2.1 Released!</h2>
+  <p>We have fixed a series of bugs in version 4.2.1 to improve stability and introduce a new feature: <strong>Parallel Registration</strong>.</p>
   <p>For more details, please see the history page.</p>
   <a href="./history" class="announcement-link">View Version History →</a>
 </div>
