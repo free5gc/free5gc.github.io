@@ -129,11 +129,11 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
-    * To install the latest stable build (v4.2.0):
+    * To install the latest stable build (v4.2.1):
 
         ```bash
         cd ~
-        git clone --recursive -b v4.2.0 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b v4.2.1 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
         ```
 
