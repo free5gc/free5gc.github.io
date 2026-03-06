@@ -1,0 +1,1471 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>5G-DPOP: eBPF-Based UPF Data Plane Observability Platform - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5g-dpop-ebpf-based-upf-data-plane-observability-platform" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5G-DPOP: eBPF-Based UPF Data Plane Observability Platform
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-architecture" class="md-nav__link">
+    2. System Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="2. System Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-ebpf-agent" class="md-nav__link">
+    2.1 eBPF Agent
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 eBPF Agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hook-mechanism" class="md-nav__link">
+    Hook Mechanism
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpf-maps" class="md-nav__link">
+    BPF Maps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packet-drop-reason-codes" class="md-nav__link">
+    Packet Drop Reason Codes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-pfcp-sniffer" class="md-nav__link">
+    2.2 PFCP Sniffer
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 PFCP Sniffer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitored-pfcp-message-types" class="md-nav__link">
+    Monitored PFCP Message Types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-data-structure" class="md-nav__link">
+    Session Data Structure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-state-tracking" class="md-nav__link">
+    Session State Tracking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-api-server" class="md-nav__link">
+    2.3 API Server
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 API Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-api-endpoints" class="md-nav__link">
+    REST API Endpoints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#websocket-streaming" class="md-nav__link">
+    WebSocket Streaming
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-data-flow" class="md-nav__link">
+    2.4 Data Flow
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-feature-demonstration" class="md-nav__link">
+    3. Feature Demonstration
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Feature Demonstration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-real-time-traffic-monitoring" class="md-nav__link">
+    3.1 Real-time Traffic Monitoring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-pdu-session-information" class="md-nav__link">
+    3.2 PDU Session Information
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-network-topology-visualization" class="md-nav__link">
+    3.3 Network Topology Visualization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-packet-drop-detection" class="md-nav__link">
+    3.4 Packet Drop Detection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-demo-videos" class="md-nav__link">
+    4. Demo Videos
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Demo Videos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-operation-demo" class="md-nav__link">
+    Basic Operation Demo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packet-drop-test" class="md-nav__link">
+    Packet Drop Test
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-quick-start" class="md-nav__link">
+    5. Quick Start
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-steps" class="md-nav__link">
+    Installation Steps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#starting-services" class="md-nav__link">
+    Starting Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-service-status" class="md-nav__link">
+    Verify Service Status
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-summary" class="md-nav__link">
+    6. Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260211/20260211.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260211/20260211.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="5g-dpop-ebpf-based-upf-data-plane-observability-platform">5G-DPOP: eBPF-Based UPF Data Plane Observability Platform</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/solar224">Yu-Chen, Chan</a><br />
+Date: 2026/02/11</p>
+</div>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>In the 5G Core Network architecture, the User Plane Function (UPF) handles all user data plane packet forwarding. However, the UPF's packet processing logic runs in Linux Kernel space (via the gtp5g kernel module), making it difficult for traditional user-space monitoring tools to observe its internal behavior.</p>
+<p>When network issues occur, engineers often face the following challenges:</p>
+<ul>
+<li><strong>Packet loss is hard to trace</strong>: Unknown where packets are dropped and why</li>
+<li><strong>Inaccurate traffic statistics</strong>: Only interface-level statistics are available, unable to distinguish actual user traffic within GTP tunnels</li>
+<li><strong>Session correlation is difficult</strong>: Hard to associate traffic data with specific PDU Sessions or UEs</li>
+</ul>
+<p><strong>5G-DPOP (Data Plane Observability Platform)</strong> attempts to address these issues. This project leverages Linux eBPF technology to directly hook into key functions of the gtp5g kernel module, enabling:</p>
+<ul>
+<li><strong>Real-time traffic monitoring</strong>: Precise Uplink/Downlink packet count and traffic statistics</li>
+<li><strong>Packet drop detection</strong>: Capture every dropped packet and record the drop reason</li>
+<li><strong>PFCP Session correlation</strong>: Build TEID-to-Session mappings by listening to PFCP messages</li>
+<li><strong>Network topology visualization</strong>: Automatically generate UE → gNB → UPF → DN topology diagrams</li>
+</ul>
+<hr />
+<h2 id="2-system-architecture">2. System Architecture</h2>
+<p><img alt="System Architecture" src="../image/ArchitectureDesign.png" /><br />
+<strong>Figure 1.</strong> 5G-DPOP System Architecture</p>
+<p>5G-DPOP uses a modular design consisting of the following components:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Tech Stack</th>
+<th>Description</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>eBPF Agent</strong></td>
+<td>Go + cilium/ebpf</td>
+<td>Load eBPF programs, read Kernel Maps, export Metrics</td>
+<td>9100</td>
+</tr>
+<tr>
+<td><strong>PFCP Sniffer</strong></td>
+<td>Go + gopacket</td>
+<td>Listen to PFCP messages, parse Sessions, build TEID mappings</td>
+<td>8805</td>
+</tr>
+<tr>
+<td><strong>API Server</strong></td>
+<td>Go + Gin</td>
+<td>Provide REST API and WebSocket real-time streaming</td>
+<td>8080</td>
+</tr>
+<tr>
+<td><strong>Web Frontend</strong></td>
+<td>React + TypeScript + Vite</td>
+<td>Visualization dashboard</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>Prometheus</strong></td>
+<td>Docker</td>
+<td>Time-series database for Metrics storage</td>
+<td>9090</td>
+</tr>
+<tr>
+<td><strong>Otel Collector</strong></td>
+<td>Docker</td>
+<td>OpenTelemetry collector</td>
+<td>4317</td>
+</tr>
+</tbody>
+</table>
+<h3 id="21-ebpf-agent">2.1 eBPF Agent</h3>
+<p>The eBPF Agent is the core of the platform, responsible for collecting data at the Kernel level.</p>
+<h4 id="hook-mechanism">Hook Mechanism</h4>
+<p>The Agent uses eBPF kprobe mechanism to hook two key functions in the gtp5g kernel module:</p>
+<table>
+<thead>
+<tr>
+<th>Hook Point</th>
+<th>Function Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uplink Entry</td>
+<td><code>gtp5g_encap_recv</code></td>
+<td>Capture packets entering UPF from gNB</td>
+</tr>
+<tr>
+<td>Downlink Exit</td>
+<td><code>gtp5g_dev_xmit</code></td>
+<td>Capture packets sent from UPF to gNB</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, we modified the gtp5g kernel module to add tracepoints for tracking packet drop events. When a packet is dropped, gtp5g triggers the tracepoint and passes the drop reason code. The eBPF program captures this and sends it to User Space via Ring Buffer.</p>
+<h4 id="bpf-maps">BPF Maps</h4>
+<p>The Agent uses various BPF Maps to store and transfer data:</p>
+<table>
+<thead>
+<tr>
+<th>Map Type</th>
+<th>Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PERCPU_ARRAY</code></td>
+<td><code>traffic_stats</code></td>
+<td>Store Uplink/Downlink traffic counters, avoiding lock contention</td>
+</tr>
+<tr>
+<td><code>RINGBUF</code></td>
+<td><code>drop_events</code></td>
+<td>Send packet drop events to User Space</td>
+</tr>
+<tr>
+<td><code>RINGBUF</code></td>
+<td><code>packet_events</code></td>
+<td>Send detailed packet information (optional)</td>
+</tr>
+<tr>
+<td><code>HASH</code></td>
+<td><code>teid_session_map</code></td>
+<td>TEID-to-Session mapping, populated by PFCP Sniffer</td>
+</tr>
+<tr>
+<td><code>HASH</code></td>
+<td><code>teid_stats</code></td>
+<td>Per-TEID traffic statistics</td>
+</tr>
+<tr>
+<td><code>HASH</code></td>
+<td><code>ue_ip_stats</code></td>
+<td>Per-UE IP traffic statistics</td>
+</tr>
+</tbody>
+</table>
+<h4 id="packet-drop-reason-codes">Packet Drop Reason Codes</h4>
+<p>The gtp5g module defines various drop reasons, which the eBPF program records:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td><code>NO_ROUTE</code></td>
+<td>No route to destination</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>NO_PDR</code></td>
+<td>No matching PDR rule found</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>UL_GATE_CLOSED</code></td>
+<td>Uplink QoS Gate closed</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>DL_GATE_CLOSED</code></td>
+<td>Downlink QoS Gate closed</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>IP_XMIT_FAIL</code></td>
+<td>IP layer transmission failed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-pfcp-sniffer">2.2 PFCP Sniffer</h3>
+<p>The PFCP Sniffer listens to PFCP messages between SMF and UPF, parsing Session information and building TEID mappings.</p>
+<h4 id="monitored-pfcp-message-types">Monitored PFCP Message Types</h4>
+<table>
+<thead>
+<tr>
+<th>Message Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Session Establishment Request/Response</td>
+<td>Create new Session, extract F-SEID, F-TEID, UE IP</td>
+</tr>
+<tr>
+<td>Session Modification Request/Response</td>
+<td>Update Session, may add or modify TEIDs</td>
+</tr>
+<tr>
+<td>Session Deletion Request/Response</td>
+<td>Delete Session, clean up related mappings</td>
+</tr>
+</tbody>
+</table>
+<h4 id="session-data-structure">Session Data Structure</h4>
+<p>Each Session contains the following key information:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Session</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">SEID</span><span class="w">         </span><span class="kt">uint64</span><span class="w">    </span><span class="c1">// Session Endpoint ID</span>
+<span class="w">    </span><span class="nx">UEIP</span><span class="w">         </span><span class="nx">net</span><span class="p">.</span><span class="nx">IP</span><span class="w">    </span><span class="c1">// UE IP Address</span>
+<span class="w">    </span><span class="nx">UPFIP</span><span class="w">        </span><span class="nx">net</span><span class="p">.</span><span class="nx">IP</span><span class="w">    </span><span class="c1">// UPF IP Address</span>
+<span class="w">    </span><span class="nx">GNBIP</span><span class="w">        </span><span class="nx">net</span><span class="p">.</span><span class="nx">IP</span><span class="w">    </span><span class="c1">// gNB IP Address</span>
+<span class="w">    </span><span class="nx">TEIDs</span><span class="w">        </span><span class="p">[]</span><span class="kt">uint32</span><span class="w">  </span><span class="c1">// Associated GTP TEID list</span>
+<span class="w">    </span><span class="nx">DNN</span><span class="w">          </span><span class="kt">string</span><span class="w">    </span><span class="c1">// Data Network Name</span>
+<span class="w">    </span><span class="nx">QFI</span><span class="w">          </span><span class="kt">uint8</span><span class="w">     </span><span class="c1">// QoS Flow Identifier</span>
+<span class="w">    </span><span class="nx">CreatedAt</span><span class="w">    </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<span class="w">    </span><span class="c1">// Traffic statistics</span>
+<span class="w">    </span><span class="nx">BytesUL</span><span class="p">,</span><span class="w"> </span><span class="nx">BytesDL</span><span class="w">     </span><span class="kt">uint64</span>
+<span class="w">    </span><span class="nx">PacketsUL</span><span class="p">,</span><span class="w"> </span><span class="nx">PacketsDL</span><span class="w"> </span><span class="kt">uint64</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="session-state-tracking">Session State Tracking</h4>
+<p>The Sniffer tracks Session establishment states:</p>
+<ul>
+<li><strong>Pending</strong>: Session Establishment Request received, waiting for completion</li>
+<li><strong>Established</strong>: Session Modification received, Session is fully established</li>
+<li><strong>Failed</strong>: Timed out without completion (possibly N1N2 signaling failure)</li>
+</ul>
+<h3 id="23-api-server">2.3 API Server</h3>
+<p>The API Server provides REST API and WebSocket interfaces for frontend queries and real-time data subscriptions.</p>
+<h4 id="rest-api-endpoints">REST API Endpoints</h4>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/v1/health</code></td>
+<td>Health check</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/sessions</code></td>
+<td>Get all PDU Sessions</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/topology</code></td>
+<td>Get network topology</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/metrics/traffic</code></td>
+<td>Get traffic statistics</td>
+</tr>
+</tbody>
+</table>
+<h4 id="websocket-streaming">WebSocket Streaming</h4>
+<p>The frontend subscribes to real-time data updates via WebSocket connection:</p>
+<ul>
+<li>Traffic statistics pushed every second</li>
+<li>Packet drop events pushed in real-time</li>
+<li>Session state changes notified immediately</li>
+</ul>
+<h3 id="24-data-flow">2.4 Data Flow</h3>
+<p>The overall data flow is as follows:</p>
+<p><strong>Kernel Space:</strong></p>
+<ol>
+<li>gtp5g module processes GTP-U packets</li>
+<li>eBPF programs (kprobe/tracepoint) capture packet events</li>
+<li>Data is sent to User Space via Ring Buffer</li>
+</ol>
+<p><strong>User Space:</strong></p>
+<ol>
+<li><strong>PFCP Sniffer</strong> captures PFCP messages → extracts Session/TEID mappings</li>
+<li><strong>eBPF Agent</strong> reads BPF Maps → exports metrics to Prometheus</li>
+<li><strong>API Server</strong> aggregates data → provides REST API + WebSocket</li>
+<li><strong>Web Frontend</strong> subscribes to WebSocket → displays real-time dashboard</li>
+</ol>
+<hr />
+<h2 id="3-feature-demonstration">3. Feature Demonstration</h2>
+<h3 id="31-real-time-traffic-monitoring">3.1 Real-time Traffic Monitoring</h3>
+<p>The Dashboard homepage provides real-time Uplink/Downlink traffic charts for observing traffic trends.</p>
+<p><img alt="Traffic Monitoring" src="../image/Traffic.png" /><br />
+<strong>Figure 2.</strong> Real-time Traffic Monitoring Charts</p>
+<h3 id="32-pdu-session-information">3.2 PDU Session Information</h3>
+<p>The system automatically tracks all established PDU Sessions, displaying SEID, UE IP, TEID, and other details.</p>
+<p><img alt="Session Details" src="../image/SessionDetails.png" /><br />
+<strong>Figure 3.</strong> PDU Session Details</p>
+<p>Per-Session traffic statistics can also be viewed independently:</p>
+<p><img alt="Per-Session Traffic" src="../image/PerSessionTraffic.png" /><br />
+<strong>Figure 4.</strong> Per-Session Traffic Statistics</p>
+<h3 id="33-network-topology-visualization">3.3 Network Topology Visualization</h3>
+<p>Based on captured packet information, the system automatically generates network topology diagrams showing connections between UE, gNB, UPF, and DN.</p>
+<p><img alt="Network Topology" src="../image/NetworkTopology.png" /><br />
+<strong>Figure 5.</strong> Auto-generated Network Topology</p>
+<h3 id="34-packet-drop-detection">3.4 Packet Drop Detection</h3>
+<p>When packets are dropped within the UPF, the system captures and records the drop reason in real-time for subsequent troubleshooting.</p>
+<p><img alt="Drop Detection" src="../image/DropsDetected.png" /><br />
+<strong>Figure 6.</strong> Real-time Packet Drop Detection</p>
+<p>The system also provides drop reason statistics to help locate the root cause:</p>
+<p><img alt="Drop Reasons Analysis" src="../image/DropReasonsAnalysis.png" /><br />
+<strong>Figure 7.</strong> Packet Drop Reason Analysis</p>
+<p>Common drop reasons include:<br />
+- <code>NO_PDR</code>: No matching PDR rule found<br />
+- <code>UL_GATE_CLOSED</code> / <code>DL_GATE_CLOSED</code>: QoS Gate closed<br />
+- <code>NO_ROUTE</code>: No route to destination</p>
+<hr />
+<h2 id="4-demo-videos">4. Demo Videos</h2>
+<h3 id="basic-operation-demo">Basic Operation Demo</h3>
+<p>Shows traffic monitoring and session tracking in action.</p>
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/q5S6spIqfPg" title="demo single" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h3 id="packet-drop-test">Packet Drop Test</h3>
+<p>Demonstrates drop detection and reason analysis.</p>
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/ntuTbTNDHSk" title="Drop test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<hr />
+<h2 id="5-quick-start">5. Quick Start</h2>
+<h3 id="requirements">Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operating System</td>
+<td>Ubuntu 25.04 (Kernel 6.14+ with BTF support)</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>1.21+</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>18+ LTS</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>24+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Ensure gtp5g kernel module and free5gc-compose environment are installed:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify BTF support</span>
+ls<span class="w"> </span>-la<span class="w"> </span>/sys/kernel/btf/vmlinux
+
+<span class="c1"># Verify gtp5g module is loaded</span>
+lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gtp5g
+</code></pre></div>
+<h3 id="installation-steps">Installation Steps</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Clone the project</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/solar224/5G-DPOP.git
+<span class="nb">cd</span><span class="w"> </span>5G-DPOP
+
+<span class="c1"># 2. Run environment setup script</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>scripts/setup_env.sh
+./scripts/setup_env.sh
+
+<span class="c1"># 3. Generate vmlinux.h and compile</span>
+sudo<span class="w"> </span>bpftool<span class="w"> </span>btf<span class="w"> </span>dump<span class="w"> </span>file<span class="w"> </span>/sys/kernel/btf/vmlinux<span class="w"> </span>format<span class="w"> </span>c<span class="w"> </span>&gt;<span class="w"> </span>internal/ebpf/bpf/vmlinux.h
+make<span class="w"> </span>all
+
+<span class="c1"># 4. Install frontend dependencies</span>
+<span class="nb">cd</span><span class="w"> </span>web<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</code></pre></div>
+<h3 id="starting-services">Starting Services</h3>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Startup order matters</strong>: You must start 5G-DPOP before starting free5GC.<br />
+This is because DPOP needs to capture PFCP Session Establishment messages during UE registration.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Terminal 1: Start infrastructure (Prometheus, Redis)</span>
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deployments/docker-compose.yaml<span class="w"> </span>up<span class="w"> </span>-d
+
+<span class="c1"># Terminal 2: Start Agent (requires root privileges)</span>
+sudo<span class="w"> </span>./bin/agent<span class="w"> </span>-pfcp-iface<span class="w"> </span>br-free5gc
+
+<span class="c1"># Terminal 3: Start API Server</span>
+./bin/api-server
+
+<span class="c1"># Terminal 4: Start Web Frontend</span>
+<span class="nb">cd</span><span class="w"> </span>web<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>dev
+</code></pre></div>
+<p>After startup, open a browser and visit <strong>http://localhost:3000</strong> to see the monitoring dashboard.</p>
+<h3 id="verify-service-status">Verify Service Status</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check health status of each service</span>
+curl<span class="w"> </span>http://localhost:9100/health<span class="w">       </span><span class="c1"># Agent</span>
+curl<span class="w"> </span>http://localhost:8080/api/v1/health<span class="w"> </span><span class="c1"># API Server</span>
+curl<span class="w"> </span>http://localhost:9090/-/healthy<span class="w">     </span><span class="c1"># Prometheus</span>
+</code></pre></div>
+<hr />
+<h2 id="6-summary">6. Summary</h2>
+<p>5G-DPOP provides a UPF data plane observability solution. Through eBPF technology, we can:</p>
+<ul>
+<li><strong>Deep Kernel-level access</strong>: Directly observe gtp5g module packet processing behavior</li>
+<li><strong>Real-time monitoring</strong>: Millisecond-level traffic statistics and event notifications</li>
+<li><strong>Problem diagnosis</strong>: Precisely locate packet drop positions and reasons</li>
+<li><strong>Visualization</strong>: Intuitive Dashboard and network topology diagrams</li>
+</ul>
+<p>For 5G Core Network developers and operators, 5G-DPOP serves as a practical diagnostic and monitoring tool that helps reduce troubleshooting time.</p>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/solar224/5G-DPOP">5G-DPOP - eBPF-Based UPF Data Plane Observability Platform</a></li>
+<li><a href="https://github.com/free5gc/gtp5g">gtp5g - 5G GTP-U Kernel Module</a></li>
+<li><a href="https://ebpf.io/">eBPF - Extended Berkeley Packet Filter</a></li>
+<li><a href="https://github.com/cilium/ebpf">cilium/ebpf - Go library for eBPF</a></li>
+<li><a href="https://free5gc.org/">free5GC - Open Source 5G Core Network</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129200_129299/129244/15.05.00_60/ts_129244v150500p.pdf">3GPP TS 29.244 - PFCP Specification</a></li>
+</ul>
+<hr />
+<h2 id="about">About</h2>
+<p>Hello, I'm Yu-Chen Chan. I'm a contributor to the free5GC project, focusing on 5G Core Network technologies. I hope this project and blog post have been helpful. If you have any questions, suggestions, or would like to discuss further, please don't hesitate to reach out.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/solar224">solar224</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
