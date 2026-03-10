@@ -6,7 +6,7 @@
 
 ## March 3, 2026: v4.2.1
 
-In the release v4.2.1 of free5GC, we have fixed s series of bugs, and also introduce new features:
+In the release v4.2.1 of free5GC, we have fixed series of bugs, and also introduce new features:
 
 - [Parallel Registration](https://github.com/free5gc/amf/pull/194)
 - [Quick Setup Script](https://github.com/free5gc/free5gc/pull/828)
