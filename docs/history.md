@@ -6,14 +6,14 @@
 
 ## March 3, 2026: v4.2.1
 
-In the release v4.2.1 of free5GC, we have fixed series of bugs, and also introduce new features:
+In the release v4.2.1 of free5GC, we have fixed a series of bugs, and also introduce new features:
 
 - [Parallel Registration](https://github.com/free5gc/amf/pull/194)
 - [Quick Setup Script](https://github.com/free5gc/free5gc/pull/828)
 
 ## January 13, 2026: v4.2.0
 
-In the release v4.2.0 of free5GC, we have fixed s series of bugs, upgrade go versioin to 1.25.5, and also introduce new features:
+In the release v4.2.0 of free5GC, we have fixed a series of bugs, upgrade go versioin to 1.25.5, and also introduce new features:
 
 - [BSF](https://github.com/free5gc/free5gc/pull/711)
 
