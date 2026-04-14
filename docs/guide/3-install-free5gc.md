@@ -66,8 +66,8 @@ lscpu | grep avx
     1. Import the public key used by the package management system
         ```bash
         sudo apt install -y gnupg curl
-        curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-        sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
+        curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
+        sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
         ```
     2. Create a list file for MongoDB
         ```bash
