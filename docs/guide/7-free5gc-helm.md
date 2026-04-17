@@ -22,6 +22,14 @@
         sudo snap install helm --classic
         ```
 
+    - k9s (Optional)
+
+        We recommend using [k9s](https://github.com/derailed/k9s). It provides a terminal UI to interact with your Kubernetes cluster.
+        For other details, see: [k9s-installation-guide](https://github.com/derailed/k9s#installation)
+        ```bash
+        snap install k9s --devmode
+        ```
+
 - Set `sudo` group and join
 
     ```bash
@@ -37,6 +45,7 @@
     chmod 0700 ~/.kube
     microk8s config > ~/.kube/config
     ```
+
 
 ## IP Forward Configuration
 
@@ -106,97 +115,43 @@
 > - [Multus - Tell pods to use those networks via annotations](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#run-pod-with-network-annotation)
 
 ```bash
+# required
+microk8s enable hostpath-storage
+
+# optional: only required when deploying with multus mode
 microk8s enable community
 microk8s enable multus
-microk8s enable hostpath-storage
 ```
 
 ## Create Persistent Volumn
 
-- Create two storage directories:
 
-    - One for mongo: `/home/usr/mongo` <= just an example
-    - One for cert: `/home/use/cert` <= just an example
+> [!NOTE]
+> CNTI best practice removes cert PVC usage and uses Secrets/ConfigMaps for certs.
+> You only need to configure MongoDB PV parameters in the chart values file.
 
-- For mongodb
+- Update MongoDB PV settings in `free5gc-helm/charts/free5gc/charts/mongodb-15.6.0/values.yaml` under `extraDeploy`.
+- Set your local storage path and node name in the embedded PV manifest.
 
-    - Create an storage directory: `/home/usr/mongo` <= just an example
-    - Create an YAML file: `persistent-vol-for-mongodb.yaml`
-
-        ```yaml
+```yaml
+extraDeploy:
+    - |
         apiVersion: v1
         kind: PersistentVolume
         metadata:
-          name: free5gc-pv-mongo
-          labels:
-            project: free5gc
+            name: free5gc-pv-mongo
         spec:
-          capacity:
-            storage: 8Gi
-          accessModes:
-          - ReadWriteOnce
-          persistentVolumeReclaimPolicy: Retain
-          storageClassName: microk8s-hostpath
-          local:
-            path: <mongo_storage_dir> # edit to your own path, like: /home/use/mongo
-          nodeAffinity:
-            required:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                  - <work_node_name> # edit to you node name
-        ```
-
-    - Apply via `kubectl`
-
-        ```bash
-        kubectl apply -f persistent-vol-for-mongodb.yaml
-        ```
-
-- For cert
-
-    - Create an storage directory: `/home/usr/cert` <= just an example
-    - Create an YAML file: `persistent-vol-for-cert.yaml`
-
-        ```yaml
-        apiVersion: v1
-        kind: PersistentVolume
-        metadata:
-          name: free5gc-pv-cert
-          labels:
-            project: free5gc
-        spec:
-          capacity:
-            storage: 2Mi
-          accessModes:
-          - ReadOnlyMany
-          persistentVolumeReclaimPolicy: Retain
-          storageClassName: microk8s-hostpath
-          local:
-            path: <cert_storage_dir> # edit to your own path, like: /home/use/cert
-          nodeAffinity:
-            required:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                  - <work-node-name> # edit to you node name
-        ```
-
-    - Apply via `kubectl`
-
-        ```bash
-        kubectl apply -f persistent-vol-for-cert.yaml
-        ```
-
-- Check it
-
-    ```bash
-    kubectl get pv
-    ```
+            local:
+                path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
+            nodeAffinity:
+                required:
+                    nodeSelectorTerms:
+                        - matchExpressions:
+                                - key: kubernetes.io/hostname
+                                    operator: In
+                                    values:
+                                        - <worker-node-name> # edit to your own node name, e.g. : ubuntu
+```
 
 ## Helm Chart
 
@@ -215,52 +170,83 @@ microk8s enable hostpath-storage
 
     - **free5gc-helm** offered a network configuration YAML file at `free5gc-helm/charts/free5gc/value.yaml`.
     - For `N2`/`N3`/`N4`/`N6`/`N9` interfaces, the `masterIf` and other `IP` field should be modified for customized deployment.
-
+    
 - **(Optional)** These values could also be setup by using `helm install --set`.
 
     ```bash
     helm install -n free5gc free5gc-helm ./free5gc/ \
-        --set global.n6network.subnetIP="x.x.x.x" \
-        --set global.n6network.gatewayIP="y.y.y.y" \
-        --set free5gc-upf.upf.n6if.ipAddress="z.z.z.z"
+        --set global.upf.multus.n6network.subnetIP="x.x.x.x" \
+        --set global.upf.multus.n6network.gatewayIP="y.y.y.y" \
+        --set global.upf.multus.upf.n6if.ipAddress="z.z.z.z"
     ```
 
-## Install Chart
+## How to deploy & test
 
-- Set working namespace for free5GC
+### Non-Multus Deploy (Default)
+
+1. **Prerequisites:** Follow [Prerequirements](#prerequirements).
+2. **Node Setup:** Follow [IP Forward Configuration](#ip-forward-configuration).
+3. **Addons:** Follow [Addons Enable](#addons-enable).
+4. **PV Setup:** Follow [Create Persistent Volumn](#create-persistent-volumn).
+5. **Install:** Run `helm install`.
 
     ```bash
+    cd free5gc-helm/charts
     kubectl create ns free5gc
-    ```
 
-- Install free5GC charts
-
-    ```bash
-    cd free5gc-helm/charts
     helm install -n free5gc free5gc-helm ./free5gc/ 
+
+    helm install -n free5gc ueransim ./ueransim/
     ```
 
-- Install UERANSIM chart
+### Multus Deploy
+
+1. **Prerequisites:** Follow [Prerequirements](#prerequirements), [IP Forward Configuration](#ip-forward-configuration), and [Addons Enable](#addons-enable).
+2. **PV Setup:** Follow [Create Persistent Volumn](#create-persistent-volumn).
+3. **Configuration (charts/free5gc/values.yaml):**
+    - Set `amf/smf/upf: multus.enabled` -> `true`.
+    - Set `amf.service.ngap` -> `false`.
+4. **UERANSIM:** Set `multus.enabled` -> `true` in `charts/ueransim/values.yaml`.
+5. **Network:** Configure `masterIF`, `n6 ip pool`, and subnets as usual.
+6. **Install:** Run `helm install`.
+
+### Single UPF Deploy
+
+*Applicable to both Multus and Non-Multus modes.*
+
+1. **Configuration:** In `charts/free5gc/values.yaml`, set `global.userPlaneArchitecture` -> `single`.
+2. **File Overwrites:**
+    - Copy `free5gc-smf/smf-configmap-single-upf.yaml` to `free5gc-smf/templates/smf-configmap.yaml`.
+    - Copy `free5gc-smf/single-upf-values.yaml` to `free5gc-smf/values.yaml`.
+3. **Install:** Run `helm install`.
 
     ```bash
     cd free5gc-helm/charts
+    kubectl create ns free5gc
+
+    cp free5gc/charts/free5gc-smf/single-upf-values.yaml \
+       free5gc/charts/free5gc-smf/values.yaml
+    cp free5gc/charts/free5gc-smf/smf-configmap-single-upf.yaml \
+       free5gc/charts/free5gc-smf/templates/smf-configmap.yaml
+
+    helm install -n free5gc free5gc-helm ./free5gc/ 
     helm install -n free5gc ueransim ./ueransim/ 
     ```
 
-- Check installation
+### Check installation
 
-    - Check installed charts
+- Check installed charts
 
-        ```bash
-        helm ls -A
-        ```
+    ```bash
+    helm ls -A
+    ```
 
-    - Check services, pods, replicates and deployments
+- Check services, pods, replicas, and deployments
 
-        ```bash
-        # status at each pod is expected as "Running"
-        kubectl get all -n free5gc
-        ```
+    ```bash
+    # status at each pod is expected as "Running"
+    kubectl get all -n free5gc
+    ```
 
 - Check IP forwarding is available at UPF
 
