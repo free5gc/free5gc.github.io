@@ -95,33 +95,32 @@ microk8s enable multus
 
 - Update MongoDB PV settings in `free5gc-helm/charts/free5gc/charts/mongodb-15.6.0/values.yaml` under `extraDeploy`.
 - Set your local storage path and node name in the embedded PV manifest.
-
-```yaml
-extraDeploy:
-  - apiVersion: v1
-    kind: PersistentVolume
-    metadata:
-      name: free5gc-pv-mongo
-      labels:
-        project: free5gc
-    spec:
-      capacity:
-        storage: 8Gi
-      accessModes:
-      - ReadWriteOnce
-      persistentVolumeReclaimPolicy: Retain
-      storageClassName: microk8s-hostpath
-      local:
-        path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
-      nodeAffinity:
-        required:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-              - <worker-node-name> # edit to your own node name, e.g. : ubuntu
-```
+    ```yaml
+    extraDeploy:
+    - apiVersion: v1
+        kind: PersistentVolume
+        metadata:
+        name: free5gc-pv-mongo
+        labels:
+            project: free5gc
+        spec:
+        capacity:
+            storage: 8Gi
+        accessModes:
+        - ReadWriteOnce
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: microk8s-hostpath
+        local:
+            path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
+        nodeAffinity:
+            required:
+            nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - <worker-node-name> # edit to your own node name, e.g. : ubuntu
+    ```
 
 - Setup kubelet args for IP fowarding:
 
@@ -134,7 +133,7 @@ extraDeploy:
         microk8s stop
         microk8s start
         ```
-        
+
 ## How to deploy & test
 
 ### Non-Multus Deploy (Default)
