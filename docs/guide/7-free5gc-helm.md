@@ -98,22 +98,29 @@ microk8s enable multus
 
 ```yaml
 extraDeploy:
-    - |
-        apiVersion: v1
-        kind: PersistentVolume
-        metadata:
-            name: free5gc-pv-mongo
-        spec:
-            local:
-                path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
-            nodeAffinity:
-                required:
-                    nodeSelectorTerms:
-                        - matchExpressions:
-                                - key: kubernetes.io/hostname
-                                    operator: In
-                                    values:
-                                        - <worker-node-name> # edit to your own node name, e.g. : ubuntu
+  - apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: free5gc-pv-mongo
+      labels:
+        project: free5gc
+    spec:
+      capacity:
+        storage: 8Gi
+      accessModes:
+      - ReadWriteOnce
+      persistentVolumeReclaimPolicy: Retain
+      storageClassName: microk8s-hostpath
+      local:
+        path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
+      nodeAffinity:
+        required:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - <worker-node-name> # edit to your own node name, e.g. : ubuntu
 ```
 
 
