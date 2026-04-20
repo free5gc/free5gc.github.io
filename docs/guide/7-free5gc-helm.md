@@ -123,7 +123,18 @@ extraDeploy:
               - <worker-node-name> # edit to your own node name, e.g. : ubuntu
 ```
 
+- Setup kubelet args for IP fowarding:
 
+    - Edit `/var/snap/microk8s/current/args/kubelet` and restart MicroK8s
+
+        ```bash
+        # append this arg
+        --allowed-unsafe-sysctls "net.ipv4.ip_forward"
+        # restart MicroK8s
+        microk8s stop
+        microk8s start
+        ```
+        
 ## How to deploy & test
 
 ### Non-Multus Deploy (Default)
@@ -239,15 +250,6 @@ extraDeploy:
                         }
                     ]
                 }
-        ```
-
-- Setup kubelet args for IP fowarding:
-
-    - Edit `/var/snap/microk8s/current/args/kubelet`
-
-        ```bash
-        # append this arg
-        --allowed-unsafe-sysctls "net.ipv4.ip_forward"
         ```
 
 - Apply settings and restart MicroK8s
