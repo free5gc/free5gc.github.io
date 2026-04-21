@@ -119,7 +119,7 @@ microk8s enable multus
                 - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - <worker-node-name> # edit to your own node name, e.g. : ubuntu
+                - <worker-node-name> # edit to your own node name, e.g. ubuntu
     ```
 
 ## IP Forward Configuration
