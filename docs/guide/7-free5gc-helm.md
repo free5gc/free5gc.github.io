@@ -97,29 +97,29 @@ microk8s enable multus
 - Set your local storage path and node name in the embedded PV manifest.
     ```yaml
     extraDeploy:
-    - apiVersion: v1
+      - apiVersion: v1
         kind: PersistentVolume
         metadata:
-        name: free5gc-pv-mongo
-        labels:
+          name: free5gc-pv-mongo
+          labels:
             project: free5gc
         spec:
-        capacity:
+          capacity:
             storage: 8Gi
-        accessModes:
-        - ReadWriteOnce
-        persistentVolumeReclaimPolicy: Retain
-        storageClassName: microk8s-hostpath
-        local:
+          accessModes:
+          - ReadWriteOnce
+          persistentVolumeReclaimPolicy: Retain
+          storageClassName: microk8s-hostpath
+          local:
             path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
-        nodeAffinity:
+          nodeAffinity:
             required:
-            nodeSelectorTerms:
-            - matchExpressions:
+              nodeSelectorTerms:
+              - matchExpressions:
                 - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - <worker-node-name> # edit to your own node name, e.g. ubuntu
+                  operator: In
+                  values:
+                  - <worker-node-name> # edit to your own node name, e.g. ubuntu
     ```
 
 ## IP Forward Configuration
