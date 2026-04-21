@@ -36,7 +36,7 @@ This guide will help you setup requirements, then apply adjustments based on the
         We recommend using [k9s](https://github.com/derailed/k9s) to interact with your Kubernetes cluster.
 
         ```bash
-        sudo snap install k9s --devmode
+        wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb
         ```
 
 - Set `sudo` group and join
