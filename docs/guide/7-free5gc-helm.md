@@ -122,6 +122,8 @@ microk8s enable multus
                 - <worker-node-name> # edit to your own node name, e.g. : ubuntu
     ```
 
+## IP Forward Configuration
+
 - Setup kubelet args for IP fowarding:
 
     - Edit `/var/snap/microk8s/current/args/kubelet` and restart MicroK8s
