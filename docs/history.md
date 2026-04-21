@@ -4,6 +4,12 @@
 
 ![free5gc-roadmp-2026](./assets/free5gc-roadmap-2026.png)
 
+## April 21, 2026: v4.2.2
+
+In the release v4.2.2 of free5GC, we have fixed a series of bugs, and also introduce new features:
+
+- [CNTi](https://github.com/free5gc/free5gc-helm/pull/14)
+
 ## March 3, 2026: v4.2.1
 
 In the release v4.2.1 of free5GC, we have fixed a series of bugs, and also introduce new features:

@@ -6,7 +6,7 @@
   <div class="hero-content">
     <img width="300" src="./assets/logo.png" alt="free5GC Logo" class="hero-logo"/>
     <h1 class="hero-title">Open Source Core Network Implementation</h1>
-    <p class="hero-description">free5GC is a Linux Foundation project dedicated to implementing 3GPP Release 15 and beyond core networks</p>
+    <p class="hero-description">free5GC is a Linux Foundation project dedicated to implementing 3GPP Release 17 and beyond core networks</p>
     <div class="hero-buttons">
       <a href="./guide/quick-setup/" class="hero-button primary" target="_blank">Quick Start</a>
       <a href="./guide/contribute/" class="hero-button secondary">How to Contribute</a>
@@ -18,8 +18,8 @@
   <h2>Your Roadmap to 5G Expertise Starts Here — And It’s Free!</h2>
   <p>Linux Foundation Education has launched Introduction to free5GC (LFS114), a free, self-paced course designed for developers, network engineers, and technologists who want to deepen their 5G expertise and work directly with modern 5G Core architecture. In just a few focused hours, you’ll learn how free5GC is built, how its core functions operate, and how to navigate and engage with the codebase — giving you a real advantage in today’s cloud native networking landscape.</p>
   <p>For more details, please visit the <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" target="_blank">Introduction to free5GC (LFS114)</a>.</p>
-  <h2>Latest News: free5GC v4.2.1 Released!</h2>
-  <p>We have fixed a series of bugs in version 4.2.1 to improve stability and introduce a new feature: <strong>Parallel Registration</strong>.</p>
+  <h2>Latest News: free5GC v4.2.2 Released!</h2>
+  <p>We have fixed a series of bugs in version 4.2.2 to improve stability and met the testbed in the K8s-helm: <strong><a href="https://lfnetworking.org/cloud-native-telecom-initiative/">CNTi</a></strong>.</p>
   <p>For more details, please see the history page.</p>
   <a href="./history" class="announcement-link">View Version History →</a>
 </div>
@@ -45,6 +45,11 @@
     <h3>Open Source</h3>
     <p>Licensed under Apache 2.0, free for both commercial and non-commercial use with no restrictions</p>
   </div>
+  <div class="feature-card highlighted">
+    <div class="feature-icon">☁️</div>
+    <h3>CNTi</h3>
+    <p>K8s-helm infrastructure meets <a href="https://lfnetworking.org/cloud-native-telecom-initiative/">LFN-CNTi</a> Certification requirements</p>
+  </div>
 </div>
 
 The free5GC (a Linux Foundation project) is an open-source project for 5th generation (5G) mobile core networks. The ultimate goal of this project is to implement the 5G core network (5GC) defined in 3GPP Release 15 (R15) and beyond.
@@ -63,11 +68,10 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 ### Connecting to the Future!
 
 <div class="roadmap-container">
-  <img src="./assets/roadmap-202603.png" alt="free5GC Roadmap" class="roadmap-image"/>
+  <img src="./assets/roadmap-202604.png" alt="free5GC Roadmap" class="roadmap-image"/>
   <div class="roadmap-text">
     <p>We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:</p>
     <ul class="roadmap-list">
-      <li>CNTi</li>
       <li>SCP</li>
     </ul>
     <a href="#" class="roadmap-button">Learn More About free5GC Development Plans</a>
