@@ -1,5 +1,14 @@
 # free5gc-helm
 
+## Mode Overview
+
+free5gc-helm supports two deployment modes:
+
+- **Non-Multus mode (default):** cloud-native deployment path without Multus secondary interfaces.
+- **Multus mode:** deployment path with dedicated N2/N3/N4/N6/N9 interfaces.
+
+This guide will help you setup requirements, then apply adjustments based on the selected mode.
+
 ## Prerequirements
 
 - Install
@@ -13,13 +22,21 @@
     - kubectl
 
         ```bash
-         sudo snap install kubectl --classic
+        sudo snap install kubectl --classic
         ```
 
     - helm
 
         ```bash
         sudo snap install helm --classic
+        ```
+
+    - k9s (Optional)
+
+        We recommend using [k9s](https://github.com/derailed/k9s) to interact with your Kubernetes cluster.
+
+        ```bash
+        wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb
         ```
 
 - Set `sudo` group and join
@@ -38,15 +55,174 @@
     microk8s config > ~/.kube/config
     ```
 
+
+
+## Addons Enable
+
+> [!Note]
+> Reference:
+>
+> - [MicroK8s multus addons](https://microk8s.io/docs/addon-multus)
+> - [Multus - Create Network Definitions](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#create-network-attachment-definition)
+> - [Multus - Tell pods to use those networks via annotations](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#run-pod-with-network-annotation)
+
+```bash
+# required
+microk8s enable hostpath-storage
+
+# optional: only required when deploying with multus mode
+microk8s enable community
+microk8s enable multus
+```
+
+- Non-Multus mode: only `hostpath-storage` is required.
+- Multus mode: `hostpath-storage`, `community`, and `multus` are required.
+
+## Helm Chart
+
+- Clone from github
+
+    ```bash
+    git clone https://github.com/free5gc/free5gc-helm.git
+    ```
+    
+## Create Persistent Volumn
+
+
+> [!NOTE]
+> CNTI best practice removes cert PVC usage and uses Secrets/ConfigMaps for certs.
+> You only need to configure MongoDB PV parameters in the chart values file.
+
+- Update MongoDB PV settings in `free5gc-helm/charts/free5gc/charts/mongodb-15.6.0/values.yaml` under `extraDeploy`.
+- Set your local storage path and node name in the embedded PV manifest.
+    ```yaml
+    extraDeploy:
+      - apiVersion: v1
+        kind: PersistentVolume
+        metadata:
+          name: free5gc-pv-mongo
+          labels:
+            project: free5gc
+        spec:
+          capacity:
+            storage: 8Gi
+          accessModes:
+          - ReadWriteOnce
+          persistentVolumeReclaimPolicy: Retain
+          storageClassName: microk8s-hostpath
+          local:
+            path: <mongo_storage_dir> # edit to your own path, e.g. /home/usr/mongo
+          nodeAffinity:
+            required:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - <worker-node-name> # edit to your own node name, e.g. ubuntu
+    ```
+
 ## IP Forward Configuration
+
+- Setup kubelet args for IP fowarding:
+
+    - Edit `/var/snap/microk8s/current/args/kubelet` and restart MicroK8s
+
+        ```bash
+        # append this arg
+        --allowed-unsafe-sysctls "net.ipv4.ip_forward"
+        # restart MicroK8s
+        microk8s stop
+        microk8s start
+        ```
+
+## How to deploy & test
+
+### Non-Multus Deploy (Default)
+
+1. **Prerequisites:** Follow [Prerequirements](#prerequirements).
+2. **Addons:** Follow [Addons Enable](#addons-enable) (`hostpath-storage` only).
+3. **PV Setup:** Follow [Create Persistent Volumn](#create-persistent-volumn).
+4. **Install:** Run `helm install`.
+
+    ```bash
+    cd free5gc-helm/charts
+    kubectl create ns free5gc
+
+    helm install -n free5gc free5gc-helm ./free5gc/ 
+
+    helm install -n free5gc ueransim ./ueransim/
+    ```
+
+### Multus Deploy
+
+1. **Prerequisites:** Follow [Prerequirements](#prerequirements).
+2. **Node Setup:** Follow [Calico IP Forward Configuration (Multus Only)](#calico-ip-forward-configuration-multus-only) in the final section of this guide, then return here.
+3. **Addons:** Follow [Addons Enable](#addons-enable) (`hostpath-storage`, `community`, and `multus`).
+4. **PV Setup:** Follow [Create Persistent Volumn](#create-persistent-volumn).
+5. **Configuration (charts/free5gc/values.yaml):**
+    - Set `amf/smf/upf: multus.enabled` -> `true`.
+    - Set `amf.service.ngap` -> `false`.
+    - Configure `N2`/`N3`/`N4`/`N6`/`N9` interface settings by following [Network configuration](#network-configuration).
+6. **UERANSIM:** Set `multus.enabled` -> `true` in `charts/ueransim/values.yaml`.
+7. **Install:** Run `helm install` only after completing the Calico section linked in Step 2.
+
+### Single UPF Deploy
+
+*Applicable to both Multus and Non-Multus modes.*
+
+1. **Configuration:** In `charts/free5gc/values.yaml`, set `global.userPlaneArchitecture` -> `single`.
+2. **File Overwrites:**
+    - Copy `free5gc-smf/smf-configmap-single-upf.yaml` to `free5gc-smf/templates/smf-configmap.yaml`.
+    - Copy `free5gc-smf/single-upf-values.yaml` to `free5gc-smf/values.yaml`.
+3. **Install:** Run `helm install`.
+
+    ```bash
+    cd free5gc-helm/charts
+    kubectl create ns free5gc
+
+    cp free5gc/charts/free5gc-smf/single-upf-values.yaml \
+       free5gc/charts/free5gc-smf/values.yaml
+    cp free5gc/charts/free5gc-smf/smf-configmap-single-upf.yaml \
+       free5gc/charts/free5gc-smf/templates/smf-configmap.yaml
+
+    helm install -n free5gc free5gc-helm ./free5gc/ 
+    helm install -n free5gc ueransim ./ueransim/ 
+    ```
+
+### Check installation
+
+- Check installed charts
+
+    ```bash
+    helm ls -A
+    ```
+
+- Check services, pods, replicas, and deployments
+
+    ```bash
+    # status at each pod is expected as "Running"
+    kubectl get all -n free5gc
+    ```
+
+- Check IP forwarding is available at UPF (Multus mode)
+
+    ```bash
+    # output should be '1'
+    kubectl exec -it -n free5gc deployment/free5gc-helm-free5gc-upf-upf \
+        -- cat /proc/sys/net/ipv4/ip_forward
+    ```
+
+## Calico IP Forward Configuration (Multus Only)
 
 > [!NOTE]
 > Reference: [Calico CNI Docs](https://docs.tigera.io/calico/latest/reference/configure-cni-plugins#container-settings).
 
 - Starting from version 1.19, MicroK8s clusters use the **Calico CNI** by default.
 
+    - This section is only required for **Multus** mode deployment.
     - To enable IP forwarding on UPF, Calico CNI needs some necessary configurations.
-    - Some CNI plugin, like Flannel, kube-ovn, allow this funtionality by default.
+    - Some CNI plugins, like Flannel and kube-ovn, allow this functionality by default.
 
 - Setup Calico CNI for IP forwarding:
 
@@ -77,15 +253,6 @@
                 }
         ```
 
-- Setup kubelet args for IP fowarding:
-
-    - Edit `/var/snap/microk8s/current/args/kubelet`
-
-        ```bash
-        # append this arg
-        --allowed-unsafe-sysctls "net.ipv4.ip_forward"
-        ```
-
 - Apply settings and restart MicroK8s
 
     ```bash
@@ -96,116 +263,6 @@
     microk8s start
     ```
 
-## Addons Enable
-
-> [!Note]
-> Reference:
->
-> - [MicroK8s multus addons](https://microk8s.io/docs/addon-multus)
-> - [Multus - Create Network Definitions](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#create-network-attachment-definition)
-> - [Multus - Tell pods to use those networks via annotations](https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9/docs/how-to-use.md#run-pod-with-network-annotation)
-
-```bash
-microk8s enable community
-microk8s enable multus
-microk8s enable hostpath-storage
-```
-
-## Create Persistent Volumn
-
-- Create two storage directories:
-
-    - One for mongo: `/home/usr/mongo` <= just an example
-    - One for cert: `/home/use/cert` <= just an example
-
-- For mongodb
-
-    - Create an storage directory: `/home/usr/mongo` <= just an example
-    - Create an YAML file: `persistent-vol-for-mongodb.yaml`
-
-        ```yaml
-        apiVersion: v1
-        kind: PersistentVolume
-        metadata:
-          name: free5gc-pv-mongo
-          labels:
-            project: free5gc
-        spec:
-          capacity:
-            storage: 8Gi
-          accessModes:
-          - ReadWriteOnce
-          persistentVolumeReclaimPolicy: Retain
-          storageClassName: microk8s-hostpath
-          local:
-            path: <mongo_storage_dir> # edit to your own path, like: /home/use/mongo
-          nodeAffinity:
-            required:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                  - <work_node_name> # edit to you node name
-        ```
-
-    - Apply via `kubectl`
-
-        ```bash
-        kubectl apply -f persistent-vol-for-mongodb.yaml
-        ```
-
-- For cert
-
-    - Create an storage directory: `/home/usr/cert` <= just an example
-    - Create an YAML file: `persistent-vol-for-cert.yaml`
-
-        ```yaml
-        apiVersion: v1
-        kind: PersistentVolume
-        metadata:
-          name: free5gc-pv-cert
-          labels:
-            project: free5gc
-        spec:
-          capacity:
-            storage: 2Mi
-          accessModes:
-          - ReadOnlyMany
-          persistentVolumeReclaimPolicy: Retain
-          storageClassName: microk8s-hostpath
-          local:
-            path: <cert_storage_dir> # edit to your own path, like: /home/use/cert
-          nodeAffinity:
-            required:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                  - <work-node-name> # edit to you node name
-        ```
-
-    - Apply via `kubectl`
-
-        ```bash
-        kubectl apply -f persistent-vol-for-cert.yaml
-        ```
-
-- Check it
-
-    ```bash
-    kubectl get pv
-    ```
-
-## Helm Chart
-
-- Clone from github
-
-    ```bash
-    git clone https://github.com/free5gc/free5gc-helm.git
-    ```
-
 ## Network configuration
 
 > [!Note]
@@ -214,62 +271,17 @@ microk8s enable hostpath-storage
 - In summary, the `value.yaml` in each configuration should be set up correctly.
 
     - **free5gc-helm** offered a network configuration YAML file at `free5gc-helm/charts/free5gc/value.yaml`.
-    - For `N2`/`N3`/`N4`/`N6`/`N9` interfaces, the `masterIf` and other `IP` field should be modified for customized deployment.
+    - For **Multus mode**, `N2`/`N3`/`N4`/`N6`/`N9` interface settings (`masterIf`, `subnetIP`, `gatewayIP`, `ipAddress`) should be modified for customized deployment.
 
 - **(Optional)** These values could also be setup by using `helm install --set`.
 
     ```bash
     helm install -n free5gc free5gc-helm ./free5gc/ \
-        --set global.n6network.subnetIP="x.x.x.x" \
-        --set global.n6network.gatewayIP="y.y.y.y" \
-        --set free5gc-upf.upf.n6if.ipAddress="z.z.z.z"
+        --set global.upf.multus.n6network.subnetIP="x.x.x.x" \
+        --set global.upf.multus.n6network.gatewayIP="y.y.y.y" \
+        --set global.upf.multus.upf.n6if.ipAddress="z.z.z.z"
     ```
-
-## Install Chart
-
-- Set working namespace for free5GC
-
-    ```bash
-    kubectl create ns free5gc
-    ```
-
-- Install free5GC charts
-
-    ```bash
-    cd free5gc-helm/charts
-    helm install -n free5gc free5gc-helm ./free5gc/ 
-    ```
-
-- Install UERANSIM chart
-
-    ```bash
-    cd free5gc-helm/charts
-    helm install -n free5gc ueransim ./ueransim/ 
-    ```
-
-- Check installation
-
-    - Check installed charts
-
-        ```bash
-        helm ls -A
-        ```
-
-    - Check services, pods, replicates and deployments
-
-        ```bash
-        # status at each pod is expected as "Running"
-        kubectl get all -n free5gc
-        ```
-
-- Check IP forwarding is available at UPF
-
-    ```bash
-    # output should be '1'
-    kubectl exec -it -n free5gc deployment/free5gc-helm-free5gc-upf-upf \
-        -- cat /proc/sys/net/ipv4/ip_forward
-    ```
-
+    
 ## Test
 
 - Add subscribers via web console
