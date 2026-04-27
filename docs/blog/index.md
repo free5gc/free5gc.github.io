@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2026/04/29: Parallelizing NGAP Processing in free5GC AMF: From Per-Connection to Per-UE Concurrency](./20260429/20260429.md)
 - [2026/04/17: free5GC TNGF UE Deregistration and IKE/RADIUS Parser DoS Mitigation](./20260417/20260417.md)
 - [2026/04/16: Exploring the N2 SCTP Middleware: A Zero Trust Hop for 5G Control Plane](./20260416/20260416.md)
 - [2026/04/15: CNTi & free5gc-helm Integration](./20260415/20260415.md)
