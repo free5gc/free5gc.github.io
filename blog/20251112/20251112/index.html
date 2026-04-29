@@ -1,0 +1,1604 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Getting Started with go-gtp5gnl: Userspace Control of GTP-U for free5GC UPF - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started-with-go-gtp5gnl-userspace-control-of-gtp-u-for-free5gc-upf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started with go-gtp5gnl: Userspace Control of GTP-U for free5GC UPF
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-go-gtp5gnl" class="md-nav__link">
+    Building go-gtp5gnl
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-go-gtp5gnl-commands" class="md-nav__link">
+    Understanding Go-gtp5gnl Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Go-gtp5gnl Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-overview" class="md-nav__link">
+    Command Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Command Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-usage-of-go-gtp5gnl" class="md-nav__link">
+    Practical Usage of Go-gtp5gnl
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Usage of Go-gtp5gnl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-pdrs" class="md-nav__link">
+    Inspecting PDRs
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting PDRs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pdr-information-elements" class="md-nav__link">
+    PDR Information Elements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdi-details" class="md-nav__link">
+    PDI Details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fteid-fully-qualified-tunnel-endpoint-identifier-details" class="md-nav__link">
+    FTEID (Fully Qualified Tunnel Endpoint Identifier) Details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdf-service-data-flow-details" class="md-nav__link">
+    SDF (Service Data Flow) Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-fars" class="md-nav__link">
+    Inspecting FARs
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting FARs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#far-information-elements" class="md-nav__link">
+    FAR Information Elements
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-qers" class="md-nav__link">
+    Inspecting QERs
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting QERs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qer-information-elements" class="md-nav__link">
+    QER Information Elements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mbr-and-gbr-details" class="md-nav__link">
+    MBR and GBR Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-far" class="md-nav__link">
+    Modifying FAR
+  </a>
+  
+    <nav class="md-nav" aria-label="Modifying FAR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-verify-initial-state-ue-should-be-reachable" class="md-nav__link">
+    Step 1: Verify initial state (UE should be reachable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-modify-far-3-change-action-from-2-forward-to-1-drop" class="md-nav__link">
+    Step 2: Modify FAR 3 – change action from 2 (Forward) to 1 (Drop)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-re-test-connectivity-ping-should-fail-or-timeout" class="md-nav__link">
+    Step 3: Re-test connectivity (ping should fail or timeout)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-restore-far-3-to-forwarding-state" class="md-nav__link">
+    Step 4: Restore FAR 3 to forwarding state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-test-again-connectivity-should-be-restored" class="md-nav__link">
+    Step 5: Test again (connectivity should be restored)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleting-and-re-adding-pdrs" class="md-nav__link">
+    Deleting and Re-Adding PDRs
+  </a>
+  
+    <nav class="md-nav" aria-label="Deleting and Re-Adding PDRs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-delete-pdr-1-and-pdr-3" class="md-nav__link">
+    Step 1: Delete PDR 1 and PDR 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-test-connectivity-again-should-fail" class="md-nav__link">
+    Step 2: Test connectivity again (should fail)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-re-add-pdr-3-based-on-its-original-configuration" class="md-nav__link">
+    Step 3: Re-add PDR 3 based on its original configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-test-once-more-connectivity-should-recover" class="md-nav__link">
+    Step 4: Test once more (connectivity should recover)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20251112/20251112.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20251112/20251112.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="getting-started-with-go-gtp5gnl-userspace-control-of-gtp-u-for-free5gc-upf">Getting Started with go-gtp5gnl: Userspace Control of GTP-U for free5GC UPF</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Kai-Xu, Zhan<br />
+Date: 2025/11/12</p>
+</div>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>The go-gtp5gnl project bridges user-space control logic and kernel-space GTP-U data forwarding by providing a Go-native Netlink interface to the Linux gtp5g kernel module. It allows free5GC’s UPF—or any custom UPF built on top of gtp5g—to program kernel-level PDR, FAR, and QER rules that implement GTP-U encapsulation, forwarding, and QoS behavior.<br />
+This article provides a hands-on walkthrough of using go-gtp5gnl to observe, modify, and verify PFCP-controlled GTP-U state in free5GC. You will learn how to list, edit, and recreate rules in real time to understand how the UPF enforces 5G user-plane logic.</p>
+<p>Goal: By the end, you will understand how go-gtp5gnl connects the 3GPP PFCP control plane to kernel-level forwarding on the N3/N6 interfaces—making it an indispensable tool for debugging and research.</p>
+<hr />
+<h2 id="environment-setup">Environment Setup</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Install free5GC: <a href="https://free5gc.org/guide/3-install-free5gc/">https://free5gc.org/guide/3-install-free5gc/</a></li>
+<li>Install UERANSIM: <a href="https://free5gc.org/guide/5-install-ueransim/">https://free5gc.org/guide/5-install-ueransim/</a></li>
+<li>Install gtp5g kernel module: <a href="https://github.com/free5gc/gtp5g">https://github.com/free5gc/gtp5g</a></li>
+</ul>
+<hr />
+<h3 id="building-go-gtp5gnl">Building go-gtp5gnl</h3>
+<p>Clone and build the project to obtain the command-line utility gtp5g-tunnel:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/free5gc/go-gtp5gnl.git
+<span class="nb">cd</span><span class="w"> </span>go-gtp5gnl/
+go<span class="w"> </span>build<span class="w"> </span>-o<span class="w"> </span>gtp5g-tunnel<span class="w"> </span>./cmd/gogtp5g-tunnel
+</code></pre></div>
+<hr />
+<h2 id="understanding-go-gtp5gnl-commands">Understanding Go-gtp5gnl Commands</h2>
+<h3 id="command-overview">Command Overview</h3>
+<p>The go-gtp5gnl library and CLI expose Netlink interfaces to manipulate kernel objects representing PDR, FAR, and QER entities. </p>
+<ul>
+<li><strong>PDR (Packet Detection Rule)</strong> – Identifies packets belonging to a PDU Session.  </li>
+<li><strong>FAR (Forwarding Action Rule)</strong> – Specifies what action is applied.  </li>
+<li><strong>QER (QoS Enforcement Rule)</strong> – Defines QoS parameters.</li>
+</ul>
+<p>Each rule type supports the operations add, get, mod, del, and list.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>add</strong></td>
+<td>Create a new rule entry in the kernel.</td>
+</tr>
+<tr>
+<td><strong>get</strong></td>
+<td>Retrieve current rule(s) from kernel.</td>
+</tr>
+<tr>
+<td><strong>mod</strong></td>
+<td>Modify attributes of an existing rule.</td>
+</tr>
+<tr>
+<td><strong>del</strong></td>
+<td>Delete a rule from the kernel.</td>
+</tr>
+<tr>
+<td><strong>list</strong></td>
+<td>Display all rules of a given type.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="usage">Usage</h4>
+<ul>
+<li>List all PDR/FAR/QER:<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>pdr/far/qer<span class="o">]</span>
+</code></pre></div></li>
+<li>Get/Del/Add/Mod PDR/FAR/QER:<br />
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span><span class="o">[</span>get/del/add/mod<span class="o">]</span><span class="w"> </span><span class="o">[</span>PDR/FAR/QER<span class="o">]</span><span class="w"> </span><span class="o">[</span>interface_name<span class="o">]</span><span class="w"> </span><span class="o">[</span>seid<span class="o">]</span><span class="w"> </span><span class="o">[</span>id<span class="o">]</span><span class="w"> </span><span class="o">[</span>option<span class="o">]</span>
+</code></pre></div></li>
+</ul>
+<hr />
+<h2 id="practical-usage-of-go-gtp5gnl">Practical Usage of Go-gtp5gnl</h2>
+<p>Before testing go-gtp5gnl, verify that you can successfully create a UE instance using UERANSIM and attach it to the free5GC core network. A successful registration and PDU Session establishment indicate that the environment is ready for go-gtp5gnl testing.</p>
+<h3 id="inspecting-pdrs">Inspecting PDRs</h3>
+<p>Use <code>sudo ./gtp5g-tunnel list pdr</code> to list all PDRs. The output will look like this:<br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="nt">&quot;Precedence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span>
+<span class="nt">&quot;PDI&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;SrcIntf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;UEAddr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10.60.0.1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;FTEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;TEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;GTPuAddr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192.168.56.102&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;SDF&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;FD&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Proto&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Src&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;IP&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AAAAAA==&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;Dst&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;IP&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;SrcPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;DstPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;TTC&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SPI&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;FL&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;BID&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;EPFs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">},</span>
+<span class="nt">&quot;OuterHdrRemoval&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="nt">&quot;FARID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="nt">&quot;QERID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">3</span>
+<span class="p">],</span>
+<span class="nt">&quot;URRID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">7</span>
+<span class="p">],</span>
+<span class="nt">&quot;SEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="nt">&quot;PDNType&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">},</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="nt">&quot;Precedence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span>
+<span class="nt">&quot;PDI&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;SrcIntf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;UEAddr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10.60.0.1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;FTEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;SDF&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;FD&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Proto&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Src&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;IP&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;Dst&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;IP&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AAAAAA==&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;SrcPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;DstPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;TTC&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SPI&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;FL&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;BID&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;EPFs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">},</span>
+<span class="nt">&quot;OuterHdrRemoval&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;FARID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="nt">&quot;QERID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">3</span>
+<span class="p">],</span>
+<span class="nt">&quot;URRID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">7</span>
+<span class="p">],</span>
+<span class="nt">&quot;SEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="nt">&quot;PDNType&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<blockquote>
+<p>Example truncated for brevity — other PDR entries omitted.</p>
+</blockquote>
+<h4 id="pdr-information-elements">PDR Information Elements</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>Unique identifier of the PDR.<br> Must be unique within the same SEID.</td>
+</tr>
+<tr>
+<td><strong>Precedence</strong></td>
+<td>Rule priority (smaller numbers have higher priority).</td>
+</tr>
+<tr>
+<td><strong>SEID</strong></td>
+<td>Session Endpoint ID that identifies the PFCP Session this rule belongs to.<br>All PDRs for the same UE PDU Session share the same SEID.</td>
+</tr>
+<tr>
+<td><strong>PDI</strong></td>
+<td>Packet Detection Information defines which packets match this rule.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pdi-details">PDI Details</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SrcIntf</strong></td>
+<td>The source interface of the incoming packet.</td>
+</tr>
+<tr>
+<td><strong>UEAddr</strong></td>
+<td>UE IPv4 address.<br>This PDR handles traffic to or from this IP.</td>
+</tr>
+<tr>
+<td><strong>FTEID</strong></td>
+<td>Defines the GTP-U tunnel endpoint by combining a TEID and an IP address</td>
+</tr>
+<tr>
+<td><strong>SDF</strong></td>
+<td>Specifies the service data flow filter(s) used for packet detection.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="fteid-fully-qualified-tunnel-endpoint-identifier-details">FTEID (Fully Qualified Tunnel Endpoint Identifier) Details</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TEID</strong></td>
+<td>Tunnel Endpoint ID is an identifier for the GTP-U tunnel.<br>Used to recognize packets received from the gNB.</td>
+</tr>
+<tr>
+<td><strong>GTPuAddr</strong></td>
+<td>Local GTP-U address.<br>The N3 interface IP address of the UPF that listens for GTP-U packets from the gNB.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Important Rule:</strong>  </p>
+<ul>
+<li><strong>FTEID present</strong> → Uplink traffic (GTP-U packets from gNB/UE). </li>
+<li><strong>FTEID null</strong> → Downlink traffic (plain IP packets from N6/Internet).</li>
+</ul>
+</blockquote>
+<hr />
+<h4 id="sdf-service-data-flow-details">SDF (Service Data Flow) Details</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Action</strong></td>
+<td>SDF action.<br><code>1</code> = This rule permits matching traffic.</td>
+</tr>
+<tr>
+<td><strong>Dir</strong></td>
+<td>Traffic direction.<br><code>2</code> = Out</td>
+</tr>
+<tr>
+<td><strong>Proto</strong></td>
+<td>IP protocol number</td>
+</tr>
+<tr>
+<td><strong>Src</strong></td>
+<td>Source Address<br><ul><li>IP<li>Mask<ul></td>
+</tr>
+<tr>
+<td><strong>Dst</strong></td>
+<td>Destination Address<br><ul><li>IP<li>Mask<ul></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="inspecting-fars">Inspecting FARs</h3>
+<p>The PDR defines which packets are detected by the UPF. Packets that match this PDR are then handled according to their associated Forwarding Action Rule (FAR), which specifies how the UPF should process or forward them. Now, let’s use <code>sudo ./gtp5g-tunnel list far</code> to examine the configured FARs and see how these packets are processed.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="nt">&quot;Param&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;PDRIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">3</span>
+<span class="p">],</span>
+<span class="nt">&quot;BARID&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;SEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">},</span>
+<span class="p">{</span>
+<span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="nt">&quot;Param&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;PDRIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">1</span>
+<span class="p">],</span>
+<span class="nt">&quot;BARID&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;SEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">},</span>
+<span class="p">{</span>
+<span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="nt">&quot;Param&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Creation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Desc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">256</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;TEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;PeerAddr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192.168.56.101&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2152</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;Policy&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;TosTc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">},</span>
+<span class="nt">&quot;PDRIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">4</span>
+<span class="p">],</span>
+<span class="nt">&quot;BARID&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;SEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">},</span>
+</code></pre></div>
+<blockquote>
+<p>Example truncated for brevity — other FAR entries omitted.</p>
+</blockquote>
+<h4 id="far-information-elements">FAR Information Elements</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>Unique identifier of the FAR.<br> Must be unique within the same SEID.</td>
+</tr>
+<tr>
+<td><strong>Action</strong></td>
+<td>Apply action.<br><code>1</code> = drop the pakcets<br><code>2</code> = Forward the packets.</td>
+</tr>
+<tr>
+<td><strong>SEID</strong></td>
+<td>Session Endpoint ID that identifies the PFCP Session this rule belongs to.<br>All FARs for the same UE PDU Session share the same SEID.</td>
+</tr>
+<tr>
+<td><strong>Param</strong></td>
+<td>Forwarding Parameters.</td>
+</tr>
+</tbody>
+</table>
+<p>From the above demonstration, PDR with ID 3 is an uplink rule, matching GTP-U packets arriving from the RAN. Its corresponding FAR (FAR ID 3) has no forwarding parameters, meaning the packets are decapsulated and delivered locally toward the data network. Conversely, PDR with ID 4 is a downlink rule, where the associated FAR (FAR ID 4) contains forwarding parameters (TEID and peer address) used to encapsulate and send packets back to the gNB through GTP-U.</p>
+<hr />
+<h3 id="inspecting-qers">Inspecting QERs</h3>
+<p>Next, let's use <code>sudo ./gtp5g-tunnel list qer</code> to examine the configured QERs.<br />
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="nt">&quot;Gate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="nt">&quot;MBR&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ULHigh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">812</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ULLow&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;UL_Kbps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">208000</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DLHigh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">812</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DLLow&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DL_Kbps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">208000</span>
+<span class="p">},</span>
+<span class="nt">&quot;GBR&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ULHigh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ULLow&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;UL_Kbps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DLHigh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DLLow&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DL_Kbps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">},</span>
+<span class="nt">&quot;CorrID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="nt">&quot;RQI&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="nt">&quot;QFI&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="nt">&quot;PPI&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="nt">&quot;PDRIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">3</span>
+<span class="p">],</span>
+<span class="nt">&quot;SEID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">},</span>
+</code></pre></div></p>
+<blockquote>
+<p>Example truncated for brevity — other QER entries omitted.</p>
+</blockquote>
+<h4 id="qer-information-elements">QER Information Elements</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>Unique identifier of the QER.<br> Must be unique within the same SEID.</td>
+</tr>
+<tr>
+<td><strong>QFI</strong></td>
+<td>QoS Flow Identifier.<br>Identifies the QoS Flow within a PDU Session.<br>Value range: (0 ~ 63)</td>
+</tr>
+<tr>
+<td><strong>RQI</strong></td>
+<td>Reflective QoS Indicator.<br>Indicates whether reflective QoS is triggered.<br><code>0</code> = Not triggered.<br><code>1</code> = Triggered.</td>
+</tr>
+<tr>
+<td><strong>PPP</strong></td>
+<td>Packet Per Flow presence flag.<br>Specifies whether the Packet Per Flow Indicator (PPI) is included in the QER.<br><code>0</code> = Not present.<br><code>1</code> = Present.</td>
+</tr>
+<tr>
+<td><strong>PPI</strong></td>
+<td>Packet Per Flow Indicator.<br>Marks packets with a priority level or DSCP value for differentiated handling.<br>Value range: (0 ~ 7)</td>
+</tr>
+<tr>
+<td><strong>SEID</strong></td>
+<td>Session Endpoint Identifier identifying the PFCP session this QER belongs to.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="mbr-and-gbr-details">MBR and GBR Details</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ULHigh / ULLow</strong></td>
+<td>Encoded uplink maximum (or guaranteed) bit rate split into two fields per 3GPP spec (High/Low octets).</td>
+</tr>
+<tr>
+<td><strong>UL_Kbps</strong></td>
+<td>Readable uplink bit rate in Kbps derived from the encoded values.</td>
+</tr>
+<tr>
+<td><strong>DLHigh / DLLow</strong></td>
+<td>Encoded downlink maximum (or guaranteed) bit rate.</td>
+</tr>
+<tr>
+<td><strong>DL_Kbps</strong></td>
+<td>Readable downlink bit rate in Kbps derived from the encoded values.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="modifying-far">Modifying FAR</h3>
+<p>After understanding how to inspect PDRs, FARs, and QERs, let’s move on to modify an existing FAR (Forwarding Action Rule) to block traffic and then restore it.</p>
+<h4 id="step-1-verify-initial-state-ue-should-be-reachable">Step 1: Verify initial state (UE should be reachable)</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on UERANSIM</span>
+ping<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span>-I<span class="w"> </span>ueransim0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+</code></pre></div><br />
+If the UPF and UERANSIM are properly connected, you should see successful ping replies from 1.1.1.1.</p>
+<h4 id="step-2-modify-far-3-change-action-from-2-forward-to-1-drop">Step 2: Modify FAR 3 – change action from 2 (Forward) to 1 (Drop)</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on free5GC</span>
+sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span>mod<span class="w"> </span>far<span class="w"> </span>upfgtp<span class="w"> </span><span class="m">1</span>:3<span class="w"> </span>--action<span class="w"> </span><span class="m">1</span>
+</code></pre></div><br />
+This updates FAR ID 3 under SEID 1 to drop packets instead of forwarding them.</p>
+<h4 id="step-3-re-test-connectivity-ping-should-fail-or-timeout">Step 3: Re-test connectivity (ping should fail or timeout)</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on UERANSIM</span>
+ping<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span>-I<span class="w"> </span>ueransim0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+</code></pre></div><br />
+Since this PDR defines the uplink traffic path from the UE (via gNB) toward the data network, removing it prevents packets from reaching the external destination.</p>
+<h4 id="step-4-restore-far-3-to-forwarding-state">Step 4: Restore FAR 3 to forwarding state</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Executed on free5GC</span>
+sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span>mod<span class="w"> </span>far<span class="w"> </span>upfgtp<span class="w"> </span><span class="m">1</span>:3<span class="w"> </span>--action<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+<h4 id="step-5-test-again-connectivity-should-be-restored">Step 5: Test again (connectivity should be restored)</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on UERANSIM</span>
+ping<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span>-I<span class="w"> </span>ueransim0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+</code></pre></div><br />
+If pings succeed again, it confirms that the mod operation has correctly re-applied the forwarding rule.</p>
+<h3 id="deleting-and-re-adding-pdrs">Deleting and Re-Adding PDRs</h3>
+<p>Next, you’ll experiment with removing and re-adding PDRs (Packet Detection Rules) to observe how the UPF handles missing or re-created rules.</p>
+<h4 id="step-1-delete-pdr-1-and-pdr-3">Step 1: Delete PDR 1 and PDR 3</h4>
+<p>These rules typically correspond to the uplink flow for your UE session.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Executed on free5GC</span>
+sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span>del<span class="w"> </span>pdr<span class="w"> </span>upfgtp<span class="w"> </span><span class="m">1</span>:1
+sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span>del<span class="w"> </span>pdr<span class="w"> </span>upfgtp<span class="w"> </span><span class="m">1</span>:3
+</code></pre></div>
+<h4 id="step-2-test-connectivity-again-should-fail">Step 2: Test connectivity again (should fail)</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on UERANSIM</span>
+ping<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span>-I<span class="w"> </span>ueransim0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+</code></pre></div><br />
+With no matching uplink PDRs, the UPF cannot identify sending traffic, causing packet drops or timeouts.</p>
+<h4 id="step-3-re-add-pdr-3-based-on-its-original-configuration">Step 3: Re-add PDR 3 based on its original configuration</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on free5GC</span>
+sudo<span class="w"> </span>./gtp5g-tunnel<span class="w"> </span>add<span class="w"> </span>pdr<span class="w"> </span>upfgtp<span class="w"> </span><span class="m">1</span>:3<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--pcd<span class="w"> </span><span class="m">128</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--hdr-rm<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--far-id<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ue-ipv4<span class="w"> </span><span class="m">10</span>.60.0.1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--f-teid<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">192</span>.168.56.102<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--qer-id<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--qer-id<span class="w"> </span><span class="m">3</span>
+</code></pre></div><br />
+This command recreates PDR ID 3 with its corresponding parameters — linking it again to FAR 3 and QER 1/3 for the same UE.</p>
+<h4 id="step-4-test-once-more-connectivity-should-recover">Step 4: Test once more (connectivity should recover)</h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Executed on UERANSIM</span>
+ping<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span>-I<span class="w"> </span>ueransim0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+</code></pre></div><br />
+A successful ping confirms that the add operation has restored proper forwarding behavior.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The go-gtp5gnl framework offers full userspace visibility and control of kernel-based GTP-U tunnels. Through the experiments above, you have:</p>
+<ul>
+<li>Inspected PFCP-translated kernel rules (PDR, FAR, QER).</li>
+<li>Modified actions and observed instant traffic impact.</li>
+<li>Re-created rules to validate real-time UPF behavior.</li>
+</ul>
+<p>By unifying Go’s ease of use with Netlink’s power, go-gtp5gnl becomes an ideal platform for 5G UPF debugging, QoS experimentation, and academic research on user-plane optimization.</p>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129200_129299/129244/16.05.00_60/ts_129244v160500p.pdf">3GPP TS 29.244</a></li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129200_129299/129212/16.04.00_60/ts_129212v160400p.pdf">3GPP TS 23.212</a></li>
+<li><a href="https://github.com/free5gc/free5gc">free5GC Project</a></li>
+<li><a href="https://github.com/free5gc/gtp5g">gtp5g Kernel Module</a></li>
+<li><a href="https://github.com/free5gc/go-gtp5gnl">go-gtp5gnl Library</a></li>
+<li><a href="https://www.kernel.org/doc/html/latest/userspace-api/netlink/index.html">Linux Netlink and Generic Netlink</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello, I'm Kai-Xu Zhan. I'm honored to be a new member of the free5GC project under the Linux Foundation. As someone who is still learning and growing in the field of 5G core network development, I'm enthusiastic about contributing to the community and expanding my knowledge in telecommunications technologies. I welcome any guidance or feedback as I continue to familiarize myself with the project.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/KASHZKX">KASHZKX</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

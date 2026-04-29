@@ -1,0 +1,1159 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Simplifying 5G Edge Routing: The free5GC Traffic Influence WebUI Project - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#simplifying-5g-edge-routing-the-free5gc-traffic-influence-webui-project" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Simplifying 5G Edge Routing: The free5GC Traffic Influence WebUI Project
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pain-point" class="md-nav__link">
+    The Pain Point
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridging-the-gap-with-a-gui" class="md-nav__link">
+    Bridging the Gap with a GUI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-feature" class="md-nav__link">
+    Architecture &amp; Feature
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture & Feature">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features-of-the-webui" class="md-nav__link">
+    Key Features of the WebUI:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-detail" class="md-nav__link">
+    Implementation Detail
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Detail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-update-dynamic-payload-mapping" class="md-nav__link">
+    Create &amp; Update: Dynamic Payload Mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-steering" class="md-nav__link">
+    Global Steering:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#individual-ue-steering-supi" class="md-nav__link">
+    Individual UE Steering (SUPI):
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traffic-filters" class="md-nav__link">
+    Traffic Filters:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-delete-targeted-resource-cleanup" class="md-nav__link">
+    Read &amp; Delete: Targeted Resource Cleanup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbi-authentication-secure-communication" class="md-nav__link">
+    SBI Authentication &amp; Secure Communication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-via-free5gc-ci-test" class="md-nav__link">
+    Validation via free5GC ci-test
+  </a>
+  
+    <nav class="md-nav" aria-label="Validation via free5GC ci-test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-mechanism-and-underlying-behavior" class="md-nav__link">
+    Testing Mechanism and Underlying Behavior
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimental-design-shifting-control-to-the-webui" class="md-nav__link">
+    Experimental Design: Shifting Control to the WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo-video" class="md-nav__link">
+    Demo Video
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-work-observability" class="md-nav__link">
+    Future Work: Observability
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-repository" class="md-nav__link">
+    Project Repository
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260325/20260325.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260325/20260325.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="simplifying-5g-edge-routing-the-free5gc-traffic-influence-webui-project">Simplifying 5G Edge Routing: The free5GC Traffic Influence WebUI Project</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Chia-Hui, Chen<br />
+Date: 2026/03/25</p>
+</div>
+<hr />
+<h2 id="overview"><strong>Overview</strong></h2>
+<p>Multi-access Edge Computing (MEC) is the cornerstone of 5G’s promise for ultra-low latency. To ensure user data reaches local edge servers instead of traveling to a distant central cloud, the 5G Core (5GC) introduces the Traffic Influence (TI) mechanism. By steering traffic toward a specific Data Network Access Identifier (DNAI), TI allows for seamless Local Breakout (LBO) and dynamic routing. In the free5GC ecosystem, one of the most powerful and direct ways to trigger this process is through the Unified Data Repository (UDR).</p>
+<h3 id="the-pain-point">The Pain Point</h3>
+<p>Despite the rigorous definitions in 3GPP specifications, managing these policies in a real-world deployment is often a nightmare. Currently, most open-source 5GC implementations lack a dedicated graphical interface for TI. Developers and network administrators are forced to:</p>
+<ul>
+<li>
+<p>Manually craft complex JSON payloads for RESTful APIs.</p>
+</li>
+<li>
+<p>Use command-line tools like curl to trigger routing changes, which is highly prone to syntax errors.</p>
+</li>
+<li>
+<p>Operate in a "blind" state where there is no centralized dashboard to visualize which rules are active or which User Equipment (UE) is being steered.</p>
+</li>
+</ul>
+<h3 id="bridging-the-gap-with-a-gui">Bridging the Gap with a GUI</h3>
+<p>To solve this problem, we developed a specialized Traffic Influence WebUI within the free5GC project. This article explores how we designed a user-centric interface that encapsulates 3GPP complexity into an intuitive dashboard, enabling one-click edge routing management.</p>
+<h2 id="architecture-feature"><strong>Architecture &amp; Feature</strong></h2>
+<p>In the 5G Service-Based Architecture (SBA), Traffic Influence data can be stored directly in the UDR. When information is stored or updated in the UDR, it triggers a chain reaction: UDR notifies PCF, which then decides the policy and informs SMF to reconfigure the UPF (specifically inserting an ULCL or branching point).</p>
+<p>Our WebUI acts as a management console, interacting directly with the UDR's SBI to manage these policies.<br />
+<img alt="" src="../overview.png" /></p>
+<h3 id="key-features-of-the-webui">Key Features of the WebUI:</h3>
+<ul>
+<li><strong>GUI-Driven Provisioning</strong>: Replaces complex JSON/CLI operations with an intuitive web form.</li>
+<li><strong>Flexible Steering Scope</strong>: Supports both Global routing (applying to all UEs via "Any UE") and Individual routing (targeting specific users via SUPI).</li>
+<li><strong>Granular Traffic Filtering</strong>: Allows administrators to define precise Flow Descriptions (e.g., 5-tuple IP rules) to intercept exact MEC traffic.</li>
+<li><strong>Direct UDR Manipulation</strong>: Synchronizes directly with the core network's database, ensuring the UI always reflects the true runtime state.</li>
+</ul>
+<h2 id="implementation-detail"><strong>Implementation Detail</strong></h2>
+<p>The WebUI provides a unified form that maps user input directly to the UDR's TrafficInfluData structure.</p>
+<p>The TrafficInfluData structure:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Represents the Traffic Influence Data.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">TrafficInfluData</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Contains the Notification Correlation Id allocated by the NEF for the UP path change notification.</span>
+<span class="w">    </span><span class="nx">UpPathChgNotifCorreId</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;upPathChgNotifCorreId,omitempty&quot; yaml:&quot;upPathChgNotifCorreId&quot; bson:&quot;upPathChgNotifCorreId,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Identifies whether an application can be relocated once a location of the application has been selected.</span>
+<span class="w">    </span><span class="nx">AppReloInd</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="s">`json:&quot;appReloInd,omitempty&quot; yaml:&quot;appReloInd&quot; bson:&quot;appReloInd,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Identifies an application.</span>
+<span class="w">    </span><span class="nx">AfAppId</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;afAppId,omitempty&quot; yaml:&quot;afAppId&quot; bson:&quot;afAppId,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// String representing a Data Network as defined in clause 9A of 3GPP TS 23.003;  it shall contain either a DNN Network Identifier, or a full DNN with both the Network  Identifier and Operator Identifier, as specified in 3GPP TS 23.003 clause 9.1.1 and 9.1.2. It shall be coded as string in which the labels are separated by dots  (e.g. \&quot;Label1.Label2.Label3\&quot;).</span>
+<span class="w">    </span><span class="nx">Dnn</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;dnn,omitempty&quot; yaml:&quot;dnn&quot; bson:&quot;dnn,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Identifies Ethernet packet filters. Either \&quot;trafficFilters\&quot; or \&quot;ethTrafficFilters\&quot; shall be included if applicable.</span>
+<span class="w">    </span><span class="nx">EthTrafficFilters</span><span class="w"> </span><span class="p">[]</span><span class="nx">EthFlowDescription</span><span class="w"> </span><span class="s">`json:&quot;ethTrafficFilters,omitempty&quot; yaml:&quot;ethTrafficFilters&quot; bson:&quot;ethTrafficFilters,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">Snssai</span><span class="w">            </span><span class="o">*</span><span class="nx">Snssai</span><span class="w">              </span><span class="s">`json:&quot;snssai,omitempty&quot; yaml:&quot;snssai&quot; bson:&quot;snssai,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// String identifying a group of devices network internal globally unique ID which identifies a set of IMSIs, as specified in clause 19.9 of 3GPP TS 23.003.</span>
+<span class="w">    </span><span class="nx">InterGroupId</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;interGroupId,omitempty&quot; yaml:&quot;interGroupId&quot; bson:&quot;interGroupId,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// String identifying a Supi that shall contain either an IMSI, a network specific identifier, a Global Cable Identifier (GCI) or a Global Line Identifier (GLI) as specified in clause  2.2A of 3GPP TS 23.003. It shall be formatted as follows  - for an IMSI \&quot;imsi-&lt;imsi&gt;\&quot;, where &lt;imsi&gt; shall be formatted according to clause 2.2    of 3GPP TS 23.003 that describes an IMSI.  - for a network specific identifier \&quot;nai-&lt;nai&gt;, where &lt;nai&gt; shall be formatted    according to clause 28.7.2 of 3GPP TS 23.003 that describes an NAI.  - for a GCI \&quot;gci-&lt;gci&gt;\&quot;, where &lt;gci&gt; shall be formatted according to clause 28.15.2    of 3GPP TS 23.003.  - for a GLI \&quot;gli-&lt;gli&gt;\&quot;, where &lt;gli&gt; shall be formatted according to clause 28.16.2 of    3GPP TS 23.003.To enable that the value is used as part of an URI, the string shall    only contain characters allowed according to the \&quot;lower-with-hyphen\&quot; naming convention    defined in 3GPP TS 29.501.</span>
+<span class="w">    </span><span class="nx">Supi</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;supi,omitempty&quot; yaml:&quot;supi&quot; bson:&quot;supi,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Identifies IP packet filters. Either \&quot;trafficFilters\&quot; or \&quot;ethTrafficFilters\&quot; shall be included if applicable.</span>
+<span class="w">    </span><span class="nx">TrafficFilters</span><span class="w"> </span><span class="p">[]</span><span class="nx">FlowInfo</span><span class="w"> </span><span class="s">`json:&quot;trafficFilters,omitempty&quot; yaml:&quot;trafficFilters&quot; bson:&quot;trafficFilters,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Identifies the N6 traffic routing requirement.</span>
+<span class="w">    </span><span class="nx">TrafficRoutes</span><span class="w"> </span><span class="p">[]</span><span class="o">*</span><span class="nx">RouteToLocation</span><span class="w"> </span><span class="s">`json:&quot;trafficRoutes,omitempty&quot; yaml:&quot;trafficRoutes&quot; bson:&quot;trafficRoutes,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">TraffCorreInd</span><span class="w"> </span><span class="kt">bool</span><span class="w">               </span><span class="s">`json:&quot;traffCorreInd,omitempty&quot; yaml:&quot;traffCorreInd&quot; bson:&quot;traffCorreInd,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// string with format &#39;date-time&#39; as defined in OpenAPI.</span>
+<span class="w">    </span><span class="nx">ValidStartTime</span><span class="w"> </span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w"> </span><span class="s">`json:&quot;validStartTime,omitempty&quot; yaml:&quot;validStartTime&quot; bson:&quot;validStartTime,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// string with format &#39;date-time&#39; as defined in OpenAPI.</span>
+<span class="w">    </span><span class="nx">ValidEndTime</span><span class="w"> </span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w"> </span><span class="s">`json:&quot;validEndTime,omitempty&quot; yaml:&quot;validEndTime&quot; bson:&quot;validEndTime,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Identifies the temporal validities for the N6 traffic routing requirement.</span>
+<span class="w">    </span><span class="nx">TempValidities</span><span class="w"> </span><span class="p">[]</span><span class="nx">TemporalValidity</span><span class="w"> </span><span class="s">`json:&quot;tempValidities,omitempty&quot; yaml:&quot;tempValidities&quot; bson:&quot;tempValidities,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">NwAreaInfo</span><span class="w">     </span><span class="o">*</span><span class="nx">NetworkAreaInfo</span><span class="w">   </span><span class="s">`json:&quot;nwAreaInfo,omitempty&quot; yaml:&quot;nwAreaInfo&quot; bson:&quot;nwAreaInfo,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// String providing an URI formatted according to RFC 3986.</span>
+<span class="w">    </span><span class="nx">UpPathChgNotifUri</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;upPathChgNotifUri,omitempty&quot; yaml:&quot;upPathChgNotifUri&quot; bson:&quot;upPathChgNotifUri,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Contains the headers provisioned by the NEF.</span>
+<span class="w">    </span><span class="nx">Headers</span><span class="w">          </span><span class="p">[]</span><span class="kt">string</span><span class="w">          </span><span class="s">`json:&quot;headers,omitempty&quot; yaml:&quot;headers&quot; bson:&quot;headers,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">SubscribedEvents</span><span class="w"> </span><span class="p">[]</span><span class="nx">SubscribedEvent</span><span class="w"> </span><span class="s">`json:&quot;subscribedEvents,omitempty&quot; yaml:&quot;subscribedEvents&quot; bson:&quot;subscribedEvents,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">DnaiChgType</span><span class="w">      </span><span class="nx">DnaiChangeType</span><span class="w">    </span><span class="s">`json:&quot;dnaiChgType,omitempty&quot; yaml:&quot;dnaiChgType&quot; bson:&quot;dnaiChgType,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">AfAckInd</span><span class="w">         </span><span class="kt">bool</span><span class="w">              </span><span class="s">`json:&quot;afAckInd,omitempty&quot; yaml:&quot;afAckInd&quot; bson:&quot;afAckInd,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">AddrPreserInd</span><span class="w">    </span><span class="kt">bool</span><span class="w">              </span><span class="s">`json:&quot;addrPreserInd,omitempty&quot; yaml:&quot;addrPreserInd&quot; bson:&quot;addrPreserInd,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Unsigned Integer, i.e. only value 0 and integers above 0 are permissible.</span>
+<span class="w">    </span><span class="nx">MaxAllowedUpLat</span><span class="w"> </span><span class="kt">int32</span><span class="w"> </span><span class="s">`json:&quot;maxAllowedUpLat,omitempty&quot; yaml:&quot;maxAllowedUpLat&quot; bson:&quot;maxAllowedUpLat,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// Indicates whether simultaneous connectivity should be temporarily maintained for the source and target PSA.</span>
+<span class="w">    </span><span class="nx">SimConnInd</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="s">`json:&quot;simConnInd,omitempty&quot; yaml:&quot;simConnInd&quot; bson:&quot;simConnInd,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// indicating a time in seconds.</span>
+<span class="w">    </span><span class="nx">SimConnTerm</span><span class="w"> </span><span class="kt">int32</span><span class="w"> </span><span class="s">`json:&quot;simConnTerm,omitempty&quot; yaml:&quot;simConnTerm&quot; bson:&quot;simConnTerm,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// A string used to indicate the features supported by an API that is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain a bitmask indicating supported features in  hexadecimal representation Each character in the string shall take a value of \&quot;0\&quot; to \&quot;9\&quot;,  \&quot;a\&quot; to \&quot;f\&quot; or \&quot;A\&quot; to \&quot;F\&quot; and shall represent the support of 4 features as described in  table 5.2.2-3. The most significant character representing the highest-numbered features shall  appear first in the string, and the character representing features 1 to 4 shall appear last  in the string. The list of features and their numbering (starting with 1) are defined  separately for each API. If the string contains a lower number of characters than there are  defined features for an API, all features that would be represented by characters that are not  present in the string are not supported.</span>
+<span class="w">    </span><span class="nx">SupportedFeatures</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;supportedFeatures,omitempty&quot; yaml:&quot;supportedFeatures&quot; bson:&quot;supportedFeatures,omitempty&quot;`</span>
+<span class="w">    </span><span class="c1">// String providing an URI formatted according to RFC 3986.</span>
+<span class="w">    </span><span class="nx">ResUri</span><span class="w">   </span><span class="kt">string</span><span class="w">   </span><span class="s">`json:&quot;resUri,omitempty&quot; yaml:&quot;resUri&quot; bson:&quot;resUri,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">ResetIds</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;resetIds,omitempty&quot; yaml:&quot;resetIds&quot; bson:&quot;resetIds,omitempty&quot;`</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="create-update-dynamic-payload-mapping">Create &amp; Update: Dynamic Payload Mapping</h3>
+<p>In UDR Mode, the system validates identifiers such as SUPI (IMSI) or the Any UE flag.</p>
+<h3 id="global-steering">Global Steering:</h3>
+<p>By setting interGroupId to "AnyUE", the rule applies to all UEs within a specific DNN and S-NSSAI.<br />
+<img alt="" src="../create_any.png" /></p>
+<h3 id="individual-ue-steering-supi">Individual UE Steering (SUPI):</h3>
+<p>If the "Any UE" option is disabled, administrators can provide a specific SUPI (Subscription Permanent Identifier), typically formatted as imsi-&lt;208930000000001&gt;.</p>
+<ul>
+<li>Mechanism: The WebUI maps this value to the supi field in the UDR. When the specific UE establishes a PDU session, the PCF retrieves this data and instructs the SMF to apply the TI policy only for that user. This is crucial for developer testing or dedicated edge routing for VIP subscribers.<br />
+<img alt="" src="../create_supi.png" /></li>
+</ul>
+<h3 id="traffic-filters">Traffic Filters:</h3>
+<p>We support multiple Flow Descriptions (e.g., permit out ip from any to 10.60.0.0/16) to define which traffic should be offloaded to the MEC.<br />
+<img alt="" src="../filter.png" /></p>
+<h3 id="read-delete-targeted-resource-cleanup">Read &amp; Delete: Targeted Resource Cleanup</h3>
+<ul>
+<li>
+<p>Read: The system performs a direct database lookup in MongoDB (applicationData.influenceData), ensuring the UI reflects the "Source of Truth."</p>
+</li>
+<li>
+<p>Delete: The WebUI sends an SBI DELETE request to the UDR. Once removed, the PCF automatically triggers a routing update to revert traffic to the default path.</p>
+</li>
+</ul>
+<h3 id="sbi-authentication-secure-communication">SBI Authentication &amp; Secure Communication</h3>
+<ul>
+<li>
+<p>In the 5G SBA, Network Functions (NFs) must authenticate before communicating. The WebUI cannot simply send an HTTP request to the UDR. Instead, it must act as a legitimate NF:</p>
+</li>
+<li>
+<p>Token Retrieval: The WebUI requests an OAuth2 access token from the NRF using webuiSelf.GetTokenCtx(models.ServiceName_NUDR_DR, ...).</p>
+</li>
+<li>
+<p>Request Binding: The token is bound to the HTTP headers.</p>
+</li>
+<li>
+<p>Execution: The authorized PUT or DELETE request is then sent to the UDR's /nudr-dr/v2/application-data/influenceData/{influenceId} endpoint.</p>
+</li>
+</ul>
+<h3 id="validation-via-free5gc-ci-test">Validation via free5GC ci-test</h3>
+<p>To verify that the WebUI can precisely inject Traffic Influence (TI) rules into the 5G Core, we employed a "semi-automated" validation approach using the free5GC ci-test framework.</p>
+<h4 id="testing-mechanism-and-underlying-behavior">Testing Mechanism and Underlying Behavior</h4>
+<p>We utilized a modified version of the built-in test script:<br />
+<div class="highlight"><pre><span></span><code>./ci-operation.sh<span class="w"> </span><span class="nb">test</span><span class="w"> </span>ulcl-ti
+</code></pre></div><br />
+When this command is executed, the script performs several automated background operations:</p>
+<p>Subscriber Provisioning: It automatically registers a test subscriber with specific S-NSSAI and DNN profiles in the database.</p>
+<p>Environment Deployment: It triggers a free-ran-ue container to simulate a real UE performing 5G Registration and PDU Session Establishment.</p>
+<p>Traffic Simulation: The UE simultaneously pings both N6 (Remote DN) and MEC (Local DN) endpoints to monitor data path steering.</p>
+<h4 id="experimental-design-shifting-control-to-the-webui">Experimental Design: Shifting Control to the WebUI</h4>
+<p>In its original state, the TestULCLTrafficInfluence script automatically configures TI rules via curl. To validate our WebUI, we modified the script logic:</p>
+<p>Disabling Auto-Configuration: We commented out the lines responsible for automatic API calls, forcing the system to remain in its default "non-offloaded" state.</p>
+<p>Dual-Phase Validation:</p>
+<ul>
+<li>
+<p>Phase 1 (Baseline Test): We execute the script without any prior configuration. As expected, the UE can only reach the N6 destination, and the ping to the MEC endpoint fails, confirming a "clean" environment.</p>
+</li>
+<li>
+<p>WebUI Manual Setup: While the core network remains active, we manually input and submit the Traffic Influence parameters via the WebUI.</p>
+</li>
+<li>
+<p>Phase 2 (Post-Configuration Test): We re-run the test script. This time, the script detects a successful ping to the MEC endpoint, indicating that the rules were successfully applied.<br />
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">TestULCLTrafficInfluence</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// FreeRanUe</span>
+<span class="w">    </span><span class="nx">fru</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">freeRanUE</span><span class="p">.</span><span class="nx">NewFreeRanUe</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">fru</span><span class="p">.</span><span class="nx">Activate</span><span class="p">()</span>
+<span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">fru</span><span class="p">.</span><span class="nx">Deactivate</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// // before TI</span>
+<span class="w">    </span><span class="c1">// t.Run(&quot;Before TI&quot;, func(t *testing.T) {</span>
+<span class="w">    </span><span class="c1">//  pingN6gwSuccessMecFailed(t)</span>
+<span class="w">    </span><span class="c1">// })</span>
+
+<span class="w">    </span><span class="c1">// // post TI</span>
+<span class="w">    </span><span class="c1">// tiOperation(t, &quot;put&quot;)</span>
+
+<span class="w">    </span><span class="c1">// after TI</span>
+<span class="w">    </span><span class="nx">t</span><span class="p">.</span><span class="nx">Run</span><span class="p">(</span><span class="s">&quot;After TI&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">pingN6gwFailedMecSuccess</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="p">})</span>
+
+<span class="w">    </span><span class="c1">// // delete TI</span>
+<span class="w">    </span><span class="c1">// tiOperation(t, &quot;delete&quot;)</span>
+
+<span class="w">    </span><span class="c1">// // reset TI</span>
+<span class="w">    </span><span class="c1">// t.Run(&quot;Reset TI&quot;, func(t *testing.T) {</span>
+<span class="w">    </span><span class="c1">//  pingN6gwSuccessMecFailed(t)</span>
+<span class="w">    </span><span class="c1">// })</span>
+
+<span class="w">    </span><span class="c1">// // flow level ping</span>
+<span class="w">    </span><span class="c1">// t.Run(&quot;Flow Level Ping&quot;, func(t *testing.T) {</span>
+<span class="w">    </span><span class="c1">//  pingOneOneOneOne(t)</span>
+<span class="w">    </span><span class="c1">// })</span>
+
+<span class="w">    </span><span class="c1">// // check charging record</span>
+<span class="w">    </span><span class="c1">// t.Run(&quot;Check Charging Record&quot;, func(t *testing.T) {</span>
+<span class="w">    </span><span class="c1">//  checkChargingRecord(t)</span>
+<span class="w">    </span><span class="c1">// })</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+</ul>
+<h4 id="demo-video">Demo Video</h4>
+<p>The video below demonstrates the transition from a Test Failed status to a Test PASSED status following the WebUI configuration.</p>
+<iframe 
+  src="https://drive.google.com/file/d/1tLFcEJpyTojiJrL5R933SIQWgiJyXjD7/preview" 
+  width="100%" 
+  height="480" 
+  allow="autoplay; fullscreen" 
+  allowfullscreen="true">
+</iframe>
+
+<h2 id="future-work-observability"><strong>Future Work: Observability</strong></h2>
+<p>While not currently a built-in feature of the official free5GC, this branch provides a clear direction and solid foundation for future development. A potential next step would be implementing UP Path Management Event Notifications. By subscribing to Nudr/SMF events, future iterations could feature:</p>
+<ul>
+<li>
+<p>Real-time Tracking: Receiving instant updates whenever a DNAI change occurs or a PDU session is modified.</p>
+</li>
+<li>
+<p>Status Correlation: Correlating the "Configured State" (rules provisioned via the UI) with the "Runtime State" (how the core network actually routes traffic).</p>
+</li>
+</ul>
+<p>By transforming these asynchronous notifications into a visual dashboard, the WebUI could eventually evolve from a simple configuration tool into a comprehensive diagnostic platform for 5G Edge Computing.</p>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>The Traffic Influence WebUI transforms an opaque, command-line process into a transparent graphical workflow.</p>
+<h2 id="project-repository"><strong>Project Repository</strong></h2>
+<p>If you're interested, you can find my forked repository here: <br />
+<a href="https://github.com/chchen7/webconsole/tree/feat/ti-gui">webconsole-Traffic-Influence-WebUI</a></p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://github.com/free5gc/free5gc">free5GC</a></li>
+<li><a href="https://github.com/free5gc/ci-test">free5GC/ci test</a></li>
+<li><a href="https://github.com/free5gc/webconsole">free5GC/webconsole</a></li>
+<li><a href="https://free5gc.org/guide/8-traffic-influence/">free5gc guide: Influence Traffic Routing</a></li>
+<li><a href="https://github.com/free-ran-ue">free-ran-ue</a></li>
+</ul>
+<p><strong>About Me</strong><br />
+Hi, I'm Chia-Hui Chen. I'm currently diving into 5G technology and the free5gc project. I hope you find this blog valuable! Feel free to reach out if you have any feedback or would like to discuss anything further.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

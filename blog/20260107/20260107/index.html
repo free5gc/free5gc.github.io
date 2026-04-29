@@ -1,0 +1,1280 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>MCP Server Integration with free5GC: Architecture and Use Cases - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mcp-server-integration-with-free5gc-architecture-and-use-cases" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MCP Server Integration with free5GC: Architecture and Use Cases
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-core-concepts-of-mcp" class="md-nav__link">
+    1.1 Core Concepts of MCP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-mcp-data-layer-and-lifecycle" class="md-nav__link">
+    1.2 MCP Data Layer and Lifecycle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-tool-discovery-and-execution" class="md-nav__link">
+    1.3 Tool Discovery and Execution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-why-use-mcp" class="md-nav__link">
+    1.4 Why use MCP?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-architecture-free5gc-mcp" class="md-nav__link">
+    2. System Architecture: free5GC-MCP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-free5gc-mcp-protocol-flow-step-by-step-walkthrough" class="md-nav__link">
+    3. free5GC-MCP Protocol Flow: Step by step walkthrough
+  </a>
+  
+    <nav class="md-nav" aria-label="3. free5GC-MCP Protocol Flow: Step by step walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-capability-negotiation-initialization" class="md-nav__link">
+    3.1 Capability Negotiation (Initialization)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-tool-discovery-defining-the-operational-surface" class="md-nav__link">
+    3.2 Tool Discovery: Defining the Operational Surface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-deterministic-execution-via-toolscall" class="md-nav__link">
+    3.3 Deterministic Execution via tools/call
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-how-the-mcp-server-enforces-safety" class="md-nav__link">
+    4. How the MCP Server Enforces Safety
+  </a>
+  
+    <nav class="md-nav" aria-label="4. How the MCP Server Enforces Safety">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-server-bootstrap-and-dependency-injection" class="md-nav__link">
+    4.1 Server Bootstrap and Dependency Injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-resilient-authentication-against-webconsole" class="md-nav__link">
+    4.2 Resilient Authentication Against WebConsole
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-examples-of-workflows-enabled-by-mcp" class="md-nav__link">
+    5. Examples of Workflows Enabled by MCP
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Examples of Workflows Enabled by MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-workflow-a-unified-lifecycle-management" class="md-nav__link">
+    5.1 Workflow A — Unified Lifecycle Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-workflow-b-subscriber-inventory-and-provisioning" class="md-nav__link">
+    5.2 Workflow B — Subscriber Inventory and Provisioning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-workflow-c-complex-configuration-chaining" class="md-nav__link">
+    5.3 Workflow C — Complex Configuration Chaining
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-closing-thoughts" class="md-nav__link">
+    6. Closing Thoughts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260107/20260107.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260107/20260107.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="mcp-server-integration-with-free5gc-architecture-and-use-cases">MCP Server Integration with free5GC: Architecture and Use Cases</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Author:</strong> <a href="https://github.com/warren0813">Ng Warren</a><br />
+<strong>Date:</strong> 2026/01/07</p>
+</div>
+<hr />
+<h2 id="1-introduction"><strong>1. Introduction</strong></h2>
+<p>While free5GC is the gold standard for 3GPP-compliant research, its day-to-day operations remain burdensome. Managing Network Functions (NFs), dependencies, and subscriber provisioning relies on fragile, script-heavy workflows that scale poorly in complex lab environments.</p>
+<p>AI assistants can bridge this gap by translating operator intent into action, but they require safe boundaries. The free5GC-MCP server provides this control layer. <strong>Utilizing the Model Context Protocol (MCP), it replaces unrestricted shell access with a strict, typed interface</strong>. This ensures that high-level requests—like "provision 10 UEs" or "restart the core"—are executed as deterministic, auditable free5GC operations.</p>
+<hr />
+<h3 id="11-core-concepts-of-mcp"><strong>1.1 Core Concepts of MCP</strong></h3>
+<p>At a high level, MCP defines who participates, what can be exchanged, and how communication happens. MCP follows a client–server architecture with a clear separation of responsibilities:</p>
+<ul>
+<li>
+<p><strong>MCP Host:</strong> The AI application users interact with (e.g. IDEs, desktop AI apps, chat interfaces).<br />
+  It owns the UI, the LLM, and user consent.</p>
+</li>
+<li>
+<p><strong>MCP Client:</strong> A protocol component created by the Host.<br />
+  Each client maintains one dedicated connection to one MCP server.</p>
+</li>
+<li>
+<p><strong>MCP Server:</strong> A standalone program that exposes tools, resources, and prompts to clients.</p>
+</li>
+</ul>
+<pre class="mermaid"><code>graph TB
+    subgraph "MCP Host (AI Application)"
+        Client1["MCP Client"]
+        Client2["MCP Client"]
+    end
+
+    ServerA["MCP Server (Local)"]
+    ServerB["MCP Server (Remote)"]
+
+    Client1 ---|"Dedicated connection"| ServerA
+    Client2 ---|"Dedicated connection"| ServerB</code></pre>
+<blockquote>
+<p>This design allows a single AI application to safely coordinate <strong>multiple independent systems</strong> through a unified interface.</p>
+</blockquote>
+<hr />
+<h3 id="12-mcp-data-layer-and-lifecycle"><strong>1.2 MCP Data Layer and Lifecycle</strong></h3>
+<p>MCP is a stateful protocol. Every connection begins with a lifecycle handshake that negotiates capabilities.</p>
+<p><strong>Initialization Flow:</strong></p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Host
+    participant Client
+    participant Server
+
+    Host-&gt;&gt;Client: Create MCP client
+    Client-&gt;&gt;Server: initialize
+    Server--&gt;&gt;Client: capabilities + server info
+    Client--&gt;&gt;Server: notifications/initialized</code></pre>
+<p><strong>During initialization:</strong></p>
+<ol>
+<li>Protocol versions are negotiated</li>
+<li>Supported primitives (tools, resources, prompts, notifications) are declared</li>
+<li>Both sides know <em>exactly</em> what is allowed for the lifetime of the session</li>
+</ol>
+<blockquote>
+<p>This prevents undefined behavior and unsafe assumptions.</p>
+</blockquote>
+<hr />
+<h3 id="13-tool-discovery-and-execution"><strong>1.3 Tool Discovery and Execution</strong></h3>
+<p>Once initialized, clients dynamically discover server capabilities.</p>
+<p><strong>Tool Discovery &amp; Tool Execution</strong></p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+
+    Note over Client, Server: Phase 1: Discovery
+    Client-&gt;&gt;Server: tools/list
+    Server--&gt;&gt;Client: tool definitions (schemas, descriptions)
+
+    Note over Client: AI analyzes tools &amp; selects action
+
+    Note over Client, Server: Phase 2: Execution
+    Client-&gt;&gt;Server: tools/call
+    Server--&gt;&gt;Client: structured result</code></pre>
+<p>The AI now knows:</p>
+<ul>
+<li>What tools exist</li>
+<li>What inputs they accept</li>
+<li>What actions are possible</li>
+</ul>
+<blockquote>
+<p>This structured flow enables <strong>safe, typed, auditable actions</strong> instead of free-form command execution.</p>
+</blockquote>
+<hr />
+<h3 id="14-why-use-mcp"><strong>1.4 Why use MCP?</strong></h3>
+<p>MCP solves the fragmentation problem between AI models and infrastructure. Instead of building custom integrations for every new AI tool, MCP provides a universal standard for connecting data and systems.</p>
+<ul>
+<li>
+<p><strong>Write Once, Run Anywhere</strong>: Developers build a single MCP server for their infrastructure (like free5GC). This server instantly works with any MCP-compliant client (Claude Desktop, IDEs, etc.), removing the need to maintain separate adapters for different AI platforms.</p>
+</li>
+<li>
+<p><strong>Real-Time Context, Not Training Data</strong>: LLMs are limited by their training cutoff. MCP allows the AI to query the current state of the system (e.g., "Is the UPF running?"), ensuring answers are based on live reality rather than outdated information.</p>
+</li>
+<li>
+<p><strong>Safety &amp; Control</strong>: MCP provides a strict boundary between the AI and the system. The AI cannot execute arbitrary commands; it can only request to use specific, pre-defined tools. This ensures that even powerful models operate within a safe, typed, and human-supervised sandbox.</p>
+</li>
+</ul>
+<hr />
+<h2 id="2-system-architecture-free5gc-mcp"><strong>2. System Architecture: free5GC-MCP</strong></h2>
+<p>The free5GC-MCP server acts as a control-plane facade that sits <em>above</em> existing free5GC management interfaces.</p>
+<p><img alt="" src="../arch_diagram.png" /></p>
+<ul>
+<li>
+<p><strong>Built with Go:</strong> The server is written in Golang to be fast and reliable. It acts like a translator: it listens to the AI's requests and converts them into actual commands for the network.</p>
+</li>
+<li>
+<p><strong>Connects to free5GC:</strong> Instead of using separate tools, this server talks to everything at once. It manages the WebConsole for users, runs Scripts to start/stop the core, and connects to Kubernetes for cloud setups.</p>
+</li>
+<li>
+<p><strong>Follows Strict Rules:</strong> The AI isn't allowed to guess. It must pick from a specific list of approved tools (like "login" or "create subscriber"). This prevents the AI from making mistakes or running dangerous commands.</p>
+</li>
+</ul>
+<hr />
+<h2 id="3-free5gc-mcp-protocol-flow-step-by-step-walkthrough"><strong>3. free5GC-MCP Protocol Flow: Step by step walkthrough</strong></h2>
+<p>The server is configured through <code>config/config.yaml</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">addr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8080&quot;</span>
+<span class="w">  </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">api_token_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+
+<span class="nt">free5gc</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">webui_base_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://127.0.0.1:30500&quot;</span>
+<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;free5gc&quot;</span>
+<span class="w">  </span><span class="nt">free5gc_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/home/you/free5gc&quot;</span>
+
+<span class="nt">k8s</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">k8s_tool</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;microk8s&quot;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;free5gc&quot;</span>
+</code></pre></div>
+<p>Practical security model:</p>
+<ul>
+<li>Bind to localhost by default</li>
+<li>Treat MCP API tokens as administrative credentials</li>
+<li>Restrict <code>sudo</code> access to specific scripts only</li>
+</ul>
+<p>The threat model is explicit: MCP is a <em>privileged control interface</em> and should be exposed accordingly.</p>
+<h3 id="31-capability-negotiation-initialization"><strong>3.1 Capability Negotiation (Initialization)</strong></h3>
+<p>Upon connection, the MCP client and server agree on an MCP protocol version. This ensures forward compatibility as tool semantics evolve.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://127.0.0.1:8080/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;jsonrpc&quot;: &quot;2.0&quot;,</span>
+<span class="s1">    &quot;id&quot;: 1,</span>
+<span class="s1">    &quot;method&quot;: &quot;initialize&quot;,</span>
+<span class="s1">    &quot;params&quot;: {</span>
+<span class="s1">      &quot;protocolVersion&quot;: &quot;2025-03-26&quot;</span>
+<span class="s1">    }</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>The server responds with its supported capabilities, forming a contract for the session.</p>
+<hr />
+<h3 id="32-tool-discovery-defining-the-operational-surface"><strong>3.2 Tool Discovery: Defining the Operational Surface</strong></h3>
+<p>The <code>tools/list</code> method exposes the <em>entire</em> operational vocabulary available to the client.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://127.0.0.1:8080/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;jsonrpc&quot;: &quot;2.0&quot;,</span>
+<span class="s1">    &quot;id&quot;: 2,</span>
+<span class="s1">    &quot;method&quot;: &quot;tools/list&quot;,</span>
+<span class="s1">    &quot;params&quot;: {}</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>Tools are grouped by responsibility:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Tools</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subscriber Management (CRUD)</td>
+<td><code>subscriber_list</code>, <code>subscriber_get</code>, <code>subscriber_create</code>, <code>subscriber_create_multiple</code>, <code>subscriber_update</code>, <code>subscriber_patch</code>, <code>subscriber_delete</code>, <code>subscriber_delete_multiple</code></td>
+</tr>
+<tr>
+<td>Local free5GC lifecycle</td>
+<td><code>local_free5gc_start</code>, <code>local_free5gc_stop</code>, <code>local_free5gc_status</code></td>
+</tr>
+<tr>
+<td>Kubernetes / Helm orchestration</td>
+<td><code>k8s_start_free5gc</code>, <code>k8s_stop_free5gc</code>, <code>k8s_free5gc_status</code>, <code>k8s_upgrade_free5gc</code>, <code>k8s_start_ueransim</code>, <code>k8s_stop_ueransim</code>, <code>k8s_ueransim_status</code>, <code>k8s_list_network_func</code>, <code>k8s_update_nfconfig</code>, <code>k8s_set_free5gc_helm_base_path</code></td>
+</tr>
+</tbody>
+</table>
+<p>Each tool is accompanied by an <code>inputSchema</code>, enabling strict validation before execution.</p>
+<hr />
+<h3 id="33-deterministic-execution-via-toolscall"><strong>3.3 Deterministic Execution via <code>tools/call</code></strong></h3>
+<p>Tool invocation is explicit and unambiguous.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://127.0.0.1:8080/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;jsonrpc&quot;: &quot;2.0&quot;,</span>
+<span class="s1">    &quot;id&quot;: 3,</span>
+<span class="s1">    &quot;method&quot;: &quot;tools/call&quot;,</span>
+<span class="s1">    &quot;params&quot;: {</span>
+<span class="s1">      &quot;name&quot;: &quot;subscriber_list&quot;,</span>
+<span class="s1">      &quot;arguments&quot;: {}</span>
+<span class="s1">    }</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>Responses are returned as MCP <code>content</code> blocks (typically <code>type: text</code>) along with a high-level status. From an AI perspective, this is crucial: the result is structured, interpretable, and safe to reason about.</p>
+<hr />
+<h2 id="4-how-the-mcp-server-enforces-safety"><strong>4. How the MCP Server Enforces Safety</strong></h2>
+<p>The implementation is intentionally modular, with clear separation between protocol handling and operational logic.</p>
+<h3 id="41-server-bootstrap-and-dependency-injection"><strong>4.1 Server Bootstrap and Dependency Injection</strong></h3>
+<p>At startup, the server:</p>
+<ol>
+<li>Loads YAML configuration</li>
+<li>Instantiates a <code>Free5GCClient</code> for WebConsole access</li>
+<li>Optionally initializes Kubernetes/Helm managers</li>
+<li>Binds MCP handlers to the Gin router</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nx">cfg</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">config</span><span class="p">.</span><span class="nx">Load</span><span class="p">(</span><span class="o">*</span><span class="nx">configPath</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;failed to load config: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">client</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">control</span><span class="p">.</span><span class="nx">NewFree5GCClient</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">cfg</span><span class="p">.</span><span class="nx">Free5GC</span><span class="p">.</span><span class="nx">BaseURL</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">cfg</span><span class="p">.</span><span class="nx">Free5GC</span><span class="p">.</span><span class="nx">Username</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">cfg</span><span class="p">.</span><span class="nx">Free5GC</span><span class="p">.</span><span class="nx">Password</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">cfg</span><span class="p">.</span><span class="nx">Free5GC</span><span class="p">.</span><span class="nx">Free5GCPath</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nx">r</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">SetupRouter</span><span class="p">(</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="nx">authCfg</span><span class="p">)</span>
+<span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Run</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">Server</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
+</code></pre></div>
+<p>This wiring makes the server stateless with respect to MCP sessions, which simplifies reliability and restart semantics.</p>
+<hr />
+<h3 id="42-resilient-authentication-against-webconsole"><strong>4.2 Resilient Authentication Against WebConsole</strong></h3>
+<p>The <code>Free5GCClient</code> encapsulates WebConsole authentication. Tokens are refreshed transparently when a request encounters <code>401</code> or <code>403</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">resp</span><span class="p">.</span><span class="nx">StatusCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusUnauthorized</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">resp</span><span class="p">.</span><span class="nx">StatusCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusForbidden</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Login</span><span class="p">();</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;re-login failed: %w&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">doRequest</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span><span class="w"> </span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="nx">bytes</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">bodyBytes</span><span class="p">),</span><span class="w"> </span><span class="nx">headers</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This design is critical for long-lived MCP sessions, where token expiry should not surface as an operational failure.</p>
+<hr />
+<h2 id="5-examples-of-workflows-enabled-by-mcp"><strong>5. Examples of Workflows Enabled by MCP</strong></h2>
+<p>By bridging natural language processing with the 5G core's API and Kubernetes layer, MCP transforms complex operational sequences into simple, conversational interactions. Below are the key workflows currently enabled.</p>
+<h3 id="51-workflow-a-unified-lifecycle-management"><strong>5.1 Workflow A — Unified Lifecycle Management</strong></h3>
+<p>Whether running locally on bare metal or orchestrating a cloud-native deployment, MCP abstracts the underlying complexity of starting and stopping the network.</p>
+<p><strong>1. Local Development Control</strong><br />
+For local testing, the <code>local_free5gc_start</code> and <code>local_free5gc_stop</code> tools handle the orchestration of all 11 Network Functions (NFs). The agent verifies that the WebConsole is accessible and that services are healthy before confirming success to the user.</p>
+<p><img alt="Start free5GC Local" src="../start_free5gc.png" /></p>
+<blockquote>
+<p>A split-screen view showing the MCP Chat interface confirming "free5GC has been started successfully" alongside a terminal window displaying the Gin server logs (HTTP 200 responses) indicating the 11 NFs are active.</p>
+</blockquote>
+<p><strong>2. Kubernetes and Helm Orchestration</strong><br />
+In Kubernetes environments, the complexity increases. MCP exposes specific tools to manage Helm charts directly, allowing users to spin up the core or simulation tools without memorizing <code>kubectl</code> or <code>helm</code> commands.<br />
+* <code>k8s_start_free5gc</code>: Deploys or upgrades the core network chart.<br />
+* <code>k8s_start_ueransim</code>: Spins up the UE and gNodeB simulators to generate traffic.</p>
+<p><img alt="Start UERANSIM K8s" src="../start_k8s.png" /></p>
+<blockquote>
+<p>The VS Code interface showing the agent executing <code>k8s_start_ueransim</code>. The output panel displays the "Running" status of both the <code>ueransim-gnb</code> and <code>ueransim-ue</code> pods, confirming the simulation is live.</p>
+</blockquote>
+<hr />
+<h3 id="52-workflow-b-subscriber-inventory-and-provisioning"><strong>5.2 Workflow B — Subscriber Inventory and Provisioning</strong></h3>
+<p>Managing User Equipment (UE) data is often the most repetitive task in a 5G lab. MCP creates a seamless loop between the database and the operator.</p>
+<p><strong>1. Instant Visibility (Read Operations)</strong><br />
+Instead of navigating through multiple WebUI tabs, an engineer can simply ask, "Show me current subscribers in a table." The agent triggers <code>subscriber_list</code>, retrieving the IMSI, PLMN ID, and status directly from the database and formatting it for immediate review.</p>
+<p><img alt="Query Subscribers" src="../query_subscribers.png" /></p>
+<blockquote>
+<p>A side-by-side comparison. On the left, the free5GC WebUI displays a list of subscribers. On the right, the MCP Chat interface renders that same data into a clean, text-based table format in response to the prompt "show me current subscribers in a table."</p>
+</blockquote>
+<p><strong>2. Bulk Provisioning (Write Operations)</strong><br />
+Populating a test environment usually requires tedious manual entry. With MCP, users can describe their intent naturally.<br />
+* <strong>Prompt:</strong> <em>"Add 3 subscribers: imsi-208930000000111, ...222, ...333"</em><br />
+* <strong>Result:</strong> The agent parses the request, applies default templates (authentication keys, slice selection), and executes <code>subscriber_create</code> for each entry.</p>
+<p><img alt="Bulk Create Subscribers" src="../bulk_create_subscriber.png" /></p>
+<blockquote>
+<p>The agent processing a request to "Add 3 subscribers" by running the <code>subscriber_create</code> tool three consecutive times. The left side shows the WebUI instantly reflecting the three new IMSIs registered under PLMN ID 20893.</p>
+</blockquote>
+<hr />
+<h3 id="53-workflow-c-complex-configuration-chaining"><strong>5.3 Workflow C — Complex Configuration Chaining</strong></h3>
+<p>Perhaps the most powerful capability of MCP is <strong>chaining tools</strong> to perform atomic infrastructure updates. Changing a network parameter often requires a config update, a Helm upgrade, and a restart of dependent services.</p>
+<p><strong>Example Scenario: Changing the SMF IP Pool</strong><br />
+A user wants to change the PDU Session IP range to <code>10.2.0.0/17</code>. This involves a multi-step dependency chain that the agent handles autonomously:</p>
+<ol>
+<li><strong>Configuration Update:</strong> The agent calls <code>k8s_update_nfconfig</code> to patch the Session Management Function (SMF) configuration.</li>
+<li><strong>Deployment Upgrade:</strong> It triggers <code>k8s_upgrade_free5gc</code> to apply the new ConfigMap to the cluster.</li>
+<li><strong>Simulation Restart:</strong> To ensure the UEs pick up the new IP addresses, the agent executes <code>k8s_stop_ueransim</code> followed immediately by <code>k8s_start_ueransim</code>.</li>
+</ol>
+<p><img alt="Modify IP Pool Chain" src="../modify_ip_pool.png" /></p>
+<blockquote>
+<p>A complex workflow demonstration. The chat history shows a "Todo" list where the agent automatically planned and executed four distinct tasks: updating the config, upgrading the Helm chart, stopping the simulator, and restarting it. The terminal below verifies success with an <code>ip a</code> command showing the UE interface now holds an IP from the new <code>10.2.0.0/17</code> subnet.</p>
+</blockquote>
+<p>The result is a fully reconfigured network and a restarted simulation environment from a single natural language prompt, significantly reducing the risk of human error during configuration rollouts.</p>
+<hr />
+<h2 id="6-closing-thoughts"><strong>6. Closing Thoughts</strong></h2>
+<p>free5GC-MCP represents a fundamental shift from manual, error-prone lab management to a structured, intent-driven architecture. By wrapping the free5GC WebConsole, local scripts, and Kubernetes operations in a robust Go-based MCP server, we have successfully bridged the gap between strict 3GPP compliance and the flexibility of AI agents.</p>
+<p>This project proves that we don't need to sacrifice safety for convenience. By enforcing strict tool contracts and JSON schemas, we ensure that every AI action—from bulk subscriber provisioning to complex Helm upgrades—is authenticated, validated, and auditable. Ultimately, free5GC-MCP transforms the 5G Core from a system you laboriously operate into a platform you can intelligently orchestrate.</p>
+<h2 id="credits"><strong>Credits</strong></h2>
+<p>A huge thank you to my colleagues for their collaboration, insights, and support on this journey:</p>
+<ul>
+<li>
+<p>🙌 <a href="https://github.com/Jasonkuo23">Jason Kuo</a></p>
+</li>
+<li>
+<p>🔥 <a href="https://github.com/q1317540161">Ji-Jun Lin</a></p>
+</li>
+<li>
+<p>⚡ <a href="https://github.com/Pei-H-Chen">Hung-Pei Chen</a></p>
+</li>
+</ul>
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+<li><a href="https://github.com/q1317540161/free5gc-MCP">GitHub: free5gc-MCP</a></li>
+<li><a href="https://modelcontextprotocol.io/specification/2025-11-25">MCP: Specs (2025-11-25)</a></li>
+<li><a href="https://modelcontextprotocol.io/docs/learn/architecture">MCP: Architecture overview</a></li>
+</ul>
+<h2 id="about"><strong>About</strong></h2>
+<p>Hey it's Warren! currently exploring 5G Core and working with free5GC. I’m just learning how things work in practice and building as I go. Still early in the journey, but enjoying the process and learning a lot along the way. I would love to connect with you!</p>
+<h2 id="connect-with-me"><strong>Connect with Me</strong></h2>
+<ul>
+<li>GitHub: <a href="https://github.com/warren0813">Ng Warren</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

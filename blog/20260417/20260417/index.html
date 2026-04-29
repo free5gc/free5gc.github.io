@@ -1,0 +1,1367 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>free5GC TNGF UE Deregistration and IKE/RADIUS Parser DoS Mitigation - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#free5gc-tngf-ue-deregistration-and-ikeradius-parser-dos-mitigation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              free5GC TNGF UE Deregistration and IKE/RADIUS Parser DoS Mitigation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tngf-role-in-deregistration-why-ordering-matters" class="md-nav__link">
+    TNGF Role in Deregistration: Why Ordering Matters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tngf-deregister-flow-overview" class="md-nav__link">
+    TNGF Deregister Flow Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ue-deregistration-call-flow-through-tngf" class="md-nav__link">
+    UE Deregistration Call Flow Through TNGF
+  </a>
+  
+    <nav class="md-nav" aria-label="UE Deregistration Call Flow Through TNGF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ue-side-orchestration-single-control-point" class="md-nav__link">
+    1) UE-side orchestration (single control point)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ue-sends-secured-nas-with-non-3gpp-envelope" class="md-nav__link">
+    2) UE sends secured NAS with Non-3GPP envelope
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-tngf-gates-n2-release-on-ike-response-with-timeout-fallback" class="md-nav__link">
+    3) TNGF gates N2 release on IKE response (with timeout fallback)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-messageid-correlation-downlink-nas-direct-writecache-logic" class="md-nav__link">
+    4) MessageID correlation + downlink NAS direct-write/cache logic
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actual-deregistration-results-tngfue-and-tngfamf" class="md-nav__link">
+    Actual Deregistration Results (TNGFUE and TNGF/AMF)
+  </a>
+  
+    <nav class="md-nav" aria-label="Actual Deregistration Results (TNGFUE and TNGF/AMF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tngfue-side-deregistration-result" class="md-nav__link">
+    TNGFUE Side Deregistration Result
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-network-tngfamf-side-deregistration-result" class="md-nav__link">
+    Core Network (TNGF/AMF) Side Deregistration Result
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-threat-ikev2-and-radius-parser-dos-in-tngf" class="md-nav__link">
+    The Threat: IKEv2 and RADIUS Parser DoS in TNGF
+  </a>
+  
+    <nav class="md-nav" aria-label="The Threat: IKEv2 and RADIUS Parser DoS in TNGF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attack-surface-a-ikev2-udp4500-pre-parse-assumptions" class="md-nav__link">
+    Attack Surface A: IKEv2 UDP/4500 pre-parse assumptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attack-surface-b-radius-an-parameter-parsing-with-variable-length-fields" class="md-nav__link">
+    Attack Surface B: RADIUS AN-Parameter parsing with variable-length fields
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attack-surface-c-resource-exhaustion-via-transaction-fan-out" class="md-nav__link">
+    Attack Surface C: Resource exhaustion via transaction fan-out
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-level-mitigation-hardened-parser-and-teardown-patterns" class="md-nav__link">
+    Code-Level Mitigation: Hardened Parser and Teardown Patterns
+  </a>
+  
+    <nav class="md-nav" aria-label="Code-Level Mitigation: Hardened Parser and Teardown Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-guard-udp4500-non-esp-marker-parsing" class="md-nav__link">
+    Case 1: Guard UDP/4500 non-ESP marker parsing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-harden-ue-identity-decoding-in-radius-eap-5g-parser" class="md-nav__link">
+    Case 2: Harden UE Identity decoding in RADIUS EAP-5G parser
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3-enforce-strict-ike-messagepayload-bounds-checks" class="md-nav__link">
+    Case 3: Enforce strict IKE message/payload bounds checks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-4-transaction-correlation-with-timeout-and-cleanup" class="md-nav__link">
+    Case 4: Transaction correlation with timeout and cleanup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-these-enhancements-matter-for-free5gc-security" class="md-nav__link">
+    Why These Enhancements Matter for free5GC Security
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-and-verification-strategy" class="md-nav__link">
+    Testing and Verification Strategy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260417/20260417.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260417/20260417.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="free5gc-tngf-ue-deregistration-and-ikeradius-parser-dos-mitigation">free5GC TNGF UE Deregistration and IKE/RADIUS Parser DoS Mitigation</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Author:</strong> <a href="https://github.com/warren0813">Ng Warren</a><br />
+<strong>Date:</strong> 2026/04/17</p>
+</div>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>In free5GC deployments that expose <strong>Trusted Non-3GPP access</strong>, the <strong>TNGF (Trusted Non-3GPP Gateway Function)</strong> is the control and security hinge between trusted Wi-Fi access and the 5G Core.</p>
+<p>It terminates and coordinates multiple protocols at once:</p>
+<ul>
+<li><strong>IKEv2/IPsec</strong> for control-plane protection over untrusted transport semantics.</li>
+<li><strong>NAS over TCP</strong> framing between UE and TNGF.</li>
+<li><strong>NGAP over N2</strong> toward the AMF.</li>
+<li><strong>GTP-U context coupling on N3</strong> toward the UPF through TEID and tunnel lifecycle state.</li>
+</ul>
+<p>This article has a dual focus:</p>
+<ol>
+<li>The <strong>normal UE deregistration path</strong> in <code>tngf-deregister-feat</code> (what should happen).</li>
+<li>The <strong>adversarial parser path</strong> (what malformed IKEv2/RADIUS input can do, and how to harden against DoS).</li>
+</ol>
+<hr />
+<h2 id="tngf-role-in-deregistration-why-ordering-matters">TNGF Role in Deregistration: Why Ordering Matters</h2>
+<p>UE deregistration in Non-3GPP access is not a single NAS transaction. It is a coordinated teardown across three state machines:</p>
+<ul>
+<li><strong>NAS mobility state</strong> at AMF.</li>
+<li><strong>IKE SA and Child SA state</strong> at TNGF and UE.</li>
+<li><strong>TNGF UE context and transport state</strong> (N2/N3 references, TCP signaling, TEID mappings).</li>
+</ul>
+<p>If the order is wrong, common failure modes include:</p>
+<ul>
+<li>UE context removed too early while an IKE transaction is still in flight.</li>
+<li>IKE delete completed but no <code>UEContextReleaseComplete</code> sent on N2.</li>
+<li>Deregistration Accept delayed because downlink NAS was cached but not flushed promptly.</li>
+</ul>
+<hr />
+<h2 id="tngf-deregister-flow-overview">TNGF Deregister Flow Overview</h2>
+<p>Before diving into implementation details, here is the short deregistration sequence adapted for TNGF in Trusted Non-3GPP access:</p>
+<p><img alt="Deregistration procedure for untrusted non-3gpp access" src="../flow_diagram.png" /></p>
+<ol>
+<li>
+<p><strong>Step 2 - N2 UE Context Release Command</strong><br />
+The AMF sends an N2 UE Context Release Command to the TNGF to release the UE's N2 signaling context.</p>
+</li>
+<li>
+<p><strong>Step 3 - IPsec SA Release Request (NWt)</strong><br />
+The TNGF sends an IKE INFORMATIONAL Request carrying a DELETE payload to the UE, requesting IPsec SA teardown on the NWt side.</p>
+</li>
+<li>
+<p><strong>Step 4 - IPsec SA Release Response</strong><br />
+The UE acknowledges with an IKE INFORMATIONAL Response, confirming the SA release transaction.</p>
+</li>
+<li>
+<p><strong>Step 5 - N2 UE Context Release Complete</strong><br />
+After local teardown is confirmed (or timeout fallback is reached), the TNGF sends N2 UE Context Release Complete to the AMF.</p>
+</li>
+</ol>
+<p>This ordering is the key: clean IKE/IPsec shutdown first, then deterministic N2 completion, so the UE does not get stuck in a half-released state.</p>
+<hr />
+<h2 id="ue-deregistration-call-flow-through-tngf">UE Deregistration Call Flow Through TNGF</h2>
+<p>Below are only the core code paths that actually control success/failure of UE deregistration.</p>
+<h3 id="1-ue-side-orchestration-single-control-point">1) UE-side orchestration (single control point)</h3>
+<div class="highlight"><pre><span></span><code><span class="cm">/* src/eap_peer/eap_vendor_test.c */</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">eap_vendor_test_initiate_deregistration</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">eap_sm</span><span class="w"> </span><span class="o">*</span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">priv</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">eap_vendor_test_send_deregistration</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">ngksi</span><span class="p">,</span><span class="w"> </span><span class="n">guti</span><span class="p">,</span><span class="w"> </span><span class="n">guti_len</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">eap_vendor_test_handle_ike_delete</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">eap_vendor_test_process_deregistration_accept</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>What is happening:</p>
+<ul>
+<li>The UE runs deregistration as a strict 3-step state machine.</li>
+<li>If any step fails, the flow stops immediately instead of continuing with half-valid state.</li>
+<li>This function is the best starting point when debugging UE-side failures.</li>
+</ul>
+<h3 id="2-ue-sends-secured-nas-with-non-3gpp-envelope">2) UE sends secured NAS with Non-3GPP envelope</h3>
+<div class="highlight"><pre><span></span><code><span class="cm">/* src/eap_peer/eap_vendor_test.c */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">eap_vendor_test_send_deregistration</span><span class="p">(...)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">wpabuf</span><span class="w"> </span><span class="o">*</span><span class="n">dereg_req</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eap_vendor_test_build_deregistration_request</span><span class="p">(...);</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">wpabuf</span><span class="w"> </span><span class="o">*</span><span class="n">secured</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BuildSecureNAS</span><span class="p">(</span>
+<span class="w">        </span><span class="n">SecurityHeaderTypeIntegrityProtectedAndCiphered</span><span class="p">,</span>
+<span class="w">        </span><span class="n">dereg_req</span><span class="p">,</span>
+<span class="w">        </span><span class="n">data</span><span class="p">,</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">s_tcp</span><span class="p">,</span><span class="w"> </span><span class="n">wpabuf_head</span><span class="p">(</span><span class="n">secured</span><span class="p">),</span><span class="w"> </span><span class="n">wpabuf_len</span><span class="p">(</span><span class="n">secured</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">wpabuf</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BuildSecureNAS</span><span class="p">(...)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="n">wpabuf_put_be16</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">wpabuf_len</span><span class="p">(</span><span class="n">result</span><span class="p">));</span>
+<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wpabuf_concat</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w"> </span><span class="cm">/* [2-byte length][NAS payload] */</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>What is happening:</p>
+<ul>
+<li>Deregistration NAS is integrity-protected and ciphered before transmission.</li>
+<li>The 2-byte length prefix creates the TS 24.502 NAS envelope required on the TCP signaling path.</li>
+<li>If this envelope is wrong, TNGF cannot parse Deregistration Request/Accept reliably.</li>
+</ul>
+<h3 id="3-tngf-gates-n2-release-on-ike-response-with-timeout-fallback">3) TNGF gates N2 release on IKE response (with timeout fallback)</h3>
+<div class="highlight"><pre><span></span><code><span class="cm">/* internal/ngap/handler/handler.go */</span>
+<span class="nx">doneChan</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="nx">messageID</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ike_handler</span><span class="p">.</span><span class="nx">SendIKESADeletion</span><span class="p">(</span><span class="nx">tngfUe</span><span class="p">.</span><span class="nx">TNGFIKESecurityAssociation</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">messageID</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ngap_message</span><span class="p">.</span><span class="nx">SendUEContextReleaseComplete</span><span class="p">(</span><span class="nx">amf</span><span class="p">,</span><span class="w"> </span><span class="nx">tngfUe</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">releaseTngfUeAndIkeSa</span><span class="p">(</span><span class="nx">tngfUe</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="p">}</span>
+
+<span class="nx">tngfUe</span><span class="p">.</span><span class="nx">TransactionChannels</span><span class="p">[</span><span class="nx">messageID</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">doneChan</span>
+<span class="k">select</span><span class="w"> </span><span class="p">{</span>
+<span class="k">case</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">doneChan</span><span class="p">:</span>
+<span class="k">case</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">):</span>
+<span class="p">}</span>
+
+<span class="nx">ngap_message</span><span class="p">.</span><span class="nx">SendUEContextReleaseComplete</span><span class="p">(</span><span class="nx">amf</span><span class="p">,</span><span class="w"> </span><span class="nx">tngfUe</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">releaseTngfUeAndIkeSa</span><span class="p">(</span><span class="nx">tngfUe</span><span class="p">)</span>
+</code></pre></div>
+<p>What is happening:</p>
+<ul>
+<li>TNGF sends IKE SA DELETE and tracks that transaction with <code>MessageID</code>.</li>
+<li>NGAP release completion waits for IKE response, but only up to 5 seconds.</li>
+<li>This prevents indefinite blocking and still guarantees eventual cleanup.</li>
+</ul>
+<h3 id="4-messageid-correlation-downlink-nas-direct-writecache-logic">4) MessageID correlation + downlink NAS direct-write/cache logic</h3>
+<div class="highlight"><pre><span></span><code><span class="cm">/* pkg/ike/handler/handler.go */</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">isResponse</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">doneChan</span><span class="p">,</span><span class="w"> </span><span class="nx">find</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">TransactionChannels</span><span class="p">[</span><span class="nx">message</span><span class="p">.</span><span class="nx">MessageID</span><span class="p">];</span><span class="w"> </span><span class="nx">find</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">doneChan</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">        </span><span class="nb">close</span><span class="p">(</span><span class="nx">doneChan</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">TransactionChannels</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">.</span><span class="nx">MessageID</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cm">/* internal/ngap/handler/handler.go + internal/nwtcp/service/service.go */</span>
+<span class="nx">nasEnv</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">encapNasMsgToEnvelope</span><span class="p">(</span><span class="nx">nasPDU</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">tngfUe</span><span class="p">.</span><span class="nx">TCPConnection</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">tngfUe</span><span class="p">.</span><span class="nx">TCPConnection</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">nasEnv</span><span class="p">)</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">tngfUe</span><span class="p">.</span><span class="nx">TemporaryCachedNASMessage</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">nasEnv</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="w"> </span><span class="nx">ue</span><span class="p">.</span><span class="nx">TemporaryCachedNASMessage</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">connection</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">ue</span><span class="p">.</span><span class="nx">TemporaryCachedNASMessage</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">ue</span><span class="p">.</span><span class="nx">TemporaryCachedNASMessage</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>What is happening:</p>
+<ul>
+<li>IKE response <code>MessageID</code> unblocks the exact waiting NGAP release transaction.</li>
+<li>Deregistration Accept is delivered immediately if TCP is up; otherwise it is cached and flushed on reconnect.</li>
+<li>This is the key mechanism that avoids lost downlink NAS during short signaling races.</li>
+</ul>
+<p>These four snippets are the minimum core needed to understand why deregistration is robust in this implementation.</p>
+<hr />
+<h2 id="actual-deregistration-results-tngfue-and-tngfamf">Actual Deregistration Results (TNGFUE and TNGF/AMF)</h2>
+<h3 id="tngfue-side-deregistration-result">TNGFUE Side Deregistration Result</h3>
+<p><img alt="TNGFUE Deregistration Log" src="../tngfue-deregister.png" /></p>
+<p>Based on <code>tngfue-deregister.png</code>, the UE executes this sequence:</p>
+<ol>
+<li>
+<p><strong>Initiation</strong><br />
+On termination, TNGFUE triggers UE-initiated deregistration and sends the Deregistration Request NAS message.</p>
+</li>
+<li>
+<p><strong>IKE SA Deletion Receipt</strong><br />
+The UE waits for an IKE INFORMATIONAL (DELETE) request from TNGF to tear down the NWt IPsec tunnel. The log also shows one initial interruption/failure before a successful retry.</p>
+</li>
+<li>
+<p><strong>IKE SA Deletion Acknowledgment</strong><br />
+The UE builds and sends an IKE INFORMATIONAL Response to acknowledge SA deletion.</p>
+</li>
+<li>
+<p><strong>Deregistration Acceptance</strong><br />
+The UE waits for and validates the Deregistration Accept from the network.</p>
+</li>
+<li>
+<p><strong>Local Resource Cleanup</strong><br />
+After successful deregistration, TNGFUE disconnects Wi-Fi (<code>wlp1s0f0</code>) and removes GRE interfaces, XFRM interfaces, IP addresses, and routing entries before termination.</p>
+</li>
+</ol>
+<h3 id="core-network-tngfamf-side-deregistration-result">Core Network (TNGF/AMF) Side Deregistration Result</h3>
+<p><img alt="TNGF and AMF Deregistration Log" src="../tngf-deregister.png" /></p>
+<p>Based on <code>tngf-deregister.png</code>, the core side executes this sequence:</p>
+<ol>
+<li>
+<p><strong>Deregistration Accept and N2 Release</strong><br />
+AMF transitions UE state to <code>Deregistered</code>, sends Deregistration Accept (Downlink NAS Transport), then sends N2 UE Context Release Command to TNGF.</p>
+</li>
+<li>
+<p><strong>IKE SA Deletion Request</strong><br />
+TNGF handles the N2 release command and sends IKE INFORMATIONAL (DELETE) to the UE.</p>
+</li>
+<li>
+<p><strong>IKE Wait and Timeout</strong><br />
+TNGF waits for the IKE transaction response. In this run, an INFORMATIONAL with unrecognized SPI is observed, and the expected response times out.</p>
+</li>
+<li>
+<p><strong>N2 Release Complete</strong><br />
+After timeout fallback, TNGF sends N2 UE Context Release Complete and releases local UE resources.</p>
+</li>
+<li>
+<p><strong>Context Removal at AMF</strong><br />
+AMF processes UEContextReleaseComplete and removes the UE context (<code>AmfUe[...] is removed</code>).</p>
+</li>
+</ol>
+<hr />
+<h2 id="the-threat-ikev2-and-radius-parser-dos-in-tngf">The Threat: IKEv2 and RADIUS Parser DoS in TNGF</h2>
+<p>The TNGF sits at a protocol edge where hostile inputs are realistic. Two high-risk parser surfaces are IKEv2 and RADIUS/EAP-5G decoding.</p>
+<h3 id="attack-surface-a-ikev2-udp4500-pre-parse-assumptions">Attack Surface A: IKEv2 UDP/4500 pre-parse assumptions</h3>
+<p>When handling NAT-T traffic, code often assumes a 4-byte non-ESP marker exists. If a short packet is accessed without length checking, an out-of-range panic can terminate service and create an easy DoS primitive.</p>
+<h3 id="attack-surface-b-radius-an-parameter-parsing-with-variable-length-fields">Attack Surface B: RADIUS AN-Parameter parsing with variable-length fields</h3>
+<p>In EAP-5G parsing, UE Identity contains nested length semantics. If a parser slices fields (for IEI, length, identity bytes) without strict bounds and consistency checks, malformed attributes can trigger:</p>
+<ul>
+<li>slice-out-of-range panic,</li>
+<li>memory pressure via malformed lengths,</li>
+<li>parser desynchronization and repeated CPU-heavy error handling.</li>
+</ul>
+<h3 id="attack-surface-c-resource-exhaustion-via-transaction-fan-out">Attack Surface C: Resource exhaustion via transaction fan-out</h3>
+<p>Even with correct syntax handling, a flood of malformed or incomplete exchanges can exhaust channel maps, goroutines, CPU, or socket resources if timeout and cleanup paths are weak.</p>
+<p>This is why <strong>5G cybersecurity</strong> at the TNGF edge is both protocol-correctness and defensive-runtime engineering.</p>
+<hr />
+<h2 id="code-level-mitigation-hardened-parser-and-teardown-patterns">Code-Level Mitigation: Hardened Parser and Teardown Patterns</h2>
+<p>Below are concrete hardening patterns and enhancement cases for TNGF.</p>
+<h3 id="case-1-guard-udp4500-non-esp-marker-parsing">Case 1: Guard UDP/4500 non-ESP marker parsing</h3>
+<p><strong>Before (vulnerable pattern)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">localAddr</span><span class="p">.</span><span class="nx">Port</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4500</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">msg</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">msg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">msg</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>After (hardened pattern)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">localAddr</span><span class="p">.</span><span class="nx">Port</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4500</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">ikeLog</span><span class="p">.</span><span class="nx">Warnf</span><span class="p">(</span><span class="s">&quot;Drop short UDP/4500 packet: len=%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">msg</span><span class="p">))</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">msg</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">ikeLog</span><span class="p">.</span><span class="nx">Warn</span><span class="p">(</span><span class="s">&quot;Non-IKE UDP/4500 payload (likely ESP), ignore&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">msg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">msg</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Security impact: prevents panic-on-short-input DoS and cleanly drops malformed probes.</p>
+<h3 id="case-2-harden-ue-identity-decoding-in-radius-eap-5g-parser">Case 2: Harden UE Identity decoding in RADIUS EAP-5G parser</h3>
+<p><strong>Before (vulnerable pattern)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nx">parameterValue</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">anParameterField</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="nx">parameterValue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">parameterValue</span><span class="p">[:</span><span class="nx">parameterLength</span><span class="p">]</span>
+
+<span class="nx">iei</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">parameterValue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nx">valLen</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nx">Uint16</span><span class="p">(</span><span class="nx">parameterValue</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nx">ueIdentity</span><span class="p">.</span><span class="nx">SetMobileIdentity5GSContents</span><span class="p">(</span><span class="nx">parameterValue</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+</code></pre></div>
+<p><strong>After (hardened pattern)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">parameterLength</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;invalid UEIdentity parameter: too short&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">parameterValue</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">anParameterField</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">parameterValue</span><span class="p">)</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">parameterLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;error formatting&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">parameterValue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">parameterValue</span><span class="p">[:</span><span class="nx">parameterLength</span><span class="p">]</span>
+
+<span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">parameterValue</span><span class="p">)</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;invalid UEIdentity parameter: missing IEI/length&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">iei</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">parameterValue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nx">valLen</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nx">Uint16</span><span class="p">(</span><span class="nx">parameterValue</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nx">mobileIdentityContents</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">parameterValue</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+<span class="k">if</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">valLen</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">mobileIdentityContents</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;invalid UEIdentity parameter: length mismatch&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">ueIdentity</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nasType</span><span class="p">.</span><span class="nx">NewMobileIdentity5GS</span><span class="p">(</span><span class="nx">iei</span><span class="p">)</span>
+<span class="nx">ueIdentity</span><span class="p">.</span><span class="nx">SetLen</span><span class="p">(</span><span class="nx">valLen</span><span class="p">)</span>
+<span class="nx">ueIdentity</span><span class="p">.</span><span class="nx">SetMobileIdentity5GSContents</span><span class="p">(</span><span class="nx">mobileIdentityContents</span><span class="p">)</span>
+</code></pre></div>
+<p>Security impact: closes parser panic vectors and enforces semantic consistency, core to <strong>RADIUS DoS mitigation</strong>.</p>
+<h3 id="case-3-enforce-strict-ike-messagepayload-bounds-checks">Case 3: Enforce strict IKE message/payload bounds checks</h3>
+<p>A robust IKE parser should validate:</p>
+<ul>
+<li>minimum IKE header length,</li>
+<li>header-advertised total length equality,</li>
+<li>minimum payload header size,</li>
+<li>per-payload length sanity before slicing.</li>
+</ul>
+<p>This significantly reduces exploitability of <strong>IKEv2 parser vulnerability</strong> classes (truncation, length mismatch, malformed nested payloads).</p>
+<h3 id="case-4-transaction-correlation-with-timeout-and-cleanup">Case 4: Transaction correlation with timeout and cleanup</h3>
+<p>For deregistration and delete exchanges, use MessageID-correlated channels with timeout fallback and deterministic map cleanup.</p>
+<p>This protects both correctness and availability by preventing indefinite blocking and stale transaction state accumulation.</p>
+<hr />
+<h2 id="why-these-enhancements-matter-for-free5gc-security">Why These Enhancements Matter for free5GC Security</h2>
+<p>The improved patterns above are not cosmetic refactors. They directly reduce production risk in edge-facing protocol handlers:</p>
+<ul>
+<li>panic-based process termination is converted into safe packet drops,</li>
+<li>malformed attribute handling becomes explicit and auditable,</li>
+<li>timeout-driven release logic avoids deadlock/stuck-context conditions,</li>
+<li>deregistration remains functional while parser hardening is tightened.</li>
+</ul>
+<p>This is exactly the kind of engineering required for <strong>free5GC security</strong> in high-exposure environments.</p>
+<hr />
+<h2 id="testing-and-verification-strategy">Testing and Verification Strategy</h2>
+<p>To verify both security and protocol correctness, combine positive and adversarial testing as summarized below.</p>
+<table>
+<thead>
+<tr>
+<th>Test Area</th>
+<th>What to Execute</th>
+<th>Expected Result</th>
+<th>Evidence to Collect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Functional regression (normal UE deregistration)</td>
+<td>UE sends Deregistration Request -&gt; TNGF sends IKE INFORMATIONAL(DELETE) -&gt; UE replies with matching MessageID -&gt; TNGF sends UE Context Release Complete over N2 -&gt; UE receives Deregistration Accept -&gt; local context/tunnel artifacts are cleared</td>
+<td>End-to-end deregistration succeeds with correct signaling order and clean teardown</td>
+<td>TNGF logs (NGAP/IKE/NWtCP), packet captures (NAS + IKE), post-check for stale xfrm/TEID/GRE state</td>
+</tr>
+<tr>
+<td>Negative testing (malformed packet generation)</td>
+<td>Inject malformed inputs at parser edges: truncated UDP/4500 packets, IKE payload length mismatches, malformed RADIUS AN-Parameters and UEIdentity lengths</td>
+<td>No panic, bounded error handling, malformed packets dropped with explicit logs</td>
+<td>Error logs showing rejection path and service continuity during malformed traffic</td>
+</tr>
+<tr>
+<td>Fuzzing parser entry points</td>
+<td>Run Go fuzzers for decode paths (for example IKE decode and EAP-5G unmarshal helpers)</td>
+<td>No panic, no unbounded memory growth, deterministic parser error behavior</td>
+<td>Fuzzer crash-free runs, reproducible corpus cases, stable memory/CPU trends</td>
+</tr>
+<tr>
+<td>Capacity and resilience checks</td>
+<td>Run malformed traffic bursts and sustained stress against parser and transaction paths</td>
+<td>Goroutine count remains bounded, transaction channels cleaned on timeout/response, no sustained CPU saturation</td>
+<td>Runtime telemetry (goroutines/CPU/memory), timeout cleanup logs, long-run stability data</td>
+</tr>
+</tbody>
+</table>
+<p>This table provides a practical baseline for <strong>5G cybersecurity</strong> validation in CI and pre-production.</p>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>The TNGF deregistration path shows how tightly coupled Non-3GPP control-plane state is across NAS, IKEv2, NGAP, and N3-related context lifecycle. The same code paths that ensure clean UE deregistration are also the code paths exposed to parser-level DoS risk.</p>
+<p>Robust length validation, nil-safe handling, strict decode contracts, MessageID-correlated teardown, and timeout-based cleanup are the difference between a recoverable malformed packet and a control-plane outage.</p>
+<h2 id="credits"><strong>Credits</strong></h2>
+<p>A huge thank you to my colleague for their collaboration, insights, and support on this journey:</p>
+<ul>
+<li>🙌 <a href="https://github.com/HiImPeggy">Peggy Cheng</a> for collaborating on TNGF-Deregistration</li>
+</ul>
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/123500_123599/123502/16.07.00_60/ts_123502v160700p.pdf">5G; Procedures for the 5G System (5GS) (3GPP TS 23.502 version 16.7.0 Release 16)</a></li>
+<li><a href="https://github.com/HiImPeggy/tngf/tree/feat-ue-deregister">Github: TNGF (feat-ue-deregister)</a></li>
+<li><a href="https://github.com/warren0813/tngfue/tree/feat-ue-deregister">Github: TNGFUE (feat-ue-deregister)</a></li>
+</ul>
+<h2 id="about"><strong>About</strong></h2>
+<p>Hey it's Warren! currently exploring 5G Core and working with free5GC. I’m just learning how things work in practice and building as I go. Still early in the journey, but enjoying the process and learning a lot along the way. I would love to connect with you!</p>
+<h2 id="connect-with-me"><strong>Connect with Me</strong></h2>
+<ul>
+<li>GitHub: <a href="https://github.com/warren0813">Ng Warren</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
