@@ -20,6 +20,7 @@
 
 ### free5GC Helm
 
+- [free5GC Quick Setup Helm](./quick-setup-helm.md)
 - [free5GC Helm Installation](./7-free5gc-helm.md)
 
 ### free5GC Single Host Mode
