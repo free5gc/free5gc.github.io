@@ -9,6 +9,10 @@ Welcome to the free5GC helm quick setup guide! If you are using the [free5gc-hel
 
 ## Prerequisites
 
+- **CPU**: AMD or Intel CPU.
+- **OS**: Ubuntu 20.04, 22.04, 24.04, or 25.04.
+- **Tools**: The `git` command must be installed on your system.
+
 In this quick setup scrip, we will use `ansible` to run the whole installation. As a result, it can be deploy on both remote machine and local machine.
 
 Install `ansible`:
