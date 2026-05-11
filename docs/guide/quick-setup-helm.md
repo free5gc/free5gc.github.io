@@ -61,7 +61,6 @@ Ansible will help you to install:
 - free5gc-helm
 
     - core network chart
-    - ue/ran simulator chart
 
 ## Result
 
@@ -72,3 +71,54 @@ Ansible will show if there is failed task:
 After installed, use `k9s -A` to check all pods are running:
 
 ![k9s](./images/k9s.png)
+
+## RAN/UE test
+
+### free-ran-ue
+
+free-ran-ue's helm chart is a submodule under `free5gc-helm/charts`. So it is necessary to get the source by:
+
+```bash
+cd free5gc-helm
+git submodule update --init
+```
+
+Then use exec command to enter the pod:
+
+```bash
+kubectl exec -it -n free5gc fru-freeranue-ue-xxxxxxxxxx-xxxxx -- sh
+```
+
+Run UE simulator:
+
+```bash
+./free-ran-ue ue -c config/ue.yaml
+```
+
+Ping test(open another terminal):
+
+```bash
+ping -I ueTun0 1.1.1.1 -c 5
+```
+
+It is expected to see:
+
+```bash
+PING 1.1.1.1 (1.1.1.1) from 10.60.0.1 ueTun0: 56(84) bytes of data.
+64 bytes from 1.1.1.1: icmp_seq=1 ttl=48 time=3.99 ms
+64 bytes from 1.1.1.1: icmp_seq=2 ttl=48 time=3.85 ms
+64 bytes from 1.1.1.1: icmp_seq=3 ttl=48 time=3.70 ms
+64 bytes from 1.1.1.1: icmp_seq=4 ttl=48 time=3.63 ms
+64 bytes from 1.1.1.1: icmp_seq=5 ttl=48 time=3.95 ms
+
+--- 1.1.1.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 3.632/3.823/3.993/0.140 ms
+```
+
+### UERANSIM
+
+```bash
+cd free5gc-helm
+helm install -n free5gc ueransim ./charts/ueransim
+```
