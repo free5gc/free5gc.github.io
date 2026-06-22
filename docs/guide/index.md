@@ -55,15 +55,9 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Traffic Influence](./8-traffic-influence.md)
 - [NR-DC](./9-nr-dc.md)
 
-## Deployment
+## Integration Deployments
 
-For Container deployment:
-
-- [free5GC Compose](https://github.com/free5gc/free5gc-compose) (Docker Compose)
-- [free5GC Helm](https://github.com/free5gc/free5gc-helm) (Kubernetes)
-- [Towards5gs-helm](https://github.com/Orange-OpenSource/towards5gs-helm) (Kubernetes)
-    - [Deploying free5GC on Kubernetes by Danilo Granados](https://www.linkedin.com/feed/update/urn:li:activity:7150871881020002305?utm_source=share&utm_medium=member_desktop)
-    - [Deploying free5GC in a multi-cluster Environment by Danilo Granados](https://www.linkedin.com/feed/update/urn:li:activity:7159899595810992128?utm_source=share&utm_medium=member_desktop)
+- [OCUDU: Integration free5GC and OCUDU With ZeroMQ](../blog/20260619/20260619.md)
 
 ## Roadmap
 
