@@ -18,8 +18,14 @@
   <h2>Your Roadmap to 5G Expertise Starts Here — And It’s Free!</h2>
   <p>Linux Foundation Education has launched Introduction to free5GC (LFS114), a free, self-paced course designed for developers, network engineers, and technologists who want to deepen their 5G expertise and work directly with modern 5G Core architecture. In just a few focused hours, you’ll learn how free5GC is built, how its core functions operate, and how to navigate and engage with the codebase — giving you a real advantage in today’s cloud native networking landscape.</p>
   <p>For more details, please visit the <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" target="_blank">Introduction to free5GC (LFS114)</a>.</p>
-  <h2>Latest News: free5GC v4.2.2 Released!</h2>
-  <p>We have fixed a series of bugs in version 4.2.2 to improve stability and met the testbed in the K8s-helm: <strong><a href="https://lfnetworking.org/cloud-native-telecom-initiative/">CNTi</a></strong>.</p>
+  <h2>Latest News: free5GC v4.2.3 Released!</h2>
+  <p>Version 4.2.3 includes a series of bug fixes to improve overall stability, introduces a redesigned and more user-friendly Webconsole, and adds the <a href="https://github.com/free-ran-ue/fru-helm" target="_blank">free-ran-ue</a> chart for <a href="https://github.com/free5gc/free5gc-helm/tree/main/charts" target="_blank">free5GC Kubernetes deployments</a>.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;">
+    <img src="./assets/newStyleWebconsole/1.png" alt="New Webconsole 1" style="width:100%;border-radius:4px;"/>
+    <img src="./assets/newStyleWebconsole/2.png" alt="New Webconsole 2" style="width:100%;border-radius:4px;"/>
+    <img src="./assets/newStyleWebconsole/3.png" alt="New Webconsole 3" style="width:100%;border-radius:4px;"/>
+    <img src="./assets/newStyleWebconsole/4.png" alt="New Webconsole 4" style="width:100%;border-radius:4px;"/>
+  </div>
   <p>For more details, please see the history page.</p>
   <a href="./history" class="announcement-link">View Version History →</a>
 </div>
@@ -68,7 +74,7 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
 ### Connecting to the Future!
 
 <div class="roadmap-container">
-  <img src="./assets/roadmap-202604.png" alt="free5GC Roadmap" class="roadmap-image"/>
+  <img src="./assets/roadmap-202606.png" alt="free5GC Roadmap" class="roadmap-image"/>
   <div class="roadmap-text">
     <p>We remain committed to enhancing free5GC with new features, and we have a roadmap in place to support the following functionalities:</p>
     <ul class="roadmap-list">

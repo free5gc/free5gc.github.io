@@ -4,6 +4,13 @@
 
 ![free5gc-roadmp-2026](./assets/free5gc-roadmap-2026.png)
 
+## June 30, 2026: v4.2.3
+
+In the release v4.2.2 of free5GC, we have fixed a series of bugs, and also introduce the new style of Webconsole and the free-ran-ue charts:
+
+- [New Style of Webconsole](https://github.com/free5gc/webconsole/pull/201)
+- [free-ran-ue Charts](https://github.com/free5gc/free5gc-helm/pull/25)
+
 ## April 21, 2026: v4.2.2
 
 In the release v4.2.2 of free5GC, we have fixed a series of bugs, and also introduce new features:
