@@ -59,15 +59,6 @@ For people who are not familiar with virtual machines and Linux installation, he
 
 - [OCUDU: Integration free5GC and OCUDU With ZeroMQ](../blog/20260619/20260619.md)
 
-## Roadmap
-
-Here are the features on the roadmap. These items are planned to be supported in the near future:
-
-- CNTi
-- Parallel Registration
-
-If you're interested in more details, please visit the [GitHub Dashboard](https://github.com/users/ianchen0119/projects/4/views/5)
-
 ## Others
 
 - [Release Note](https://github.com/free5gc/free5gc/releases)
