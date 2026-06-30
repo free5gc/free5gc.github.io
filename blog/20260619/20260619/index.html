@@ -1,0 +1,2274 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Integration free5GC and OCUDU With ZeroMQ - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#integration-free5gc-and-ocudu-with-zeromq" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Integration free5GC and OCUDU With ZeroMQ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    Components
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-free5gc-by-following" class="md-nav__link">
+    Install free5GC by following:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-config" class="md-nav__link">
+    Set config
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-ocudu" class="md-nav__link">
+    Build OCUDU
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-srsue" class="md-nav__link">
+    Build srsUE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-scenario-single-ue-registration-and-connectivity" class="md-nav__link">
+    Basic Scenario: Single UE Registration and Connectivity
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Scenario: Single UE Registration and Connectivity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-free5gc" class="md-nav__link">
+    Start free5GC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-ocudu" class="md-nav__link">
+    Start OCUDU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce-cpu-usage-in-a-vm" class="md-nav__link">
+    Reduce CPU Usage in a VM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-srsue" class="md-nav__link">
+    Start srsUE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-routing-and-nat" class="md-nav__link">
+    Configure Routing and NAT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-connectivity" class="md-nav__link">
+    Verify Connectivity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-scenario-two-ues-with-network-slicing" class="md-nav__link">
+    Advanced Scenario: Two UEs with Network Slicing
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Scenario: Two UEs with Network Slicing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_1" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-dummy-interfaces" class="md-nav__link">
+    Create Dummy Interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-free5gc_1" class="md-nav__link">
+    Start free5GC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-ocudu-with-multi-ue-configuration" class="md-nav__link">
+    Start OCUDU with Multi-UE Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-two-ues" class="md-nav__link">
+    Start Two UEs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-gnu-breaker" class="md-nav__link">
+    Start GNU Breaker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-iperf3-servers" class="md-nav__link">
+    Start iperf3 Servers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-ue-routes" class="md-nav__link">
+    Configure UE Routes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-ue1-traffic" class="md-nav__link">
+    Run UE1 Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-ue2-traffic" class="md-nav__link">
+    Run UE2 Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation" class="md-nav__link">
+    Limitation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    Appendix
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-ue-scenario" class="md-nav__link">
+    Single UE scenario
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dual-ue-scenario" class="md-nav__link">
+    Dual UE scenario
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260619/20260619.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260619/20260619.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="integration-free5gc-and-ocudu-with-zeromq">Integration free5GC and <a href="https://ocudu.org/">OCUDU</a> With ZeroMQ</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/qawl987">Fang-Kai Ting</a><br />
+Date: 2026/06/19</p>
+</div>
+<hr />
+<p>This guide describes how to connect <a href="https://ocudu.org/"><strong>OCUDU</strong></a> to <a href="https://free5gc.org"><strong>free5GC</strong></a> and run a software UE with <strong>srsUE</strong> through <strong>ZeroMQ</strong>. It first covers a basic single-UE setup, then provides an advanced two-UE network slicing example with <code>iperf3</code> traffic testing.</p>
+<p>This article was written to make it easy to copy the configurations step-by-step and quickly verify the deployment between free5GC and OCUDU.</p>
+<p>The focus here is not to explain every configuration parameter in detail, but to provide configuration files that can quickly bring up the setup. For parameter details, refer to the <a href="https://docs.srsran.com/projects/project/en/latest/user_manuals/source/config_ref.html">Configuration Reference — srsRAN Project documentation</a>. Also note that the software simulation has a throughput limit of around 3 Mbits/sec. For better performance, refer to <a href="https://docs.srsran.com/projects/project/en/latest/tutorials/source/srsUE/source/index.html">srsRAN gNB with srsUE — srsRAN Project documentation</a> and use a physical RU.</p>
+<h2 id="overview">Overview</h2>
+<p>The setup uses OCUDU as the 5G RAN, free5GC as the 5G Core, and srsUE as the UE. ZeroMQ is used as the software RF transport between the OCUDU DU and srsUE, so the test can run without SDR hardware.</p>
+<p>This guide includes:</p>
+<ul>
+<li>Building OCUDU with ZeroMQ support.</li>
+<li>Building srsUE from <code>srsRAN_4G</code>.</li>
+<li>Starting free5GC, OCUDU CU-CP, OCUDU CU-UP, OCUDU DU, and srsUE.</li>
+<li>Registering one UE and testing data-plane connectivity.</li>
+<li>Running two UEs with different slice settings.</li>
+<li>Testing traffic behavior with <code>iperf3</code>.</li>
+</ul>
+<h2 id="components">Components</h2>
+<ul>
+<li><strong>free5GC</strong>: Provides the 5G Core.</li>
+<li><strong>OCUDU CU-CP</strong>: Handles RAN control-plane functions.</li>
+<li><strong>OCUDU CU-UP</strong>: Handles RAN user-plane functions.</li>
+<li><strong>OCUDU DU</strong>: Connects to srsUE through ZeroMQ.</li>
+<li><strong>srsUE</strong>: Provides the software UE and creates the <code>tun_srsue</code> interface.</li>
+<li><strong>ZeroMQ</strong>: Provides the software RF transport between DU and UE.</li>
+<li><strong>Appendix config</strong>: Provides the configuration files used in this guide.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This guide was tested in the environment described below; however, the minimum RAM requirement and supported Ubuntu versions have not been tested.</p>
+<ul>
+<li>Ubuntu-based 22.04 or newer VM or host.</li>
+<li>CPU: 4 or more</li>
+<li>RAM: 16GB or more</li>
+</ul>
+<h3 id="install-free5gc-by-following">Install free5GC by following:</h3>
+<p><a href="https://free5gc.org/guide/quick-setup/">free5GC Quick Setup</a></p>
+<h3 id="set-config">Set config</h3>
+<ol>
+<li>
+<p>Create below in home directory </p>
+<p><img alt="image.png" src="../image.png" /></p>
+</li>
+<li>
+<p>Move the configuration files in the <a href="./#appendix">appendix</a> to the <code>~/ocudu-config</code> directory, and the multi-ue configuration files to the <code>~/ocudu-config/multi-ue</code> directory.</p>
+</li>
+</ol>
+<h2 id="build-ocudu">Build OCUDU</h2>
+<ol>
+<li>
+<p>Install the required packages:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gcc<span class="w"> </span>g++<span class="w"> </span>pkg-config<span class="w"> </span>libfftw3-dev<span class="w"> </span>libmbedtls-dev<span class="w"> </span>libsctp-dev<span class="w"> </span>libyaml-cpp-dev<span class="w"> </span>libgtest-dev<span class="w"> </span>libzmq3-dev
+</code></pre></div>
+</li>
+<li>
+<p>Clone OCUDU:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>release_26_04<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://gitlab.com/ocudu/ocudu.git
+</code></pre></div>
+</li>
+<li>
+<p>Build OCUDU with ZeroMQ support:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>ocudu
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>../<span class="w"> </span>-DENABLE_EXPORT<span class="o">=</span>ON<span class="w"> </span>-DENABLE_ZEROMQ<span class="o">=</span>ON
+make<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>During CMake configuration, confirm that ZeroMQ is detected:</p>
+<div class="highlight"><pre><span></span><code>-- FINDING ZEROMQ.
+-- Checking for module &#39;ZeroMQ&#39;
+-- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
+</code></pre></div>
+</li>
+</ol>
+<p>If CMake uses stale build artifacts, clean the build directory and rerun the configuration step.</p>
+<h2 id="build-srsue">Build srsUE</h2>
+<ol>
+<li>
+<p>Install the required packages:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>libfftw3-dev<span class="w"> </span>libmbedtls-dev<span class="w"> </span>libboost-program-options-dev<span class="w"> </span>libconfig++-dev<span class="w"> </span>libsctp-dev<span class="w"> </span>libzmq3-dev
+</code></pre></div>
+</li>
+<li>
+<p>Clone <code>srsRAN_4G</code>:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>release_25_10<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://github.com/srsran/srsRAN_4G
+</code></pre></div>
+</li>
+<li>
+<p>Build srsUE:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>srsRAN_4G
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>../<span class="w"> </span>-DENABLE_RF_PLUGINS<span class="o">=</span>OFF
+make<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span>
+</code></pre></div>
+</li>
+</ol>
+<h2 id="basic-scenario-single-ue-registration-and-connectivity">Basic Scenario: Single UE Registration and Connectivity</h2>
+<p>This section starts free5GC, OCUDU, and one srsUE instance. After the UE registers, the data-plane connection is verified with a ping test through <code>tun_srsue</code>.</p>
+<p><img alt="image 9.png" src="../image%209.png" /></p>
+<h3 id="start-free5gc">Start free5GC</h3>
+<p>Start the free5GC core:</p>
+<div class="highlight"><pre><span></span><code><span class="go">~/free5gc$ ./run.sh</span>
+</code></pre></div>
+<h3 id="start-ocudu">Start OCUDU</h3>
+<p>Start CU-CP:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/ocudu/build/apps/cu_cp/ocucp<span class="w"> </span>-c<span class="w"> </span>~/ocudu-config/cu_cp.yml
+</code></pre></div>
+<p>Start CU-UP:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/ocudu/build/apps/cu_up/ocuup<span class="w"> </span>-c<span class="w"> </span>~/ocudu-config/cu_up.yml
+</code></pre></div>
+<p>Start DU with the ZeroMQ configuration:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/ocudu/build/apps/du/odu<span class="w"> </span>-c<span class="w"> </span>~/ocudu-config/du_zmq.yml
+</code></pre></div>
+<p>When the processes start correctly, the CU and DU components should wait for the UE connection.</p>
+<ul>
+<li>
+<p>OCUDU startup result</p>
+<p><img alt="image.png" src="../image%201.png" /></p>
+</li>
+</ul>
+<h3 id="reduce-cpu-usage-in-a-vm">Reduce CPU Usage in a VM</h3>
+<p>In VM environments, OCUDU may consume a large amount of CPU due to excessive VM context switching. Adding the following block to the CU-CP, CU-UP, and DU YAML files can significantly reduce CPU utilization:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">expert_execution</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">threads</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">main_pool</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">backoff_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Before apply</p>
+<p><img alt="image.png" src="../image%202.png" /></p>
+</li>
+<li>
+<p>After apply</p>
+<p><img alt="image.png" src="../e5a4bab2-eb05-4476-a6b1-8e0c2eb6ad25.png" /></p>
+</li>
+</ul>
+<h3 id="start-srsue">Start srsUE</h3>
+<ol>
+<li>Before starting srsUE, create the corresponding subscriber in the free5GC web console (the <code>ue.conf</code> has already been modified to the default settings of the web console). Please refer to the official documentation <a href="https://free5gc.org/guide/Webconsole/Create-Subscriber-via-webconsole/">Create Subscriber via webconsole - free5GC</a> for steps on registering the UE.</li>
+<li>
+<p>Create ue1 namespace:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span>add<span class="w"> </span>ue1
+</code></pre></div>
+</li>
+<li>
+<p>Start srsUE:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/srsRAN_4G/build/srsue/src/srsue<span class="w"> </span>~/ocudu-config/ue.conf
+</code></pre></div>
+</li>
+</ol>
+<p>After the UE registers, srsUE creates the <code>tun_srsue</code> interface.</p>
+<ul>
+<li>
+<p>UE registration result</p>
+<p><img alt="image.png" src="../image%203.png" /></p>
+</li>
+</ul>
+<h3 id="configure-routing-and-nat">Configure Routing and NAT</h3>
+<ol>
+<li>
+<p>Update the default route inside the UE namespace:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue1<span class="w"> </span>ip<span class="w"> </span>route<span class="w"> </span>del<span class="w"> </span>default<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.60.0.1<span class="w"> </span>dev<span class="w"> </span>tun_srsue
+sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue1<span class="w"> </span>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>default<span class="w"> </span>dev<span class="w"> </span>tun_srsue
+</code></pre></div>
+</li>
+<li>
+<p>Enable IP forwarding:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+</li>
+<li>
+<p>Add NAT for the UE subnet:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>iptables<span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>POSTROUTING<span class="w"> </span>-s<span class="w"> </span><span class="m">10</span>.60.0.0/16<span class="w"> </span>-o<span class="w"> </span>enp0s3<span class="w"> </span>-j<span class="w"> </span>MASQUERADE
+</code></pre></div>
+<p>The CIDR(10.60.0.0/16) is the IP class we set at webconsole for UE SNSSAI.</p>
+</li>
+<li>
+<p>Allow forwarding between <code>upfgtp</code> and the external network interface:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span>upfgtp<span class="w"> </span>-o<span class="w"> </span>enp0s3<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span>enp0s3<span class="w"> </span>-o<span class="w"> </span>upfgtp<span class="w"> </span>-m<span class="w"> </span>state<span class="w"> </span>--state<span class="w"> </span>RELATED,ESTABLISHED<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+</code></pre></div>
+</li>
+</ol>
+<p>Replace <code>enp0s3</code> with the external network interface used by your environment.</p>
+<h3 id="verify-connectivity">Verify Connectivity</h3>
+<p>Run a ping test from the UE namespace:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>-n<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue1<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span>-I<span class="w"> </span>tun_srsue<span class="w"> </span><span class="m">8</span>.8.8.8
+</code></pre></div>
+<ul>
+<li>
+<p>Ping result</p>
+<p><img alt="image.png" src="../image%204.png" /></p>
+</li>
+</ul>
+<h2 id="advanced-scenario-two-ues-with-network-slicing">Advanced Scenario: Two UEs with Network Slicing</h2>
+<p>This section runs two UE instances with different slice settings. Because we use <code>iperf3</code> for traffic testing, we create two dummy interfaces to serve as the iperf3 servers.</p>
+<p><img alt="image.png" src="../image%205.png" /></p>
+<p>The example uses:</p>
+<ul>
+<li>UE1: <code>imsi=208930000000001</code>, eMBB slice <code>nssai-sd=010203</code></li>
+<li>UE2: <code>imsi=208930000000002</code>, URLLC slice <code>nssai-sd=112233</code></li>
+<li>UE1 server endpoint: <code>192.168.100.1</code></li>
+<li>UE2 server endpoint: <code>192.168.100.2</code></li>
+</ul>
+<h3 id="prerequisites_1">Prerequisites</h3>
+<ol>
+<li>
+<p>Install GNU Radio</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>gnuradio
+</code></pre></div>
+</li>
+<li>
+<p>Install iperf3 with <code>--bind-dev</code> support</p>
+</li>
+<li>Make sure the subscriber profiles in the free5GC web console match the two UE configuration files. For steps on registering a dual-UE slice, please refer to the <a href="https://free5gc.org/blog/20250625/20250625/?h=prac">A Practical Guide to Network Slicing and Traffic Steering with free5GC and OAI-MEC - free5GC</a> "Create a new network slice" section in the previous blog post.</li>
+</ol>
+<h3 id="create-dummy-interfaces">Create Dummy Interfaces</h3>
+<p>Create a dummy interface for UE1:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>dummy-ue1<span class="w"> </span><span class="nb">type</span><span class="w"> </span>dummy
+sudo<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.100.1/24<span class="w"> </span>dev<span class="w"> </span>dummy-ue1
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dummy-ue1<span class="w"> </span>up
+</code></pre></div>
+<p>Create a dummy interface for UE2:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>dummy-ue2<span class="w"> </span><span class="nb">type</span><span class="w"> </span>dummy
+sudo<span class="w"> </span>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.100.2/24<span class="w"> </span>dev<span class="w"> </span>dummy-ue2
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dummy-ue2<span class="w"> </span>up
+</code></pre></div>
+<h3 id="start-free5gc_1">Start free5GC</h3>
+<p>Start the core network:</p>
+<div class="highlight"><pre><span></span><code><span class="go">~/free5gc$ ./run.sh</span>
+</code></pre></div>
+<h3 id="start-ocudu-with-multi-ue-configuration">Start OCUDU with Multi-UE Configuration</h3>
+<p>Start CU-CP:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/ocudu/build/apps/cu_cp/ocucp<span class="w"> </span>-c<span class="w"> </span>~/ocudu-config/multi-ue/cu_cp.yml
+</code></pre></div>
+<p>Start CU-UP:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/ocudu/build/apps/cu_up/ocuup<span class="w"> </span>-c<span class="w"> </span>~/ocudu-config/multi-ue/cu_up.yml
+</code></pre></div>
+<p>Start DU:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/ocudu/build/apps/du/odu<span class="w"> </span>-c<span class="w"> </span>~/ocudu-config/multi-ue/du_zmq.yml
+</code></pre></div>
+<h3 id="start-two-ues">Start Two UEs</h3>
+<p>Start UE1:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span>add<span class="w"> </span>ue1
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/srsRAN_4G/build/srsue/src/srsue<span class="w"> </span>~/ocudu-config/multi-ue/ue.conf
+</code></pre></div>
+<p>Start UE2:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span>add<span class="w"> </span>ue2
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>~/srsRAN_4G/build/srsue/src/srsue<span class="w"> </span>~/ocudu-config/multi-ue/ue2.conf
+</code></pre></div>
+<h3 id="start-gnu-breaker">Start GNU Breaker</h3>
+<ol>
+<li>
+<p>Start the GNU breaker process from the same directory:</p>
+<div class="highlight"><pre><span></span><code>grcc<span class="w"> </span>-r<span class="w"> </span>~/ocudu-config/multi-ue/multi_ue_scenario.grc
+</code></pre></div>
+</li>
+</ol>
+<p>If both UEs register successfully, each UE should have its tunnel interface.</p>
+<ul>
+<li>
+<p>UE1 result</p>
+<p><img alt="image.png" src="../image%206.png" /></p>
+</li>
+<li>
+<p>UE2 result</p>
+<p><img alt="image.png" src="../image%207.png" /></p>
+</li>
+</ul>
+<h3 id="start-iperf3-servers">Start iperf3 Servers</h3>
+<p>Start the UE1 server:</p>
+<div class="highlight"><pre><span></span><code>iperf3<span class="w"> </span>-s<span class="w"> </span>-B<span class="w"> </span><span class="m">192</span>.168.100.1
+</code></pre></div>
+<p>Start the UE2 server:</p>
+<div class="highlight"><pre><span></span><code>iperf3<span class="w"> </span>-s<span class="w"> </span>-B<span class="w"> </span><span class="m">192</span>.168.100.2
+</code></pre></div>
+<h3 id="configure-ue-routes">Configure UE Routes</h3>
+<p>Add the default route for UE1:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue1<span class="w"> </span>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>default<span class="w"> </span>dev<span class="w"> </span>tun_srsue
+</code></pre></div>
+<p>Add the default route for UE2:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue2<span class="w"> </span>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>default<span class="w"> </span>dev<span class="w"> </span>tun_srsue
+</code></pre></div>
+<h3 id="run-ue1-traffic">Run UE1 Traffic</h3>
+<p>Start a 60-second UDP flow from UE1:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue1<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>free5gc<span class="w"> </span>iperf3<span class="w"> </span>--bind-dev<span class="w"> </span>tun_srsue<span class="w"> </span>-c<span class="w"> </span><span class="m">192</span>.168.100.1<span class="w"> </span>-i<span class="w"> </span><span class="m">1</span><span class="w"> </span>-t<span class="w"> </span><span class="m">60</span><span class="w"> </span>-u<span class="w"> </span>-b<span class="w"> </span>3M<span class="w"> </span>--get-server-output<span class="w"> </span>--logfile<span class="w"> </span>~/ocudu-config/embb.log
+</code></pre></div>
+<h3 id="run-ue2-traffic">Run UE2 Traffic</h3>
+<p>Start UE2 about 15 seconds after UE1:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ue2<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>free5gc<span class="w"> </span>iperf3<span class="w"> </span>--bind-dev<span class="w"> </span>tun_srsue<span class="w"> </span>-c<span class="w"> </span><span class="m">192</span>.168.100.2<span class="w"> </span>-i<span class="w"> </span><span class="m">1</span><span class="w"> </span>-t<span class="w"> </span><span class="m">30</span><span class="w"> </span>-u<span class="w"> </span>-b<span class="w"> </span>3M<span class="w"> </span>--get-server-output<span class="w"> </span>--logfile<span class="w"> </span>~/ocudu-config/urllc.log
+</code></pre></div>
+<p>Expected behavior:</p>
+<ul>
+<li><code>0s-15s</code>: only the eMBB UE1 traffic is running, so UE1 can reach the software simulation limit of around 3 Mbps.</li>
+<li><code>15s-45s</code>: the eMBB UE1 and URLLC UE2 traffic overlap. Because the URLLC flow has a higher priority, UE2 can keep the 3 Mbps throughput, while the eMBB UE1 traffic is compressed to only a small amount of remaining bandwidth. This behavior matches the <code>15s-45s</code> interval in the results below.</li>
+<li><code>45s-60s</code>: the URLLC UE2 traffic stops, leaving only the eMBB UE1 traffic. As a result, UE1 recovers and returns to around 3 Mbps.</li>
+</ul>
+<p><img alt="image.png" src="../image%208.png" /></p>
+<p>Example UE1 result:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="w"> </span>ID<span class="o">]</span><span class="w"> </span>Interval<span class="w">           </span>Transfer<span class="w">     </span>Bitrate<span class="w">         </span>Jitter<span class="w">    </span>Lost/Total<span class="w"> </span>Datagrams
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-1.00<span class="w">   </span>sec<span class="w">   </span><span class="m">248</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">2</span>.03<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">2</span>.004<span class="w"> </span>ms<span class="w">  </span><span class="m">0</span>/180<span class="w"> </span><span class="o">(</span><span class="m">0</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">1</span>.00-2.00<span class="w">   </span>sec<span class="w">   </span><span class="m">277</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">2</span>.27<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">1</span>.362<span class="w"> </span>ms<span class="w">  </span><span class="m">0</span>/201<span class="w"> </span><span class="o">(</span><span class="m">0</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">14</span>.00-15.00<span class="w">  </span>sec<span class="w">   </span><span class="m">321</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">2</span>.63<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">1</span>.833<span class="w"> </span>ms<span class="w">  </span><span class="m">3</span>/236<span class="w"> </span><span class="o">(</span><span class="m">1</span>.3%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">15</span>.00-16.00<span class="w">  </span>sec<span class="w">   </span><span class="m">175</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">1</span>.44<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">29</span>.659<span class="w"> </span>ms<span class="w">  </span><span class="m">8</span>/135<span class="w"> </span><span class="o">(</span><span class="m">5</span>.9%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">16</span>.00-17.00<span class="w">  </span>sec<span class="w">  </span><span class="m">13</span>.8<span class="w"> </span>KBytes<span class="w">   </span><span class="m">113</span><span class="w"> </span>Kbits/sec<span class="w">  </span><span class="m">55</span>.679<span class="w"> </span>ms<span class="w">  </span><span class="m">10</span>/20<span class="w"> </span><span class="o">(</span><span class="m">50</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">30</span>.00-31.00<span class="w">  </span>sec<span class="w">  </span><span class="m">9</span>.65<span class="w"> </span>KBytes<span class="w">  </span><span class="m">79</span>.1<span class="w"> </span>Kbits/sec<span class="w">  </span><span class="m">122</span>.631<span class="w"> </span>ms<span class="w">  </span><span class="m">1</span>/8<span class="w"> </span><span class="o">(</span><span class="m">12</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">44</span>.00-45.00<span class="w">  </span>sec<span class="w">  </span><span class="m">11</span>.0<span class="w"> </span>KBytes<span class="w">  </span><span class="m">90</span>.3<span class="w"> </span>Kbits/sec<span class="w">  </span><span class="m">106</span>.456<span class="w"> </span>ms<span class="w">  </span><span class="m">8</span>/16<span class="w"> </span><span class="o">(</span><span class="m">50</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">49</span>.00-50.00<span class="w">  </span>sec<span class="w">   </span><span class="m">176</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">1</span>.44<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">2</span>.212<span class="w"> </span>ms<span class="w">  </span><span class="m">176</span>/304<span class="w"> </span><span class="o">(</span><span class="m">58</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">56</span>.00-57.00<span class="w">  </span>sec<span class="w">   </span><span class="m">332</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">2</span>.72<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">1</span>.562<span class="w"> </span>ms<span class="w">  </span><span class="m">21</span>/262<span class="w"> </span><span class="o">(</span><span class="m">8</span>%<span class="o">)</span>
+</code></pre></div>
+<p>Example UE2 result:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="w"> </span>ID<span class="o">]</span><span class="w"> </span>Interval<span class="w">           </span>Transfer<span class="w">     </span>Bitrate<span class="w">         </span>Jitter<span class="w">    </span>Lost/Total<span class="w"> </span>Datagrams
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-1.00<span class="w">   </span>sec<span class="w">   </span><span class="m">239</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">1</span>.95<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">2</span>.031<span class="w"> </span>ms<span class="w">  </span><span class="m">0</span>/173<span class="w"> </span><span class="o">(</span><span class="m">0</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">1</span>.00-2.00<span class="w">   </span>sec<span class="w">   </span><span class="m">196</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">1</span>.60<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">9</span>.493<span class="w"> </span>ms<span class="w">  </span><span class="m">54</span>/196<span class="w"> </span><span class="o">(</span><span class="m">28</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">15</span>.00-16.00<span class="w">  </span>sec<span class="w">   </span><span class="m">163</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">1</span>.34<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">11</span>.741<span class="w"> </span>ms<span class="w">  </span><span class="m">159</span>/277<span class="w"> </span><span class="o">(</span><span class="m">57</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">  </span><span class="m">29</span>.00-30.00<span class="w">  </span>sec<span class="w">   </span><span class="m">181</span><span class="w"> </span>KBytes<span class="w">  </span><span class="m">1</span>.48<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">11</span>.185<span class="w"> </span>ms<span class="w">  </span><span class="m">127</span>/258<span class="w"> </span><span class="o">(</span><span class="m">49</span>%<span class="o">)</span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-30.66<span class="w">  </span>sec<span class="w">  </span><span class="m">5</span>.75<span class="w"> </span>MBytes<span class="w">  </span><span class="m">1</span>.57<span class="w"> </span>Mbits/sec<span class="w">  </span><span class="m">15</span>.185<span class="w"> </span>ms<span class="w">  </span><span class="m">3686</span>/7959<span class="w"> </span><span class="o">(</span><span class="m">46</span>%<span class="o">)</span>
+</code></pre></div>
+<h3 id="limitation">Limitation</h3>
+<p>As noted earlier, this setup uses ZMQ software emulation instead of real radio hardware such as a USRP. The results should therefore be treated as a functional connectivity test between OCUDU and free5GC, rather than a performance benchmark.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If the UE cannot register:</p>
+<ul>
+<li>Confirm that the subscriber exists in the free5GC web console.</li>
+<li>Confirm that the UE SUPI, key, OPc, DNN, and S-NSSAI match the subscriber profile.</li>
+<li>Confirm that OCUDU was built with <code>-DENABLE_ZEROMQ=ON</code>.</li>
+<li>Check if the UE has entered the RRC connected state.</li>
+<li>Check the AMF log to identify at which stage the UE failed.</li>
+</ul>
+<p>If the UE registers but cannot pass traffic:</p>
+<ul>
+<li>Check the route inside the UE namespace.</li>
+<li>Confirm that the default route points to <code>tun_srsue</code>.</li>
+<li>Confirm that host IP forwarding is enabled.</li>
+<li>Confirm that the NAT rule uses the correct UE subnet.</li>
+<li>Confirm that the forwarding rules use the correct external network interface.</li>
+</ul>
+<p>If CPU usage is too high:</p>
+<ul>
+<li>Add the <code>expert_execution</code> block shown in the Basic Usage section to the OCUDU YAML files.</li>
+</ul>
+<h2 id="appendix">Appendix</h2>
+<h3 id="single-ue-scenario">Single UE scenario</h3>
+<ul>
+<li>
+<p>cu_cp.yml</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example config for a locally deployed CU-CP listening on the localhost interface for a CU-UP and DU connection</span>
+
+<span class="nt">cu_cp</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">request_pdu_session_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">  </span><span class="nt">inactivity_timer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7000</span>
+<span class="w">  </span><span class="nt">amf</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.18</span><span class="w">               </span><span class="c1"># The address or hostname of the AMF.</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">38412</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span><span class="w">            </span><span class="c1"># A local IP that the gNB binds to for traffic from the AMF.</span>
+<span class="w">    </span><span class="nt">supported_tracking_areas</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">plmn_list</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">plmn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20893&quot;</span>
+<span class="w">            </span><span class="nt">tai_slice_support_list</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">                </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;010203&quot;</span>
+<span class="w">  </span><span class="nt">e1ap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.20.1</span>
+<span class="w">  </span><span class="nt">f1ap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.1</span>
+
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/logs/cu_cp.log</span>
+<span class="w">  </span><span class="nt">all_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warning</span>
+
+<span class="nt">pcap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ngap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">ngap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/cu_cp_ngap.pcap</span>
+<span class="w">  </span><span class="nt">f1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/cu_cp_f1ap.pcap</span>
+<span class="w">  </span><span class="nt">e1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">e1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/cu_cp_e1ap.pcap</span>
+
+<span class="c1"># Below work for VM env</span>
+<span class="nt">expert_execution</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">threads</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">main_pool</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">backoff_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+</code></pre></div>
+</li>
+<li>
+<p>cu_up.yml</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example config for a locally deployed CU-UP</span>
+
+<span class="nt">cu_up</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">e1ap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cu_cp_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.20.1</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.20.2</span>
+<span class="w">  </span><span class="nt">ngu</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span>
+<span class="w">        </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">  </span><span class="nt">f1u</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span>
+<span class="w">        </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.1</span>
+
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/cu_up.log</span>
+<span class="w">  </span><span class="nt">all_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warning</span>
+
+<span class="nt">pcap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">e1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">e1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/cu_up_e1ap.pcap</span>
+<span class="w">  </span><span class="nt">f1u_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1u_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/cu_up_f1u.pcap</span>
+<span class="w">  </span><span class="nt">n3_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">n3_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/cu_up_n3.pcap</span>
+
+<span class="c1"># Below work for VM env</span>
+<span class="nt">expert_execution</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">threads</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">main_pool</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">backoff_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+</code></pre></div>
+</li>
+<li>
+<p>du_zmq.yml</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example config for a DU with ZMQ radio.</span>
+<span class="nt">f1ap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cu_cp_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.1</span>
+<span class="w">  </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.2</span>
+
+<span class="nt">f1u</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">socket</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span>
+<span class="w">      </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.2</span>
+
+<span class="nt">ru_sdr</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">device_driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq</span><span class="w">                </span><span class="c1"># The RF driver name.</span>
+<span class="w">  </span><span class="nt">device_args</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=23.04e6,verbose</span><span class="w"> </span><span class="c1"># Optionally pass arguments to the selected RF driver.</span>
+<span class="w">  </span><span class="nt">srate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">23.04</span><span class="w">                      </span><span class="c1"># RF sample rate might need to be adjusted according to selected bandwidth.</span>
+<span class="w">  </span><span class="nt">tx_gain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span><span class="w">                       </span><span class="c1"># Transmit gain of the RF might need to adjusted to the given situation.</span>
+<span class="w">  </span><span class="nt">rx_gain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span><span class="w">                       </span><span class="c1"># Receive gain of the RF might need to adjusted to the given situation.</span>
+
+<span class="nt">cell_cfg</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dl_arfcn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">368500</span><span class="w">                  </span><span class="c1"># ARFCN of the downlink carrier (center frequency).</span>
+<span class="w">  </span><span class="nt">band</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">                           </span><span class="c1"># The NR band.</span>
+<span class="w">  </span><span class="nt">channel_bandwidth_MHz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w">         </span><span class="c1"># Bandwith in MHz. Number of PRBs will be automatically derived.</span>
+<span class="w">  </span><span class="nt">common_scs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w">                    </span><span class="c1"># Subcarrier spacing in kHz used for data.</span>
+<span class="w">  </span><span class="nt">plmn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20893&quot;</span><span class="w">                     </span><span class="c1"># PLMN broadcasted by the gNB.</span>
+<span class="w">  </span><span class="nt">tac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">                            </span><span class="c1"># Tracking area code (needs to match the core configuration).</span>
+<span class="w">  </span><span class="nt">pci</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">pdcch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">common</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ss0_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">                  </span><span class="c1"># Set search space zero index to match srsUE capabilities</span>
+<span class="w">      </span><span class="nt">coreset0_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w">            </span><span class="c1"># Set search CORESET Zero index to match srsUE capabilities</span>
+<span class="w">    </span><span class="nt">dedicated</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ss2_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common</span><span class="w">              </span><span class="c1"># Search Space type, has to be set to common</span>
+<span class="w">      </span><span class="nt">dci_format_0_1_and_1_1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Set correct DCI format (fallback)</span>
+<span class="w">  </span><span class="nt">prach</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">prach_config_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">           </span><span class="c1"># Sets PRACH config to match what is expected by srsUE</span>
+<span class="w">  </span><span class="nt">pdsch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcs_table</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qam64</span><span class="w">                </span><span class="c1"># Sets PDSCH MCS to 64 QAM</span>
+<span class="w">  </span><span class="nt">pusch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcs_table</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qam64</span><span class="w">                </span><span class="c1"># Sets PUSCH MCS to 64 QAM</span>
+
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/logs/du.log</span>
+<span class="w">  </span><span class="nt">all_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warning</span>
+
+<span class="nt">pcap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mac_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">mac_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/du_mac.pcap</span>
+<span class="w">  </span><span class="nt">f1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/du_f1ap.pcap</span>
+<span class="w">  </span><span class="nt">f1u_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1u_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/pcaps/du_f1u.pcap</span>
+
+<span class="c1"># Below work for VM env</span>
+<span class="nt">expert_execution</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">threads</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">main_pool</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">backoff_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">                        </span><span class="c1"># Optional UINT (50). Main thread pool back-off period, in microseconds.</span>
+</code></pre></div>
+</li>
+<li>
+<p>ue.conf</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#####################################################################</span>
+<span class="c1">#                   srsUE configuration file</span>
+<span class="c1">#####################################################################</span>
+
+<span class="k">[rf]</span>
+<span class="c1"># Using ZMQ device to connect to the gNB.</span>
+<span class="c1"># The ports and srate are configured to match your du_zmq.yml.</span>
+<span class="na">freq_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="na">tx_gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">50</span>
+<span class="na">rx_gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">40</span>
+<span class="na">srate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">23.04e6</span>
+<span class="na">nof_antennas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+
+<span class="na">device_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">zmq</span>
+<span class="na">device_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=23.04e6</span>
+
+<span class="c1"># According to your du_zmq.yml, the gNB is on band 3.</span>
+<span class="c1"># The dl_arfcn is 368500, which corresponds to band 3.</span>
+<span class="k">[rat.eutra]</span>
+<span class="na">dl_earfcn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2850</span>
+<span class="na">nof_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+
+<span class="k">[rat.nr]</span>
+<span class="na">bands</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3</span>
+<span class="na">nof_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">max_nof_prb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">106</span>
+<span class="na">nof_prb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">106</span>
+
+<span class="k">[rrc]</span>
+<span class="na">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">15</span>
+<span class="na">ue_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">4</span>
+
+<span class="k">[usim]</span>
+<span class="c1"># USIM configuration from your free5gc-ue.yaml</span>
+<span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">soft</span>
+<span class="na">algo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">milenage</span>
+<span class="na">imsi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">208930000000001</span>
+<span class="na">k</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">8baf473f2f8fd09487cccbd7097c6862</span>
+<span class="na">opc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">8e27b6af0e692e750f32667a3b14605d</span>
+<span class="na">imei</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">356938035643803</span>
+
+<span class="k">[nas]</span>
+<span class="c1"># APN from your free5gc-ue.yaml</span>
+<span class="na">apn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">internet</span>
+<span class="na">apn_protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ipv4</span>
+
+<span class="k">[slicing]</span>
+<span class="c1"># Slicing configuration from your free5gc-ue.yaml</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">nssai-sst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">nssai-sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">66051</span>
+
+<span class="k">[gw]</span>
+<span class="na">netns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ue1</span>
+<span class="na">ip_devname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tun_srsue</span>
+<span class="na">ip_netmask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">255.255.255.0</span>
+
+<span class="k">[gui]</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+
+<span class="k">[log]</span>
+<span class="na">all_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">warning</span>
+<span class="na">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">~/ocudu-config/logs/ue.log</span>
+<span class="na">phy_lib_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">none</span>
+<span class="na">all_hex_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">32</span>
+
+<span class="k">[pcap]</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nas</span>
+<span class="na">nas_filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">~/ocudu-config/pcaps/ue_nas.pcap</span>
+</code></pre></div>
+</li>
+</ul>
+<h3 id="dual-ue-scenario">Dual UE scenario</h3>
+<ul>
+<li>
+<p>cu_cp.yml</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example config for a locally deployed CU-CP listening on the localhost interface for a CU-UP and DU connection</span>
+
+<span class="nt">cu_cp</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">request_pdu_session_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">  </span><span class="nt">inactivity_timer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7200</span>
+<span class="w">  </span><span class="nt">amf</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.18</span><span class="w">               </span><span class="c1"># The address or hostname of the AMF.</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">38412</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span><span class="w">            </span><span class="c1"># A local IP that the gNB binds to for traffic from the AMF.</span>
+<span class="w">    </span><span class="nt">supported_tracking_areas</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">plmn_list</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">plmn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20893&quot;</span>
+<span class="w">            </span><span class="nt">tai_slice_support_list</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">                </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;010203&quot;</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">                </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;112233&quot;</span>
+<span class="w">  </span><span class="nt">e1ap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.20.1</span>
+<span class="w">  </span><span class="nt">f1ap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.1</span>
+
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/logs/cu_cp.log</span>
+<span class="w">  </span><span class="nt">all_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warning</span>
+
+<span class="nt">pcap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ngap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">ngap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/cu_cp_ngap.pcap</span>
+<span class="w">  </span><span class="nt">f1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/cu_cp_f1ap.pcap</span>
+<span class="w">  </span><span class="nt">e1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">e1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/cu_cp_e1ap.pcap</span>
+</code></pre></div>
+</li>
+<li>
+<p>cu_up.yml</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example config for a locally deployed CU-UP</span>
+
+<span class="nt">cu_up</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">e1ap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cu_cp_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.20.1</span>
+<span class="w">    </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.20.2</span>
+<span class="w">  </span><span class="nt">ngu</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span>
+<span class="w">        </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">  </span><span class="nt">f1u</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span>
+<span class="w">        </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.1</span>
+
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/logs/cu_up.log</span>
+<span class="w">  </span><span class="nt">all_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warning</span>
+
+<span class="nt">pcap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">e1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">e1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/cu_up_e1ap.pcap</span>
+<span class="w">  </span><span class="nt">f1u_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1u_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/cu_up_f1u.pcap</span>
+<span class="w">  </span><span class="nt">n3_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">n3_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/cu_up_n3.pcap</span><span class="w"> </span>
+</code></pre></div>
+</li>
+<li>
+<p>du_zmq.yml</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example config for a DU with ZMQ radio.</span>
+
+<span class="nt">f1ap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cu_cp_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.1</span>
+<span class="w">  </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.2</span>
+
+<span class="nt">f1u</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">socket</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span>
+<span class="w">      </span><span class="nt">bind_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.10.2</span>
+
+<span class="nt">ru_sdr</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">device_driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq</span><span class="w">                </span><span class="c1"># The RF driver name.</span>
+<span class="w">  </span><span class="nt">device_args</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6,verbose</span><span class="w"> </span><span class="c1"># Optionally pass arguments to the selected RF driver.</span>
+<span class="w">  </span><span class="nt">srate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.52</span><span class="w">                      </span><span class="c1"># RF sample rate might need to be adjusted according to selected bandwidth.</span>
+<span class="w">  </span><span class="nt">tx_gain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span><span class="w">                       </span><span class="c1"># Transmit gain of the RF might need to adjusted to the given situation.</span>
+<span class="w">  </span><span class="nt">rx_gain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span><span class="w">                       </span><span class="c1"># Receive gain of the RF might need to adjusted to the given situation.</span>
+
+<span class="nt">cell_cfg</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dl_arfcn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">368500</span><span class="w">                  </span><span class="c1"># ARFCN of the downlink carrier (center frequency).</span>
+<span class="w">  </span><span class="nt">band</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">                           </span><span class="c1"># The NR band.</span>
+<span class="w">  </span><span class="nt">channel_bandwidth_MHz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">         </span><span class="c1"># Bandwith in MHz. Number of PRBs will be automatically derived.</span>
+<span class="w">  </span><span class="nt">common_scs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w">                    </span><span class="c1"># Subcarrier spacing in kHz used for data.</span>
+<span class="w">  </span><span class="nt">plmn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20893&quot;</span><span class="w">                     </span><span class="c1"># PLMN broadcasted by the gNB.</span>
+<span class="w">  </span><span class="nt">tac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">                            </span><span class="c1"># Tracking area code (needs to match the core configuration).</span>
+<span class="w">  </span><span class="nt">pci</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">scheduler</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">policy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">qos_sched</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Higher fairness = more consistent scheduling = lower jitter</span>
+<span class="w">        </span><span class="c1"># Value 5.0 balances throughput vs fairness for mixed traffic</span>
+<span class="w">        </span><span class="nt">pf_fairness_coeff</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="w">        </span><span class="nt">prio_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">pdb_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">gbr_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">pdcch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">common</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ss0_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">                  </span><span class="c1"># Set search space zero index to match srsUE capabilities</span>
+<span class="w">      </span><span class="nt">coreset0_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w">            </span><span class="c1"># Set search CORESET Zero index to match srsUE capabilities</span>
+<span class="w">    </span><span class="nt">dedicated</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ss2_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common</span><span class="w">              </span><span class="c1"># Use common search space for lower latency</span>
+<span class="w">      </span><span class="nt">dci_format_0_1_and_1_1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Use fallback DCI (0_0/1_0) for faster scheduling</span>
+<span class="w">  </span><span class="nt">prach</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">prach_config_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">           </span><span class="c1"># Sets PRACH config to match what is expected by srsUE</span>
+<span class="w">    </span><span class="nt">total_nof_ra_preambles</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span><span class="w">      </span><span class="c1"># Sets number of available PRACH preambles</span>
+<span class="w">    </span><span class="nt">nof_cb_preambles_per_ssb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span><span class="w">    </span><span class="c1"># Sets the number of contention based preambles per SSB.</span>
+<span class="w">  </span><span class="nt">pdsch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcs_table</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qam64</span><span class="w">                </span><span class="c1"># Sets PDSCH MCS to 64 QAM</span>
+<span class="w">  </span><span class="nt">pusch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcs_table</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qam64</span><span class="w">                </span><span class="c1"># Sets PUSCH MCS to 64 QAM</span>
+
+<span class="w">  </span><span class="nt">slicing</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="c1"># Slice 1: eMBB (needs guaranteed resources)</span>
+<span class="w">      </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">66051</span><span class="w"> </span><span class="c1"># 0x010203 in decimal</span>
+<span class="w">      </span><span class="nt">sched_cfg</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Set min=0 to allow full utilization when alone</span>
+<span class="w">        </span><span class="nt">min_prb_policy_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">        </span><span class="c1"># Allow eMBB to use 50% max to leave headroom for URLLC</span>
+<span class="w">        </span><span class="nt">max_prb_policy_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">        </span><span class="c1"># LOWER priority value (0-255 scale, higher number = higher priority)</span>
+<span class="w">        </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="c1"># Slice 2: URLLC (low latency priority)</span>
+<span class="w">      </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1122867</span><span class="w"> </span><span class="c1"># 0x112233 in decimal</span>
+<span class="w">      </span><span class="nt">sched_cfg</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># No minimum - takes what it needs when active</span>
+<span class="w">        </span><span class="nt">min_prb_policy_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">        </span><span class="c1"># Can burst up to 100% for low latency</span>
+<span class="w">        </span><span class="nt">max_prb_policy_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">        </span><span class="c1"># HIGHER priority value = scheduled first (0-255 scale)</span>
+<span class="w">        </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/logs/du_zmq.log</span>
+<span class="w">  </span><span class="nt">all_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warning</span>
+
+<span class="nt">pcap</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mac_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">mac_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/du_mac.pcap</span>
+<span class="w">  </span><span class="nt">f1ap_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1ap_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/du_f1ap.pcap</span>
+<span class="w">  </span><span class="nt">f1u_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">f1u_filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/ocudu-config/multi-ue/pcaps/du_f1u.pcap</span><span class="w">  </span>
+</code></pre></div>
+</li>
+<li>
+<p>multi_ue_scenario.grc</p>
+<div class="highlight"><pre><span></span><code><span class="nt">options</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">catch_exceptions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;True&#39;</span>
+<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;[GRC</span><span class="nv"> </span><span class="s">Hier</span><span class="nv"> </span><span class="s">Blocks]&#39;</span>
+<span class="w">    </span><span class="nt">cmake_opt</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">copyright</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">gen_cmake</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;On&#39;</span>
+<span class="w">    </span><span class="nt">gen_linking</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span>
+<span class="w">    </span><span class="nt">generate_options</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no_gui</span>
+<span class="w">    </span><span class="nt">hier_block_src_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;.:&#39;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">multi_ue_scenario</span>
+<span class="w">    </span><span class="nt">max_nouts</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">output_language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="w">    </span><span class="nt">placement</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(0,0)</span>
+<span class="w">    </span><span class="nt">qt_qss_theme</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">realtime_scheduling</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;True&#39;</span>
+<span class="w">    </span><span class="nt">run_command</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{python}</span><span class="nv"> </span><span class="s">-u</span><span class="nv"> </span><span class="s">{filename}&#39;</span>
+<span class="w">    </span><span class="nt">run_options</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">run</span>
+<span class="w">    </span><span class="nt">sizing_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fixed</span>
+<span class="w">    </span><span class="nt">thread_safe_setters</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">srsRAN_multi_UE_2Users</span>
+<span class="w">    </span><span class="nt">window_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(1000,1000)</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enabled</span>
+
+<span class="nt">blocks</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">samp_rate</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variable</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;11520000&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">184</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enabled</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slow_down_ratio</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variable</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1064</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">468.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ue1_path_loss_db</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variable</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1088</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">20.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ue2_path_loss_db</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variable</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1088</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">172.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variable</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;-1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">432</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enabled</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variable</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;100&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">304</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enabled</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_add_xx_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_add_xx</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">num_inputs</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2&#39;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">648</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">408.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">const</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10**(-1.0*ue1_path_loss_db/20.0)</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">384</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">348.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx_0_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">const</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10**(-1.0*ue2_path_loss_db/20.0)</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">384</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">436.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx_0_1</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">const</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10**(-1.0*ue1_path_loss_db/20.0)</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">664</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">76.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx_0_1_1</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_multiply_const_vxx</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">const</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10**(-1.0*ue2_path_loss_db/20.0)</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">664</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">172.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_throttle_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocks_throttle</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">ignoretag</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;True&#39;</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">samples_per_second</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0*samp_rate/(1.0*slow_down_ratio)</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">392</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">172.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_rep_sink_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_rep_sink</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp://127.0.0.1:2100</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">hwm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">    </span><span class="nt">pass_tags</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;False&#39;</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">856</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">60.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_rep_sink_0_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_rep_sink</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp://127.0.0.1:2200</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">hwm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">    </span><span class="nt">pass_tags</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;False&#39;</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">856</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">156.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_rep_sink_0_1</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_rep_sink</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp://127.0.0.1:2001</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">hwm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">    </span><span class="nt">pass_tags</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;False&#39;</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">856</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">420.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_req_source_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_req_source</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp://127.0.0.1:2000</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">hwm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">pass_tags</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;False&#39;</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">156.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_req_source_1</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_req_source</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp://127.0.0.1:2101</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">hwm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">pass_tags</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;False&#39;</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">332.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_req_source_1_0</span>
+<span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zeromq_req_source</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp://127.0.0.1:2201</span>
+<span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">    </span><span class="nt">hwm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_hwm</span>
+<span class="w">    </span><span class="nt">maxoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">minoutbuf</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span>
+<span class="w">    </span><span class="nt">pass_tags</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;False&#39;</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zmq_timeout</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">complex</span>
+<span class="w">    </span><span class="nt">vlen</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">  </span><span class="nt">states</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">bus_sink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">bus_structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">coordinate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">420.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">connections</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_add_xx_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">zeromq_rep_sink_0_1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_multiply_const_vxx_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_add_xx_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_multiply_const_vxx_0_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_add_xx_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;1&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_multiply_const_vxx_0_1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">zeromq_rep_sink_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_multiply_const_vxx_0_1_1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">zeromq_rep_sink_0_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_throttle_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_multiply_const_vxx_0_1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">blocks_throttle_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_multiply_const_vxx_0_1_1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">zeromq_req_source_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_throttle_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">zeromq_req_source_1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_multiply_const_vxx_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">zeromq_req_source_1_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">blocks_multiply_const_vxx_0_0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">file_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div>
+</li>
+<li>
+<p>ue.conf</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#####################################################################</span>
+<span class="c1">#                   srsUE configuration file</span>
+<span class="c1">#####################################################################</span>
+
+<span class="k">[rf]</span>
+<span class="c1"># Using ZMQ device to connect to the gNB.</span>
+<span class="c1"># The ports and srate are configured to match your du_zmq.yml.</span>
+<span class="na">freq_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="na">tx_gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">50</span>
+<span class="na">rx_gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">40</span>
+<span class="na">srate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">11.52e6</span>
+<span class="na">nof_antennas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+
+<span class="na">device_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">zmq</span>
+<span class="na">device_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tx_port=tcp://127.0.0.1:2101,rx_port=tcp://127.0.0.1:2100,base_srate=11.52e6</span>
+
+<span class="c1"># According to your du_zmq.yml, the gNB is on band 3.</span>
+<span class="c1"># The dl_arfcn is 368500, which corresponds to band 3.</span>
+<span class="k">[rat.eutra]</span>
+<span class="na">dl_earfcn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2850</span>
+<span class="na">nof_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+
+<span class="k">[rat.nr]</span>
+<span class="na">bands</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3</span>
+<span class="na">nof_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">max_nof_prb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">52</span>
+<span class="na">nof_prb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">52</span>
+
+<span class="k">[rrc]</span>
+<span class="na">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">15</span>
+<span class="na">ue_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">4</span>
+
+<span class="k">[usim]</span>
+<span class="c1"># USIM configuration from your free5gc-ue.yaml</span>
+<span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">soft</span>
+<span class="na">algo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">milenage</span>
+<span class="na">imsi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">208930000000001</span>
+<span class="na">k</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">8baf473f2f8fd09487cccbd7097c6862</span>
+<span class="na">opc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">8e27b6af0e692e750f32667a3b14605d</span>
+<span class="na">imei</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">356938035643803</span>
+
+<span class="k">[nas]</span>
+<span class="c1"># APN from your free5gc-ue.yaml</span>
+<span class="na">apn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">internet</span>
+<span class="na">apn_protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ipv4</span>
+
+<span class="k">[slicing]</span>
+<span class="c1"># Slicing configuration from your free5gc-ue.yaml</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">nssai-sst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">nssai-sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">66051</span>
+
+<span class="k">[gw]</span>
+<span class="na">netns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ue1</span>
+<span class="na">ip_devname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tun_srsue</span>
+<span class="na">ip_netmask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">255.255.255.0</span>
+
+<span class="k">[gui]</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+
+<span class="k">[log]</span>
+<span class="na">all_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">warning</span>
+<span class="na">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">~/ocudu-config/multi-ue/logs/ue.log</span>
+<span class="na">phy_lib_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">none</span>
+<span class="na">all_hex_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">32</span>
+
+<span class="k">[pcap]</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nas</span>
+<span class="na">nas_filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">~/ocudu-config/multi-ue/pcaps/ue_nas.pcap</span>
+</code></pre></div>
+</li>
+<li>
+<p>ue2.conf</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#####################################################################</span>
+<span class="c1">#                   srsUE configuration file</span>
+<span class="c1">#####################################################################</span>
+
+<span class="k">[rf]</span>
+<span class="c1"># Using ZMQ device to connect to the gNB.</span>
+<span class="c1"># The ports and srate are configured to match your du_zmq.yml.</span>
+<span class="na">freq_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="na">tx_gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">50</span>
+<span class="na">rx_gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">40</span>
+<span class="na">srate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">11.52e6</span>
+<span class="na">nof_antennas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+
+<span class="na">device_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">zmq</span>
+<span class="na">device_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tx_port=tcp://127.0.0.1:2201,rx_port=tcp://127.0.0.1:2200,base_srate=11.52e6</span>
+
+<span class="c1"># According to your du_zmq.yml, the gNB is on band 3.</span>
+<span class="c1"># The dl_arfcn is 368500, which corresponds to band 3.</span>
+<span class="k">[rat.eutra]</span>
+<span class="na">dl_earfcn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2850</span>
+<span class="na">nof_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+
+<span class="k">[rat.nr]</span>
+<span class="na">bands</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3</span>
+<span class="na">nof_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">max_nof_prb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">52</span>
+<span class="na">nof_prb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">52</span>
+
+<span class="k">[rrc]</span>
+<span class="na">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">15</span>
+<span class="na">ue_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">4</span>
+
+<span class="k">[usim]</span>
+<span class="c1"># USIM configuration from your free5gc-ue.yaml</span>
+<span class="na">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">soft</span>
+<span class="na">algo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">milenage</span>
+<span class="na">imsi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">208930000000002</span>
+<span class="na">k</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">8baf473f2f8fd09487cccbd7097c6862</span>
+<span class="na">opc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">8e27b6af0e692e750f32667a3b14605d</span>
+<span class="na">imei</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">356938035643803</span>
+
+<span class="k">[nas]</span>
+<span class="c1"># APN from your free5gc-ue.yaml</span>
+<span class="na">apn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">internet</span>
+<span class="na">apn_protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ipv4</span>
+
+<span class="k">[slicing]</span>
+<span class="c1"># Slicing configuration from your free5gc-ue.yaml</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">nssai-sst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">nssai-sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1122867</span>
+
+<span class="k">[gw]</span>
+<span class="na">netns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ue2</span>
+<span class="na">ip_devname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">tun_srsue</span>
+<span class="na">ip_netmask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">255.255.255.0</span>
+
+<span class="k">[gui]</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+
+<span class="k">[log]</span>
+<span class="na">all_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">warning</span>
+<span class="na">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">~/ocudu-config/multi-ue/logs/ue2.log</span>
+<span class="na">phy_lib_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">none</span>
+<span class="na">all_hex_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">32</span>
+
+<span class="k">[pcap]</span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nas</span>
+<span class="na">nas_filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">~/ocudu-config/multi-ue/pcaps/ue2_nas.pcap</span>
+</code></pre></div>
+</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://gitlab.com/ocudu/ocudu">OCUDU GitLab</a></li>
+<li><a href="https://github.com/srsran/srsRAN_4G">srsRAN 4G</a></li>
+<li><a href="https://free5gc.org/guide/quick-setup/#step-2-find-your-network-interface-name">free5GC Quick Setup</a></li>
+<li><a href="https://github.com/qawl987/srsran-config">srsran-config</a></li>
+</ul>
+<h3 id="about-me"><strong>About me</strong></h3>
+<p>Hi, I’m Fang-Kai Ting, currently conducting research on Network Slicing. </p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<p>GitHub: <a href="https://github.com/qawl987">qawl987</a></p>
+<p>LinkedIn: <a href="http://www.linkedin.com/in/%E6%96%B9%E5%87%B1-%E4%B8%81-a26a7925a">www.linkedin.com/in/方凱-丁-a26a7925a</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

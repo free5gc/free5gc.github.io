@@ -1,0 +1,1098 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Refactoring 5G Charging Logic: How I Fixed Resource Leaks and ID Overlaps in free5GC SMF - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#refactoring-5g-charging-logic-how-i-fixed-resource-leaks-and-id-overlaps-in-free5gc-smf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Refactoring 5G Charging Logic: How I Fixed Resource Leaks and ID Overlaps in free5GC SMF
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-understanding-5g-charging-offline-online-and-the-core-network-symphony" class="md-nav__link">
+    1.1 Understanding 5G Charging: Offline, Online, and the Core Network Symphony
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-defining-usage-reporting-rules-urrs" class="md-nav__link">
+    1.2 Defining Usage Reporting Rules (URRs)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-root-of-the-problem-architectural-flaws-in-urr-management" class="md-nav__link">
+    2. The Root of the Problem: Architectural Flaws in URR Management
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The Root of the Problem: Architectural Flaws in URR Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-the-solution-implementing-a-robust-urr-lifecycle-manager" class="md-nav__link">
+    2.1 The Solution: Implementing a Robust URR Lifecycle Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-2-the-two-pass-solution-orchestrating-urr-injection" class="md-nav__link">
+    2-2 The Two-Pass Solution: Orchestrating URR Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-3-the-logic-bomb-when-correctness-unmasks-a-bug" class="md-nav__link">
+    2-3 The "Logic Bomb": When Correctness Unmasks a Bug
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-looking-ahead-the-vision-for-a-dynamic-urr-quota-manager" class="md-nav__link">
+    3. Looking Ahead: The Vision for a Dynamic URR Quota Manager
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Looking Ahead: The Vision for a Dynamic URR Quota Manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-current-limitation-independent-silos" class="md-nav__link">
+    The Current Limitation: Independent Silos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260322/20260322.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260322/20260322.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="refactoring-5g-charging-logic-how-i-fixed-resource-leaks-and-id-overlaps-in-free5gc-smf">Refactoring 5G Charging Logic: How I Fixed Resource Leaks and ID Overlaps in free5GC SMF</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: HUANG, YUAN-CHUN<br />
+Date: 2026/03/22</p>
+</div>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>The evolution of a robust 5G core often relies on the strictness of its individual components. A recent critical update in go-upf <a href="https://github.com/free5gc/go-upf/pull/87">PR #87</a><br />
+introduced more rigorous validation for PFCP rules, specifically treating duplicate Usage Reporting Rule (URR) creations as explicit errors. <br />
+<div class="highlight"><pre><span></span><code><span class="c1">// HasCreateURR checks if the plan contains a CreateURR with the given URR ID</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">ModificationPlan</span><span class="p">)</span><span class="w"> </span><span class="nx">HasCreateURR</span><span class="p">(</span><span class="nx">urrid</span><span class="w"> </span><span class="kt">uint32</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">CreateURRs</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">URRID</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">urrid</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>This change acted as a catalyst, exposing a fundamental flaw in how the free5gc SMF handled charging rules derived from the PCF. Previously, the SMF would frequently generate redundant URR requests within the same PFCP session, leading to integration failures under the new UPF standards. </p>
+<p>This realization prompted a deep dive into the SMF's internal state management. In this post, I will walk through the refactoring process in SMF <a href="https://github.com/free5gc/smf/pull/195">PR #195</a>, where I overhauled the URR recording mechanism to ensure proper resource release and resolved a critical bug where identical URR IDs were incorrectly shared across multiple UPF instances—effectively streamlining the PFCP message generation for a more stable and standards-compliant core network.</p>
+<h3 id="11-understanding-5g-charging-offline-online-and-the-core-network-symphony">1.1 Understanding 5G Charging: Offline, Online, and the Core Network Symphony</h3>
+<p>Before diving into the code refactor, it is essential to understand how charging actually works in a 5G Service-Based Architecture (SBA). In 3GPP standards, charging is categorized into two primary modes:</p>
+<ul>
+<li>
+<p><strong>Offline Charging:</strong> The network collects resource usage information (like data volume or duration) and generates Charging Data Records (CDR). These records are typically processed later for billing (e.g., your monthly post-paid bill).</p>
+</li>
+<li>
+<p><strong>Online Charging:</strong> This is a real-time interaction. The network must request "quota" (credit) from the charging system before providing service. If the user runs out of balance, the service is immediately throttled or terminated (e.g., a pre-paid SIM card).</p>
+</li>
+</ul>
+<p><strong>The Four Key Players</strong><br />
+To orchestrate this, four main Network Functions (NFs) must work in perfect synchronization:</p>
+<ol>
+<li>
+<p>PCF (Policy Control Function): The "Brain." It defines the charging policies—for example, "this specific App's traffic should be billed at a premium rate." It sends these rules to the SMF.</p>
+</li>
+<li>
+<p>SMF (Session Management Function): The "Controller." It translates PCF's high-level policies into low-level URR (Usage Reporting Rules). It is the SMF's responsibility to manage the lifecycle of these URRs and instruct the UPF via the PFCP protocol.</p>
+</li>
+<li>
+<p>UPF (User Plane Function): The "Worker." It sits in the data path, actually counting every byte that passes through. Based on the URR it receives, it monitors usage and sends Usage Reports back to the SMF when thresholds are met.</p>
+</li>
+<li>
+<p>CHF (Charging Function): The "Accountant." It maintains the user's billing state and quotas, communicating with the SMF via the Nchf interface to authorize service usage.</p>
+</li>
+</ol>
+<p><img alt="5g Session Management" src="../image.png" /></p>
+<p><img alt="5G charging" src="../image-1.png" /></p>
+<h3 id="12-defining-usage-reporting-rules-urrs">1.2 Defining Usage Reporting Rules (URRs)</h3>
+<p>As illustrated in our architectural breakdown, the SMF doesn't simply tell the UPF to "count data." It must provide specific, structured measurement instructions. In the language of the Packet Forwarding Control Protocol (PFCP) used on the N4 interface, these instructions are called Usage Reporting Rules (URRs).</p>
+<p>Think of a URR as a detailed measurement job description given to the UPF worker. When traffic matches a certain profile, the UPF consults the associated URR to know how to measure it and when to report back to the SMF bridge.</p>
+<p>A critical aspect of SMF logic—and the focus of my recent refactor—is understanding that a single PDU Session (a user's connection) rarely uses just one URR. To support complex modern billing schemes, the SMF must manage a hierarchy of URRs. This brings us to the distinction between PDU Session Level and Flow Level charging.</p>
+<ol>
+<li>
+<p><strong>PDU Session Level Charging: The Aggregate View</strong></p>
+<p>PDU Session Level charging is the simplest form of accounting. It measures the total volume of data (uplink and downlink combined, or separated) passing through the entire PDU Session, regardless of which specific application or service generated that traffic.</p>
+<ul>
+<li>
+<p>How it works: The SMF creates one main URR (e.g., URR ID 1) that is applied to all traffic within the session.</p>
+</li>
+<li>
+<p>Use Case: This is typically used for enforcing total monthly data caps (e.g., your base 20GB allowance).</p>
+</li>
+</ul>
+<p>In previous free5gc implementations, managing this single ID was straightforward. However, modern networks require more granularity.</p>
+</li>
+<li>
+<p><strong>Flow Level Charging (SDF): The Granular View</strong></p>
+<p>Flow Level Charging, often associated with Service Data Flows (SDFs), allows operators to apply different billing rates or policies to specific types of traffic (e.g., video streaming vs. web browsing vs. messaging). This is achieved through the interaction of Packet Detection Rules (PDRs) and multiple URRs.</p>
+<ul>
+<li>
+<p>How it works: The SMF defines specific PDRs to identify flows (e.g., traffic matching Netflix IP addresses). It then links that specific flow to a dedicated URR (e.g., URR ID 2). Standard internet traffic might simultaneously be counted by URR ID 3.</p>
+</li>
+<li>
+<p>Use Case: This enables complex schemes like "zero-rating" WhatsApp traffic (counting it but not charging for it) while charging a premium for 4K video streaming, or providing a dedicated data quota for gaming.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-the-root-of-the-problem-architectural-flaws-in-urr-management">2. The Root of the Problem: Architectural Flaws in URR Management</h2>
+<p>While the theory of 5G charging is sound, the implementation in a complex topology like <strong>Uplink Classifier (ULCL)</strong> revealed a significant architectural oversight in the SMF. To understand the bug, we must look at how the SMF handles <strong>Policy and Charging Control (PCC) Rules</strong>.</p>
+<p>In free5gc, PCC rules are categorized into <code>PDU Session Level</code> and <code>Flow Level</code>. The problem arises because of a fundamental mismatch: <strong>A single PCC Rule typically defines only one Data Path, but in a ULCL scenario, multiple Data Paths must be accounted for simultaneously</strong>.</p>
+<p><strong>The Flawed Execution Flow</strong></p>
+<p>By tracing the SMF logic, I identified a problematic sequence in the way rules are applied to the User Plane. When a PCC rule is triggered, the SMF follows this simplified call stack:</p>
+<p><div class="highlight"><pre><span></span><code>├─ ApplyPccRules()                [sm_context_policy.go]
+│   ├─ CreatePccRuleDataPath()       [sm_context.go]
+│   │   ├─ ...
+│   │   ├─ AddChargingRules()        [datapath.go]  &lt;-- URR is linked to the primary path
+│   │   └─ ...
+│   └─ addPduLevelChargingRuleToFlow() [sm_context_policy.go] &lt;-- The &quot;Force-Add&quot; Logic
+</code></pre></div><br />
+Here is where the logic breaks down:</p>
+<ol>
+<li>
+<p><code>AddChargingRules()</code>: This function attaches the URR specified by the PCC rule to the Packet Detection Rules (PDRs) of the primary data path.</p>
+</li>
+<li>
+<p><code>addPduLevelChargingRuleToFlow()</code>: Because ULCL requires every branch (every path to an Anchor UPF) to be charged at the PDU level, the SMF attempts to "copy" the PDU-level URR into all other existing paths.</p>
+</li>
+</ol>
+<p><strong>The "Shared URR" Crisis</strong><br />
+The fatal error is that the SMF treats the URR as a <strong>global object</strong> rather than a <strong>per-UPF resource</strong>.</p>
+<p>In a ULCL structure, you have multiple Anchor UPFs. By using the logic above, the SMF assigns the exact same URR (with the same ID and state) to different UPF instances. This creates a "Shared URR" scenario that leads to two major issues:</p>
+<ol>
+<li>
+<p><strong>Duplicate Creation Errors:</strong> Following the recent update in go-upf (PR #87), the User Plane now strictly validates PFCP messages. When the SMF tries to "create" the same URR across different paths or repeatedly within the same session, the UPF flags this as an illegal duplicate creation, causing the session establishment to fail.</p>
+</li>
+<li>
+<p><strong>Resource Overlap &amp; Inaccuracy:</strong> Because multiple UPFs are reporting usage against the same URR ID, the SMF cannot distinguish which volume came from which UPF. If one UPF reports 50MB and another reports 50MB using the same ID, the SMF's internal state becomes a race condition, leading to corrupted charging data sent to the CHF.</p>
+</li>
+</ol>
+<p>This discovery made it clear: the SMF needed a complete refactor of how it records and dispatches URRs. It needed to stop "sharing" and start "managing" the lifecycle of every rule for every specific UPF.</p>
+<h3 id="21-the-solution-implementing-a-robust-urr-lifecycle-manager">2.1 The Solution: Implementing a Robust URR Lifecycle Manager</h3>
+<p>To fix the shared ID conflicts and resource leaks, I introduced a fundamental shift in how the SMF manages Charging Rules. Instead of relying on a loosely managed global state, the SMF now treats every <strong>Usage Reporting Rule (URR)</strong> as a tracked entity with a strictly managed lifecycle tied to specific <strong>UPF instances</strong>.</p>
+<ol>
+<li>The <code>UrrEntry</code>: Granular Tracking<br />
+The core of the refactor is the introduction of the <code>UrrEntry</code> struct. This structure allows the SMF to maintain a "Source of Truth" for every URR currently deployed on the User Plane.</li>
+</ol>
+<p><div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">UrrEntry</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Rule</span><span class="w">     </span><span class="o">*</span><span class="nx">URR</span><span class="w">       </span><span class="c1">// The actual rule content (Rating Group, Thresholds...)</span>
+<span class="w">    </span><span class="nx">State</span><span class="w">    </span><span class="nx">RuleState</span><span class="w">  </span><span class="c1">// The deployment state (INITIAL, CREATE, REMOVE...)</span>
+<span class="w">    </span><span class="nx">RefCount</span><span class="w"> </span><span class="kt">int</span><span class="w">        </span><span class="c1">// How many PDRs are currently referencing this URR</span>
+<span class="w">    </span><span class="nx">PDRIDs</span><span class="w">   </span><span class="p">[]</span><span class="kt">uint16</span><span class="w">   </span><span class="c1">// Traceability: Which PDR IDs are using this rule?</span>
+<span class="p">}</span>
+</code></pre></div><br />
+Two fields here are critical for stability:</p>
+<ul>
+<li>
+<p><code>RefCount</code>: This prevents premature deletion. Since multiple Packet Detection Rules (PDRs) can point to the same URR (especially in complex flow-based charging), we only mark a URR for removal when the reference count hits zero.</p>
+</li>
+<li>
+<p><code>PDRIDs</code>: This provides essential observability. If a developer needs to debug why a URR isn't being released, they can trace exactly which PDRs are still "holding" it.</p>
+</li>
+<li>
+<p>Transitioning from "Reuse" to "Release"</p>
+<p>Previously, free5gc SMF lacked a formal mechanism to release URRs from the UPF once a session was modified or terminated. It relied on a "reuse" concept that often led to stale rules hanging in the UPF's memory.</p>
+<p>In PR #195, I implemented a formal //Reference Counting** and State Management flow:</p>
+</li>
+<li>
+<p><code>PDRAppendURRs</code>: When a new data path is established, the SMF registers the URR to a specific upfId and increments its RefCount. This ensures that even in ULCL scenarios, URRs are tracked uniquely per UPF.</p>
+</li>
+<li>
+<p><code>PDRReleaseURRs</code>: When a PDR is removed or a path is deactivated, the SMF decrements the count.</p>
+</li>
+<li>
+<p>Automatic Removal: Once the <code>RefCount</code> reaches zero, the URR state is set to <code>RULE_REMOVE</code>.</p>
+</li>
+</ul>
+<h3 id="2-2-the-two-pass-solution-orchestrating-urr-injection">2-2 The Two-Pass Solution: Orchestrating URR Injection</h3>
+<p>To resolve the architectural flaw where multiple Anchor UPFs were incorrectly sharing the same URR instances, I refactored the <code>ApplyPccRules()</code> and <code>AddChargingRules()</code> logic into a <strong>Two-Pass execution structure</strong>.</p>
+<p>The Core Challenge: PDU-Level Dependencies</p>
+<p>In a 5G session, a Flow-level rule (SDF) doesn't exist in a vacuum; it must also contribute to the overall PDU Session-level charging quota. In a ULCL topology, where traffic is split across different Anchor UPFs, each UPF must have its own unique instance of the PDU-level URR to maintain the integrity of the PFCP session.</p>
+<p>The legacy implementation tried to "force-inject" these rules in a single pass, which led to SMF attempting to reuse the exact same URR object across different UPF boundaries. This is what caused the "Duplicate Creation" errors and data corruption.</p>
+<p><strong>Pass 1: Establishing the PDU-Level Baseline</strong></p>
+<p>The first stage of the refactor focuses exclusively on rules identified as <code>PduSessionCharging</code>.</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1">// Pass 1: Pdu Session level charging rules</span>
+<span class="k">for</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">pcc</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">pduRulesToProcess</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">processRule</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">pcc</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><br />
+During this pass, the SMF creates the primary charging rules for the session.Crucially, we do not try to link these rules to other flow-level paths yet. Once Pass 1 is complete, we perform a Collection Phase, where we gather all successfully created PDU-level <code>ChargingData</code> into a temporary repository (<code>pduChgDatas</code>).</p>
+<p><strong>Pass 2: Flow-Level Injection with Context</strong></p>
+<p>In the second pass, we process the <code>Flow level charging rules</code>. However, instead of processing them in isolation, we "inject" the collected PDU-level charging definitions into the creation process of each flow-level path.</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1">// Pass 2: Flow level charging rules, applying PDU-level charging data</span>
+<span class="k">for</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">pcc</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">flowRulesToProcess</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">processRule</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">pcc</span><span class="p">,</span><span class="w"> </span><span class="nx">pduChgDatas</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><br />
+<strong>Refactoring</strong> <code>AddChargingRules</code>: From Sharing to Intelligent Retrieval<br />
+The real magic happens inside the refactored <code>AddChargingRules()</code> in <code>datapath.go</code>. Instead of blindly copying a URR ID, the function now takes the list of <code>pduChgDatas</code> as an argument.</p>
+<p>As the SMF iterates through the data path, it only applies charging rules to Anchor UPFs. For each specific UPF node, it uses a new method, <code>GetOrCreateUrr()</code>, to handle the PDU-level requirements.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nx">chgLevel</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">PduSessionCharging</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">pduChgDatas</span><span class="p">)</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">pduData</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">pduChgDatas</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Ensure this specific UPF gets its own URR instance for the PDU data</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">pduUrr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">GetOrCreateUrr</span><span class="p">(</span><span class="nx">smContext</span><span class="p">,</span><span class="w"> </span><span class="nx">currentUPF</span><span class="p">,</span><span class="w"> </span><span class="nx">pduData</span><span class="p">,</span><span class="w"> </span><span class="nx">PduSessionCharging</span><span class="p">);</span><span class="w"> </span><span class="nx">pduUrr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">urrsToAttach</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">urrsToAttach</span><span class="p">,</span><span class="w"> </span><span class="nx">pduUrr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><br />
+<strong>Why This Architecture Wins</strong></p>
+<p>By decoupling the definition of a charging rule from its instance on the UPF, we achieved three major improvements:</p>
+<ol>
+<li>
+<p>UPF Isolation: <code>GetOrCreateUrr()</code> ensures that if a flow-level rule requires a PDU-level counter on Anchor UPF-B, it creates (or retrieves) a URR ID that is valid only for UPF-B.</p>
+</li>
+<li>
+<p>Order of Operations: The Two-Pass structure ensures that all session-wide charging definitions are fully resolved and available before any granular flow-level rules are constructed.</p>
+</li>
+<li>
+<p>Strict Compliance: This eliminates the duplicate creation errors in the User Plane (go-upf), as the SMF no longer tries to "leak" URR objects from one data path into another.</p>
+</li>
+</ol>
+<h2 id="2-3-the-logic-bomb-when-correctness-unmasks-a-bug">2-3 The "Logic Bomb": When Correctness Unmasks a Bug</h2>
+<p>After implementing this rigorous lifecycle management, I encountered an unexpected side effect: connection drops during rule updates. Through deep debugging, I discovered a "logic bomb" hidden in the interaction between the SMF and the CHF (Charging Function).</p>
+<p><strong>The Mechanism of Failure</strong></p>
+<p>In my refactored SMF, when a rule is updated, the old URR is explicitly released via <code>PDRReleaseURRs</code>. When the UPF receives the PFCP removal command, it sends a "Final" Usage Report back to the SMF. The SMF then forwards this to the CHF as an <code>Update</code>request with a final usage flag.</p>
+<ul>
+<li>
+<p>The CHF Behavior: Upon receiving a "Final" report for a specific Rating Group, the CHF enters a Debit Mode to settle the balance.</p>
+</li>
+<li>
+<p>The Bug: Once the CHF processed this settlement, it failed to transition back to an authorization state for that session. Consequently, when the SMF immediately requested a new Quota for the newly created URR (part of the same update procedure), the CHF refused to grant it. Without a quota, the SMF couldn't activate the rules, leading to a dropped connection.</p>
+</li>
+</ul>
+<p><strong>Why the Legacy SMF Survived</strong><br />
+Interestingly, the legacy free5gc SMF never encountered this because its URR management was "lazy." It relied on reusing URR IDs and rarely performed an explicit release. Because it didn't strictly clean up old rules, it rarely sent the "Final" usage report that triggered the CHF’s problematic debit-settlement state.</p>
+<p>By making the SMF’s resource management "correct" and standards-compliant, I inadvertently exposed a state-machine flaw in the CHF. This highlights a fundamental truth in 5G Core development: <strong>improving the robustness of one Network Function often uncovers hidden fragilities in the rest of the Service-Based Architecture (SBA)</strong>.</p>
+<h2 id="3-looking-ahead-the-vision-for-a-dynamic-urr-quota-manager">3. Looking Ahead: The Vision for a Dynamic URR Quota Manager</h2>
+<p>While the refactoring in PR #195 successfully resolved the immediate crisis of URR ID conflicts and resource leaks, it also laid the groundwork for a more advanced challenge in 5G charging: <strong>intelligent quota distribution</strong>. </p>
+<h3 id="the-current-limitation-independent-silos">The Current Limitation: Independent Silos</h3>
+<p>In the current implementation of free5gc, every URR instance is effectively a silo. When the SMF establishes multiple data paths—such as in an <strong>Uplink Classifier (ULCL)</strong> or Multi-homing scenario—it creates independent URRs for each Anchor UPF.</p>
+<p>However, the <strong>Charging Function (CHF)</strong> usually grants a single, unified quota for a specific Rating Group (e.g., "You have 1GB for Video Streaming"). Currently, the SMF lacks a sophisticated way to "slice" this 1GB across different paths. If one path becomes heavily congested while another remains idle, the quota distribution can become inefficient, leading to premature service interruptions or excessive signaling back to the CHF.</p>
+<p>The Proposal: A Centralized URR Quota Manager</p>
+<p>The next evolution of the free5gc SMF should involve a Centralized URR Quota Manager. This internal component would sit above the UrrTable and act as the "Financial Controller" for the PDU Session.</p>
+<p>Key features of this proposed manager would include:</p>
+<ul>
+<li>
+<p>Dynamic Quota Slicing: Instead of static allocation, the manager could monitor real-time traffic trends on each data path. It could then dynamically distribute slices of the total CHF quota to specific URRs based on their current load.</p>
+</li>
+<li>
+<p>Predictive Rebalancing: If URR-A (at Anchor UPF 1) is consuming data rapidly while URR-B (at Anchor UPF 2) is dormant, the manager could "recall" unused quota from URR-B and reassign it to URR-A without needing a new <code>Nchf_ConvergedCharging_Update</code> request.</p>
+</li>
+<li>
+<p>Global-Local Sync: It would maintain a "Global View" of the session's total remaining balance while ensuring each "Local" URR on the User Plane has enough threshold to operate smoothly.</p>
+</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Refactoring the charging logic was about more than just fixing a bug; it was about bringing architectural precision to how the SMF handles its most critical resources. By implementing the Two-Pass structure and rigorous lifecycle management, free5gc is now better equipped for complex multi-UPF deployments.</p>
+<p>If you're interested in the code details, check out the full PR at <a href="https://github.com/free5gc/smf/pull/195/">SMF PR#195</a>. Let's keep building a better open-source 5G together!</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
