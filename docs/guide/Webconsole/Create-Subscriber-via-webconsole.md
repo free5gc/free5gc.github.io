@@ -99,7 +99,6 @@ There are two options to add a new subscriber:
 
 ![](./images/profileData1.png)
 ![](./images/profileData2.png)
-![](./images/profileData3.png)
 
 > Check that the new profile was added successfully
 
