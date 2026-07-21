@@ -201,7 +201,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
     sudo apt update
     sudo apt install -y nodejs
-    corepack enable # setup yarn automatically
+    sudo corepack enable # setup yarn automatically
     ```
 
 2. Build WebConsole
