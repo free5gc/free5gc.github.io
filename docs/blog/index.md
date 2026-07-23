@@ -6,6 +6,7 @@
 - [2026/06/22: Deploying OAI-RAN RF Simulator Against free5GC](./20260622/20260622.md)
 - [2026/06/19: Connecting free5GC and OCUDU With ZeroMQ Software Simulation](./20260619/20260619.md)
 - [2026/05/20: Empowering free5GC NEF with Standardized CAMARA APIs](./20260520/20260520.md)
+- [2026/05/06: Accelerating Bulk Subscriber Provisioning in free5GC WebConsole with MongoDB-Based IMSI Allocation](./20260506/20260506.md)
 - [2026/04/29: Parallelizing NGAP Processing in free5GC AMF: From Per-Connection to Per-UE Concurrency](./20260429/20260429.md)
 - [2026/04/17: free5GC TNGF UE Deregistration and IKE/RADIUS Parser DoS Mitigation](./20260417/20260417.md)
 - [2026/04/16: Exploring the N2 SCTP Middleware: A Zero Trust Hop for 5G Control Plane](./20260416/20260416.md)
