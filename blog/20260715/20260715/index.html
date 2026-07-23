@@ -1,0 +1,1461 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ng Warren">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Cutting AI Token Cost on free5GC Operations: A Token-Optimization Middle Layer for free5GC-MCP - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quick-recap-free5gc-mcp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cutting AI Token Cost on free5GC Operations: A Token-Optimization Middle Layer for free5GC-MCP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recap-free5gc-mcp" class="md-nav__link">
+    Quick Recap: free5GC-MCP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-a-token-optimization-middle-layer" class="md-nav__link">
+    1. Why a Token-Optimization Middle Layer?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-problem-in-numbers" class="md-nav__link">
+    2. The Problem, in Numbers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-system-architecture" class="md-nav__link">
+    3. System Architecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-path-a-the-native-domain-filter" class="md-nav__link">
+    4. Path A — The Native Domain Filter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-path-b-rtk-the-rust-token-killer" class="md-nav__link">
+    5. Path B — rtk, the Rust Token Killer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-request-flow-end-to-end" class="md-nav__link">
+    6. Request Flow, End to End
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-benchmarks-before-vs-after" class="md-nav__link">
+    7. Benchmarks: Before vs After
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Benchmarks: Before vs After">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-subscriber_list-the-call-that-blows-up-context" class="md-nav__link">
+    7.1 subscriber_list — the call that blows up context
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-subscriber_get-a-security-win-more-than-a-size-win" class="md-nav__link">
+    7.2 subscriber_get — a security win more than a size win
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-rtk-host-inspection" class="md-nav__link">
+    7.3 rtk host inspection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-security-falls-out-for-free" class="md-nav__link">
+    8. Security Falls Out for Free
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-reproduce-it-yourself" class="md-nav__link">
+    9. Reproduce It Yourself
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-closing-thoughts" class="md-nav__link">
+    10. Closing Thoughts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    About the author
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260715/20260715.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260715/20260715.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>Cutting AI Token Cost on free5GC Operations: A Token-Optimization Middle Layer for free5GC-MCP</h1>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Author:</strong> <a href="https://github.com/warren0813">Ng Warren</a><br />
+<strong>Date:</strong> 2026/07/15</p>
+</div>
+<hr />
+<h2 id="quick-recap-free5gc-mcp">Quick Recap: free5GC-MCP</h2>
+<p>This is a follow-up in the free5GC-MCP series. My last post, <a href="https://free5gc.org/blog/20260107/20260107/"><em>MCP Server Integration with free5GC: Architecture and Use Cases</em></a>, introduced the server that lets an AI assistant drive free5GC through typed, controlled tools instead of raw shell access. This post is about what happens <strong>on the backend</strong> — the middle layer that keeps verbose 5G-core responses from drowning the model's context window, and the measured before/after numbers that justify it.</p>
+<hr />
+<h2 id="1-why-a-token-optimization-middle-layer">1. Why a Token-Optimization Middle Layer?</h2>
+<p>In that first post we gave an AI assistant a set of MCP tools — <code>subscriber_list</code>, <code>subscriber_get</code>, <code>local_free5gc_status</code>, the Kubernetes/Helm controls, and so on — and it worked: the model could translate <em>"show me all the subscribers on PLMN 20893 and tell me which ones are on the low-latency slice"</em> into a real webconsole query.</p>
+<p>But there is a cost nobody sees until the deployment grows. free5GC's webconsole is built for a browser, not for a language model. A single subscriber object is ~2.9 KB of deeply nested JSON — cryptographic keys, sequence numbers, SM-policy plumbing, SMF-selection tables, flow rules — most of which an AI <strong>never reasons about</strong>. Multiply that by a few hundred subscribers and one <code>subscriber_list</code> call returns more tokens than the model's entire context window can hold. The tool call <em>succeeds</em>. The conversation <em>dies</em> — truncated, or billed at a price that makes routine operations absurd.</p>
+<p>So the design goal of this iteration was blunt:</p>
+<blockquote>
+<p><strong>Every verbose tool response must be compressed <em>before</em> it reaches the AI, without losing the information the AI actually needs to make an operational decision.</strong></p>
+</blockquote>
+<p>That compression stage — the <em>token-optimization middle layer</em> — is the whole subject of this post.</p>
+<hr />
+<h2 id="2-the-problem-in-numbers">2. The Problem, in Numbers</h2>
+<p>Here is the raw shape of one free5GC subscriber, straight from the webconsole.<br />
+This is what the model used to receive, <strong>per subscriber</strong>, on every list call:</p>
+<details>
+<summary>Show the full raw subscriber context</summary>
+
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;AccessAndMobilitySubscriptionData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;gpsis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;msisdn-&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;nssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;defaultSingleNssais&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">      </span><span class="nt">&quot;singleNssais&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112233&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;subscribedUeAmbr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;downlink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2 Gbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;uplink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1 Gbps&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;AmPolicyData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;subscCats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;free5gc&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;AuthenticationSubscription&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;authenticationManagementField&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;8000&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;authenticationMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5G_AKA&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;milenage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;op&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;encryptionAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;encryptionKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;opValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;opc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;encryptionAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;encryptionKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;opcValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;8e27b6af0e692e750f32667a3b14605d&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;permanentKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;encryptionAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;encryptionKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;permanentKeyValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;8baf473f2f8fd09487cccbd7097c6862&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;sequenceNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000000000&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;ChargingDatas&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;chargingMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Offline&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quota&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01010203&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;unitCost&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;chargingMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Offline&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qosRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quota&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01010203&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;unitCost&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;chargingMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Online&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quota&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100000&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01112233&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;unitCost&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;chargingMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Online&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qosRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quota&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5000&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01112233&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;unitCost&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;FlowRules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;precedence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qosRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01010203&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;precedence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">127</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qosRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01112233&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;QosFlows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;108 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;108 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;208 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;208 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qosRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01010203&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;207 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;207 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;407 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;407 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qosRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;01112233&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;SessionManagementSubscriptionData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;dnnConfigurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;internet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;5gQosProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;arp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;preemptCap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;preemptVuln&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;priorityLevel&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;priorityLevel&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;pduSessionTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;allowedSessionTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;IPV4&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;defaultSessionType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;IPV4&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;sessionAmbr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;downlink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;uplink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000 Mbps&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;sscModes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;allowedSscModes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;SSC_MODE_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SSC_MODE_3&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;defaultSscMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SSC_MODE_1&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;singleNssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;dnnConfigurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;internet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;5gQosProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;arp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;preemptCap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;preemptVuln&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;priorityLevel&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;priorityLevel&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;pduSessionTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;allowedSessionTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;IPV4&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;defaultSessionType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;IPV4&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;sessionAmbr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;downlink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;uplink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000 Mbps&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;sscModes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;allowedSscModes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;SSC_MODE_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SSC_MODE_3&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;defaultSscMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SSC_MODE_1&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;singleNssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112233&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;SmPolicyData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;smPolicySnssaiData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;01010203&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;smPolicyDnnData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;internet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;01112233&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;smPolicyDnnData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;internet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;snssai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112233&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;SmfSelectionSubscriptionData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;subscribedSnssaiInfos&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;01010203&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnnInfos&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="w"> </span><span class="p">}]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;01112233&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnnInfos&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="w"> </span><span class="p">}]</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;plmnID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20893&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ueId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;imsi-208930000000001&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</details>
+
+<p>Scale that up and the numbers get hostile fast:</p>
+<table>
+<thead>
+<tr>
+<th>Deployment size</th>
+<th style="text-align: right;">Raw <code>subscriber_list</code> payload</th>
+<th style="text-align: right;">Approx. tokens (<code>bytes/4</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50 subscribers</td>
+<td style="text-align: right;"><strong>144,851 bytes</strong> (≈ 141 KB)</td>
+<td style="text-align: right;">≈ <strong>36,213</strong></td>
+</tr>
+<tr>
+<td>500 subscribers</td>
+<td style="text-align: right;"><strong>1,448,501 bytes</strong> (≈ 1.4 MB)</td>
+<td style="text-align: right;">≈ <strong>362,126</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A 500-subscriber list is <strong>~362K tokens</strong>. It does not <em>fit</em> in a 200K-token context window — the single most common operational query is physically impossible to answer without help. That is the problem the middle layer exists to solve.</p>
+<hr />
+<h2 id="3-system-architecture">3. System Architecture</h2>
+<p>The MCP server sits between the AI and free5GC, and <strong>every</strong> tool response passes through the optimization layer on the way out. There are two complementary compression paths — one for structured 5G-domain data, one for generic host inspection.</p>
+<pre class="mermaid"><code>flowchart TD
+    AI["🤖 AI Assistant&lt;br/&gt;(Copilot / Claude / Codex)"]
+
+    subgraph MCP["free5GC MCP Server &amp;nbsp;·&amp;nbsp; pkg/mcp/server.go"]
+        direction TB
+        DISP["handleCallTool&lt;br/&gt;(dispatch by tool name)"]
+
+        subgraph LAYER["Token-Optimization Middle Layer"]
+            direction TB
+            NATIVE["&lt;b&gt;Path A — Native filter&lt;/b&gt;&lt;br/&gt;pkg/tokenfilter&lt;br/&gt;StripAuthSecrets → Summarize (Rich)&lt;br/&gt;→ FilterByPlmn → Paginate"]
+            RTK["&lt;b&gt;Path B — rtk proxy&lt;/b&gt;&lt;br/&gt;rtk_exec (allowlisted)&lt;br/&gt;ls · git · grep · find · cat"]
+        end
+    end
+
+    CLIENT["control.Free5GCClient&lt;br/&gt;(webconsole REST)"]
+    F5GC["free5GC webconsole&lt;br/&gt;+ Network Functions"]
+    HOST["MCP host filesystem&lt;br/&gt;/ git repo"]
+
+    AI -- "JSON-RPC 2.0 (MCP)" --&gt; DISP
+    DISP -- "subscriber_* / tenant_*" --&gt; NATIVE
+    NATIVE --&gt; CLIENT --&gt; F5GC
+    DISP -- "rtk_exec" --&gt; RTK --&gt; HOST
+    LAYER -- "token-shrunk result" --&gt; AI
+
+    classDef layer fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef ai fill:#e3f2fd,stroke:#1565c0,color:#0d47a1;
+    class NATIVE,RTK layer;
+    class AI ai;</code></pre>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Handles</th>
+<th>How</th>
+<th>Measured reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A — Native</strong> (<code>pkg/tokenfilter</code>)</td>
+<td>5G-domain data: subscribers, tenants</td>
+<td>Go, domain-aware (knows SUPI / PLMN / slices / QoS)</td>
+<td><strong>~78%</strong> per payload on <code>subscriber_list</code>, and each call bounded to ~9.5K tokens</td>
+</tr>
+<tr>
+<td><strong>B — rtk</strong> (<code>rtk_exec</code>)</td>
+<td>Generic host dev-tool output</td>
+<td>External <code>rtk</code> "Rust Token Killer" proxy</td>
+<td><strong>49%–86%</strong> on <code>ls</code> / <code>git</code> / <code>grep</code></td>
+</tr>
+</tbody>
+</table>
+<p>Path A is domain-specific and <strong>always on</strong> for 5G data. Path B covers everything rtk already knows how to shrink — filesystem, git, search — so the AI can cheaply inspect the free5GC host without a bespoke tool per command.</p>
+<hr />
+<h2 id="4-path-a-the-native-domain-filter">4. Path A — The Native Domain Filter</h2>
+<p>The native filter is a small, dependency-free pipeline in <code>pkg/tokenfilter</code>. Every stage is <strong>defensive</strong>: if the input is not the shape it expects (say, an error object instead of an array), it passes the data through untouched rather than erroring. Four stages run in order:</p>
+<pre class="mermaid"><code>flowchart LR
+    RAW["Raw webconsole&lt;br/&gt;JSON array"] --&gt; S1
+    S1["① StripAuthSecrets&lt;br/&gt;&lt;i&gt;drop key material&lt;/i&gt;"] --&gt; S2
+    S2["② SummarizeSubscribers&lt;br/&gt;&lt;i&gt;Rich projection&lt;/i&gt;"] --&gt; S3
+    S3["③ FilterByPlmn&lt;br/&gt;&lt;i&gt;optional&lt;/i&gt;"] --&gt; S4
+    S4["④ PaginateSubscribers&lt;br/&gt;&lt;i&gt;bound the page&lt;/i&gt;"] --&gt; OUT["Compact&lt;br/&gt;envelope"]
+
+    classDef s fill:#fff3e0,stroke:#e65100,color:#bf360c;
+    class S1,S2,S3,S4 s;</code></pre>
+<p>The heavy lifter is stage 2 — the <strong>"Rich" projection</strong>. An earlier revision of this filter kept only six scalar fields and threw away all the DNN/QoS/slice context. That was <em>too lossy</em>: the AI kept having to re-fetch full objects, which defeated the point. The Rich projection instead keeps the <strong>entire operational UE context</strong> — slices, UE and per-DNN AMBR, PDU session types, SSC modes, QoS flows, charging mode — and drops only two categories: <strong>cryptographic secrets</strong> and <strong>redundant policy plumbing that is derivable from the slices + DNNs</strong>.</p>
+<p>Here is the same subscriber, <strong>before and after</strong> the projection:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// BEFORE — 2,896 bytes of nested webconsole JSON (abridged above in (2))</span>
+
+<span class="c1">// AFTER — 625 bytes, everything the AI needs to know</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ueId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;imsi-208930000000001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;plmnId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20893&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;authMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5G_AKA&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;slices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sst&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112233&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;ueAmbr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;up&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1 Gbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;down&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2 Gbps&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;dnns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;sessAmbr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;up&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;down&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1000 Mbps&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;sessionTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;IPV4&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;sscModes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;SSC_MODE_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SSC_MODE_3&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;qosFlows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;108 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;108 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;208 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;208 Mbps&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;5qi&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;207 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;207 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrUL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;407 Mbps&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;mbrDL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;407 Mbps&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;charging&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Offline&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;dnn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;internet&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Online&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>What is kept vs dropped:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Kept (operational context)</th>
+<th>Dropped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ueId</code>, <code>plmnId</code>, <code>authMethod</code></td>
+<td>crypto secrets (<code>opcValue</code>, <code>permanentKeyValue</code>, <code>milenage</code>), <code>sequenceNumber</code></td>
+</tr>
+<tr>
+<td><code>slices</code> (default + single, de-duplicated)</td>
+<td><code>FlowRules</code> (derivable from QoS + DNN)</td>
+</tr>
+<tr>
+<td><code>ueAmbr</code> (subscribed UE AMBR)</td>
+<td><code>SmPolicyData</code>, <code>SmfSelectionSubscriptionData</code> (redundant with slices + DNNs)</td>
+</tr>
+<tr>
+<td>per-DNN <code>5qi</code>, <code>sessAmbr</code>, <code>sessionTypes</code>, <code>sscModes</code></td>
+<td><code>arp</code>, <code>priorityLevel</code>, <code>qosRef</code>, <code>snssai</code>, <code>filter</code>, <code>quota</code>, <code>gpsis</code>, <code>subscCats</code></td>
+</tr>
+<tr>
+<td><code>qosFlows</code> (<code>5qi</code>, GBR/MBR per DNN)</td>
+<td>JSON indentation / field-name repetition (compact marshal)</td>
+</tr>
+<tr>
+<td><code>charging</code> (per-DNN billing mode)</td>
+<td>DNN-less charging catch-all rows</td>
+</tr>
+</tbody>
+</table>
+<p>Stage 4, pagination, is what <strong>bounds the worst case</strong>: even a 500-subscriber backend returns at most 50 compact objects wrapped in a metadata envelope, so the output stays ~38 KB no matter how large the deployment gets. The AI pages with <code>offset</code> / <code>limit</code> or narrows with <code>plmn_id</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// The envelope the AI actually receives:</span>
+<span class="p">{</span><span class="w"> </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;subscribers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="cm">/* 50 Rich objects */</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="5-path-b-rtk-the-rust-token-killer">5. Path B — rtk, the Rust Token Killer</h2>
+<p>Not every question an operator asks is about subscribers. <em>"What's in the config directory?"</em>, <em>"What did the last commit change?"</em>, <em>"Grep the SMF logs for <code>PFCP</code>"</em> — these are host-inspection tasks, and their tools (<code>ls</code>, <code>git</code>, <code>grep</code>, <code>find</code>, <code>cat</code>) emit their own brand of low-signal noise: owner/group/date columns, permission strings, repeated path prefixes, prose framing.</p>
+<p>Rather than write a bespoke filter for each, the server exposes a single <code>rtk_exec</code> tool that shells out to <a href="https://github.com/rtk-ai/rtk"><strong>rtk</strong></a> — the "Rust Token Killer" CLI proxy — which already knows how to shrink those formats.</p>
+<p>Because <code>rtk</code> runs <em>real</em> commands, the tool is deliberately gated:</p>
+<ul>
+<li><strong>Allowlist.</strong> Only the first token of the command is checked, and it must be an allowlisted read-only subcommand. Default: <code>ls git grep find cat gain discover</code>. Anything else (<code>rm</code>, <code>mv</code>, <code>sh</code>, …) is rejected with <code>rtk subcommand not allowed</code>. The allowlist is overridable via the <code>RTK_ALLOW</code> env var — and it <em>replaces</em> the default entirely, so widening it is an explicit, auditable act.</li>
+<li><strong>No shell interpretation.</strong> The command string is split on whitespace and passed as <code>argv</code> directly — no pipes, redirects, or <code>;</code> chaining.</li>
+<li><strong>30-second timeout</strong> on every invocation.</li>
+</ul>
+<p>That allowlist is security-critical, so in this iteration it also gained direct unit tests (<code>pkg/mcp/rtk_test.go</code>) covering the default list, the <code>RTK_ALLOW</code> override semantics, and the empty-env fallback.</p>
+<p>Here is a concrete example of the shrinker on <code>rtk find . -name '*.go'</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># BEFORE (389 bytes)</span>
+./cmd/mockwebui/main.go
+./cmd/server/main.go
+./cmd/server/main_test.go
+./cmd/tokendemo/main.go
+./pkg/control/free5gc_client_test.go
+./pkg/control/k8s_service.go
+./pkg/control/free5gc_client.go
+./pkg/tokenfilter/tokenfilter.go
+./pkg/tokenfilter/tokenfilter_test.go
+./pkg/k8s/manager.go
+./pkg/api/handlers.go
+./pkg/api/router.go
+./pkg/config/config.go
+./pkg/mcp/server.go
+./pkg/auth/auth.go
+
+<span class="c1"># AFTER — rtk find . -name &#39;*.go&#39; (320 bytes)</span>
+15F<span class="w"> </span>10D:
+
+cmd/mockwebui/<span class="w"> </span>main.go
+cmd/server/<span class="w"> </span>main.go<span class="w"> </span>main_test.go
+cmd/tokendemo/<span class="w"> </span>main.go
+pkg/api/<span class="w"> </span>handlers.go<span class="w"> </span>router.go
+pkg/auth/<span class="w"> </span>auth.go
+pkg/config/<span class="w"> </span>config.go
+pkg/control/<span class="w"> </span>free5gc_client.go<span class="w"> </span>free5gc_client_test.go<span class="w"> </span>k8s_service.go
+pkg/k8s/<span class="w"> </span>manager.go
+pkg/mcp/<span class="w"> </span>server.go
+pkg/tokenfilter/<span class="w"> </span>tokenfilter.go<span class="w"> </span>tokenfilter_test.go
+</code></pre></div>
+<hr />
+<h2 id="6-request-flow-end-to-end">6. Request Flow, End to End</h2>
+<p>Putting both paths together, here is what a single <code>subscriber_list</code> call looks like from the model's prompt to the shrunk response:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant AI as 🤖 AI Assistant
+    participant MCP as MCP Server
+    participant TF as Token Filter (Path A)
+    participant WC as free5GC webconsole
+
+    AI-&gt;&gt;MCP: tools/call subscriber_list {}
+    MCP-&gt;&gt;WC: GET /api/subscriber
+    WC--&gt;&gt;MCP: 1,448,501 bytes (500 subs) 😱
+    Note over MCP,TF: middle layer engages
+    MCP-&gt;&gt;TF: StripAuthSecrets
+    TF-&gt;&gt;TF: SummarizeSubscribers (Rich)
+    TF-&gt;&gt;TF: FilterByPlmn (optional)
+    TF-&gt;&gt;TF: PaginateSubscribers (limit 50)
+    TF--&gt;&gt;MCP: 37,863 bytes ✅
+    MCP--&gt;&gt;AI: content[0].text = compact envelope
+    Note over AI: ~9,466 tokens instead of ~362,126</code></pre>
+<p>The key property: the 1.4 MB backend blob <strong>never leaves the server</strong>. The AI only ever sees the ~38 KB envelope.</p>
+<hr />
+<h2 id="7-benchmarks-before-vs-after">7. Benchmarks: Before vs After</h2>
+<p>All numbers below are <strong>measured, not estimated</strong> — they come from running the real <code>pkg/tokenfilter</code> code (and, for the end-to-end rows, the real <code>mcp.Server</code> + <code>control.Free5GCClient</code> over HTTP) against genuine free5GC-shaped data, plus the real <code>rtk</code> binary (v0.43.0) for the host-inspection path. Reproduce them with <code>make token-demo</code> (see (9)).</p>
+<h3 id="71-subscriber_list-the-call-that-blows-up-context">7.1 <code>subscriber_list</code> — the call that blows up context</h3>
+<p><code>subscriber_list</code> is the call that hurts most: on a 500-subscriber deployment the raw response is <strong>~362K tokens</strong> — too large to even fit inside a 200K-token window. The filter tackles that in <strong>two independent ways</strong>, and the trick to reading the numbers is to keep them apart.</p>
+<p><img alt="subscriber_list on a 500-subscriber deployment — raw vs. filtered vs. per-call" src="../subscriber_list_tokens.png" /></p>
+<p><strong>Win #1 — every subscriber gets ~78% smaller.</strong> The Rich projection keeps everything an operator actually reasons about (slices, AMBR, QoS, charging) and drops only crypto secrets and redundant policy plumbing, so each subscriber shrinks from <strong>2,896 → 625 bytes</strong>. That ratio holds at any scale, so the <em>same</em> 500 subscribers drop from <strong>~362K → ~78K tokens</strong>.</p>
+<p><strong>Win #2 — every call is capped at ~9,466 tokens.</strong> Pagination returns at most <strong>50 subscribers per page</strong>, so one response is always ~50 compact objects plus a small envelope — no matter how big the deployment is. A 500-subscriber backend just reports <code>"total": 500</code> and hands back the first 50:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;subscribers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="cm">/* 50 Rich objects */</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>The AI then pages through the rest with <code>offset</code> / <code>limit</code>, or narrows the search with <code>plmn_id</code>.</p>
+<p>So what does it actually cost to pull the whole 500-subscriber list?</p>
+<table>
+<thead>
+<tr>
+<th>Listing all 500 subscribers</th>
+<th style="text-align: right;">Tokens</th>
+<th style="text-align: right;">vs. raw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw — one blob <em>(old behavior)</em></td>
+<td style="text-align: right;">362,126</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Filtered — 10 pages of 50 <em>(new behavior)</em></td>
+<td style="text-align: right;">~94,660</td>
+<td style="text-align: right;">~74%</td>
+</tr>
+<tr>
+<td>…any single one of those pages</td>
+<td style="text-align: right;">9,466</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>The chart's ~78K "filtered" bar is the <strong>pure compression</strong> from Win #1. The real end-to-end total is a little higher — ~94,660 — because the list is delivered as 10 separate calls and each one re-sends the ~6.5 KB envelope. That overhead is the price of Win #2: never letting a single call overflow the window.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Reading it honestly:</strong> the eye-catching "one call: 362,126 → 9,466 tokens" is real, but that page holds <strong>50 of the 500</strong> subscribers — it is <em>not</em> a 97% shrink of the same data. The true same-data figure is Win #1's <strong>~78%</strong>. Win #2 is a separate guarantee, and just as valuable: no single call can ever overflow the context window, however large the deployment grows.</p>
+</div>
+<p>The upshot: a query that used to be <strong>impossible</strong> — the raw blob couldn't even be received — is now a stream of page-sized ~9.5K-token chunks (≈4.7% of a 200K window each) that the model can comfortably read and reason over.</p>
+<details class="note">
+<summary>Full pipeline breakdown — one call, measured at every stage</summary>
+<p>These rows are the <strong>same</strong> <code>subscriber_list</code> call measured at four points along the filter, at two backend sizes, so each stage's contribution is visible:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Scale</th>
+<th style="text-align: right;">Before (B)</th>
+<th style="text-align: right;">After (B)</th>
+<th style="text-align: right;">~tok before</th>
+<th style="text-align: right;">~tok after</th>
+<th style="text-align: right;">Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① strip auth only</td>
+<td>50</td>
+<td style="text-align: right;">144,851</td>
+<td style="text-align: right;">131,401</td>
+<td style="text-align: right;">36,213</td>
+<td style="text-align: right;">32,851</td>
+<td style="text-align: right;">9.3%</td>
+</tr>
+<tr>
+<td>② summarize (Rich) only</td>
+<td>50</td>
+<td style="text-align: right;">144,851</td>
+<td style="text-align: right;">31,301</td>
+<td style="text-align: right;">36,213</td>
+<td style="text-align: right;">7,826</td>
+<td style="text-align: right;">78.4%</td>
+</tr>
+<tr>
+<td>③ full pipeline (+ paginate)</td>
+<td>50</td>
+<td style="text-align: right;">144,851</td>
+<td style="text-align: right;">31,361</td>
+<td style="text-align: right;">36,213</td>
+<td style="text-align: right;">7,841</td>
+<td style="text-align: right;">78.3%</td>
+</tr>
+<tr>
+<td><strong>④ end-to-end (MCP server)</strong></td>
+<td>50</td>
+<td style="text-align: right;">144,851</td>
+<td style="text-align: right;">37,862</td>
+<td style="text-align: right;">36,213</td>
+<td style="text-align: right;">9,466</td>
+<td style="text-align: right;">73.9%</td>
+</tr>
+<tr>
+<td>③ full pipeline (+ paginate)</td>
+<td>500</td>
+<td style="text-align: right;">1,448,501</td>
+<td style="text-align: right;">31,362</td>
+<td style="text-align: right;">362,126</td>
+<td style="text-align: right;">7,841</td>
+<td style="text-align: right;">97.8%</td>
+</tr>
+<tr>
+<td><strong>④ end-to-end (MCP server)</strong></td>
+<td>500</td>
+<td style="text-align: right;">1,448,501</td>
+<td style="text-align: right;">37,863</td>
+<td style="text-align: right;">362,126</td>
+<td style="text-align: right;">9,466</td>
+<td style="text-align: right;">97.4%</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>④ end-to-end</strong> rows are the real deployed numbers — a literal <code>tools/call subscriber_list {}</code> issued over HTTP, measuring the response body, which also carries the ~6.5 KB JSON-RPC + pagination envelope (that's why ④ runs a little larger than the bare pipeline ③). The ~78K "all 500 filtered" figure quoted above is stage ②'s measured 50-subscriber projection ×10; because the mock subscribers are identical, that multiple is exact for this benchmark.</p>
+</details>
+<h3 id="72-subscriber_get-a-security-win-more-than-a-size-win">7.2 <code>subscriber_get</code> — a security win more than a size win</h3>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th style="text-align: right;">Before</th>
+<th style="text-align: right;">After</th>
+<th style="text-align: right;">Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscriber_get</code> (strip auth only)</td>
+<td style="text-align: right;">2,896 B</td>
+<td style="text-align: right;">2,627 B</td>
+<td style="text-align: right;"><strong>9.3%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><code>subscriber_get</code> returns full detail <em>by design</em> — the AI asked about one specific UE. The only thing stripped is cryptographic key material, so the reduction is modest (~9%). Its real value here is <strong>security</strong>, not token count (see §8). Pass <code>include_auth=true</code> to opt back into the raw block.</p>
+<h3 id="73-rtk-host-inspection">7.3 rtk host inspection</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th style="text-align: right;">Before</th>
+<th style="text-align: right;">After</th>
+<th style="text-align: right;">Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls -la pkg/mcp</code></td>
+<td style="text-align: right;">162 B</td>
+<td style="text-align: right;">22 B</td>
+<td style="text-align: right;"><strong>86.4%</strong></td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td style="text-align: right;">464 B</td>
+<td style="text-align: right;">116 B</td>
+<td style="text-align: right;"><strong>75.0%</strong></td>
+</tr>
+<tr>
+<td><code>grep -rn func pkg/mcp/server.go</code></td>
+<td style="text-align: right;">4,952 B</td>
+<td style="text-align: right;">2,526 B</td>
+<td style="text-align: right;"><strong>49.0%</strong></td>
+</tr>
+<tr>
+<td><code>find . -name '*.go'</code></td>
+<td style="text-align: right;">389 B</td>
+<td style="text-align: right;">320 B</td>
+<td style="text-align: right;"><strong>17.7%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>rtk strips the fixed per-line metadata that dominates dev-tool output, so savings scale with row count — and it never does worse than passthrough.</p>
+<hr />
+<h2 id="8-security-falls-out-for-free">8. Security Falls Out for Free</h2>
+<p>The same projection that saves tokens also <strong>prevents secret exfiltration</strong>. free5GC stores each subscriber's OPc and permanent key (<code>Ki</code>) in the webconsole response. Those are the root of the entire 5G-AKA trust chain — they should never end up in an LLM's context, a chat transcript, or a provider's server logs.</p>
+<p><code>StripAuthSecrets</code> runs on <strong>every</strong> subscriber path (list <em>and</em> get), unconditionally:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// redactAuthBlock deletes key material from a single subscriber map in-place.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">redactAuthBlock</span><span class="p">(</span><span class="nx">sub</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">auth</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sub</span><span class="p">[</span><span class="s">&quot;AuthenticationSubscription&quot;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">opc</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">auth</span><span class="p">[</span><span class="s">&quot;opc&quot;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{});</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">opc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;opcValue&quot;</span><span class="p">)</span><span class="w">          </span><span class="c1">// ← the OPc secret, gone</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">opc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;encryptionAlgorithm&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">opc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;encryptionKey&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">pk</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">auth</span><span class="p">[</span><span class="s">&quot;permanentKey&quot;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{});</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">pk</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;permanentKeyValue&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">// ← the Ki secret, gone</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">pk</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;encryptionAlgorithm&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">pk</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;encryptionKey&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">mil</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">auth</span><span class="p">[</span><span class="s">&quot;milenage&quot;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{});</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">op</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">mil</span><span class="p">[</span><span class="s">&quot;op&quot;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{});</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nb">delete</span><span class="p">(</span><span class="nx">op</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;opValue&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">delete</span><span class="p">(</span><span class="nx">op</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;encryptionAlgorithm&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">delete</span><span class="p">(</span><span class="nx">op</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;encryptionKey&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nb">delete</span><span class="p">(</span><span class="nx">auth</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sequenceNumber&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <em>policy</em> fields — <code>authenticationMethod</code>, <code>authenticationManagementField</code> — are kept, because they describe configuration, not secrets. The AI can still tell you a subscriber uses <code>5G_AKA</code>; it just can't read the key that makes AKA work.</p>
+<hr />
+<h2 id="9-reproduce-it-yourself">9. Reproduce It Yourself</h2>
+<p>Every number in (7. Benchmark) is regenerable from the repo. There is no simulation — the demo runs the exact filter functions the server calls in production, and the end-to-end row stands up the real <code>mcp.Server</code> and sends it a real JSON-RPC request over HTTP:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 50 subscribers (default)</span>
+make<span class="w"> </span>token-demo
+
+<span class="c1"># 500 subscribers</span>
+make<span class="w"> </span>token-demo<span class="w"> </span><span class="nv">N</span><span class="o">=</span><span class="m">500</span>
+
+<span class="c1"># Dump the full raw/after JSON for one subscriber</span>
+go<span class="w"> </span>run<span class="w"> </span>./cmd/tokendemo<span class="w"> </span>-dump
+</code></pre></div>
+<p>Example output (50 subscribers, end-to-end through the real server):</p>
+<div class="highlight"><pre><span></span><code>=== END-TO-END through the real MCP server (HTTP JSON-RPC) ===
+  Request: tools/call subscriber_list {}  (50 subscribers in backend)
+  backend raw -&gt; MCP resp   bytes  144851 -&gt; 37862   (~tok 36213 -&gt; 9466)   73.9% saved
+</code></pre></div>
+<p>The tooling and test story also got some housekeeping in this iteration: the tree is <code>gofmt</code>-clean, <code>make install</code> no longer references a deleted unit file, the <code>Makefile</code> gained <code>test</code> / <code>vet</code> / <code>fmt</code> targets, and the security-critical rtk allowlist is now unit-tested. Small things — but the benchmarks are only believable if the harness that produces them is clean.</p>
+<hr />
+<h2 id="10-closing-thoughts">10. Closing Thoughts</h2>
+<p>Giving an AI assistant tools is the easy half. The hard half is the <em>economics</em> of the responses those tools return — because a 5G core was built to talk to browsers and other network functions, not to a model with a finite, billed context window.</p>
+<p>The pattern generalizes well beyond free5GC: <strong>put a domain-aware projection between your backend and your model, keep exactly the fields an operator reasons about, and drop the rest before it ever costs a token.</strong> For structured domain data, a small hand-written filter (Path A) wins because it <em>understands</em> the data. For the long tail of generic host output, lean on an existing shrinker like rtk (Path B) instead of reinventing one per command. And because the same projection that removes noise also removes secrets, the token win and the security win are the <em>same</em> change.</p>
+<p>The result: the operation that used to be physically impossible — <em>"list the subscribers"</em> on a 500-UE deployment — went from a single <strong>~362K-token</strong> blob that could not even be received, to page-sized <strong>~9.5K-token</strong> responses (≈4.7% of the window each; ~47% to page through all 500) that keep the full operational context and strip the cryptographic keys. That is the difference between a demo and something you would actually run.</p>
+<hr />
+<h2 id="credits">Credits</h2>
+<p>Thanks to the free5GC community and the maintainers of the free5gc-MCP project for the foundation this builds on, and to the authors of <a href="https://github.com/rtk-ai/rtk">rtk</a> for the generic host-output shrinker that powers Path B.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Part 1 — <a href="https://free5gc.org/blog/20260107/20260107/"><em>MCP Server Integration with free5GC: Architecture and Use Cases</em></a></li>
+<li><a href="https://modelcontextprotocol.io/">MCP specification</a></li>
+<li><a href="https://free5gc.org/">free5GC</a> · <a href="https://free5gc.org/guide/3-install-free5gc/">free5GC installation guide</a></li>
+<li><a href="https://github.com/warren0813/free5gc-MCP/tree/feat/token-optimization-layer">free5GC-MCP</a></li>
+<li><a href="https://github.com/rtk-ai/rtk">rtk-ai/rtk</a></li>
+</ul>
+<h2 id="about-the-author">About the author</h2>
+<p>Hey it's Warren! currently exploring 5G Core and working with free5GC. I’m just learning how things work in practice and building as I go. Still early in the journey, but enjoying the process and learning a lot along the way. I would love to connect with you!, via <a href="https://github.com/warren0813">Github</a>.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1150 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Efficient and Hardware-Independent Deep Packet Inspection for Free5GC - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#efficient-and-hardware-independent-deep-packet-inspection-for-free5gc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Efficient and Hardware-Independent Deep Packet Inspection for Free5GC
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preface" class="md-nav__link">
+    Preface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduce" class="md-nav__link">
+    Introduce
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduce">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-dpi-affect-the-link-throughput" class="md-nav__link">
+    Why DPI affect the link throughput?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanism" class="md-nav__link">
+    Mechanism
+  </a>
+  
+    <nav class="md-nav" aria-label="Mechanism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p4-assist-method" class="md-nav__link">
+    P4 Assist Method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-copy-program-fcp-method" class="md-nav__link">
+    Full Copy Program (FCP) Method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-idea-is-it-possible-to-classify-packet-on-kernel-space" class="md-nav__link">
+    Key Idea: Is it possible to classify packet on kernel space?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xdp-method" class="md-nav__link">
+    XDP Method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identify-packet-is-legal" class="md-nav__link">
+    Identify Packet Is Legal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-list" class="md-nav__link">
+    Block-list
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment" class="md-nav__link">
+    Experiment
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#experiment-setup" class="md-nav__link">
+    Experiment Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experiment_1" class="md-nav__link">
+    Experiment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    Result
+  </a>
+  
+    <nav class="md-nav" aria-label="Result">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#link-throughput" class="md-nav__link">
+    Link Throughput
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocking-rate" class="md-nav__link">
+    Blocking Rate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-throughput-comparison" class="md-nav__link">
+    DNS Throughput Comparison
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epilogue" class="md-nav__link">
+    Epilogue
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260225/20260225.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260225/20260225.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="efficient-and-hardware-independent-deep-packet-inspection-for-free5gc">Efficient and Hardware-Independent Deep Packet Inspection for Free5GC</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Han-Xuan Huang<br />
+Date: 2026/02/25</p>
+</div>
+<p><img alt="" src="../image/cover.png" /></p>
+<p>Thanks Free5GC having me to write this blog. This is my personal research project started in 2025 fall. I gather a team to collaborate this project.</p>
+<h2 id="preface">Preface</h2>
+<p>Since <a href="https://www.linkedin.com/in/ian-chen-88b70b1aa">Ian Chen</a> mentioned that Free5GC UPF doesn't have Deep Packet Inspection (DPI) feature in CNDI course, it caught my interest to implement a DPI feature. <br />
+After doing some research, most DPI feature is handle with hardware support such as P4 programmable switch. I just happened to have a P4 switch in our Lab, so it's a perfect timing to start this research project.</p>
+<p>Construct hardware-support DPI solution is easy and straight forward. It's easy for me to construct this since I have some experience on P4 Switch. <br />
+To make it more challenge, I trying to find a Hardware-Independent solution that can achieve efficient as same as hardware-support solution (Like, P4 Switch). <br />
+It's interesting that discovery a hardware-independent solution and it increase the possibility that we can integrate into Free5GC UPF. </p>
+<p>Let's start to discover this project.</p>
+<h2 id="introduce">Introduce</h2>
+<p>DPI usually inspect on packet payload, like QNAME in unencrypted DNS packet, or payload in DHCP packet. For our target, we target with unencrypted GTP-U DNS Packet.</p>
+<p>I aims to have a DPI feature that achieve these feature:</p>
+<ul>
+<li>Hardware Independent.</li>
+<li>Efficient (Consider with link throughput and packet blocking-rate).</li>
+<li>Block all invalid request.</li>
+</ul>
+<p>The mechanism looks like this. When the packet is valid, it will forward to DN through RAN and UPF, drop the packet otherwise.</p>
+<p><img alt="" src="../image/DPI-mechanism.png" /></p>
+<p>Since DPI may damage the link throughput and packet blocking-rate with improper implementation. The affect of link throughput and packet blocking-rate should be noticed.</p>
+<h3 id="why-dpi-affect-the-link-throughput">Why DPI affect the link throughput?</h3>
+<p>If you have experience that driving in expressway in Taiwan earlier, you may met the tollbooth (收費站 in Chinese). It may caused the traffic jam since all car need to wait the tollbooth staff operating. <br />
+Like our implementation, if we implement a mechanism that will check the packet one-by-one to find the packet is invalid, it will caused the latency.</p>
+<p>The queue network interface is limited, if the packet need more time to operating, it will caused the queueing delay on packet. It also caused full out on queue in short time, and caused packet loss. <br />
+It'll damage the link throughput since our system can not handle the packet with such latency. Therefore, the DPI mechanism that affect the link throughput should be noticed.</p>
+<p>A good approach to solve this issue is, we may isolate the interest packet out of main datapath, to decrease the latency affect on the packet in main datapath. <br />
+It looks like:</p>
+<div class="highlight"><pre><span></span><code>Packet<span class="w"> </span>-------&gt;<span class="w"> </span>Main<span class="w"> </span>Datapath<span class="w"> </span>--------------------------------------<span class="p">|</span>-&gt;<span class="w"> </span>DN
+DNS<span class="w"> </span>Packet<span class="w"> </span>---&gt;<span class="w"> </span>Main<span class="w"> </span>Datapath<span class="w">                                       </span><span class="p">|</span>
+<span class="w">                     </span><span class="p">|</span>---------&gt;<span class="w"> </span>DNS<span class="w"> </span>Datapath<span class="w"> </span>---&gt;<span class="w"> </span>Packet<span class="w"> </span>Filter<span class="w"> </span>--&gt;<span class="p">|</span>
+</code></pre></div>
+<p>The latency caused by Packet filter only caused on DNS packet. It should be improve the link throughput that not affect by the DPI mechanism.</p>
+<p>To talk about "how" the DPI mechanism affect the link throughput, you can see the result on Full Copy Program Method below. It caused the latency on all packet, you should see the poor link throughput on this mechanism.</p>
+<h2 id="mechanism">Mechanism</h2>
+<p>To achieve the DPI, we purpose these method:</p>
+<ul>
+<li>P4 Assist Method (Hardware-support solution)</li>
+<li>Full Copy Program (FCP) Method (Latency-careless solution)</li>
+<li>XDP Method (Hardware-Independent solution)</li>
+</ul>
+<p>I'll introduce these method one-by-one.</p>
+<h3 id="p4-assist-method">P4 Assist Method</h3>
+<p>To make GTP-U DNS packet out of main datapath, one of good approach is using P4 Switch to achieve this. P4 Assist Switch with P4 Program can specific the output port with Match-Action table.<br />
+We can write a P4 program that parse the packet first, confirm the packet is GTP-U DNS packet (Check outer UDP port is 2152, and inner UDP port is 52), and specific ingress port. <br />
+It's efficient to achieve packet isolation from main datapath. The architecture look like this:</p>
+<p><img alt="" src="../image/P4-architecture.png" /></p>
+<p>When the packet is isolate to another datapath (we'll call it validate path in later), it will enter into filter program host. The filter program host will fecth packet and check QNAME is valid or not.<br />
+If the packet is valid, it will forward to UPF, drop otherwise.</p>
+<p>It should be efficient since it's almost-zero latency on packet isolation. But the cons is hard to deploy this solution since not everyone is able to afford P4 Switch (it cost <script type="math/tex">10000~</script>30000 USD), so, software-based solution is necessary.<br />
+The hardware-support solution can be our baseline that our hardware-independent solution should achieve.</p>
+<p>Next, I would like to introduce the improper software-based solution that caused latency on all packet.</p>
+<h3 id="full-copy-program-fcp-method">Full Copy Program (FCP) Method</h3>
+<p>To achieve an easy, straight-forward software solution, we can simply copy all packet from kernel space to user space, and check the packet one-by-one. The architecture look like this:</p>
+<p><img alt="" src="../image/FCP-architecture.png" /></p>
+<p>Like previous method, valid then forward and invalid then drop. </p>
+<p>The copy operation will caused huge latency and increase the queueing delay and have poor link throughput. So, it's improper implementation that have poor performance on 5G core network.<br />
+Since this solution is bad, but it still interesting that finding what the actual link throughput when deploy this mechanism.</p>
+<h3 id="key-idea-is-it-possible-to-classify-packet-on-kernel-space">Key Idea: Is it possible to classify packet on kernel space?</h3>
+<p>FCP method is easy to implement but have huge latency issue that damage link throughput. <br />
+To improve this mechanism, I trying to find how to only copy GTP-U DNS packet into user space and keep other packet forward to network stack.</p>
+<p>It looks like:</p>
+<p><img alt="" src="../image/XDP-mechanism.png" /></p>
+<p>After search a while, I found that it can be achieved by XDP. It's based on eBPF library that can attach tiny XDP program to network interface directly.<br />
+It's a good finding, and make the third method happened.</p>
+<h3 id="xdp-method">XDP Method</h3>
+<p>XDP can forward or redirect the packet by few condition structure. It looks like:</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">BPF_MAP_TYPE_XSKMAP</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">max_entries</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__type</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">__u32</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__type</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">__u32</span><span class="p">);</span>
+<span class="w">    </span><span class="n">__uint</span><span class="p">(</span><span class="n">pinning</span><span class="p">,</span><span class="w"> </span><span class="n">LIBBPF_PIN_BY_NAME</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="n">xsks_map</span><span class="w"> </span><span class="n">SEC</span><span class="p">(</span><span class="s">&quot;.maps&quot;</span><span class="p">);</span>
+
+<span class="n">SEC</span><span class="p">(</span><span class="s">&quot;xdp&quot;</span><span class="p">)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">xdp_prog_simple</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">xdp_md</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">){</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="kt">long</span><span class="p">)</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data_end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="kt">long</span><span class="p">)</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">data_end</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">&lt;</span><span class="n">some</span><span class="w"> </span><span class="n">condition</span><span class="o">&gt;</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">XDP_PASS</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">bpf_redirect_map</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xsks_map</span><span class="p">,</span><span class="w"> </span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">rx_queue_index</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>If the packet that met some condition, we can forward to network stack. We can redirect the packet to user space program with <code>bpf_redirect_map</code> also. <br />
+It achieve the packet classify on kernel space, and we can copy the packet we interest only.</p>
+<p>Therefore, we can deploy this solution to achieve DPI.</p>
+<p><img alt="" src="../image/XDP-architecture.png" /></p>
+<p>When the packet is GTP-U DNS packet, it will forward the packet to filter program in user space, and the filter program will verify the packet. <br />
+If the packet is valid, it will send the packet back to network interface and forward to network stack.</p>
+<p>The reason why we need to send the packet back is, the verify operation is working on user space. <br />
+It seems impossible to forward the packet to network stack directly, so we need to send the packet back to network interface.</p>
+<p>It caused another issue: how to tell XDP program that packet is valid to prevent infinite verify loop?</p>
+<h3 id="identify-packet-is-legal">Identify Packet Is Legal</h3>
+<p>Since it's impossible that modify some packet content because checksum issue, we need to have a mechanism that XDP program can identify the packet is valid.</p>
+<p>To achieve this, I found that we can have a map that can share information between user space and kernel space.</p>
+<p>The full mechanism look like this:</p>
+<p><img alt="" src="../image/Identify-packet.png" /></p>
+<p>We can construct allow map to kernel space and pin into user space. <br />
+If the packet is valid, it will write the element into allow map with 4-tuple as key and DNS transaction ID as value. <br />
+When we send the packet back to network interface, the XDP program can lookup map by 4-tuple fetch by packet, and check the DNS transaction ID is match.</p>
+<p>It can successfully to identify valid packet and forward to network stack. So far, we already have a software solution that can forward valid packet. <br />
+The next issue is, how to determine valid and invalid?</p>
+<h3 id="block-list">Block-list</h3>
+<p>To determine the packet is valid or invalid, we have a block-list that can use to determine QNAME is valid or invalid. <br />
+We sample almost 100k rows from Fake and NSFW dataset by <a href="https://github.com/hagezi/dns-blocklists">hagezi/dns-blocklists</a>.</p>
+<p>In our expectation, we would like to ban all subdomain if domain is invalid, that is, if suffix is match. <br />
+For example, if <code>xiaohongshu.com</code> is invalid, <code>aaa.xiaohongshu.com</code>, <code>www.xiaohongshu.com</code> should be invalid also.<br />
+It make our project more challenge since the domain comparison not suitable using hash match, it need to support wildcard match.</p>
+<p>To achieve this, I found that we can use Trie data structure to improve the query time on dataset. It inspire with JSON implementation that can efficient find the key by path.</p>
+<div class="highlight"><pre><span></span><code>com<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>----<span class="w"> </span>xiaohongshu
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>----<span class="w"> </span>c1ydeh
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>----<span class="w"> </span>fake-website-or-something
+
+net<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>----<span class="w"> </span>mmm
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>----<span class="w"> </span>nnn
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>----<span class="w"> </span>networking-is-interesting
+</code></pre></div>
+<p>The approach is we can reverse the domain and insert to Trie, and reverse the domain before query. <br />
+It improve the time-cost on query and make our user-space program more efficient, represent that it can handle more DNS request.</p>
+<h2 id="experiment">Experiment</h2>
+<p>Since we already have strong methodology, it's excited to do experiment and see the result.</p>
+<h3 id="experiment-setup">Experiment Setup</h3>
+<p>We setup a P4 Programmable Switch and connect 4 Host with 6 wires. Each wire support 10 Gbps link throughput. </p>
+<p><img alt="" src="../image/Expriment-Setup.png" /></p>
+<p>For UE host, we prepare <a href="https://github.com/HewlettPackard/PacketRusher">PacketRusher</a> for UE-RAN emulator, <a href="https://github.com/DNSPerf/dnsperf">DNSPerf</a> for DNS client, and <a href="https://github.com/esnet/iperf">iperf3</a> for link throughput client. <br />
+For UPF host, we prepare <a href="https://github.com/free5gc/free5gc">Free5GC</a> in UPF host that contains all function of 5G Control Plane and UPF. Moreover, we prepare <a href="https://github.com/esnet/iperf">iperf3</a> for link throughput server.<br />
+Finally, for Filter Host, we prepare a packet filter program. It simply copy packet to user space and check QNAME one-by-one, forward the packet if valid and drop the packet if invalid.</p>
+<p>We will use this setup for all method, and adjust the policy on P4 switch to make it fit method requirement. For example, the GTP-U DNS packet will output to Filter Host for P4 Assist Swtich method, and GTP-U DNS packet will output to UPF Host directly for XDP method.</p>
+<h3 id="experiment_1">Experiment</h3>
+<p>For the experiment, I would like to test these:</p>
+<ul>
+<li>The valid packet still forward to DN properly.</li>
+<li>All invalid packet will block by mechanism.</li>
+<li>The link throughput should not drop by DPI mechanism.</li>
+<li>The DNS throughput on user space program.</li>
+</ul>
+<p>To combine these target into one experiment, we run these step simultaneously:</p>
+<ul>
+<li>Send 4Gbps throughput to DN.</li>
+<li>Create a DNSPerf client with 1000-window invalid request.</li>
+<li>Create a DNSPerf client with 20-window valid request</li>
+</ul>
+<p>The 1000-window and 20-window means, if the client receive the response, it will send next request immediately and keep not exceed 20/1000 request.</p>
+<p>We expected that:</p>
+<ul>
+<li>All valid packet should receive response successfully.</li>
+<li>All invalid packet should be blocked and timeout.</li>
+<li>The link throughput should keep 4 Gbps.</li>
+</ul>
+<p>We call this experiment "High Concurrency Mix Request", and do the experiment on three different method. We can take a look about result now!</p>
+<h2 id="result">Result</h2>
+<h3 id="link-throughput">Link Throughput</h3>
+<p>For the link throughput, <strong>we surprised that XDP Method have the same link throughput as P4 Assist Method.</strong> <br />
+Since the bottleneck happened in UE-RAN emulator that only support 4 Gbps sending-rate, it's still possible to increase sending-rate to 10 Gbps with traffic generator and see if XDP method still maintain link throughput as same as P4 Switch.</p>
+<p><img alt="" src="../image/Result-LinkThroughput.png" /></p>
+<p>For the FCP Method, it have poor link throughput that only remain 16 Mbps link throughput (0.3% link throughput of P4 Assist Switch Method). It shows that the latency will damage the link throughput seriously.</p>
+<h3 id="blocking-rate">Blocking Rate</h3>
+<p>For the blocking rate, all method achieve 100%. It's not surprise since it will detain the packet and verify the packet. The invalid packet is impossible to forward without forward operation by validator.</p>
+<p><img alt="" src="../image/Result-BlockingRate.png" /></p>
+<h3 id="dns-throughput-comparison">DNS Throughput Comparison</h3>
+<p>For the DNS throughput, it shows that our system can accept how much DNS packet in parallel. For XDP and P4 Switch, it almost have 100 qps (queries per second). </p>
+<p><img alt="" src="../image/Result-DNSThroughput.png" /></p>
+<p>For FCP method, since poor link throughput, we only test valid DNS packet with 1-windows, and invalid DNS packet with 1-window. The result indicate it can handle 37 packet in a second.</p>
+<h2 id="summary">Summary</h2>
+<p>We achieve the efficient and hardware-independent DPI solution in 5G Core Network with XDP method. The link throughput and blocking rate is equals to P4 Assist Method.</p>
+<p>There still have some improvement can do:</p>
+<ul>
+<li>Improve the efficient on user space program to handle more DNS throughput.</li>
+<li>Test with high sending rate with multiple-UE or traffic generator.</li>
+</ul>
+<p>Actually, we have a plan to integrate user space program (written in C) in Free5GC UPF. <br />
+But due to lack of XDP library in Go, it's hard to integrate user space program and need to porting lot of XDP function.<br />
+If Free5GC plan to have DPI feature in UPF, it can be a good driven to complete this.</p>
+<h2 id="epilogue">Epilogue</h2>
+<p>I'm very enjoy on this project. It's interesting in get to know how to apply XDP into real network system like 5G Core, and share these work to the attendee in course or conference.</p>
+<p>This project already present in these course/event:</p>
+<ul>
+<li><a href="https://conf.sciwork.dev/program">sciwork conference 2025</a></li>
+<li><a href="https://timetable.nycu.edu.tw/?r=main/crsoutline&amp;Acy=114&amp;Sem=1&amp;CrsNo=535606&amp;lang=zh-tw">2025 NMS course in NYCU</a></li>
+<li><a href="https://timetable.nycu.edu.tw/?r=main/crsoutline&amp;Acy=114&amp;Sem=1&amp;CrsNo=535607&amp;lang=zh-tw">2025 CNDI course in NYCU</a></li>
+</ul>
+<p>We got lot of feedback and it's useful to improve our work.</p>
+<p>It's glad to have lot of team member also, huge thanks to our teammate Cheng-Yun (kiki), Yu-Hsuan, Yu-Sheng (John), and Jun-Hong (jhcheng). <br />
+It also receive lot of help from Ian Chen (CNDI Prof.), Du Fong (CNDI TA), and Prof. Chi-Yu Li (NMS Prof.).</p>
+<h2 id="about">About</h2>
+<p>Hello! I'm Han-Xuan Huang. From Tainan, Taiwan. You can call me Clyde.<br />
+I'm interested in Networking, Cybersecurity (Sandbox and Malware), and Network Security. I am proactively developing a wide range of interests.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<ul>
+<li>My Website: <a href="https://c1ydeh.net">c1ydeh's page</a></li>
+<li>GitHub: <a href="https://github.com/c1ydehhx">c1ydehhx</a></li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/han-xuan-huang-3b50b4238/">Han-Xuan Huang</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

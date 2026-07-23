@@ -1,0 +1,1332 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Parallelizing NGAP Processing in free5GC AMF: From Per-Connection to Per-UE Concurrency - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#parallelizing-ngap-processing-in-free5gc-amf-from-per-connection-to-per-ue-concurrency" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Parallelizing NGAP Processing in free5GC AMF: From Per-Connection to Per-UE Concurrency
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background-the-ngapsctp-connection-model" class="md-nav__link">
+    Background: The NGAP/SCTP Connection Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Background: The NGAP/SCTP Connection Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-ngap-message-types" class="md-nav__link">
+    Key NGAP Message Types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-head-of-line-blocking" class="md-nav__link">
+    The Problem: Head-of-Line Blocking
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-solution-per-ue-parallel-processing" class="md-nav__link">
+    The Solution: Per-UE Parallel Processing
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution: Per-UE Parallel Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-1-the-ue-id-extractor-ue_id_extractorgo" class="md-nav__link">
+    Component 1: The UE ID Extractor (ue_id_extractor.go)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-2-the-worker-pool-scheduler-schedulergo" class="md-nav__link">
+    Component 2: The Worker Pool Scheduler (scheduler.go)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-3-the-dispatch-layer-servicego" class="md-nav__link">
+    Component 3: The Dispatch Layer (service.go)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-4-configuration-and-lifecycle-configgo-initgo" class="md-nav__link">
+    Component 4: Configuration and Lifecycle (config.go, init.go)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-considerations-the-worker-switch-problem" class="md-nav__link">
+    Safety Considerations: The Worker-Switch Problem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shutdown-safety" class="md-nav__link">
+    Shutdown Safety
+  </a>
+  
+    <nav class="md-nav" aria-label="Shutdown Safety">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteration-1-close-the-task-channel-directly" class="md-nav__link">
+    Iteration 1: Close the task channel directly
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iteration-2-use-stopchan-select-pattern" class="md-nav__link">
+    Iteration 2: Use stopChan + select pattern
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    Testing Strategy
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests-for-ue-id-extraction-ue_id_extractor_testgo" class="md-nav__link">
+    Unit Tests for UE ID Extraction (ue_id_extractor_test.go)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduler-tests-scheduler_testgo" class="md-nav__link">
+    Scheduler Tests (scheduler_test.go)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-testing" class="md-nav__link">
+    Performance Testing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgement" class="md-nav__link">
+    Acknowledgement
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260429/20260429.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260429/20260429.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="parallelizing-ngap-processing-in-free5gc-amf-from-per-connection-to-per-ue-concurrency">Parallelizing NGAP Processing in free5GC AMF: From Per-Connection to Per-UE Concurrency</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Fang-Kai Ting, Guo-Cheng Wu, Yung-Hsuan Tsao, Pei-Chi Cheng<br />
+Written by: Che-Wei Lin<br />
+Date: 2026/04/29</p>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>As 5G networks scale to support thousands of concurrent devices per cell, the <strong>Access and Mobility Management Function (AMF)</strong> becomes a critical bottleneck. In the free5GC project, a fundamental architectural limitation existed: all NGAP messages from a single gNB connection were processed <strong>serially by one goroutine</strong>, causing head-of-line blocking and single-core saturation.</p>
+<p>In this blog post, we will walk through <a href="https://github.com/free5gc/amf/pull/194">AMF PR #194</a>, which introduces a <strong>worker pool architecture with hash-based task distribution</strong> to enable per-UE parallel NGAP processing — significantly improving AMF throughput while preserving per-UE message ordering guarantees.</p>
+<h2 id="background-the-ngapsctp-connection-model">Background: The NGAP/SCTP Connection Model</h2>
+<p>Before diving into the solution, let's quickly review how NGAP messages flow in a 5G network.</p>
+<p>The <strong>NG Application Protocol (NGAP)</strong> is the control plane protocol between the gNB (base station) and the AMF. It runs over <strong>SCTP (Stream Control Transmission Protocol)</strong>, which provides reliable, message-oriented transport. Typically, each gNB maintains a single SCTP association with the AMF, and all UE-related signaling for that gNB — registrations, handovers, PDU session setups — flows over this one connection.</p>
+<h3 id="key-ngap-message-types">Key NGAP Message Types</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Examples</th>
+<th>UE-Associated?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Non-UE messages</td>
+<td><code>NGSetupRequest</code>, <code>RANConfigurationUpdate</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>UE-specific (Initiating)</td>
+<td><code>InitialUEMessage</code>, <code>UplinkNASTransport</code>, <code>HandoverRequired</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>UE-specific (Response)</td>
+<td><code>InitialContextSetupResponse</code>, <code>PDUSessionResourceSetupResponse</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>UE-specific (Failure)</td>
+<td><code>InitialContextSetupFailure</code>, <code>HandoverFailure</code></td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Each UE-associated message carries either a <strong>RAN-UE-NGAP-ID</strong> (assigned by gNB) or an <strong>AMF-UE-NGAP-ID</strong> (assigned by AMF), which uniquely identifies the UE context within the connection.</p>
+<h2 id="the-problem-head-of-line-blocking">The Problem: Head-of-Line Blocking</h2>
+<p>In the original free5GC AMF, the <code>handleConnection</code> function in <code>service.go</code> followed a straightforward pattern:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Original: sequential processing per connection</span>
+<span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">SCTPRead</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="nx">handler</span><span class="p">.</span><span class="nx">HandleMessage</span><span class="p">(</span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">])</span><span class="w">  </span><span class="c1">// ← blocks until complete</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This meant every NGAP message on a gNB connection was processed <strong>one at a time</strong>. Consider a realistic scenario where a single gNB serves hundreds of UEs:</p>
+<p><img alt="Original AMF Architecture" src="../image/Original%20AMF%20Architecture.png" /></p>
+<p><strong>The consequences were severe:</strong></p>
+<ol>
+<li>
+<p><strong>Head-of-Line (HoL) Blocking</strong>: A slow operation for UE1 (e.g., waiting for UDM/AUSF responses) stalls all other UEs on the same gNB — even though their operations are completely independent.</p>
+</li>
+<li>
+<p><strong>Single-Core Saturation</strong>: On a multi-core server, only one CPU core per gNB connection was utilized for NGAP processing, regardless of available hardware capacity.</p>
+</li>
+<li>
+<p><strong>Scalability Ceiling</strong>: As UE density per gNB increases, the serial bottleneck becomes the dominant limiting factor for AMF throughput.</p>
+</li>
+</ol>
+<p>There was even a <code>TODO</code> comment in the original codebase acknowledging this:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// TODO: concurrent on per-UE message</span>
+<span class="nx">handler</span><span class="p">.</span><span class="nx">HandleMessage</span><span class="p">(</span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">])</span>
+</code></pre></div>
+<h2 id="the-solution-per-ue-parallel-processing">The Solution: Per-UE Parallel Processing</h2>
+<p>The re-design introduces a <strong>UEScheduler</strong> that distributes NGAP messages across a pool of worker goroutines using consistent hashing on the UE identifier:</p>
+<p><img alt="Parallelize NGAP AMF Architecture" src="../image/Parallelize%20NGAP%20AMF%20Architecture.png" /></p>
+<p>This design achieves two critical properties simultaneously:</p>
+<ul>
+<li><strong>Per-UE Sequentiality</strong>: All messages for the same UE are routed to the same worker, preserving strict ordering.</li>
+<li><strong>Cross-UE Parallelism</strong>: Messages for different UEs are processed concurrently across multiple workers and CPU cores.</li>
+</ul>
+<h3 id="component-1-the-ue-id-extractor-ue_id_extractorgo">Component 1: The UE ID Extractor (<code>ue_id_extractor.go</code>)</h3>
+<p>The first challenge is determining <em>which UE</em> a message belongs to <strong>before</strong> full message processing. The project introduces <code>ExtractUEID()</code>, a lightweight NGAP decoder that extracts the UE identifier from the raw packet:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExtractUEID</span><span class="p">(</span><span class="nx">msg</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">pdu</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ngap</span><span class="p">.</span><span class="nx">Decoder</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="nx">pdu</span><span class="p">.</span><span class="nx">Present</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">NGAPPDUPresentInitiatingMessage</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">extractFromInitiatingMessage</span><span class="p">(</span><span class="nx">pdu</span><span class="p">.</span><span class="nx">InitiatingMessage</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">NGAPPDUPresentSuccessfulOutcome</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">extractFromSuccessfulOutcome</span><span class="p">(</span><span class="nx">pdu</span><span class="p">.</span><span class="nx">SuccessfulOutcome</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">ngapType</span><span class="p">.</span><span class="nx">NGAPPDUPresentUnsuccessfulOutcome</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">extractFromUnsuccessfulOutcome</span><span class="p">(</span><span class="nx">pdu</span><span class="p">.</span><span class="nx">UnsuccessfulOutcome</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The extractor covers <strong>20+ NGAP procedure codes</strong> across all three PDU categories (InitiatingMessage, SuccessfulOutcome, UnsuccessfulOutcome). A key design decision is the <strong>ID preference strategy</strong>:</p>
+<ul>
+<li>For <code>InitialUEMessage</code>: Uses <strong>RAN-UE-NGAP-ID</strong> (the AMF ID hasn't been assigned yet).</li>
+<li>For subsequent messages (e.g., <code>UplinkNASTransport</code>): Prefers <strong>AMF-UE-NGAP-ID</strong> when available.</li>
+<li>For <code>PathSwitchRequest</code>: Uses <strong>SourceAMFUENGAPID</strong> to maintain worker affinity during handover.</li>
+<li>For non-UE messages (e.g., <code>NGSetupRequest</code>): Returns <code>0, false</code>, routing them to a default worker.</li>
+</ul>
+<h3 id="component-2-the-worker-pool-scheduler-schedulergo">Component 2: The Worker Pool Scheduler (<code>scheduler.go</code>)</h3>
+<p>The scheduler is the core orchestration layer. Each worker is a dedicated goroutine with its own buffered task channel:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Task</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">UEID</span><span class="w">    </span><span class="kt">uint64</span>
+<span class="w">    </span><span class="nx">Conn</span><span class="w">    </span><span class="nx">net</span><span class="p">.</span><span class="nx">Conn</span>
+<span class="w">    </span><span class="nx">Message</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span>
+<span class="p">}</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">Worker</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ID</span><span class="w">       </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">taskChan</span><span class="w"> </span><span class="kd">chan</span><span class="w"> </span><span class="nx">Task</span>
+<span class="w">    </span><span class="nx">stopChan</span><span class="w"> </span><span class="kd">chan</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span>
+<span class="w">    </span><span class="nx">handler</span><span class="w">  </span><span class="kd">func</span><span class="p">(</span><span class="nx">conn</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">Conn</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">wg</span><span class="w">       </span><span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+<span class="p">}</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">UEScheduler</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">workers</span><span class="w">    </span><span class="p">[]</span><span class="o">*</span><span class="nx">Worker</span>
+<span class="w">    </span><span class="nx">numWorkers</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">wg</span><span class="w">         </span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Hash-based routing</strong> ensures consistent UE-to-worker mapping with zero memory allocation:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">UEScheduler</span><span class="p">)</span><span class="w"> </span><span class="nx">hashUEID</span><span class="p">(</span><span class="nx">ueID</span><span class="w"> </span><span class="kt">uint64</span><span class="p">)</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">ueID</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nb">uint64</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">numWorkers</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>The initial implementation used FNV hashing, but this was simplified to modulo arithmetic afterward. FNV required <code>make([]byte)</code> on every packet — an unnecessary allocation on the hot path. Simple modulo is sufficient for load distribution since UE IDs are already well-distributed integers.</p>
+</blockquote>
+<p><strong>Backpressure</strong> is implemented through the worker's <code>Submit</code> method using a <code>select</code> statement:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="nx">Worker</span><span class="p">)</span><span class="w"> </span><span class="nx">Submit</span><span class="p">(</span><span class="nx">task</span><span class="w"> </span><span class="nx">Task</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">w</span><span class="p">.</span><span class="nx">taskChan</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nx">task</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">w</span><span class="p">.</span><span class="nx">stopChan</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">NgapLog</span><span class="p">.</span><span class="nx">Warnf</span><span class="p">(</span><span class="s">&quot;Worker %d stopped, rejecting task for UE ID %d&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">w</span><span class="p">.</span><span class="nx">ID</span><span class="p">,</span><span class="w"> </span><span class="nx">task</span><span class="p">.</span><span class="nx">UEID</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>When the worker's buffer is full, the sender <strong>blocks intentionally</strong> — this is a deliberate design choice for 5G control plane signaling, where dropping messages would cause retransmissions and potential signaling storms. If a shutdown signal arrives while blocked, the operation exits immediately.</p>
+<h3 id="component-3-the-dispatch-layer-servicego">Component 3: The Dispatch Layer (<code>service.go</code>)</h3>
+<p>The connection handler is refactored to decouple SCTP reading from message processing:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// New: dispatch through worker pool</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">dispatchToWorkerPool</span><span class="p">(</span><span class="nx">conn</span><span class="w"> </span><span class="nx">net</span><span class="p">.</span><span class="nx">Conn</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="nx">handler</span><span class="w"> </span><span class="nx">NGAPHandler</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">scheduler</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ngap_internal</span><span class="p">.</span><span class="nx">GetScheduler</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Fallback to sequential processing if scheduler unavailable</span>
+<span class="w">        </span><span class="nx">handler</span><span class="p">.</span><span class="nx">HandleMessage</span><span class="p">(</span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">ueID</span><span class="p">,</span><span class="w"> </span><span class="nx">found</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ngap_internal</span><span class="p">.</span><span class="nx">ExtractUEID</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">found</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">ueID</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c1">// Route non-UE messages to default worker</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">task</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ngap_internal</span><span class="p">.</span><span class="nx">Task</span><span class="p">{</span><span class="nx">UEID</span><span class="p">:</span><span class="w"> </span><span class="nx">ueID</span><span class="p">,</span><span class="w"> </span><span class="nx">Conn</span><span class="p">:</span><span class="w"> </span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="nx">Message</span><span class="p">:</span><span class="w"> </span><span class="nx">msg</span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">scheduler</span><span class="p">.</span><span class="nx">DispatchTask</span><span class="p">(</span><span class="nx">task</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">NgapLog</span><span class="p">.</span><span class="nx">Warnf</span><span class="p">(</span><span class="s">&quot;Drop packet for UE ID %d (Scheduler is shutting down)&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ueID</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>A graceful <strong>fallback to sequential processing</strong> is provided when the scheduler isn't initialized, ensuring backward compatibility.</p>
+<h3 id="component-4-configuration-and-lifecycle-configgo-initgo">Component 4: Configuration and Lifecycle (<code>config.go</code>, <code>init.go</code>)</h3>
+<p>Two new configuration parameters are added to <code>amfcfg.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">configuration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ngapWorkerPoolSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">    </span><span class="c1"># 0 = auto-detect (runtime.NumCPU())</span>
+<span class="w">  </span><span class="nt">ngapTaskBufferSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span><span class="w"> </span><span class="c1"># per-worker task buffer size</span>
+</code></pre></div>
+<p>The scheduler is initialized during AMF startup and gracefully shut down during teardown:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Startup</span>
+<span class="nx">ngap</span><span class="p">.</span><span class="nx">InitScheduler</span><span class="p">(</span><span class="nx">workerPoolSize</span><span class="p">,</span><span class="w"> </span><span class="nx">taskBufferSize</span><span class="p">,</span><span class="w"> </span><span class="nx">ngap</span><span class="p">.</span><span class="nx">Dispatch</span><span class="p">)</span>
+
+<span class="c1">// Shutdown</span>
+<span class="nx">ngap</span><span class="p">.</span><span class="nx">ShutdownScheduler</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="safety-considerations-the-worker-switch-problem">Safety Considerations: The Worker-Switch Problem</h2>
+<p>One subtlety deserves special attention. Because this re-design uses the <strong>global <code>AMFContext</code> with <code>sync.Map</code></strong> for UE state storage, a UE's lifecycle may span multiple workers:</p>
+<ol>
+<li><code>InitialUEMessage</code> → keyed by <strong>RAN-UE-NGAP-ID</strong> → routed to <strong>Worker A</strong></li>
+<li><code>UplinkNASTransport</code> → keyed by <strong>AMF-UE-NGAP-ID</strong> → routed to <strong>Worker B</strong></li>
+</ol>
+<p><strong>Why is this safe?</strong></p>
+<ul>
+<li>The global context uses thread-safe <code>sync.Map</code> for all UE context access.</li>
+<li>The 5G request-response model inherently prevents a UE from sending messages with both RAN ID and AMF ID simultaneously — by the time the AMF-UE-NGAP-ID is assigned and used, the RAN-ID-only phase is complete.</li>
+<li>The worker switch happens only <strong>once</strong> per UE lifecycle (at the ID transition point).</li>
+</ul>
+<p><strong>Future improvement</strong>: A strictly lock-free, per-UE worker affinity model would require removing the global <code>UePool</code> and modifying the AMF-UE-ID allocation mechanism to bind specific IDs to specific workers.</p>
+<h2 id="shutdown-safety">Shutdown Safety</h2>
+<p>The re-design went through several iterations:</p>
+<h3 id="iteration-1-close-the-task-channel-directly">Iteration 1: Close the task channel directly</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Problem: &quot;send on closed channel&quot; panic</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">UEScheduler</span><span class="p">)</span><span class="w"> </span><span class="nx">Shutdown</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">close</span><span class="p">(</span><span class="nx">w</span><span class="p">.</span><span class="nx">taskChan</span><span class="p">)</span><span class="w"> </span><span class="c1">// Other goroutines may still be submitting!</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="iteration-2-use-stopchan-select-pattern">Iteration 2: Use <code>stopChan</code> + <code>select</code> pattern</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Safe: stopChan signals shutdown without closing taskChan</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="nx">Worker</span><span class="p">)</span><span class="w"> </span><span class="nx">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">select</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nx">task</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">w</span><span class="p">.</span><span class="nx">taskChan</span><span class="p">:</span>
+<span class="w">            </span><span class="nx">w</span><span class="p">.</span><span class="nx">handler</span><span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="nx">Conn</span><span class="p">,</span><span class="w"> </span><span class="nx">task</span><span class="p">.</span><span class="nx">Message</span><span class="p">)</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">w</span><span class="p">.</span><span class="nx">stopChan</span><span class="p">:</span>
+<span class="w">            </span><span class="nx">w</span><span class="p">.</span><span class="nx">drainAndExit</span><span class="p">()</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="nx">Worker</span><span class="p">)</span><span class="w"> </span><span class="nx">drainAndExit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">select</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nx">task</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;-</span><span class="nx">w</span><span class="p">.</span><span class="nx">taskChan</span><span class="p">:</span>
+<span class="w">            </span><span class="nx">w</span><span class="p">.</span><span class="nx">handler</span><span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="nx">Conn</span><span class="p">,</span><span class="w"> </span><span class="nx">task</span><span class="p">.</span><span class="nx">Message</span><span class="p">)</span>
+<span class="w">        </span><span class="k">default</span><span class="p">:</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="c1">// Channel empty, exit safely</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The final design ensures:</p>
+<ul>
+<li>No panic from sending on a closed channel.</li>
+<li>All queued tasks are drained before exit.</li>
+<li><code>sync.WaitGroup</code> guarantees the AMF process doesn't exit until all workers have finished.</li>
+</ul>
+<h2 id="testing-strategy">Testing Strategy</h2>
+<p>The re-design includes a comprehensive test suite covering both correctness and performance:</p>
+<h3 id="unit-tests-for-ue-id-extraction-ue_id_extractor_testgo">Unit Tests for UE ID Extraction (<code>ue_id_extractor_test.go</code>)</h3>
+<p>9 test scenarios that construct real NGAP PDUs, encode them, and verify extraction:</p>
+<table>
+<thead>
+<tr>
+<th>Test Case</th>
+<th>Message Type</th>
+<th>Expected ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InitialUEMessage</td>
+<td>Initiating</td>
+<td>RAN-UE-NGAP-ID</td>
+</tr>
+<tr>
+<td>UplinkNASTransport</td>
+<td>Initiating</td>
+<td>AMF-UE-NGAP-ID (preferred over RAN ID)</td>
+</tr>
+<tr>
+<td>HandoverRequired</td>
+<td>Initiating</td>
+<td>AMF-UE-NGAP-ID</td>
+</tr>
+<tr>
+<td>InitialContextSetupResponse</td>
+<td>Successful</td>
+<td>AMF-UE-NGAP-ID</td>
+</tr>
+<tr>
+<td>PDUSessionResourceSetupResponse</td>
+<td>Successful</td>
+<td>AMF-UE-NGAP-ID</td>
+</tr>
+<tr>
+<td>UEContextReleaseRequest</td>
+<td>Initiating</td>
+<td>AMF-UE-NGAP-ID</td>
+</tr>
+<tr>
+<td>NGSetupRequest</td>
+<td>Initiating</td>
+<td>Not found (non-UE message)</td>
+</tr>
+<tr>
+<td>Invalid message</td>
+<td>—</td>
+<td>Not found</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scheduler-tests-scheduler_testgo">Scheduler Tests (<code>scheduler_test.go</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>What It Validates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hash Consistency</td>
+<td>Same UE ID always maps to same worker (100 iterations)</td>
+</tr>
+<tr>
+<td>Hash Distribution</td>
+<td>10,000 UEs distributed evenly (±25% tolerance)</td>
+</tr>
+<tr>
+<td>Hash Range</td>
+<td>Worker index always in <code>[0, numWorkers)</code> including edge cases</td>
+</tr>
+<tr>
+<td>Concurrent Submission</td>
+<td>50 goroutines × 100 tasks, all processed without loss</td>
+</tr>
+<tr>
+<td>Per-UE Sequentiality</td>
+<td>100 ordered messages for same UE processed in order</td>
+</tr>
+<tr>
+<td>Multiple UEs Concurrent</td>
+<td>20 UEs × 50 messages, per-UE order preserved</td>
+</tr>
+<tr>
+<td>Graceful Shutdown</td>
+<td>All 50 queued tasks processed during shutdown</td>
+</tr>
+</tbody>
+</table>
+<h3 id="performance-testing">Performance Testing</h3>
+<p>The re-design was validated with multiple UE simulation tools:<br />
+- <strong>UERANSIM</strong>: Up to ~100 concurrent UEs (<code>./nr-ue -c free5gc-ue.yaml -n 100</code>)<br />
+- <strong>free-ran-ue</strong> : Up to 3,000 concurrent UEs (<code>./build/free-ran-ue ue -c config/ue.yaml -n 3000</code>)<br />
+- <strong>Custom webconsole scripts</strong>: For multi-UE provisioning: <a href="https://github.com/qawl987/amf/pull/1/files">register_multiple_ues.sh</a></p>
+<ol>
+<li>
+<p>With <strong>UERANSIM</strong>, the test scaled to <strong>100 concurrent simulated UEs</strong>. The figure shows that the original sequential design (red) saw registration time increase steadily as UE count grew, reaching roughly <strong>17 seconds</strong> at 100 UEs. After parallel NGAP processing was introduced (blue), registration time dropped to about <strong>8 seconds with 4 workers</strong> and around <strong>6 seconds with 8 workers</strong>, showing a clear improvement in scalability even at modest UE counts.<br />
+<img alt="Performance improvement with UERANSIM" src="../image/Performance-UERANSIM.jpg" /></p>
+</li>
+<li>
+<p>With <strong>free-ran-ue</strong>, we're able to scale the test to <strong>3,000 concurrent simulated UEs</strong>. Under this heavier load, the original sequential path rose to roughly <strong>400 seconds</strong> for 3,000 UEs, while the parallel design reduced that to about <strong>220 seconds with 4 workers</strong> and around <strong>120 seconds with 8 workers</strong>. This larger-scale result better highlights the benefit of this per-UE parallelism re-design.<br />
+<img alt="Performance improvement with free-ran-ue" src="../image/Performance-free-ran-ue.jpg" /></p>
+</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>This re-design demonstrates how a targeted architectural change — introducing a worker pool with hash-based routing — can dramatically improve the scalability of a 5G core network function without altering existing business logic. The key principles are:</p>
+<ol>
+<li><strong>Decouple I/O from processing</strong>: The SCTP reader no longer blocks on message handling.</li>
+<li><strong>Hash-based affinity</strong>: A simple <code>ueID % N</code> provides per-UE ordering guarantees with zero allocation.</li>
+<li><strong>Backpressure over dropping</strong>: In control plane signaling, blocking is preferable to packet loss.</li>
+<li><strong>Incremental architecture</strong>: By keeping the global <code>AMFContext</code>/<code>sync.Map</code>, the change minimizes blast radius while achieving significant parallelism gains.</li>
+</ol>
+<p>The code review process also highlighted the importance of shutdown safety in concurrent Go systems — evolving from a naive <code>close(channel)</code> approach to a robust <code>stopChan + select + drain</code> pattern.</p>
+<p>If you're interested in the implementation details, check out the full PR at <a href="https://github.com/free5gc/amf/pull/194">AMF PR #194</a>.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/138400_138499/138413/">3GPP TS 38.413</a>: NG Application Protocol (NGAP)</li>
+<li><a href="https://github.com/free5gc/amf/pull/194">free5gc/amf PR #194</a>: feat: parallelize NGAP processing in AMF</li>
+<li>References to implementation:<ul>
+<li>Scheduler and worker pool: <a href="https://github.com/free5gc/amf/blob/main/internal/ngap/scheduler.go">internal/ngap/scheduler.go</a></li>
+<li>UE ID extraction: <a href="https://github.com/free5gc/amf/blob/main/internal/ngap/ue_id_extractor.go">internal/ngap/ue_id_extractor.go</a></li>
+<li>Connection dispatch: <a href="https://github.com/free5gc/amf/blob/main/internal/ngap/service/service.go">internal/ngap/service/service.go</a></li>
+<li>Configuration: <a href="https://github.com/free5gc/amf/blob/main/pkg/factory/config.go">pkg/factory/config.go</a></li>
+<li>Lifecycle management: <a href="https://github.com/free5gc/amf/blob/main/pkg/service/init.go">pkg/service/init.go</a></li>
+</ul>
+</li>
+<li><a href="https://free-ran-ue.github.io">free-ran-ue</a>: A next-generation open-source 5G RAN/UE project</li>
+</ul>
+<h2 id="acknowledgement">Acknowledgement</h2>
+<p>Special thanks to <a href="https://github.com/qawl987"><strong>Fang-Kai Ting</strong></a>, <a href="https://github.com/leowu0407"><strong>Guo-Cheng Wu</strong></a>, <a href="https://github.com/reki9185"><strong>Yung-Hsuan Tsao</strong></a>, and <a href="https://github.com/HiImPeggy"><strong>Pei-Chi Cheng</strong></a> — the authors of this work. Their effort in designing and iterating on the parallel NGAP processing architecture made this contribution possible.</p>
+<h2 id="about">About</h2>
+<p>Hello! I'm Che-Wei Lin, and this blog post is a write-up of the work done by the authors mentioned above. I hope you found this blog post helpful, and please feel free to reach out for further discussion.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/Zach1113">Zach1113</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
