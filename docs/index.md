@@ -14,6 +14,16 @@
   </div>
 </div>
 
+<div class="forum-banner">
+  <a href="./forum/2026" class="forum-banner-link">
+    <div class="forum-banner-overlay">
+      <h2 class="forum-banner-title">The 2nd free5GC World Forum</h2>
+      <p class="forum-banner-date">December 17-18, 2026 • Hsinchu, Taiwan</p>
+      <span class="forum-banner-cta">Learn More →</span>
+    </div>
+  </a>
+</div>
+
 <div class="announcement-box">
   <h2>Your Roadmap to 5G Expertise Starts Here — And It’s Free!</h2>
   <p>Linux Foundation Education has launched Introduction to free5GC (LFS114), a free, self-paced course designed for developers, network engineers, and technologists who want to deepen their 5G expertise and work directly with modern 5G Core architecture. In just a few focused hours, you’ll learn how free5GC is built, how its core functions operate, and how to navigate and engage with the codebase — giving you a real advantage in today’s cloud native networking landscape.</p>
@@ -180,6 +190,70 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
     border: 1px solid #b3d7ff;
   }
   
+  .forum-banner {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    background-image: url('https://free5gc.org/assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 0 2rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .forum-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .forum-banner-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .forum-banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 80, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .forum-banner-title {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white !important;
+    font-weight: bold !important;
+  }
+
+  .forum-banner-date {
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+    color: white !important;
+  }
+
+  .forum-banner-cta {
+    display: inline-block;
+    background-color: #e74c3c;
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
   .announcement-box {
     background-color: #e6f7ff;
     border-left: 4px solid #1890ff;
@@ -254,6 +328,18 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
     
     .roadmap-container {
       flex-direction: column;
+    }
+
+    .forum-banner {
+      height: 180px;
+    }
+
+    .forum-banner-title {
+      font-size: 1.5rem;
+    }
+
+    .forum-banner-date {
+      font-size: 0.9rem;
     }
   }
 </style>
