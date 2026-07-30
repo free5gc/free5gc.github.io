@@ -75,7 +75,7 @@ nav:
   - Supports: support/
   - More:
       - Relavent Publications: publication.md
-      - Other Videos: videos.md
+      - Videos: videos.md
 
 markdown_extensions:
   - nl2br
