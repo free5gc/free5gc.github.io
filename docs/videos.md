@@ -2,6 +2,8 @@
 
 # Other videos showing free5GC
 
+- [free5GC: A Linux Foundation Project for Next-Generation 5G/6G Systems](https://drive.google.com/file/d/1YvE1I1MN1OD4u4PPd7WyTeZo8spze67H/view?usp=sharing), free5GC, July 30, 2026
+- [Integrated End-to-End NTN Handover Emulation with free5GC and ns-3](https://drive.google.com/file/d/1YSSCp-3Imbf98g6eM0wxZXAb2ebQbXeW/view?usp=sharing), free5GC, July 30, 2026
 - [Duranta OpenAirInterface RAN with free5GC](https://www.youtube.com/watch?v=6pgaYMKKGu4), NgKore Foundation, July 13, 2026
 - [free5GC Dynamic NR-DC: Dynamic New Radio-Dual Connectivity (NR-DC) Deployment with free-ran-ue](https://www.youtube.com/watch?v=1TVXB_Xd9mA), NgKore Foundation, June 29, 2026
 - [free5GC Static NR-DC: Static New Radio-Dual Connectivity (NR-DC) Architecture and Deployment](https://www.youtube.com/watch?v=2K9nVvyniNc), NgKore Foundation, June 29, 2026
