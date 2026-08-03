@@ -4,7 +4,7 @@
 
 <div class="hero-container">
   <div class="hero-content">
-    <img width="300" src="./assets/logo.png" alt="free5GC Logo" class="hero-logo"/>
+    <img width="500" src="./assets/logo.png" alt="free5GC Logo" class="hero-logo"/>
     <h1 class="hero-title">Open Source Core Network Implementation</h1>
     <p class="hero-description">free5GC is a Linux Foundation project dedicated to implementing 3GPP Release 17 and beyond core networks</p>
     <div class="hero-buttons">
@@ -106,6 +106,10 @@ Currently, the major contributors are from National Yang Ming Chiao Tung Univers
   
   .hero-logo {
     margin-bottom: 1rem;
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
   .hero-title {
