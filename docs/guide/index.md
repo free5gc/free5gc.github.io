@@ -54,6 +54,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Netns5g - A free5gc and UERANSIM deployment using Linux network namespaces](https://github.com/konradkar2/netns5g)
 - [Traffic Influence](./8-traffic-influence.md)
 - [NR-DC](./9-nr-dc.md)
+- [UPF-Config](./10-UPF-Config.md)
 
 ## Integration Deployments
 
