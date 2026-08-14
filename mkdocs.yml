@@ -79,6 +79,7 @@ nav:
 
 markdown_extensions:
   - nl2br
+  - md_in_html
   - admonition
   - pymdownx.details
   - pymdownx.superfences
