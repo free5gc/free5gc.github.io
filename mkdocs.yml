@@ -66,12 +66,12 @@ theme:
 
 nav:
   - Home: index.md
+  - free5GC Forum 2026: forum/2026.md
   - User Guide: guide/
   - Documents: doc/
   - LFX Course: https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/
   - Tutorials: https://github.com/free5gc/free5GLab
   - Blogs: blog/
-  - free5GC Forum 2026: forum/2026.md
   - Supports: support/
   - Discussion Forum: https://forum.free5gc.org
   - More:
