@@ -4,7 +4,6 @@
 
 ## Official
 - [2026/08/05: From 5G QoS Flows to Linux TC](./20260805/20260805.md)
-- [2026/07/29: PacketRusher Tutorial](./20260729/20260729.md)
 - [2026/07/15: Cutting AI Token Cost on free5GC Operations: A Token-Optimization Middle Layer for free5GC-MCP](./20260715/20260715.md)
 - [2026/06/22: Deploying OAI-RAN RF Simulator Against free5GC](./20260622/20260622.md)
 - [2026/06/19: Connecting free5GC and OCUDU With ZeroMQ Software Simulation](./20260619/20260619.md)
