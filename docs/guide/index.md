@@ -59,6 +59,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 
 - [OCUDU: Integration free5GC and OCUDU With ZeroMQ](../blog/20260619/20260619.md)
 - [Deploying OAI-RAN RF Simulator Against free5GC](../blog/20260622/20260622.md)
+- [Deployment of free5GC and free-ran-ue](./free-ran-ue/free-ran-ue.md)
 
 ## Others
 
