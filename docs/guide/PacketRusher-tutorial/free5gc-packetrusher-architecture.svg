@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">free5GC and PacketRusher test environment architecture</title>
+  <desc id="desc">Two-host architecture showing free5GC control plane and user plane connected to PacketRusher simulated gNB and UE over N2 and N3. N1 is a logical NAS path.</desc>
+  <defs>
+    <pattern id="hatch-blue" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#a5d8ff" stroke-width="2" opacity="0.55"/>
+    </pattern>
+    <pattern id="hatch-green" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#b2f2bb" stroke-width="2" opacity="0.60"/>
+    </pattern>
+    <pattern id="hatch-yellow" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="12" stroke="#ffe066" stroke-width="2" opacity="0.48"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202124"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1864ab"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2b8a3e"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7048e8"/>
+    </marker>
+    <marker id="arrow-compact" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202124"/>
+    </marker>
+    <style>
+      .ink { stroke:#202124; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+      .thin { stroke-width:3; }
+      .box { fill:#fff; }
+      .group-title { font:700 31px 'Comic Sans MS','DejaVu Sans',sans-serif; fill:#202124; }
+      .node-title { font:700 27px 'Comic Sans MS','DejaVu Sans',sans-serif; fill:#202124; }
+      .node-sub { font:20px 'Comic Sans MS','DejaVu Sans',sans-serif; fill:#343a40; }
+      .label { font:700 23px 'Comic Sans MS','DejaVu Sans',sans-serif; fill:#202124; paint-order:stroke; stroke:#fff; stroke-width:9px; stroke-linejoin:round; }
+      .small-label { font:19px 'Comic Sans MS','DejaVu Sans',sans-serif; fill:#343a40; paint-order:stroke; stroke:#fff; stroke-width:8px; }
+      .legend { font:18px 'Comic Sans MS','DejaVu Sans',sans-serif; fill:#343a40; }
+      .n2-line { stroke:#1864ab; }
+      .n3-line { stroke:#2b8a3e; }
+      .n1-line { stroke:#7048e8; }
+      .n2-label { fill:#1864ab; }
+      .n3-label { fill:#2b8a3e; }
+      .n1-label { fill:#7048e8; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1120" fill="#ffffff"/>
+  <text x="800" y="52" text-anchor="middle" class="group-title">free5GC + PacketRusher Test Environment</text>
+
+  <!-- free5GC host -->
+  <path d="M58 88 Q42 94 39 120 L42 1003 Q46 1030 73 1034 L708 1030 Q728 1026 731 1001 L728 118 Q724 92 697 89 Z" fill="#f8fbff" class="ink"/>
+  <path d="M62 92 Q47 100 45 123 L48 997 Q51 1020 75 1026 L701 1023 Q718 1018 722 998 L720 121 Q717 99 694 96 Z" fill="url(#hatch-blue)" stroke="none"/>
+  <rect x="76" y="101" width="500" height="49" rx="22" fill="#d0ebff" class="ink thin"/>
+  <text x="326" y="134" text-anchor="middle" class="group-title">Host A · free5GC Core</text>
+
+  <!-- free5GC control plane boundary -->
+  <path d="M86 174 Q82 166 106 163 L662 166 Q677 170 679 188 L675 582 Q670 598 653 600 L105 597 Q88 594 85 576 Z" fill="#fff" class="ink thin"/>
+  <path d="M91 178 L670 176 L666 589 L95 588 Z" fill="url(#hatch-yellow)" stroke="none"/>
+  <text x="117" y="204" class="node-title">Control Plane</text>
+
+  <!-- NF boxes -->
+  <path d="M118 233 Q116 224 132 221 L306 223 Q318 226 318 240 L316 343 Q313 355 300 356 L133 354 Q120 351 119 339 Z" class="ink box"/>
+  <text x="218" y="278" text-anchor="middle" class="node-title">SMF</text>
+  <text x="218" y="312" text-anchor="middle" class="node-sub">PDU session control</text>
+
+  <path d="M438 233 Q436 224 452 221 L626 223 Q638 226 638 240 L636 343 Q633 355 620 356 L453 354 Q440 351 439 339 Z" class="ink box"/>
+  <text x="538" y="278" text-anchor="middle" class="node-title">AMF</text>
+  <text x="538" y="312" text-anchor="middle" class="node-sub">N2 / N1 endpoint</text>
+
+  <path d="M118 460 Q116 447 132 444 L626 446 Q638 449 638 463 L636 541 Q633 554 620 555 L133 553 Q120 550 119 537 Z" class="ink box"/>
+  <text x="378" y="479" text-anchor="middle" class="node-title">NRF · AUSF · UDM · UDR</text>
+  <text x="378" y="510" text-anchor="middle" class="node-title">PCF · NSSF</text>
+  <text x="378" y="541" text-anchor="middle" class="node-sub">Service-based core functions</text>
+
+  <!-- Internal control links -->
+  <path d="M320 289 C355 286 394 286 436 289" fill="none" class="ink thin" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="378" y="275" text-anchor="middle" class="small-label">N11 / SBI</text>
+  <path d="M538 358 C538 386 538 414 538 442" fill="none" class="ink thin" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="567" y="410" class="small-label">SBI</text>
+
+  <!-- UPF -->
+  <path d="M119 658 Q116 646 136 642 L611 645 Q626 648 627 664 L624 806 Q620 822 603 823 L137 820 Q122 817 120 801 Z" class="ink box"/>
+  <text x="371" y="703" text-anchor="middle" class="node-title">UPF</text>
+  <text x="371" y="740" text-anchor="middle" class="node-sub">User Plane · gtp5g</text>
+  <text x="371" y="774" text-anchor="middle" class="node-sub">UE subnet / DNN: internet</text>
+
+  <path d="M218 357 C142 368 72 405 72 475 L72 575 C72 618 98 638 137 645" fill="none" class="ink thin" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="88" y="574" class="label">N4</text>
+  <text x="88" y="606" class="small-label">PFCP</text>
+
+  <path d="M365 825 C365 859 365 893 365 927" fill="none" stroke="#202124" stroke-width="4" stroke-linecap="round" marker-start="url(#arrow-compact)" marker-end="url(#arrow-compact)"/>
+  <text x="424" y="881" class="label">N6 · IP traffic</text>
+  <path d="M237 949 Q235 933 258 930 L471 932 Q490 934 491 949 L489 985 Q487 998 468 999 L257 997 Q241 995 239 982 Z" fill="#e9ecef" class="ink thin"/>
+  <text x="365" y="974" text-anchor="middle" class="node-title">Data Network</text>
+
+  <!-- PacketRusher host -->
+  <path d="M986 88 Q970 94 967 120 L970 1003 Q974 1030 1001 1034 L1539 1030 Q1559 1026 1562 1001 L1559 118 Q1555 92 1528 89 Z" fill="#f8fff9" class="ink"/>
+  <path d="M990 92 Q975 100 973 123 L976 997 Q979 1020 1003 1026 L1532 1023 Q1549 1018 1553 998 L1551 121 Q1548 99 1525 96 Z" fill="url(#hatch-green)" stroke="none"/>
+  <rect x="1004" y="101" width="500" height="49" rx="22" fill="#d3f9d8" class="ink thin"/>
+  <text x="1254" y="134" text-anchor="middle" class="group-title">Host B · PacketRusher</text>
+
+  <!-- PacketRusher gNB -->
+  <path d="M1050 210 Q1047 197 1068 194 L1462 197 Q1478 200 1479 217 L1476 392 Q1472 408 1455 409 L1068 406 Q1053 403 1051 387 Z" class="ink box"/>
+  <text x="1264" y="311" text-anchor="middle" class="node-title">Simulated gNB</text>
+
+  <!-- PacketRusher UE -->
+  <path d="M1050 636 Q1047 623 1068 620 L1462 623 Q1478 626 1479 643 L1476 814 Q1472 830 1455 831 L1068 828 Q1053 825 1051 809 Z" class="ink box"/>
+  <text x="1264" y="735" text-anchor="middle" class="node-title">Simulated UE(s)</text>
+
+  <path d="M1264 412 C1266 475 1266 551 1264 617" fill="none" class="ink" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+
+  <!-- Cross-host N2 -->
+  <path d="M641 271 C760 247 907 247 1046 270" fill="none" class="ink n2-line" marker-start="url(#arrow-blue)" marker-end="url(#arrow-blue)"/>
+  <text x="835" y="218" text-anchor="middle" class="label n2-label">N2 · SCTP / NGAP</text>
+
+  <!-- Cross-host N3: UPF to PacketRusher gNB data interface -->
+  <path d="M629 719 C760 737 874 737 938 675 C987 628 1007 453 1047 338" fill="none" class="ink n3-line" marker-start="url(#arrow-green)" marker-end="url(#arrow-green)"/>
+  <text x="808" y="777" text-anchor="middle" class="label n3-label">N3 · GTP-U / UDP</text>
+
+  <!-- Logical N1 -->
+  <path d="M641 329 C778 392 901 548 1046 687" fill="none" class="n1-line" stroke-width="4" stroke-dasharray="13 11" stroke-linecap="round" marker-start="url(#arrow-purple)" marker-end="url(#arrow-purple)"/>
+  <text x="808" y="430" text-anchor="middle" class="label n1-label">N1 · NAS (logical)</text>
+  <text x="808" y="463" text-anchor="middle" class="small-label n1-label">carried through gNB over N2</text>
+
+  <!-- Legend: intentionally outside Host B, at the lower-right of the canvas -->
+  <line x1="1005" y1="1080" x2="1075" y2="1080" class="n1-line" stroke-width="4" stroke-dasharray="13 11" marker-end="url(#arrow-purple)"/>
+  <text x="1094" y="1087" class="legend">end-to-end reference point (carried via N2)</text>
+</svg>

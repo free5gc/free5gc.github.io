@@ -59,6 +59,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 
 - [OCUDU: Integration free5GC and OCUDU With ZeroMQ](../blog/20260619/20260619.md)
 - [Deploying OAI-RAN RF Simulator Against free5GC](../blog/20260622/20260622.md)
+- [Building and Testing a free5GC and PacketRusher Lab](./PacketRusher-tutorial/PacketRusher-tutorial.md)
 
 ## Others
 
