@@ -3,6 +3,7 @@
 # Blogs
 
 ## Official
+- [2026/09/02: From cuPHY to free5GC: GPU-Accelerated RAN with NVIDIA Aerial and OAI](./20260902/20260902.md)
 - [2026/08/31: From NTN to Heterogeneous NTN: Architecture and Challenges](./20260831/20260831.md)
 - [2026/08/05: From 5G QoS Flows to Linux TC](./20260805/20260805.md)
 - [2026/07/15: Cutting AI Token Cost on free5GC Operations: A Token-Optimization Middle Layer for free5GC-MCP](./20260715/20260715.md)
