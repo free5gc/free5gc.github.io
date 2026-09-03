@@ -4,6 +4,7 @@
 
 ## Official
 - [2026/09/02: From cuPHY to free5GC: GPU-Accelerated RAN with NVIDIA Aerial and OAI](./20260902/20260902.md)
+- [2026/08/31: From NTN to Heterogeneous NTN: Architecture and Challenges](./20260831/20260831.md)
 - [2026/08/05: From 5G QoS Flows to Linux TC](./20260805/20260805.md)
 - [2026/07/15: Cutting AI Token Cost on free5GC Operations: A Token-Optimization Middle Layer for free5GC-MCP](./20260715/20260715.md)
 - [2026/06/22: Deploying OAI-RAN RF Simulator Against free5GC](./20260622/20260622.md)
@@ -101,6 +102,5 @@
 - [Deploying 5G core network with Free5GC, Kubernetes and Helm](https://medium.com/rahasak/deploying-5g-core-network-with-free5gc-kubernets-and-helm-charts-29741cea3922){target=_blank}
 - [Running Free5GC on Platform9 Managed Kubernetes](https://platform9.com/blog/running-free5gc-on-platform9-managed-kubernetes/){target=_blank}
 - [Try iPhone connection with free5GC and real gNB(written in japanese)](https://qiita.com/Takashi_Eifuku/items/1b710477dee680f76909){target=_blank}
-
 
 
