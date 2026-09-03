@@ -29,7 +29,7 @@ mdurl==0.1.2
 mergedeep==1.3.4
 mkdocs==1.5.3
 mkdocs-callouts==1.9.1
-mkdocs-material==9.4.3
+mkdocs-material==9.7.7
 mkdocs-material-extensions==1.2
 more-itertools==9.1.0
 packaging==23.1
