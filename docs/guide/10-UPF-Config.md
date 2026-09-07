@@ -43,7 +43,7 @@ The fields have the following meanings:
 | `cidr` | Yes | UE address pool. It is used as the source or destination CIDR in the installed rules. |
 | `natifname` | No | Exact egress interface name in the UPF network namespace. This field takes precedence over `natIfCIDR`. |
 | `natIfCIDR` | No | Selects the egress interface whose assigned IPv4 address belongs to this CIDR. This is an interface-network selector, not the UE address pool. |
-| `ipForwardEnable` | Yes | Installs scoped uplink and downlink `FORWARD` rules when an egress interface is selected. |
+| `ipForwardEnable` | No | Installs scoped uplink and downlink `FORWARD` rules when an egress interface is selected. |
 | `tcpMss` | No | TCP MSS value. Zero or omitted uses path MTU discovery; a non-zero value sets a fixed MSS. |
 
 ## Egress Interface Selection
@@ -78,7 +78,7 @@ dnnList:
 
 When an egress interface is selected, the UPF installs a source NAT rule:
 
-```console
+```bash
 iptables -t nat -A POSTROUTING -s <ue-cidr> -o <egress-interface> -j MASQUERADE
 ```
 
@@ -87,7 +87,7 @@ interface. Return traffic can then be mapped back to the UE connection.
 
 When `ipForwardEnable` is `true`, the UPF also installs these forwarding rules:
 
-```console
+```bash
 iptables -A FORWARD -s <ue-cidr> -o <egress-interface> -j ACCEPT
 iptables -A FORWARD -d <ue-cidr> -i <egress-interface> \
   -m state --state RELATED,ESTABLISHED -j ACCEPT
@@ -100,14 +100,14 @@ address pool.
 The UPF also installs one TCP MSS rule. When `tcpMss` is zero or omitted, the
 MSS is derived from the path MTU:
 
-```console
+```bash
 iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
   -j TCPMSS --clamp-mss-to-pmtu
 ```
 
 To force an MSS of 1400 bytes, set `tcpMss: 1400`. The resulting target is:
 
-```console
+```bash
 -j TCPMSS --set-mss 1400
 ```
 
@@ -132,7 +132,7 @@ dnnList:
     ipForwardEnable: true
 ```
 
-```console
+```bash
 sudo sysctl -w net.ipv4.ip_forward=1
 ```
 
@@ -193,7 +193,7 @@ securityContext:
 The CNI must also permit IP forwarding inside the Pod network namespace. When
 Calico is managed by the Tigera Operator, it can be enabled with:
 
-```console
+```bash
 kubectl patch installation.operator.tigera.io default \
   --type merge \
   --patch '{"spec":{"calicoNetwork":{"containerIPForwarding":"Enabled"}}}'
@@ -223,14 +223,14 @@ on this page.
 First verify the available interfaces and kernel forwarding state from the UPF
 network namespace:
 
-```console
+```bash
 ip -br addr
 cat /proc/sys/net/ipv4/ip_forward
 ```
 
 Inspect the installed rules:
 
-```console
+```bash
 iptables -t nat -S POSTROUTING
 iptables -S FORWARD
 iptables -t mangle -S FORWARD
@@ -238,7 +238,7 @@ iptables -t mangle -S FORWARD
 
 Use verbose counters while generating UE traffic:
 
-```console
+```bash
 iptables -t nat -L POSTROUTING -n -v --line-numbers
 iptables -L FORWARD -n -v --line-numbers
 iptables -t mangle -L FORWARD -n -v --line-numbers
@@ -246,14 +246,14 @@ iptables -t mangle -L FORWARD -n -v --line-numbers
 
 For Docker, run the commands with `docker exec`:
 
-```console
+```bash
 docker exec -it upf iptables -t nat -L POSTROUTING -n -v --line-numbers
 ```
 
 For Kubernetes, run them with `kubectl exec` from a machine that has access to
 the cluster:
 
-```console
+```bash
 kubectl exec -n free5gc deployment/free5gc-free5gc-upf-upf -- \
   iptables -t nat -L POSTROUTING -n -v --line-numbers
 ```
