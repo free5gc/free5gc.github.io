@@ -1,4 +1,4 @@
-# UPF Network Configuration
+# UPF N6 NAT Configuration
 
 The UPF can install Linux `iptables` rules for each entry in `dnnList`. This
 allows the UPF to configure UE traffic forwarding, source NAT, and TCP MSS
