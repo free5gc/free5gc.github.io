@@ -112,20 +112,17 @@ sudo apt -y install git gcc g++ cmake autoconf libtool pkg-config libmnl-dev lib
 5\. Linux Host Network Settings
 
 By default, automatic network rule installation is disabled in the UPF
-configuration. Therefore, configure the Linux host network settings manually:
+configuration. You can either configure the required Linux host network rules
+manually or configure the UPF to install them automatically through `upfcfg.yaml`. See
+[UPF N6 NAT Configuration](./10-UPF-Config.md) for the available settings.
 
 ```bash
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo iptables -t nat -A POSTROUTING -o <dn_interface> -j MASQUERADE
 sudo iptables -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1400
 sudo systemctl stop ufw
-sudo systemctl disable ufw # prevents the firewall to wake up after a OS reboot
+sudo systemctl disable ufw # prevents the firewall from starting after a OS reboot
 ```
-
-If you do not want to manage these rules manually, you can configure the UPF
-to install the NAT, forwarding, and TCP MSS rules through `upfcfg.yaml`. See
-[UPF N6 NAT Configuration](./10-UPF-Config.md) for the available settings and
-deployment examples.
 
 Or use `reload_host_config.sh` from free5GC
 ```bash
