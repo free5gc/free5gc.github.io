@@ -111,10 +111,7 @@ sudo apt -y install git gcc g++ cmake autoconf libtool pkg-config libmnl-dev lib
 
 5\. Linux Host Network Settings
 
-By default, automatic network rule installation is disabled in the UPF
-configuration. You can either configure the required Linux host network rules
-manually or configure the UPF to install them automatically through `upfcfg.yaml`. See
-[UPF N6 NAT Configuration](./10-UPF-Config.md) for the available settings.
+By default, automatic network rule installation is disabled in the UPF configuration. You can either configure the required Linux host network rules manually or configure the UPF to install them automatically through `upfcfg.yaml`. See [UPF N6 NAT Configuration](./10-UPF-Config.md) for the available settings.
 
 ```bash
 sudo sysctl -w net.ipv4.ip_forward=1
