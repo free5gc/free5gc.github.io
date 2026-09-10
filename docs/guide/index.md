@@ -54,12 +54,14 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Netns5g - A free5gc and UERANSIM deployment using Linux network namespaces](https://github.com/konradkar2/netns5g)
 - [Traffic Influence](./8-traffic-influence.md)
 - [NR-DC](./9-nr-dc.md)
+- [UPF N6 NAT Configuration](./10-UPF-Config.md)
 
 ## Integration Deployments
 
 - [OCUDU: Integration free5GC and OCUDU With ZeroMQ](../blog/20260619/20260619.md)
 - [Deploying OAI-RAN RF Simulator Against free5GC](../blog/20260622/20260622.md)
 - [Deployment of free5GC and free-ran-ue](./free-ran-ue/free-ran-ue.md)
+- [Building and Testing a free5GC and PacketRusher Lab](./PacketRusher-tutorial/PacketRusher-tutorial.md)
 
 ## Others
 
