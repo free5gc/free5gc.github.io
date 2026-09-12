@@ -1,0 +1,1641 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Building and Testing a free5GC and PacketRusher Lab - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-and-testing-a-free5gc-and-packetrusher-lab" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building and Testing a free5GC and PacketRusher Lab
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../forum/2026/" class="md-tabs__link">
+        
+  
+    
+  
+  free5GC Forum 2026
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../blog/" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://forum.free5gc.org" class="md-tabs__link">
+        
+  
+    
+  
+  Discussion Forum
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../forum/2026/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    free5GC Forum 2026
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://forum.free5gc.org" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discussion Forum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-packetrusher" class="md-nav__link">
+    Install PacketRusher
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-simulated-gnodeb-and-ue" class="md-nav__link">
+    Configure the Simulated gNodeB and UE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-free5gc-and-provision-the-subscriber" class="md-nav__link">
+    Start free5GC and Provision the Subscriber
+  </a>
+  
+    <nav class="md-nav" aria-label="Start free5GC and Provision the Subscriber">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-start-the-core-network" class="md-nav__link">
+    1. Start the core network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-a-matching-subscriber-in-webconsole" class="md-nav__link">
+    2. Create a matching subscriber in WebConsole
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-1-single-ue-registration-and-connectivity" class="md-nav__link">
+    Test 1: Single-UE Registration and Connectivity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-2-multi-ue-registration-time" class="md-nav__link">
+    Test 2: Multi-UE Registration Time
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-3-bandwidth-with-iperf3" class="md-nav__link">
+    Test 3: Bandwidth with iperf3
+  </a>
+  
+    <nav class="md-nav" aria-label="Test 3: Bandwidth with iperf3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-iperf3" class="md-nav__link">
+    Install iperf3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-server-on-the-free5gc-vm" class="md-nav__link">
+    Start the server on the free5GC VM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-packetrusher-ue" class="md-nav__link">
+    Start the PacketRusher UE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uplink-ue-to-free5gc-vm" class="md-nav__link">
+    Uplink: UE to free5GC VM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downlink-free5gc-vm-to-ue" class="md-nav__link">
+    Downlink: free5GC VM to UE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    Troubleshooting Checklist
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/guide/PacketRusher-tutorial/PacketRusher-tutorial.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/guide/PacketRusher-tutorial/PacketRusher-tutorial.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="building-and-testing-a-free5gc-and-packetrusher-lab">Building and Testing a free5GC and PacketRusher Lab</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: Kai-Hung, Hu<br />
+Date: 2026/07/29</p>
+</div>
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/_l1hc_ZxntM?start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h2 id="introduction">Introduction</h2>
+<p>This tutorial builds a small 5G lab with <a href="https://github.com/free5gc/free5gc">free5GC</a> as the core network and <a href="https://github.com/HewlettPackard/PacketRusher">PacketRusher</a> as the simulated gNodeB and UE. The two components run on separate virtual machines connected through a VirtualBox host-only network.</p>
+<p>By the end of the tutorial, you will be able to:</p>
+<ul>
+<li>install and build PacketRusher;</li>
+<li>connect a simulated gNodeB and UE to free5GC;</li>
+<li>register a subscriber and establish a PDU session;</li>
+<li>verify user-plane connectivity with <code>ping</code>;</li>
+<li>measure the registration time of multiple UEs;</li>
+<li>run an <code>iperf3</code> bandwidth test and distinguish the underlay result from GTP-U user-plane throughput.</li>
+</ul>
+<p>Installing the free5GC VM itself is outside the scope of this article. If you do not already have a working free5GC installation, follow the <a href="https://free5gc.org/guide/">free5GC User Guide</a> first.</p>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="free5GC and PacketRusher test architecture" src="../free5gc-packetrusher-architecture.svg" /></p>
+<p>The lab contains two hosts:</p>
+<ul>
+<li><strong>Host A — free5GC Core:</strong> the AMF terminates the N2 signaling interface from the RAN, while the UPF terminates the N3 user-plane interface and forwards UE traffic toward the Data Network (DN) over N6. The SMF controls the UPF over N4 using PFCP.</li>
+<li><strong>Host B — PacketRusher:</strong> PacketRusher simulates both the gNodeB and one or more UEs. The gNodeB exchanges NGAP over SCTP with the AMF on N2 and GTP-U over UDP with the UPF on N3. UE NAS signaling is carried transparently through the simulated gNodeB to the AMF.</li>
+</ul>
+<p>This tutorial uses the following addressing plan:</p>
+<p>Both VMs use the following specification:</p>
+<ul>
+<li>Platform: VirtualBox</li>
+<li>OS: Ubuntu 24.04</li>
+<li>CPUs: 4</li>
+<li>RAM: 4096 MB</li>
+</ul>
+<blockquote>
+<p>The IP addresses listed below are assigned to the VMs' host-only adapter interfaces.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Address or value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PacketRusher VM</td>
+<td><code>192.168.56.111</code></td>
+<td>gNodeB N2 and N3 endpoint</td>
+</tr>
+<tr>
+<td>free5GC VM</td>
+<td><code>192.168.56.112</code></td>
+<td>AMF N2 and UPF N3 endpoint</td>
+</tr>
+</tbody>
+</table>
+<p>Before continuing, verify that the two VMs can reach each other. On the free5GC VM, the AMF and UPF configurations must bind N2 and N3 to <code>192.168.56.112</code>, and the SMF configuration must bind N3 to <code>192.168.56.112</code>. Any firewall between the VMs must allow SCTP port 38412 and UDP port 2152.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run on the PacketRusher VM</span>
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">192</span>.168.56.112
+ip<span class="w"> </span>route<span class="w"> </span>get<span class="w"> </span><span class="m">192</span>.168.56.112
+</code></pre></div>
+<h2 id="install-packetrusher">Install PacketRusher</h2>
+<p>PacketRusher provides an official <a href="https://github.com/HewlettPackard/PacketRusher/wiki/Installation">Installation Wiki</a>. At the time of writing, its documented requirements include Ubuntu 20.04–24.04, Linux kernel 5.4 or newer, Go 1.23 or newer, root privileges, and Secure Boot disabled for the custom <code>gtp5g</code> kernel module. PacketRusher is not currently supported on Windows or Docker.</p>
+<p>The following copy-and-paste block gathers the dependency installation, Go installation, repository download, <code>gtp5g</code> build, and PacketRusher build into one Bash session:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This block replaces an existing Go installation under <code>/usr/local/go</code>. Review it before running if that location contains a Go version you need to keep.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="c1"># Install build dependencies and headers for the running kernel.</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>build-essential<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linux-headers-generic<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>make<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>git<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>wget<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tar<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;linux-modules-extra-</span><span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="c1"># Install Go.</span>
+wget<span class="w"> </span>https://go.dev/dl/go1.24.1.linux-amd64.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/go<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>tar<span class="w"> </span>-C<span class="w"> </span>/usr/local<span class="w"> </span>-xzf<span class="w"> </span>go1.24.1.linux-amd64.tar.gz
+
+<span class="c1"># Add go binary to the executable PATH variable.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/go/bin
+<span class="nb">source</span><span class="w"> </span><span class="nv">$HOME</span>/.profile
+
+<span class="c1"># Download PacketRusher source code.</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/HewlettPackard/PacketRusher
+<span class="c1"># Enter the PacketRusher directory, save its path in $HOME/.profile, and load it into the current shell.</span>
+<span class="nb">cd</span><span class="w"> </span>PacketRusher<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export PACKETRUSHER=</span><span class="nv">$PWD</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$HOME</span>/.profile<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span><span class="nv">$HOME</span>/.profile
+
+<span class="c1"># Build and install the gtp5g kernel module.</span>
+<span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PACKETRUSHER</span><span class="s2">/lib/gtp5g&quot;</span>
+make<span class="w"> </span>clean<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>-j<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>make<span class="w"> </span>install
+
+<span class="c1"># Build the PacketRusher CLI.</span>
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$PACKETRUSHER</span>
+go<span class="w"> </span>mod<span class="w"> </span>download
+go<span class="w"> </span>build<span class="w"> </span>cmd/packetrusher.go
+./packetrusher<span class="w"> </span>--help
+</code></pre></div>
+<p>If <code>modprobe gtp5g</code> fails after a kernel update, install the headers and <code>linux-modules-extra</code> package for the new running kernel, then rebuild the module. A Secure Boot policy can also prevent an unsigned custom kernel module from loading.</p>
+<h2 id="configure-the-simulated-gnodeb-and-ue">Configure the Simulated gNodeB and UE</h2>
+<p>PacketRusher reads its gNodeB, UE, and AMF settings from <code>$PACKETRUSHER/config/config.yml</code>. The example below is the configuration used in this lab.</p>
+<blockquote>
+<p>The IP addresses and subscriber credentials below are examples for an isolated lab. Replace them with values that match your own environment.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="c1"># PacketRusher Simulated gNodeB Configuration</span>
+<span class="nt">gnodeb</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># IP address on N2 between the gNodeB and AMF</span>
+<span class="w">  </span><span class="nt">controlif</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;192.168.56.111&quot;</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9487</span>
+
+<span class="w">  </span><span class="c1"># IP address on N3 between the gNodeB and UPF</span>
+<span class="w">  </span><span class="nt">dataif</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;192.168.56.111&quot;</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2152</span>
+
+<span class="w">  </span><span class="c1"># gNodeB identity</span>
+<span class="w">  </span><span class="nt">plmnlist</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcc</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;208&quot;</span>
+<span class="w">    </span><span class="nt">mnc</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;93&quot;</span>
+<span class="w">    </span><span class="nt">tac</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000001&quot;</span>
+<span class="w">    </span><span class="nt">gnbid</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000008&quot;</span>
+
+<span class="w">  </span><span class="c1"># Supported slice</span>
+<span class="w">  </span><span class="nt">slicesupportlist</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;01&quot;</span>
+<span class="w">    </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;010203&quot;</span><span class="w"> </span><span class="c1"># Optional; remove it if SD is not used.</span>
+
+<span class="c1"># PacketRusher Simulated UE Configuration</span>
+<span class="nt">ue</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># IMSI/SUPI identity</span>
+<span class="w">  </span><span class="c1"># SUPI in this example: imsi-208930000000001</span>
+<span class="w">  </span><span class="nt">hplmn</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcc</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;208&quot;</span>
+<span class="w">    </span><span class="nt">mnc</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;93&quot;</span>
+<span class="w">  </span><span class="nt">msin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0000000001&quot;</span>
+
+<span class="w">  </span><span class="c1"># SUCI configuration</span>
+<span class="w">  </span><span class="c1"># SUCI with the null scheme:</span>
+<span class="w">  </span><span class="c1"># suci-0-208-93-0000-0-0-0000000001</span>
+<span class="w">  </span><span class="nt">routingindicator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0000&quot;</span>
+<span class="w">  </span><span class="nt">protectionScheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="w">  </span><span class="c1"># Ignored when protectionScheme is 0, but retained for other schemes.</span>
+<span class="w">  </span><span class="nt">homeNetworkPublicKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;5a8d38864820197c3394b92613b20b91633cbd897119273bf8e4a6f4eec0a650&quot;</span>
+<span class="w">  </span><span class="nt">homeNetworkPublicKeyID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+
+<span class="w">  </span><span class="c1"># SIM credentials; these must match the free5GC subscriber.</span>
+<span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8baf473f2f8fd09487cccbd7097c6862&quot;</span>
+<span class="w">  </span><span class="nt">opc</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8e27b6af0e692e750f32667a3b14605d&quot;</span>
+<span class="w">  </span><span class="nt">amf</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8000&quot;</span>
+<span class="w">  </span><span class="c1"># Same numeric SQN as WebConsole value 000000000023.</span>
+<span class="w">  </span><span class="nt">sqn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;00000023&quot;</span>
+
+<span class="w">  </span><span class="c1"># Requested PDU session</span>
+<span class="w">  </span><span class="nt">dnn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;internet&quot;</span>
+<span class="w">  </span><span class="nt">snssai</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">sst</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;01&quot;</span>
+<span class="w">    </span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;010203&quot;</span><span class="w"> </span><span class="c1"># Optional; remove it if SD is not used.</span>
+
+<span class="w">  </span><span class="c1"># UE security capabilities advertised to the AMF</span>
+<span class="w">  </span><span class="nt">integrity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">nia0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">nia1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">nia2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">nia3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">ciphering</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># NEA0 keeps NAS messages readable in Wireshark for debugging.</span>
+<span class="w">    </span><span class="nt">nea0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">nea1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">nea2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">nea3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="c1"># AMFs that PacketRusher will try to reach</span>
+<span class="nt">amfif</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;192.168.56.112&quot;</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">38412</span>
+
+<span class="nt">logs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+</code></pre></div>
+<p>Keep values with leading zeroes quoted. In particular:</p>
+<ul>
+<li><code>gnodeb.controlif.ip</code> and <code>gnodeb.dataif.ip</code> must be addresses on the PacketRusher VM;</li>
+<li><code>amfif.ip</code> must be the free5GC AMF's reachable N2 address;</li>
+<li>MCC, MNC, TAC, DNN, SST, and SD must match the corresponding free5GC configuration; and</li>
+<li>SUPI, <code>key</code>, <code>opc</code>, <code>amf</code>, and <code>sqn</code> must match the subscriber created in WebConsole.</li>
+</ul>
+<p>For a detailed explanation of every field, see the PacketRusher <a href="https://github.com/HewlettPackard/PacketRusher/wiki/Configuration">Configuration Wiki</a>.</p>
+<h2 id="start-free5gc-and-provision-the-subscriber">Start free5GC and Provision the Subscriber</h2>
+<h3 id="1-start-the-core-network">1. Start the core network</h3>
+<p>On the free5GC VM, start all network functions and leave the terminal running:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/free5gc
+./run.sh
+</code></pre></div>
+<p>Do not start PacketRusher until the AMF and UPF are ready. In particular, confirm that the SMF has established its PFCP association with the UPF and that the AMF is listening on the configured N2 address.</p>
+<h3 id="2-create-a-matching-subscriber-in-webconsole">2. Create a matching subscriber in WebConsole</h3>
+<p>If WebConsole is not already running, start it in another terminal using the command provided by your free5GC installation. A current source installation created by the quick-setup guide uses:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/free5gc/webconsole
+go<span class="w"> </span>run<span class="w"> </span>server.go
+</code></pre></div>
+<p>Open <code>http://192.168.56.112:5000</code>, sign in, and select <strong>SUBSCRIBERS → CREATE</strong>. The official <a href="https://free5gc.org/guide/Webconsole/Create-Subscriber-via-webconsole/">Create Subscriber via WebConsole</a> guide documents the complete workflow.</p>
+<p>Enter values that match <code>config.yml</code>:</p>
+<table>
+<thead>
+<tr>
+<th>WebConsole field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUPI (IMSI)</td>
+<td><code>imsi-208930000000001</code></td>
+</tr>
+<tr>
+<td>PLMN ID</td>
+<td><code>20893</code></td>
+</tr>
+<tr>
+<td>Authentication Method</td>
+<td><code>5G_AKA</code></td>
+</tr>
+<tr>
+<td>Authentication Management Field (AMF)</td>
+<td><code>8000</code></td>
+</tr>
+<tr>
+<td>Operator Code Type</td>
+<td><code>OPc</code></td>
+</tr>
+<tr>
+<td>Operator Code Value</td>
+<td><code>8e27b6af0e692e750f32667a3b14605d</code></td>
+</tr>
+<tr>
+<td>Permanent Authentication Key (K)</td>
+<td><code>8baf473f2f8fd09487cccbd7097c6862</code></td>
+</tr>
+<tr>
+<td>SQN</td>
+<td><code>000000000023</code></td>
+</tr>
+<tr>
+<td>SST / SD</td>
+<td><code>1</code> / <code>010203</code></td>
+</tr>
+<tr>
+<td>DNN</td>
+<td><code>internet</code></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Matching the free5GC subscriber to the PacketRusher UE configuration" src="../subscriber-configuration.png" /></p>
+<p>WebConsole displays SQN as a 12-digit (48-bit) hexadecimal value. Its <code>000000000023</code> value is the left-padded form of PacketRusher's <code>00000023</code> setting.</p>
+<p>The K and OPc values above are test credentials. Do not reuse production SIM credentials in a public or shared lab.</p>
+<h2 id="test-1-single-ue-registration-and-connectivity">Test 1: Single-UE Registration and Connectivity</h2>
+<p>On the PacketRusher VM, start the simulated gNodeB and UE from the repository root:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PACKETRUSHER</span><span class="s2">&quot;</span>
+sudo<span class="w"> </span>./packetrusher<span class="w"> </span>ue
+</code></pre></div>
+<p>A successful run should show a Registration Accept followed by a PDU Session Establishment Accept. PacketRusher then prints the assigned UE address and creates a Linux VRF for that UE. In this lab, the UE received <code>10.60.0.1</code> and PacketRusher created <code>vrf0000000001</code>.</p>
+<p><img alt="PacketRusher receiving a PDU Session Establishment Accept and creating the UE VRF" src="../pdu-session-established.png" /></p>
+<p>Keep PacketRusher running. Open another shell on the PacketRusher VM and send traffic from the UE's VRF:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Replace &lt;vrf_name&gt; with the name printed by PacketRusher.</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>vrf<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>&lt;vrf_name&gt;<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">8</span>.8.8.8
+
+<span class="c1"># Example from this lab:</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>vrf<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vrf0000000001<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">8</span>.8.8.8
+</code></pre></div>
+<p><img alt="Successful ping to Google Public DNS through the PacketRusher UE VRF" src="../ping-test.png" /></p>
+<p>Successful replies confirm that the UE can send user-plane packets through the PacketRusher GTP tunnel, the free5GC UPF, and the N6 data network. If registration succeeds but <code>ping</code> fails, check UPF forwarding, N6 routing/NAT, IP forwarding, and firewall rules.</p>
+<h2 id="test-2-multi-ue-registration-time">Test 2: Multi-UE Registration Time</h2>
+<p>PacketRusher's <code>multi-ue</code> command increments the MSIN for each simulated UE. Before running the 100-UE test with base MSIN <code>0000000001</code>, use the free5GC WebConsole to create 100 subscriber records for the sequential IMSIs. Use the same PLMN, K, OPc, AMF, SQN, DNN, and slice settings for all subscribers. Stop the single-UE process first so that it does not compete for the same subscriber identity.</p>
+<p>This article uses a helper script named <code>run-multi-ue-background.sh</code> that:</p>
+<ul>
+<li>starts <code>packetrusher multi-ue</code>;</li>
+<li>counts <code>Receive Registration Accept</code> messages;</li>
+<li>stops when every UE registers, the result becomes stable, or the safety timeout expires;</li>
+<li>saves the complete output to a timestamped log; and</li>
+<li>prints the registered and unregistered totals with elapsed wall-clock time.</li>
+</ul>
+<p>Save the following script as <code>run-multi-ue-background.sh</code> in the PacketRusher repository root:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="nb">set</span><span class="w"> </span>-u
+
+<span class="nv">SCRIPT_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span>
+<span class="nv">PACKETRUSHER_BIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">/packetrusher&quot;</span>
+
+usage<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">Usage: ./run-multi-ue-background.sh [options]</span>
+
+<span class="s">Run PacketRusher multi-ue in the foreground and report how many UEs</span>
+<span class="s">received a Registration Accept message. Output is also saved to a log.</span>
+
+<span class="s">Options:</span>
+<span class="s">  -n, --ues NUMBER        Number of UEs (default: 100)</span>
+<span class="s">      --max-wait SECONDS  Safety limit for abnormal runs (default: 300)</span>
+<span class="s">      --tr MILLISECONDS   Time between registrations (default: 100)</span>
+<span class="s">      --npdu NUMBER       PDU sessions per UE (default: 0)</span>
+<span class="s">  -h, --help              Show this help</span>
+
+<span class="s">Example:</span>
+<span class="s">  ./run-multi-ue-background.sh -n 100 --tr 100 --npdu 0</span>
+<span class="s">EOF</span>
+<span class="o">}</span>
+
+is_non_negative_integer<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span><span class="m">0</span>-9<span class="o">]</span>+$<span class="w"> </span><span class="o">]]</span>
+<span class="o">}</span>
+
+controller<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">stop_file</span><span class="o">=</span><span class="nv">$1</span>
+<span class="w">    </span><span class="nb">shift</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>child_pid
+
+<span class="w">    </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">    </span><span class="nv">child_pid</span><span class="o">=</span><span class="nv">$!</span>
+
+<span class="w">    </span>stop_child<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">kill</span><span class="w"> </span>-INT<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$child_pid</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">    </span><span class="nb">trap</span><span class="w"> </span>stop_child<span class="w"> </span>INT<span class="w"> </span>TERM
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-0<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$child_pid</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$stop_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span>stop_child
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="k">fi</span>
+<span class="w">        </span>sleep<span class="w"> </span><span class="m">0</span>.1
+<span class="w">    </span><span class="k">done</span>
+
+<span class="w">    </span><span class="nb">wait</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$child_pid</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+worker<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">total</span><span class="o">=</span><span class="nv">$1</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">max_wait</span><span class="o">=</span><span class="nv">$2</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">registration_interval</span><span class="o">=</span><span class="nv">$3</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">pdu_sessions</span><span class="o">=</span><span class="nv">$4</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">log_file</span><span class="o">=</span><span class="nv">$5</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">quiet_period</span><span class="o">=</span><span class="m">5</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>control_dir
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>stop_file
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>process_pid
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>exit_status
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">launched</span><span class="o">=</span><span class="m">0</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">registered</span><span class="o">=</span><span class="m">0</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">previous_registered</span><span class="o">=</span><span class="m">0</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>not_registered
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">all_started</span><span class="o">=</span><span class="nb">false</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">stable_since</span><span class="o">=</span><span class="m">0</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>start_ms
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>start_seconds
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>now
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>elapsed_ms
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>elapsed_seconds
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>message
+
+<span class="w">    </span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+
+<span class="w">    </span><span class="nv">start_ms</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%s%3N<span class="k">)</span>
+<span class="w">    </span><span class="nv">start_seconds</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span>
+
+<span class="w">    </span><span class="nv">control_dir</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="w"> </span>/tmp/packetrusher-control.XXXXXX<span class="k">)</span>
+<span class="w">    </span><span class="nv">stop_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$control_dir</span><span class="s2">/stop&quot;</span>
+<span class="w">    </span><span class="nb">trap</span><span class="w"> </span><span class="s1">&#39;touch &quot;$stop_file&quot; 2&gt;/dev/null || true&#39;</span><span class="w"> </span>EXIT
+<span class="w">    </span><span class="nb">trap</span><span class="w"> </span><span class="s1">&#39;exit 130&#39;</span><span class="w"> </span>INT<span class="w"> </span>TERM
+
+<span class="w">    </span>:<span class="w"> </span>&gt;<span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">/run-multi-ue-background.sh&quot;</span><span class="w"> </span>--controller<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$stop_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PACKETRUSHER_BIN</span><span class="s2">&quot;</span><span class="w"> </span>multi-ue<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$total</span><span class="s2">&quot;</span><span class="w"> </span>--tr<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$registration_interval</span><span class="s2">&quot;</span><span class="w"> </span>--nPdu<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$pdu_sessions</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">    </span><span class="nv">process_pid</span><span class="o">=</span><span class="nv">$!</span>
+
+<span class="w">    </span><span class="c1"># Finish immediately when all UEs register. After all registration</span>
+<span class="w">    </span><span class="c1"># attempts have started, a five-second period with no new Registration</span>
+<span class="w">    </span><span class="c1"># Accept is treated as a stable partial result.</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-0<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$process_pid</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span><span class="nv">launched</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-cF<span class="w"> </span><span class="s2">&quot;[TESTER] TESTING REGISTRATION USING IMSI &quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span><span class="k">)</span>
+<span class="w">        </span><span class="nv">registered</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-cF<span class="w"> </span><span class="s2">&quot;[UE][NAS] Receive Registration Accept&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span><span class="k">)</span>
+<span class="w">        </span><span class="nv">now</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$registered</span><span class="w"> </span>-ge<span class="w"> </span><span class="nv">$total</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="k">fi</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$launched</span><span class="w"> </span>-ge<span class="w"> </span><span class="nv">$total</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$all_started</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                </span><span class="nv">all_started</span><span class="o">=</span><span class="nb">true</span>
+<span class="w">                </span><span class="nv">stable_since</span><span class="o">=</span><span class="nv">$now</span>
+<span class="w">            </span><span class="k">elif</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$registered</span><span class="w"> </span>-ne<span class="w"> </span><span class="nv">$previous_registered</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                </span><span class="nv">stable_since</span><span class="o">=</span><span class="nv">$now</span>
+<span class="w">            </span><span class="k">elif</span><span class="w"> </span><span class="o">((</span>now<span class="w"> </span>-<span class="w"> </span>stable_since<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span>quiet_period<span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                </span><span class="k">break</span>
+<span class="w">            </span><span class="k">fi</span>
+<span class="w">        </span><span class="k">fi</span>
+
+<span class="w">        </span><span class="nv">previous_registered</span><span class="o">=</span><span class="nv">$registered</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">((</span>now<span class="w"> </span>-<span class="w"> </span>start_seconds<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span>max_wait<span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Safety limit of </span><span class="si">${</span><span class="nv">max_wait</span><span class="si">}</span><span class="s2"> seconds reached.&quot;</span><span class="w"> </span>&gt;&gt;<span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span>
+<span class="w">            </span><span class="k">break</span>
+<span class="w">        </span><span class="k">fi</span>
+
+<span class="w">        </span>sleep<span class="w"> </span><span class="m">0</span>.2
+<span class="w">    </span><span class="k">done</span>
+
+<span class="w">    </span>touch<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$stop_file</span><span class="s2">&quot;</span>
+
+<span class="w">    </span><span class="nb">wait</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$process_pid</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nv">exit_status</span><span class="o">=</span><span class="nv">$?</span>
+
+<span class="w">    </span><span class="nb">trap</span><span class="w"> </span>-<span class="w"> </span>EXIT<span class="w"> </span>INT<span class="w"> </span>TERM
+<span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$stop_file</span><span class="s2">&quot;</span>
+<span class="w">    </span>rmdir<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$control_dir</span><span class="s2">&quot;</span>
+
+<span class="w">    </span><span class="nv">registered</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-cF<span class="w"> </span><span class="s2">&quot;[UE][NAS] Receive Registration Accept&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$registered</span><span class="w"> </span>-gt<span class="w"> </span><span class="nv">$total</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nv">registered</span><span class="o">=</span><span class="nv">$total</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="w">    </span><span class="nv">not_registered</span><span class="o">=</span><span class="k">$((</span><span class="nv">total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">registered</span><span class="k">))</span>
+<span class="w">    </span><span class="nv">elapsed_ms</span><span class="o">=</span><span class="k">$(($(</span>date<span class="w"> </span>+%s%3N<span class="k">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">start_ms</span><span class="k">))</span>
+<span class="w">    </span><span class="nb">printf</span><span class="w"> </span>-v<span class="w"> </span>elapsed_seconds<span class="w"> </span><span class="s2">&quot;%d.%03d&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$((</span><span class="nv">elapsed_ms</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">1000</span><span class="k">))</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$((</span><span class="nv">elapsed_ms</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">1000</span><span class="k">))</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nv">message</span><span class="o">=</span><span class="s2">&quot;UEs registered within </span><span class="si">${</span><span class="nv">elapsed_seconds</span><span class="si">}</span><span class="s2"> seconds: </span><span class="si">${</span><span class="nv">registered</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">total</span><span class="si">}</span><span class="s2"> (not registered: </span><span class="si">${</span><span class="nv">not_registered</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$message</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span>
+
+<span class="w">    </span><span class="c1"># This works for a logged-in Linux desktop. On a headless/SSH system, the</span>
+<span class="w">    </span><span class="c1"># result remains available in the log file and in the system log.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>notify-send<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span>notify-send<span class="w"> </span><span class="s2">&quot;PacketRusher&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$message</span><span class="s2">&quot;</span><span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>logger<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span>logger<span class="w"> </span>-t<span class="w"> </span>packetrusher<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$message</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$exit_status</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$exit_status</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">130</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;PacketRusher exited with status </span><span class="si">${</span><span class="nv">exit_status</span><span class="si">}</span><span class="s2">; check </span><span class="si">${</span><span class="nv">log_file</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="si">}</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;--controller&#39;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">shift</span>
+<span class="w">    </span>controller<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="nv">$?</span>
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="si">}</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;--worker&#39;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">shift</span>
+<span class="w">    </span>worker<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="k">fi</span>
+
+<span class="nv">total</span><span class="o">=</span><span class="m">100</span>
+<span class="nv">max_wait</span><span class="o">=</span><span class="m">300</span>
+<span class="nv">registration_interval</span><span class="o">=</span><span class="m">100</span>
+<span class="nv">pdu_sessions</span><span class="o">=</span><span class="m">0</span>
+
+<span class="k">while</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+<span class="w">        </span>-n<span class="p">|</span>--ues<span class="o">)</span>
+<span class="w">            </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Missing value for </span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">            </span><span class="nv">total</span><span class="o">=</span><span class="nv">$2</span>
+<span class="w">            </span><span class="nb">shift</span><span class="w"> </span><span class="m">2</span>
+<span class="w">            </span><span class="p">;;</span>
+<span class="w">        </span>-d<span class="p">|</span>--duration<span class="p">|</span>--max-wait<span class="o">)</span>
+<span class="w">            </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Missing value for </span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">            </span><span class="nv">max_wait</span><span class="o">=</span><span class="nv">$2</span>
+<span class="w">            </span><span class="nb">shift</span><span class="w"> </span><span class="m">2</span>
+<span class="w">            </span><span class="p">;;</span>
+<span class="w">        </span>--tr<span class="o">)</span>
+<span class="w">            </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Missing value for </span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">            </span><span class="nv">registration_interval</span><span class="o">=</span><span class="nv">$2</span>
+<span class="w">            </span><span class="nb">shift</span><span class="w"> </span><span class="m">2</span>
+<span class="w">            </span><span class="p">;;</span>
+<span class="w">        </span>--npdu<span class="o">)</span>
+<span class="w">            </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Missing value for </span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">            </span><span class="nv">pdu_sessions</span><span class="o">=</span><span class="nv">$2</span>
+<span class="w">            </span><span class="nb">shift</span><span class="w"> </span><span class="m">2</span>
+<span class="w">            </span><span class="p">;;</span>
+<span class="w">        </span>-h<span class="p">|</span>--help<span class="o">)</span>
+<span class="w">            </span>usage
+<span class="w">            </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="w">            </span><span class="p">;;</span>
+<span class="w">        </span>*<span class="o">)</span>
+<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Unknown option: </span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">            </span>usage<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">            </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="w">            </span><span class="p">;;</span>
+<span class="w">    </span><span class="k">esac</span>
+<span class="k">done</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>is_non_negative_integer<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$total</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$total</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;UE count must be a positive integer.&#39;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="k">fi</span>
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>is_non_negative_integer<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$max_wait</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$max_wait</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Maximum wait must be a positive integer.&#39;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="k">fi</span>
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>is_non_negative_integer<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$registration_interval</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Registration interval must be a non-negative integer.&#39;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="k">fi</span>
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>is_non_negative_integer<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$pdu_sessions</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$pdu_sessions</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;PDU session count must be an integer from 0 to 16.&#39;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
+<span class="k">fi</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-x<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PACKETRUSHER_BIN</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;PacketRusher executable not found: </span><span class="nv">$PACKETRUSHER_BIN</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">timestamp</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+<span class="s1">&#39;%Y%m%d-%H%M%S&#39;</span><span class="k">)</span>
+<span class="nv">log_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">/packetrusher-</span><span class="si">${</span><span class="nv">timestamp</span><span class="si">}</span><span class="s2">.log&quot;</span>
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;Log: %s\n&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span>
+worker<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$total</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$max_wait</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$registration_interval</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$pdu_sessions</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$log_file</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Make it executable and run it:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PACKETRUSHER</span><span class="s2">&quot;</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>run-multi-ue-background.sh
+
+./run-multi-ue-background.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ues<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tr<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--npdu<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-wait<span class="w"> </span><span class="m">300</span>
+</code></pre></div>
+<p>The options used here mean:</p>
+<ul>
+<li><code>--ues 100</code>: launch 100 UEs;</li>
+<li><code>--tr 100</code>: wait 100 ms between registration starts;</li>
+<li><code>--npdu 0</code>: test registration only, without creating PDU sessions; and</li>
+<li><code>--max-wait 300</code>: stop an abnormal run after 300 seconds.</li>
+</ul>
+<p>The recorded run completed with the following summary:</p>
+<div class="highlight"><pre><span></span><code>UEs registered within 12.422 seconds: 100/100 (not registered: 0)
+</code></pre></div>
+<p><img alt="PacketRusher multi-UE test completing 100 registrations in 12.422 seconds" src="../multi-ue-registration-test.png" /></p>
+<p>This is an example result, not a universal performance claim. It depends on VM resources, logging level, core-network load, database performance, and the registration interval.</p>
+<h2 id="test-3-bandwidth-with-iperf3">Test 3: Bandwidth with iperf3</h2>
+<p>This test measures end-to-end user-plane throughput through the PacketRusher UE's GTP-U tunnel. The <code>iperf3</code> client must run inside the UE VRF; running it directly on the PacketRusher VM would measure only the VM underlay network.</p>
+<h3 id="install-iperf3">Install iperf3</h3>
+<p>Install <code>iperf3</code> on both the free5GC VM and the PacketRusher VM:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>iperf3
+</code></pre></div>
+<h3 id="start-the-server-on-the-free5gc-vm">Start the server on the free5GC VM</h3>
+<p>Bind the <code>iperf3</code> server to the free5GC VM address:</p>
+<div class="highlight"><pre><span></span><code>iperf3<span class="w"> </span>-s<span class="w"> </span>-B<span class="w"> </span><span class="m">192</span>.168.56.112
+</code></pre></div>
+<p>The server listens on TCP port <code>5201</code> by default. If <code>iperf3</code> reports that the address is already in use, stop the existing <code>iperf3</code> server or continue using that server instance.</p>
+<h3 id="start-the-packetrusher-ue">Start the PacketRusher UE</h3>
+<p>On the PacketRusher VM, start a simulated UE and keep this process running:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PACKETRUSHER</span><span class="s2">&quot;</span>
+sudo<span class="w"> </span>./packetrusher<span class="w"> </span>ue
+</code></pre></div>
+<p>After registration and PDU session establishment succeed, note the VRF name printed by PacketRusher. In this example, the VRF is <code>vrf0000000001</code> and the UE address is <code>10.60.0.1</code>. Open another shell on the PacketRusher VM for the bandwidth commands below.</p>
+<h3 id="uplink-ue-to-free5gc-vm">Uplink: UE to free5GC VM</h3>
+<p>Run the <code>iperf3</code> client inside the UE VRF. Replace <code>vrf0000000001</code> with the VRF name from your PacketRusher output if it is different:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>vrf<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vrf0000000001<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>iperf3<span class="w"> </span>-c<span class="w"> </span><span class="m">192</span>.168.56.112<span class="w"> </span>-t<span class="w"> </span><span class="m">10</span><span class="w"> </span>-i<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<p>The client sends traffic from the simulated UE toward the free5GC VM. In the recorded test, the connection uses the UE address <code>10.60.0.1</code> and reaches approximately <code>1.02 Gbit/s</code>.</p>
+<p><img alt="GTP-U uplink iperf3 test from the PacketRusher UE to the free5GC VM" src="../gtpu-uplink-iperf3.png" /></p>
+<h3 id="downlink-free5gc-vm-to-ue">Downlink: free5GC VM to UE</h3>
+<p>Repeat the test with <code>-R</code> (reverse mode):</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>vrf<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vrf0000000001<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>iperf3<span class="w"> </span>-c<span class="w"> </span><span class="m">192</span>.168.56.112<span class="w"> </span>-t<span class="w"> </span><span class="m">10</span><span class="w"> </span>-i<span class="w"> </span><span class="m">1</span><span class="w"> </span>-R
+</code></pre></div>
+<p>In reverse mode, the server on the free5GC VM sends traffic back to the client inside the UE VRF. The recorded test reports approximately <code>927 Mbit/s</code> at the sender and <code>925 Mbit/s</code> at the receiver.</p>
+<p><img alt="GTP-U downlink iperf3 reverse test from the free5GC VM to the PacketRusher UE" src="../gtpu-downlink-iperf3.png" /></p>
+<p>The address shown after <code>local</code> should be a UE address such as <code>10.60.0.1</code>. If it is the PacketRusher VM address (<code>192.168.56.111</code>), the command did not use the UE VRF and measured only the underlay path. Throughput varies with VM resources, CPU scheduling, logging level, MTU, and host-network configuration, so treat these figures as example results rather than universal performance limits.</p>
+<h2 id="troubleshooting-checklist">Troubleshooting Checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCTP/NGAP connection fails</td>
+<td><code>amfif.ip</code>, AMF N2 bind address, SCTP port 38412, VM routing, and firewall rules</td>
+</tr>
+<tr>
+<td>Registration is rejected</td>
+<td>SUPI, MCC/MNC, K, OPc, AMF, SQN, and Authentication Method in WebConsole</td>
+</tr>
+<tr>
+<td>PDU session is rejected</td>
+<td>DNN, SST, SD, SMF selection, and subscriber slice configuration</td>
+</tr>
+<tr>
+<td><code>gtp5g</code> does not load</td>
+<td>Running-kernel headers, <code>linux-modules-extra</code>, Secure Boot, and a rebuild after kernel upgrades</td>
+</tr>
+<tr>
+<td>Registration succeeds but <code>ping</code> fails</td>
+<td>The correct UE VRF, UPF/N6 routing, NAT, IP forwarding, and DNS-independent testing with <code>8.8.8.8</code></td>
+</tr>
+<tr>
+<td><code>iperf3</code> server sees source <code>192.168.56.111</code></td>
+<td>The client ran on the underlay; rerun it with <code>sudo ip vrf exec &lt;vrf_name&gt; ...</code></td>
+</tr>
+<tr>
+<td>Some multi-UE registrations fail</td>
+<td>Sequential subscriber provisioning, AMF/UDM logs, MongoDB performance, registration interval, and the saved PacketRusher log</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conclusion">Conclusion</h2>
+<p>You now have a repeatable two-VM environment in which PacketRusher connects to free5GC over N2 and N3. The single-UE test validates registration, PDU session establishment, and Internet reachability; the multi-UE script reports registration completion time; and the <code>iperf3</code> procedure separates raw VM-network capacity from actual GTP-U user-plane throughput.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://github.com/free5gc/free5gc">free5GC Repository</a></li>
+<li><a href="https://free5gc.org/guide/">free5GC User Guide</a></li>
+<li><a href="https://free5gc.org/guide/quick-setup/">free5GC Quick Setup Guide</a></li>
+<li><a href="https://free5gc.org/guide/Webconsole/Create-Subscriber-via-webconsole/">Create Subscriber via WebConsole</a></li>
+<li><a href="https://github.com/HewlettPackard/PacketRusher">PacketRusher Repository</a></li>
+<li><a href="https://github.com/HewlettPackard/PacketRusher/wiki/Installation">PacketRusher Installation Wiki</a></li>
+<li><a href="https://github.com/HewlettPackard/PacketRusher/wiki/Configuration">PacketRusher Configuration Wiki</a></li>
+<li><a href="https://software.es.net/iperf/">iperf3 Documentation</a></li>
+<li><a href="https://free5gc.org/blog/20240110/20240110/">PacketRusher: A New UE/gNB Simulator and CP/UP Load Tester</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Kai-Hung Hu. I hope this blog post has been informative. If you have ideas for further discussion, please don't hesitate to get in touch.</p>
+<h2 id="connect-with-me">Connect with Me</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/carlhus">carlhus</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
