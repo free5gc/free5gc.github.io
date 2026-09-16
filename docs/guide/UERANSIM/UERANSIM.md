@@ -1,4 +1,4 @@
-# free5GC and UERANSIM deployment tuorial
+# free5GC and UERANSIM deployment tutorial
 >[!NOTE]
 > Author: Chia-Hui, Chen
 > Date: 2026/09/01
