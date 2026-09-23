@@ -23,7 +23,7 @@ To register, click the “Register Now” button below and follow the prompts. I
 
 ## Notes
 
-1. **All full registrants (paying NTD 15,000 or NTD 12,000) who register before October 31, 2026, will receive a Samsonite free5GC backpack valued at NTD 6,000.**.
+1. **All full registrants (paying NTD 15,000 or NTD 12,000) who register before October 31, 2026, will receive a Samsonite free5GC backpack valued at NTD 6,000.**
 
     ![backpack](./ba.jpg){ width="254" }
 
