@@ -16,3 +16,16 @@
     height: auto;
     margin-top: 10px;
 }
+
+.md-typeset .md-button.register-btn {
+    background-color: #1976d2;
+    border-color: #1976d2;
+    color: #fff;
+}
+
+.md-typeset .md-button.register-btn:hover,
+.md-typeset .md-button.register-btn:focus {
+    background-color: #1565c0;
+    border-color: #1565c0;
+    color: #fff;
+}
