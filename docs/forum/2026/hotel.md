@@ -14,7 +14,7 @@ We offer three recommended hotels for attendees. You are also welcome to book an
     <a class="md-button register-btn hotel-card-btn" href="../hotelBook/ho.pdf" target="_blank" rel="noopener">Booking Form</a>
   </div>
   <div class="hotel-card">
-    <h3 class="hotel-card-name"><a href="#" target="_blank" rel="noopener">EPISODE Hsinchu</a></h3>
+    <h3 class="hotel-card-name"><a href="https://episode-hsinchu-jdv-hyatt-hotel.bookstaygo.com/?gad_campaignid=23819188248&gbraid=0AAAAA9-PDQSemmKBoPBLC3PYrJy_wiGuA" target="_blank" rel="noopener">EPISODE Hsinchu</a></h3>
     <div class="hotel-card-distance">Distance: 5 min by car / 21 min on foot</div>
     <div class="hotel-card-note">Booking form available from 2026/10/2</div>
     <!--
