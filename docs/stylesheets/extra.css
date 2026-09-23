@@ -29,3 +29,88 @@
     border-color: #1565c0;
     color: #fff;
 }
+
+.hotel-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.hotel-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "name btn"
+        "distance btn";
+    align-items: center;
+    column-gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-left: 4px solid #1976d2;
+    border-radius: 8px;
+    background-color: var(--md-default-bg-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.hotel-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.md-typeset .hotel-card-name {
+    grid-area: name;
+    margin: 0 0 0.4rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.hotel-card-distance {
+    grid-area: distance;
+    color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .hotel-card-btn {
+    grid-area: btn;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .hotel-card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "name"
+            "distance"
+            "btn";
+    }
+
+    .md-typeset .hotel-card-btn {
+        margin-top: 1rem;
+    }
+}
+
+.md-typeset .hotel-card-name a {
+    color: inherit;
+}
+
+.md-typeset .hotel-card-name a:hover {
+    color: #1976d2;
+    text-decoration: underline;
+}
+
+.hotel-card-note {
+    grid-area: btn;
+    padding: 0.5em 1em;
+    border: 1px dashed var(--md-default-fg-color--lighter);
+    border-radius: 0.1rem;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .hotel-card-note {
+        margin-top: 1rem;
+    }
+}
