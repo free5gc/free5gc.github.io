@@ -2,7 +2,7 @@
 
 ## Invitation Letter
 
-You may request a visa support letter. To request an invitation letter, please email [free5gc2026@gmail.com](mailto:free5gc2026@gmail.com) and include the following information:
+After registering for the conference, you may request a visa support letter. To request an invitation letter, please email [free5gc2026@gmail.com](mailto:free5gc2026@gmail.com) and include the following information:
 
 - **Name**: Required. You may include a preferred title or prefix if you would like it to appear on the letter.
 - **Paper ID/Title**: Optional; for authors only.
@@ -11,7 +11,7 @@ You may request a visa support letter. To request an invitation letter, please e
 - **Date of Birth**: Optional; required only if you would like it included on the letter.
 - **Additional Information**: Optional. Please specify any other information you would like included in the letter..
 
-Please allow 5–8 business days for processing.
+Please ensure that you have registered for the forum before requesting an invitation letter. Please allow 5–8 business days for processing.
 
 ## Visa Requirements
 
