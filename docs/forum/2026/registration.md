@@ -2,7 +2,7 @@
 
 ## Non-author Registration
 
-| Category | Fee(NTD) |
+| Category | Fee (NTD) |
 | - | - |
 | Non-ACM/SIG Member | 15,000 |
 | ACM/SIG Member | 12,000 |
@@ -10,7 +10,7 @@
 
 ## Author Registration
 
-| Category | Fee(NTD) |
+| Category | Fee (NTD) |
 | - | - |
 | Non-ACM/SIG Member | 15,000 |
 | ACM/SIG Member | 12,000 |
