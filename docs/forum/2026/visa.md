@@ -9,7 +9,7 @@ You may request a visa support letter. To request an invitation letter, please e
 - **Postal Address**: Required.
 - **Affiliation**: Required.
 - **Date of Birth**: Optional; required only if you would like it included on the letter.
-- **Additional Information**: Optional. Please specify any other information you would like included on the letter.
+- **Additional Information**: Optional. Please specify any other information you would like included in the letter..
 
 Please allow 5–8 business days for processing.
 
