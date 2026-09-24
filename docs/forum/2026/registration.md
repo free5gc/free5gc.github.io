@@ -4,18 +4,18 @@
 
 | Category | Fee (NTD) |
 | - | - |
-| Non-ACM/SIG Member | 15,000 |
-| ACM/SIG Member | 12,000 |
+| Non-ACM/SIGSAC Member | 15,000 |
+| ACM/SIGSAC Member | 12,000 |
 | Student | 2,000 |
 
 ## Author Registration
 
 | Category | Fee (NTD) |
 | - | - |
-| Non-ACM/SIG Member | 15,000 |
-| ACM/SIG Member | 12,000 |
-| Student Non-ACM/SIG Member | 15,000 |
-| Student ACM/SIG Member | 12,000 |
+| Non-ACM/SIGSAC Member | 15,000 |
+| ACM/SIGSAC Member | 12,000 |
+| Student Non-ACM/SIGSAC Member | 15,000 |
+| Student ACM/SIGSAC Member | 12,000 |
 
 To register, click the “Register Now” button below and follow the prompts. If you have any questions or need assistance, please contact us at [free5gc2026@gmail.com](mailto:free5gc2026@gmail.com).
 
