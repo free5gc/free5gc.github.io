@@ -32,14 +32,15 @@ To register, click the “Register Now” button below and follow the prompts. I
     ![t1](./t1.jpg){ width="254" } ![t2](./t2.jpg){ width="254" }
 
 3. At least one author of each accepted paper must register for the conference. Each author registration can be used for one paper only.
-4. Student registrants must present proof of student status, such as a student ID, upon arrival.
-5. Additional T-shirts are available for NTD 600 each.
-6. Additional backpacks are available for NTD 6,000 each.
-7. **Cancellation and Refund Policy**: Please review the following terms before making payment:
+4. If an author registers as a non-author before their paper is accepted, please email the author list, paper title, and paper ID to [free5gc2026@gmail.com](mailto:free5gc2026@gmail.com) once the paper has been accepted.
+5. Student registrants must present proof of student status, such as a student ID, upon arrival.
+6. Additional T-shirts are available for NTD 600 each.
+7. Additional backpacks are available for NTD 6,000 each.
+8. **Cancellation and Refund Policy**: Please review the following terms before making payment:
 
     a. **Authors**: Registration fees are strictly non-refundable.
     b. **Non-authors**: A 50% refund is available for requests submitted at least 30 days before the event (November 16, 2026). No refunds will be issued for requests submitted within 30 days of the event.
     c. **Event cancellation due to force majeure**: If the forum is cancelled due to natural disasters, government orders, or other force majeure events, a 90% refund will be issued. A non-refundable administrative fee of 10% will apply.
     d. **How to apply**: Email [nycucs2023@gmail.com](mailto:nycucs2023@gmail.com) with the subject line: `[Refund Request] free5GC Forum – [Attendee Name]`. Please include your Order ID and bank account details. Any interbank transfer fees will be deducted from the refund amount.
 
-8. **Receipt Issuance Policy**: The organizer will issue an official receipt (not a Uniform Invoice/Government Uniform Invoice). If you require a receipt, please contact the organizer in advance at [nycucs2023@gmail.com](mailto:nycucs2023@gmail.com) and provide your institution or school name (Buyer's Title) and Tax ID number (Unified Business Number).
+9. **Receipt Issuance Policy**: The organizer will issue an official receipt (not a Uniform Invoice/Government Uniform Invoice). If you require a receipt, please contact the organizer in advance at [nycucs2023@gmail.com](mailto:nycucs2023@gmail.com) and provide your institution or school name (Buyer's Title) and Tax ID number (Unified Business Number).
