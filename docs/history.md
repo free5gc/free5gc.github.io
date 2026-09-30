@@ -4,6 +4,15 @@
 
 ![free5gc-roadmp-2026](./assets/free5gc-roadmap-2026.png)
 
+## September 30, 2026: v4.3.0
+
+In the release v4.3.0 of free5GC, we have fixed a series of bugs, and also introduce new features:
+
+- [SCP (Service Communication Proxy)](https://github.com/free5gc/scp)
+- [Upgrade OpenAPI](https://github.com/free5gc/openapi/pull/80)
+- [UPF N6 NAT routing can be specified in the configuration](https://github.com/free5gc/go-upf/pull/102)
+- [Update the PFCP package in SMF](https://github.com/free5gc/smf/pull/236)
+
 ## June 30, 2026: v4.2.3
 
 In the release v4.2.2 of free5GC, we have fixed a series of bugs, and also introduce the new style of Webconsole and the free-ran-ue charts:
