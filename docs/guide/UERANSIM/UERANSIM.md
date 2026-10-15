@@ -141,7 +141,7 @@ sudo systemctl status mongod
 **Install Node.js and Yarn**
 
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt update
 sudo apt install -y nodejs
 sudo corepack enable # setup yarn automatically
