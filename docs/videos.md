@@ -2,6 +2,7 @@
 
 # Videos showing free5GC
 
+- [Extending Aether SD-Core with Six 5G Network Exposure Services](https://www.youtube.com/watch?v=Iw-DA-YzRjI), TOSSI Foundation, October 17, 2026
 - [free5GC: A Linux Foundation Project for Next-Generation 5G/6G Systems](https://youtu.be/yOmAE6Q8llE?si=qtioCmhTw5qzxkQY), free5GC, July 30, 2026
 - [Integrated End-to-End NTN Handover Emulation with free5GC and ns-3](https://youtu.be/BIPjTRneSjk?si=DzoOR3TuNmjEa_Sc), free5GC, July 30, 2026
 - [Duranta OpenAirInterface RAN with free5GC](https://www.youtube.com/watch?v=6pgaYMKKGu4), NgKore Foundation, July 13, 2026
