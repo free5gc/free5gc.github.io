@@ -55,6 +55,7 @@ For people who are not familiar with virtual machines and Linux installation, he
 - [Traffic Influence](./8-traffic-influence.md)
 - [NR-DC](./9-nr-dc.md)
 - [UPF N6 NAT Configuration](./10-UPF-Config.md)
+- [TLS Certificates and Keys](./11-TLS-Certificates.md)
 
 ## Integration Deployments
 
