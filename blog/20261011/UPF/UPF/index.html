@@ -1,0 +1,1060 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Exploring GPU Acceleration for free5GC's UPF Data Plane - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exploring-gpu-acceleration-for-free5gcs-upf-data-plane" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Exploring GPU Acceleration for free5GC's UPF Data Plane
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../forum/2026/" class="md-tabs__link">
+        
+  
+    
+  
+  free5GC Forum 2026
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://forum.free5gc.org" class="md-tabs__link">
+        
+  
+    
+  
+  Discussion Forum
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../forum/2026/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    free5GC Forum 2026
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://forum.free5gc.org" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discussion Forum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    1. Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-understanding-the-upf-data-plane" class="md-nav__link">
+    2. Understanding the UPF Data Plane
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-building-a-cpugpu-upf" class="md-nav__link">
+    3. Building a CPU/GPU UPF
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Building a CPU/GPU UPF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-cpu-and-gpu-responsibilities" class="md-nav__link">
+    3.1. CPU and GPU Responsibilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-examining-more-of-the-processing-on-gpu" class="md-nav__link">
+    3.2. Examining More of the Processing on GPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-optimizing-and-measuring-gpu-processing" class="md-nav__link">
+    4. Optimizing and Measuring GPU Processing
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Optimizing and Measuring GPU Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-reducing-repeated-work" class="md-nav__link">
+    4.1. Reducing Repeated Work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-comparison-with-multicore-cpu" class="md-nav__link">
+    4.2. Comparison with Multicore CPU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-uplink-downlink-and-mixed-traffic" class="md-nav__link">
+    4.3. Uplink, Downlink and Mixed Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-longer-downlink-measurements" class="md-nav__link">
+    4.4. Longer Downlink Measurements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-why-the-results-depend-on-the-workload" class="md-nav__link">
+    4.5. Why the Results Depend on the Workload
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-conclusion" class="md-nav__link">
+    5. Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20261011/UPF/UPF.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20261011/UPF/UPF.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="exploring-gpu-acceleration-for-free5gcs-upf-data-plane">Exploring GPU Acceleration for free5GC's UPF Data Plane</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/solar224">Yu-Chen Chan</a><br />
+Date: 2026/10/11</p>
+</div>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>A 5G core network's User Plane Function (UPF) carries traffic between mobile users and the data network. Every packet requires processing: finding its forwarding rules, handling tunnel headers, applying policy and recording usage. This makes the UPF data plane a candidate for GPU acceleration.</p>
+<p>Our starting point was <a href="https://lpc.events/event/19/contributions/2267/">Taehee Yoo's presentation at the Linux Plumbers Conference (LPC) 2025</a>, which explores kernel-native packet processing on AMD GPUs through Linux's XDP packet-processing interface and emphasizes efficient packet movement. It motivated our focus on packet movement and parallel processing.</p>
+<p>We built a CPU/GPU forwarding prototype inside free5GC, verified live session traffic and compared GPU processing with a tuned multicore CPU. The experiments examine CPU/GPU responsibilities and the processing changes needed to use GPU parallelism effectively.</p>
+<p>The implementation passed live forwarding checks. Processing comparisons using rules from ten real sessions showed different outcomes by direction and CPU allocation: CPU led the exploratory uplink and mixed-traffic cases at the largest tested core budget, while longer downlink tests found <strong>16–21% higher GPU processing rates</strong> than the corresponding CPU configurations.</p>
+<hr />
+<h2 id="2-understanding-the-upf-data-plane">2. Understanding the UPF Data Plane</h2>
+<p>The data plane is the path that carries user packets. In our environment, UERANSIM simulates the user equipment (UE) and base station (gNB). The UPF connects the base station over <strong>N3</strong>, and the data network (DN) over <strong>N6</strong>. GTP-U, the GPRS Tunnelling Protocol for user traffic, carries the UE's IP packets across N3. A Protocol Data Unit (PDU) session establishes the UE's logical connection to a data network, with rules governing its traffic.</p>
+<p><img alt="image" src="../images/dataPlane.png" /></p>
+<p><em>Figure 1. The UPF's position between the access network and the data network.</em></p>
+<p><strong>Uplink (UL)</strong> carries traffic from UE toward DN. The gNB wraps the UE's IP packet in a GTP-U tunnel. The UPF identifies the applicable rules, applies policy, removes the tunnel header and forwards admitted traffic toward N6. <strong>Downlink (DL)</strong> carries traffic from DN toward UE; the UPF selects the destination tunnel and prepares a GTP-U packet for the gNB.</p>
+<p>The Session Management Function (SMF) controls this behavior through the Packet Forwarding Control Protocol (PFCP):</p>
+<ul>
+<li><strong>PDR — Packet Detection Rule:</strong> identifies which policy applies to a packet.</li>
+<li><strong>FAR — Forwarding Action Rule:</strong> specifies the forwarding action and destination.</li>
+<li><strong>QER — QoS Enforcement Rule:</strong> controls admission and rate limits.</li>
+<li><strong>URR — Usage Reporting Rule:</strong> measures traffic and requests usage reports.</li>
+</ul>
+<p>These roles are defined in <a href="https://www.etsi.org/deliver/etsi_ts/129200_129299/129244/18.08.00_60/ts_129244v180800p.pdf">3GPP TS 29.244</a>. Processing also updates usage counters and sequence numbers that label successive tunnel packets. This information is called <strong>state</strong> because it changes as packets are handled.</p>
+<hr />
+<h2 id="3-building-a-cpugpu-upf">3. Building a CPU/GPU UPF</h2>
+<h3 id="31-cpu-and-gpu-responsibilities">3.1. CPU and GPU Responsibilities</h3>
+<p>We added a research forwarding backend to the existing UPF. Go continues to handle PFCP and reporting. A C++ host engine handles network input/output (I/O) through N3 User Datagram Protocol (UDP) sockets and an N6 virtual network interface (Linux TUN). Its CUDA worker, using NVIDIA's GPU programming platform, parses packets, selects rules and prepares tunnel transformations.</p>
+<p><img alt="image" src="../images/responsibilities.png" /></p>
+<p><em>Figure 2. The live forwarding prototype uses CPU network I/O and GPU packet preparation.</em></p>
+<p>A batch is a group of packets processed together. After GPU preparation, the host applies policy and commits state before transmitting admitted output. This division keeps network I/O and control on the CPU while introducing GPU work into the data path.</p>
+<p>CPU and CUDA research modes share the same I/O and host policy. Functional checks completed <strong>3,000 UE/gNB/UPF/DN echo roundtrips</strong>, exercising GPU-prepared output in both directions. This established a working forwarding prototype for further study.</p>
+<h3 id="32-examining-more-of-the-processing-on-gpu">3.2. Examining More of the Processing on GPU</h3>
+<p>We also implemented a GPU processing kernel that handles usage and sequence updates alongside packet preparation. To compare this processing with CPU execution, we captured rules from <strong>ten real SMF-admitted PDU sessions</strong> and generated controlled packets matching them.</p>
+<p>The captured snapshot contains <strong>40 PDRs, 40 FARs, 30 QERs and 40 URRs</strong>. A lookup group narrows the candidate PDRs using the packet's tunnel identifier on uplink or destination UE address on downlink. Each group in this snapshot has two candidates. The optimization below focuses on processing the associated forwarding and usage rules.</p>
+<hr />
+<h2 id="4-optimizing-and-measuring-gpu-processing">4. Optimizing and Measuring GPU Processing</h2>
+<h3 id="41-reducing-repeated-work">4.1. Reducing Repeated Work</h3>
+<p>Our initial GPU processing algorithm assigned tasks to individual FARs and URRs. Each task examined the entire packet batch to find its contributions, repeating that search across many rules.</p>
+<p>We replaced this repeated search with <strong>ordered worklists</strong>. The GPU groups contributions by FAR or URR, then each rule processes only its own entries. For example, if packets 1 and 3 contribute to usage rule A, its list contains those two positions. A packet linked to several usage rules contributes to each relevant list. The results call this implementation the <strong>indexed GPU</strong>.</p>
+<p>Different rule tasks can execute in parallel. Each list preserves packet order for sequence allocation and for identifying the packet that reaches a configured usage amount and triggers a report. The timed work includes building the lists, updating state and preparing complete output packets.</p>
+<h3 id="42-comparison-with-multicore-cpu">4.2. Comparison with Multicore CPU</h3>
+<p>The machine has an <strong>Intel i9-12900 and an RTX 3090</strong>, using CUDA 12.6.3. Both backends process controlled IPv4/UDP packets with the same captured rules, QER admission gates and URRs. Admission gates permit or block traffic; rate-based policing is disabled in this comparison.</p>
+<p>For this processing comparison, inputs are already in CPU system memory (RAM) or GPU memory (VRAM). Each trial repeatedly processes prepared batches, timing parsing, rule lookup, usage and sequence updates, generation of usage-report data and preparation of complete output packet bytes.</p>
+<p>The i9-12900 has eight performance cores (P-cores) and eight efficiency cores (E-cores). Here, <strong>CPU budget</strong> means the P-cores available to processing, including its coordinating thread. We tested budgets of one, two, four and eight P-cores, using rule-scanning and indexed CPU methods. Eight uses all the performance cores and is the largest budget in this sweep; E-cores are excluded. This is a core-allocation comparison, rather than a price comparison.</p>
+<p>To examine packet-size sensitivity, we used <strong>128-byte and 1,400-byte inner IPv4 packets</strong>, representing shorter and longer processing inputs. The size includes the inner IP and UDP headers and payload, and excludes the outer tunnel headers. Each size was tested in UL-only, DL-only and <strong>50:50 mixed traffic</strong>, with equal numbers of UL and DL packets.</p>
+<p>We also tested <strong>batch sizes of 128, 512, 2,048 and 8,192 packets</strong> to compare how much work each processor handles together. For each workload and CPU budget, the reported configuration uses the fastest measured method and batch; GPU selects its own batch independently.</p>
+<p>The measurements have two stages: a short sweep to select configurations, followed by longer paired downlink trials. A pair measures CPU and GPU on the same workload in one comparison block; their execution order is randomized.</p>
+<h3 id="43-uplink-downlink-and-mixed-traffic">4.3. Uplink, Downlink and Mixed Traffic</h3>
+<p>The exploratory sweep used five repetitions per configuration, each lasting at least 50 ms. Figure 3 compares the selected CPU configuration within <strong>eight P-cores</strong> with the indexed GPU. CPU selected batch 8,192 for 128-byte packets and 2,048 for 1,400-byte packets; GPU selected 8,192 for all six cases.</p>
+<p><strong>Mpps</strong> means millions of memory-resident packets processed per second; higher is faster. Each rate is the median of five measurements. Blue bars represent CPU and orange bars represent indexed GPU; the numbers at their ends give the measured rates. Both packet-size panels use the same scale, starting at zero.</p>
+<p><img alt="image" src="../images/processing.png" /></p>
+<p><em>Figure 3. Processing rates by direction and packet size in the exploratory sweep.</em></p>
+<p>Within this eight-P-core comparison, CPU leads both uplink and mixed-traffic sizes. GPU leads the 128-byte downlink case, while the 1,400-byte downlink case is close to parity.</p>
+<h3 id="44-longer-downlink-measurements">4.4. Longer Downlink Measurements</h3>
+<p>The follow-up focuses on downlink because the sweep showed a GPU lead or near parity there. We froze the selected methods and batches and ran ten paired trials per case, each lasting at least five seconds, with randomized order. This stage examines the selected configurations over longer measurement intervals.</p>
+<p>With <strong>eight P-cores</strong>, 128-byte downlink processing reached <strong>63.71 Mpps on CPU and 73.93 Mpps on GPU</strong>, a paired improvement of approximately <strong>16%</strong>. At 1,400 bytes, the rates were <strong>46.01 Mpps on CPU and 55.32 Mpps on GPU</strong>, approximately <strong>21% improvement</strong>. CPU retained batches of 8,192 and 2,048 respectively; GPU used 8,192.</p>
+<p>To examine a smaller CPU budget, we also measured 1,400-byte downlink with <strong>four P-cores</strong>. CPU selected batch 512 and achieved <strong>29.34 Mpps</strong>; GPU used batch 8,192 and achieved <strong>55.12 Mpps</strong>. This paired comparison produced the approximately <strong>88% GPU advantage</strong>.</p>
+<p>These measurements use the same algorithms as the short sweep, in a separate time window. The 1,400-byte downlink result changed from near parity to a GPU lead. Percentages compare CPU and GPU within the longer window. Each trial pair contributes a GPU/CPU ratio; we combine those ten ratios using their geometric mean, an average for multiplicative comparisons, to report speedup.</p>
+<p>Figure 4 summarizes these downlink comparisons. Bar lengths and end labels show median processing rates. The CPU allocation is stated separately for each case.</p>
+<p><img alt="image" src="../images/downlink.png" /></p>
+<p><em>Figure 4. Downlink processing rates for the selected CPU allocations.</em></p>
+<p>The worklist improvement also has a direct GPU control: in the longer 1,400-byte, eight-P-core comparison, the initial GPU algorithm reached <strong>45.80 Mpps</strong>, and the indexed algorithm reached <strong>55.32 Mpps</strong>, approximately <strong>21% improvement</strong>.</p>
+<h3 id="45-why-the-results-depend-on-the-workload">4.5. Why the Results Depend on the Workload</h3>
+<p>The direction changes the work being processed. In this implementation, downlink builds outgoing GTP-U headers and allocates sequence numbers. The ordered GPU tasks directly target sequence allocation and usage updates. Each lookup group still has just two PDR candidates, so the optimization concentrates on state processing rather than making rule matching more complex.</p>
+<p>The CPU reference also benefits from indexing and multiple cores. The GPU pays for grouping contributions and synchronizing its parallel stages inside the timed processing. For example, in 128-byte uplink, indexing raised GPU processing from <strong>56.14 to 73.93 Mpps</strong>, while CPU achieved <strong>106.57 Mpps</strong>. An effective GPU optimization can coexist with a faster CPU result for that workload.</p>
+<p>Correctness checks compare output packet bytes, usage and sequence counters, and generated usage-report data against the CPU reference.</p>
+<hr />
+<h2 id="5-conclusion">5. Conclusion</h2>
+<p>This experiment demonstrates a working CPU/GPU forwarding prototype and an optimization for packet-and-state processing. The results identify a conditional GPU advantage: the eight-P-core CPU leads the exploratory uplink and mixed-traffic cases, while the longer downlink comparison shows <strong>16–21% GPU gains</strong>. A smaller CPU allocation also makes GPU processing more competitive in the measured configurations.</p>
+<p>The processing rates apply to repeated, memory-resident batches, with GPU launch and completion costs amortized. The live forwarding prototype and the indexed processor have separate results; the initial live configuration did not establish a full-path speedup.</p>
+<p>The study provides a basis for discussing how traffic direction, CPU allocation and ordered state processing shape the CPU/GPU trade-off. Network I/O, batch waiting, latency and energy extend that discussion from processing speed to the requirements of a UPF data plane.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://github.com/free5gc/go-upf">free5GC go-upf</a> and <a href="https://github.com/free5gc/gtp5g">gtp5g</a>: The native UPF implementation and its GTP-U Linux kernel forwarding module.</li>
+<li><a href="https://github.com/aligungr/UERANSIM">UERANSIM</a>: The UE and gNodeB simulator used to establish real PDU sessions.</li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129200_129299/129244/18.08.00_60/ts_129244v180800p.pdf">3GPP TS 29.244, version 18.8.0</a>: PFCP and the packet forwarding model.</li>
+<li><a href="https://www.etsi.org/deliver/etsi_ts/129200_129299/129281/18.02.00_60/ts_129281v180200p.pdf">3GPP TS 29.281, version 18.2.0</a>: GTP-U headers and sequence-number behavior.</li>
+<li><a href="https://nvidia.github.io/cccl/unstable/cub/api/classcub_1_1BlockRadixSort.html">NVIDIA CUB BlockRadixSort</a>: The sorting primitive used in the contribution index.</li>
+<li><a href="https://lpc.events/event/19/contributions/2267/">Kernel-Native Packet Processing on AMD GPUs</a>, Taehee Yoo, LPC 2025; <a href="https://lpc.events/event/19/contributions/2267/attachments/1961/4179/LPC2025-Kernel-Native%20Packet%20processing.pdf">presentation slides</a>: The starting reference for exploring GPU packet processing and packet movement.</li>
+</ul>
+<hr />
+<h2 id="about">About</h2>
+<p>Hello, I'm <a href="https://github.com/solar224">Yu-Chen Chan</a>. This project explores GPU acceleration of free5GC UPF through implementation and measurement. I hope the article helps you understand the approach and its results. Questions, suggestions and ideas for further experiments are welcome.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/solar224">solar224</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

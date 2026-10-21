@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-label="Comparison of the uncontrolled r01 pilot with fixed scheduler parameters">
+<style>
+text{font-family:Inter,Arial,sans-serif;fill:#182433}
+.title{font-size:28px;font-weight:700}
+.subtitle{font-size:16px;fill:#617184}
+.axis{font-size:14px;fill:#405060}
+.label{font-size:15px;font-weight:600}
+.value{font-size:14px;font-weight:700}
+.legend{font-size:14px}
+</style>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="60.0" y="50.0" class="title" text-anchor="start" >Why r01 is a pilot rather than a main replicate</text>
+<text x="60.0" y="78.0" class="subtitle" text-anchor="start" >r01 let HTB derive burst, cburst, and quantum; r02–r11 fixed them across both configurations</text>
+<line x1="100.0" y1="385.0" x2="1140.0" y2="385.0" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="390.0" class="axis" text-anchor="end" >0</text>
+<line x1="100.0" y1="323.8" x2="1140.0" y2="323.8" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="328.8" class="axis" text-anchor="end" >5</text>
+<line x1="100.0" y1="262.5" x2="1140.0" y2="262.5" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="267.5" class="axis" text-anchor="end" >10</text>
+<line x1="100.0" y1="201.2" x2="1140.0" y2="201.2" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="206.2" class="axis" text-anchor="end" >15</text>
+<line x1="100.0" y1="140.0" x2="1140.0" y2="140.0" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="145.0" class="axis" text-anchor="end" >20</text>
+<line x1="100.0" y1="140.0" x2="100.0" y2="385.0" stroke="#405060" stroke-width="1.5" opacity="1.0"/>
+<line x1="100.0" y1="385.0" x2="1140.0" y2="385.0" stroke="#405060" stroke-width="1.5" opacity="1.0"/>
+<text x="25.0" y="262.5" class="label" text-anchor="middle" transform="rotate(-90 25 262.5)">Mbit/s</text>
+<text x="112.0" y="165.0" class="label" text-anchor="start" >Static HTB</text>
+<rect x="235.0" y="279.3" width="74.0" height="105.7" fill="#8A94A3" opacity="1.0" rx="4.0"/>
+<text x="272.0" y="270.3" class="value" text-anchor="middle" >8.63</text>
+<rect x="331.0" y="270.7" width="74.0" height="114.3" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="368.0" y="261.7" class="value" text-anchor="middle" >9.33</text>
+<text x="320.0" y="415.0" class="label" text-anchor="middle" >Flow A</text>
+<rect x="535.0" y="279.5" width="74.0" height="105.5" fill="#8A94A3" opacity="1.0" rx="4.0"/>
+<text x="572.0" y="270.5" class="value" text-anchor="middle" >8.61</text>
+<rect x="631.0" y="270.8" width="74.0" height="114.2" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="668.0" y="261.8" class="value" text-anchor="middle" >9.32</text>
+<text x="620.0" y="415.0" class="label" text-anchor="middle" >Flow B</text>
+<rect x="835.0" y="279.6" width="74.0" height="105.4" fill="#8A94A3" opacity="1.0" rx="4.0"/>
+<text x="872.0" y="270.6" class="value" text-anchor="middle" >8.60</text>
+<rect x="931.0" y="270.7" width="74.0" height="114.3" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="968.0" y="261.7" class="value" text-anchor="middle" >9.33</text>
+<text x="920.0" y="415.0" class="label" text-anchor="middle" >Flow C</text>
+<line x1="100.0" y1="690.0" x2="1140.0" y2="690.0" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="695.0" class="axis" text-anchor="end" >0</text>
+<line x1="100.0" y1="628.8" x2="1140.0" y2="628.8" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="633.8" class="axis" text-anchor="end" >5</text>
+<line x1="100.0" y1="567.5" x2="1140.0" y2="567.5" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="572.5" class="axis" text-anchor="end" >10</text>
+<line x1="100.0" y1="506.2" x2="1140.0" y2="506.2" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="511.2" class="axis" text-anchor="end" >15</text>
+<line x1="100.0" y1="445.0" x2="1140.0" y2="445.0" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="450.0" class="axis" text-anchor="end" >20</text>
+<line x1="100.0" y1="445.0" x2="100.0" y2="690.0" stroke="#405060" stroke-width="1.5" opacity="1.0"/>
+<line x1="100.0" y1="690.0" x2="1140.0" y2="690.0" stroke="#405060" stroke-width="1.5" opacity="1.0"/>
+<text x="25.0" y="567.5" class="label" text-anchor="middle" transform="rotate(-90 25 567.5)">Mbit/s</text>
+<text x="112.0" y="470.0" class="label" text-anchor="start" >GBR/MBR-aware HTB</text>
+<rect x="235.0" y="523.0" width="74.0" height="167.0" fill="#8A94A3" opacity="1.0" rx="4.0"/>
+<text x="272.0" y="514.0" class="value" text-anchor="middle" >13.63</text>
+<rect x="331.0" y="485.2" width="74.0" height="204.8" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="368.0" y="476.2" class="value" text-anchor="middle" >16.72</text>
+<text x="320.0" y="720.0" class="label" text-anchor="middle" >Flow A</text>
+<rect x="535.0" y="623.9" width="74.0" height="66.1" fill="#8A94A3" opacity="1.0" rx="4.0"/>
+<text x="572.0" y="614.9" class="value" text-anchor="middle" >5.40</text>
+<rect x="631.0" y="621.4" width="74.0" height="68.6" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="668.0" y="612.4" class="value" text-anchor="middle" >5.60</text>
+<text x="620.0" y="720.0" class="label" text-anchor="middle" >Flow B</text>
+<rect x="835.0" y="659.1" width="74.0" height="30.9" fill="#8A94A3" opacity="1.0" rx="4.0"/>
+<text x="872.0" y="650.1" class="value" text-anchor="middle" >2.52</text>
+<rect x="931.0" y="620.7" width="74.0" height="69.3" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="968.0" y="611.7" class="value" text-anchor="middle" >5.66</text>
+<text x="920.0" y="720.0" class="label" text-anchor="middle" >Flow C</text>
+<rect x="470.0" y="108.0" width="20.0" height="14.0" fill="#8A94A3" opacity="1.0" rx="2.0"/>
+<text x="498.0" y="122.0" class="axis" text-anchor="start" >r01 auto-derived (n=1)</text>
+<rect x="670.0" y="108.0" width="20.0" height="14.0" fill="#1976B9" opacity="1.0" rx="2.0"/>
+<text x="698.0" y="122.0" class="axis" text-anchor="start" >r02–r11 fixed mean</text>
+<text x="620.0" y="760.0" class="subtitle" text-anchor="middle" >The pilot is diagnostic only: changing scheduler parameters changes borrowing behavior and confounds rate/ceil effects.</text>
+</svg>
