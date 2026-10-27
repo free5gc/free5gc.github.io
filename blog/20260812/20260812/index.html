@@ -1,0 +1,1388 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Building the free5GC Deployment Skill: Guiding Beginners to an End-to-End Test - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-the-free5gc-deployment-skill-guiding-beginners-to-an-end-to-end-test" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building the free5GC Deployment Skill: Guiding Beginners to an End-to-End Test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../forum/2026/" class="md-tabs__link">
+        
+  
+    
+  
+  free5GC Forum 2026
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://forum.free5gc.org" class="md-tabs__link">
+        
+  
+    
+  
+  Discussion Forum
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../forum/2026/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    free5GC Forum 2026
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://forum.free5gc.org" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discussion Forum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abstract" class="md-nav__link">
+    Abstract
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background-why-a-first-deployment-needs-guidance" class="md-nav__link">
+    Background: Why a First Deployment Needs Guidance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-we-built-the-skill" class="md-nav__link">
+    How We Built the Skill
+  </a>
+  
+    <nav class="md-nav" aria-label="How We Built the Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-define-the-scope-around-a-beginners-outcome" class="md-nav__link">
+    1. Define the Scope Around a Beginner's Outcome
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-separate-workflow-instructions-references-and-diagnostics" class="md-nav__link">
+    2. Separate Workflow Instructions, References, and Diagnostics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-reconcile-documentation-with-the-selected-checkout" class="md-nav__link">
+    3. Reconcile Documentation with the Selected Checkout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-make-observation-and-user-operation-explicit" class="md-nav__link">
+    4. Make Observation and User Operation Explicit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-seven-workflow-stages" class="md-nav__link">
+    The Seven Workflow Stages
+  </a>
+  
+    <nav class="md-nav" aria-label="The Seven Workflow Stages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-preflight-understand-the-target-before-installing" class="md-nav__link">
+    1. PREFLIGHT — Understand the Target Before Installing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-waiting_for_install-hand-off-the-complete-official-installer" class="md-nav__link">
+    2. WAITING_FOR_INSTALL — Hand Off the Complete Official Installer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify_install-check-what-was-installed" class="md-nav__link">
+    3. VERIFY_INSTALL — Check What Was Installed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-guide_e2e-teach-one-checkpoint-at-a-time" class="md-nav__link">
+    4. GUIDE_E2E — Teach One Checkpoint at a Time
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-waiting_for_test_result-collect-evidence-from-the-ue-path" class="md-nav__link">
+    5. WAITING_FOR_TEST_RESULT — Collect Evidence from the UE Path
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-troubleshoot-repair-the-failed-stage" class="md-nav__link">
+    6. TROUBLESHOOT — Repair the Failed Stage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-complete-partial-report-each-level-separately" class="md-nav__link">
+    7. COMPLETE / PARTIAL — Report Each Level Separately
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-real-conversation-from-a-request-to-ue-connectivity" class="md-nav__link">
+    A Real Conversation: From a Request to UE Connectivity
+  </a>
+  
+    <nav class="md-nav" aria-label="A Real Conversation: From a Request to UE Connectivity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-and-installation-handoff" class="md-nav__link">
+    Request and Installation Handoff
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-reveals-environment-specific-details" class="md-nav__link">
+    Verification Reveals Environment-Specific Details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapt-the-namespace-topology-to-the-vm" class="md-nav__link">
+    Adapt the Namespace Topology to the VM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-association-and-subscriber-preparation" class="md-nav__link">
+    Core Association and Subscriber Preparation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gnb-setup-and-ue-registration" class="md-nav__link">
+    gNB Setup and UE Registration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-traffic-evidence" class="md-nav__link">
+    Final Traffic Evidence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-design-gives-beginners" class="md-nav__link">
+    What This Design Gives Beginners
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about" class="md-nav__link">
+    About
+  </a>
+  
+    <nav class="md-nav" aria-label="About">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-me" class="md-nav__link">
+    Connect with Me
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20260812/20260812.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20260812/20260812.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="building-the-free5gc-deployment-skill-guiding-beginners-to-an-end-to-end-test">Building the free5GC Deployment Skill: Guiding Beginners to an End-to-End Test</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/d11nn">Meng-Han, Hsieh</a><br />
+Date: 2026/08/12</p>
+</div>
+<h2 id="abstract">Abstract</h2>
+<p>Our goal in building <a href="https://github.com/free5gc/agent-skills/tree/main/skills/free5gc-deploy">free5gc-deploy</a> is to help beginners deploy free5GC and complete an end-to-end (E2E) connectivity test with an AI agent's guidance. We want to reduce the learning cost of a first deployment: deciding which instructions apply, adapting network addresses, understanding terminal output, and knowing what to check next.</p>
+<p>The skill organizes official deployment knowledge into seven workflow stages, supported by focused reference documents and read-only diagnostic scripts. It gives the AI agent a way to guide the user from environment inspection through installation, core startup, UE registration, PDU session establishment, and traffic through the UE tunnel.</p>
+<p>This article explains the design and follows an actual single-VM conversation. The walkthrough includes two useful discoveries—a tool-shell PATH issue and an overlapping subnet—and ends with successful tunnel-bound pings to two external destinations.</p>
+<h2 id="background-why-a-first-deployment-needs-guidance">Background: Why a First Deployment Needs Guidance</h2>
+<p>A free5GC deployment connects several layers: the Ubuntu environment, Go tools, MongoDB, the gtp5g kernel module, core network functions (NFs), subscriber records, and a RAN/UE simulator. A newcomer may follow individual commands successfully while still being uncertain whether the complete system works.</p>
+<p>For example, a built UPF binary does not establish that the kernel module is ready. An accepted SMF–UPF association does not establish that a UE can register. A successful ping from the VM's ordinary shell does not establish that packets traveled through the simulated UE's data session.</p>
+<p>The skill addresses these gaps by pairing each action with its purpose and expected evidence. Beginners can learn the deployment process as they run it, without first having to reconstruct every dependency from multiple documents. This is the intended benefit; the walkthrough below demonstrates one successful deployment and connectivity test, rather than a measured reduction in onboarding time.</p>
+<pre class="mermaid"><code>flowchart LR
+    Request[Beginner's deployment request] --&gt; Skill[free5gc-deploy]
+    Docs[Official guides and selected source revisions] --&gt; Skill
+    Evidence[VM observations and user results] --&gt; Skill
+    Skill --&gt; Next[Concrete next step and expected result]
+    Next --&gt; User[User operates the deployment]
+    User --&gt; Evidence</code></pre>
+<h2 id="how-we-built-the-skill">How We Built the Skill</h2>
+<h3 id="1-define-the-scope-around-a-beginners-outcome">1. Define the Scope Around a Beginner's Outcome</h3>
+<p>We defined the skill around installation, validation, troubleshooting, and a guided free-ran-ue (gNB/UE simulator) connectivity test on Ubuntu. It supports both a single VM with network namespace isolation and a two-VM topology with the core and simulator on separate machines.</p>
+<p>The target outcome determines the stopping point. An install-only request can finish with installation evidence and an explicit statement that E2E remains untested. A request for a full connectivity test continues until registration, session, tunnel, and traffic evidence are available.</p>
+<p>We also distinguish the agent's workstation from the deployment target. The agent may have local file access, remote access, or only the user's pasted output. Instructions must work with those differences instead of assuming that the agent always runs on the Ubuntu VM.</p>
+<h3 id="2-separate-workflow-instructions-references-and-diagnostics">2. Separate Workflow Instructions, References, and Diagnostics</h3>
+<p>The package has three responsibilities:</p>
+<div class="highlight"><pre><span></span><code>free5gc-deploy/
+├── SKILL.md                      # Scope, boundaries, workflow, state
+├── references/
+│   ├── sources.md                # Official sources and reviewed revisions
+│   ├── preflight.md              # Target environment and topology
+│   ├── installation.md           # Official installer and user handoff
+│   ├── verification.md           # Evidence levels and diagnostic contract
+│   ├── end-to-end-test.md        # Subscriber, simulator, and connectivity
+│   └── troubleshooting.md        # Diagnosis and focused repairs
+└── scripts/
+    ├── collect-env.sh            # Environment observations
+    ├── check-install.sh          # Installation observations
+    ├── common.sh                 # Shared diagnostic functions
+    ├── inspect-artifacts.py      # Inspect expected build outputs
+    └── check-config.py           # Check supported static YAML relationships
+</code></pre></div>
+<p><code>SKILL.md</code> provides the compact control flow. The agent reads the references needed for the current stage, keeping unrelated installation or troubleshooting details out of the immediate conversation. The scripts collect repeatable observations, while the agent interprets them in the context of the user's request.</p>
+<p>This structure also makes maintenance more focused: a simulator configuration change belongs in the relevant reference and checks, while the overall workflow can remain recognizable to users.</p>
+<h3 id="3-reconcile-documentation-with-the-selected-checkout">3. Reconcile Documentation with the Selected Checkout</h3>
+<p>We organized an official source index and recorded reviewed source revisions. Deployment instructions can change, and older guide examples may differ from the current YAML schema or startup commands. The skill therefore asks the agent to inspect the selected checkout before preparing commands.</p>
+<p>Several distinctions recorded in the references affect a first deployment directly:</p>
+<ul>
+<li>The UPF GTP-U bind address is an N3/N9 address. The N6 egress interface is a separate routing/NAT choice.</li>
+<li>The reviewed namespace script creates <code>free-ran-ns</code> and <code>free-ue-ns</code>; the core, MongoDB, and Webconsole stay in the default network namespace.</li>
+<li>The actual UPF YAML key is <code>gtpu.ifList</code>; a historical namespace example contains <code>ifList</code>.</li>
+<li>The selected core can manage per-DNN NAT/FORWARD rules through its UPF configuration, so old broad iptables recipes should not be added blindly.</li>
+<li>Current build outputs and configuration fields must be read from the checkout rather than copied mechanically from older examples.</li>
+</ul>
+<p>The <a href="https://github.com/free5gc/agent-skills/blob/main/skills/free5gc-deploy/references/sources.md">source index</a> records these differences and their source pins. A source review establishes what the instructions describe; runtime evidence establishes whether a particular VM deployment works.</p>
+<h3 id="4-make-observation-and-user-operation-explicit">4. Make Observation and User Operation Explicit</h3>
+<p>The bundled diagnostics are read-only and noninteractive. They do not invoke the installer, start NFs, create subscribers, or alter network namespaces. The complete official installer runs in the user's own target-host Bash terminal, preserving its <code>source</code> semantics and interactive behavior.</p>
+<p>For a beginner, this produces a clear division of work: the AI agent explains and checks; the user performs the system operation and returns its result. Password entry stays in the user's terminal. Existing configuration changes and subscriber records are preserved.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User
+    participant Agent as AI agent
+    participant VM as Ubuntu VM
+    User-&gt;&gt;Agent: Request installation and an E2E test
+    Agent-&gt;&gt;VM: Read-only environment checks when accessible
+    VM--&gt;&gt;Agent: Host, routes, tools, and repository observations
+    Agent--&gt;&gt;User: Explain installer effects and provide actual command
+    User-&gt;&gt;VM: Run official installer in Bash
+    User--&gt;&gt;Agent: Installation finished, or nearby error output
+    Agent-&gt;&gt;VM: Check installed artifacts and dependencies
+    Agent--&gt;&gt;User: Guide the next E2E checkpoint
+    User-&gt;&gt;VM: Perform the checkpoint
+    User--&gt;&gt;Agent: Return logs or interface/traffic evidence
+    Agent--&gt;&gt;User: Interpret results and choose the next step</code></pre>
+<h2 id="the-seven-workflow-stages">The Seven Workflow Stages</h2>
+<p>These stages are a conversational workflow, not a background service or a required state daemon. The agent keeps a compact record of the target, topology, source revisions, local changes, addresses, current stage, pending action, and evidence. That record helps the conversation resume without asking the beginner to repeat known information.</p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Install[Installation]
+        direction TB
+        P["1. PREFLIGHT&lt;br/&gt;Inspect target and choose topology"]
+        I["2. WAITING_FOR_INSTALL&lt;br/&gt;User runs the official installer"]
+        V["3. VERIFY_INSTALL&lt;br/&gt;Check artifacts and dependencies"]
+        P --&gt; I --&gt; V
+    end
+    subgraph Test[End-to-end connectivity]
+        direction TB
+        G["4. GUIDE_E2E&lt;br/&gt;Guide one checkpoint at a time"]
+        R["5. WAITING_FOR_TEST_RESULT&lt;br/&gt;Collect logs, tunnel, and traffic evidence"]
+        G --&gt; R
+    end
+    C["7. COMPLETE / PARTIAL&lt;br/&gt;Report evidence for each requested level"]
+    V --&gt; G
+    R --&gt; C
+    subgraph Recovery[Recovery from any stage]
+        direction TB
+        F["Error or failed checkpoint"]
+        T["6. TROUBLESHOOT&lt;br/&gt;Diagnose, repair, and recheck"]
+        Resume["Resume the affected workflow stage"]
+        F --&gt; T --&gt; Resume
+    end
+    classDef inspect fill:#e8f0fe,stroke:#476582,color:#172b4d
+    classDef waiting fill:#fff4db,stroke:#b8860b,color:#513c06
+    classDef recovery fill:#fce8e6,stroke:#b85450,color:#612522
+    classDef result fill:#e7f3e8,stroke:#4b8751,color:#214b27
+    class P,V,G inspect
+    class I,R waiting
+    class F,T,Resume recovery
+    class C result</code></pre>
+<p>The main path flows from installation to E2E evidence and a final assessment. The separate recovery path applies to any failed stage; after a successful repair, the agent resumes that stage. During E2E guidance, stages 4 and 5 repeat for each checkpoint until the requested evidence is available.</p>
+<h3 id="1-preflight-understand-the-target-before-installing">1. PREFLIGHT — Understand the Target Before Installing</h3>
+<p>Preflight establishes where the deployment will run and which topology the user wants. The agent inspects Ubuntu version, CPU architecture and exposed AVX, kernel, memory, storage, network addresses/routes, tools, existing repositories, MongoDB, and gtp5g state.</p>
+<p>Network interface selection follows topology and route evidence. With multiple NICs, the agent must identify RAN reachability and data-network egress rather than choosing the first interface name it sees. Unsupported or unresolved prerequisites stop the installation path until clarified.</p>
+<p><strong>Learning benefit:</strong> the beginner sees why a specific interface and setup apply to their VM. Unavailable observations remain unknown instead of becoming invented compatibility claims.</p>
+<h3 id="2-waiting_for_install-hand-off-the-complete-official-installer">2. WAITING_FOR_INSTALL — Hand Off the Complete Official Installer</h3>
+<p>The agent prepares a command using the confirmed repository path and interface, explains the selected installer's effects, and asks the user to return after running it. In our deployment the command was:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/home/ubuntu/free5gc
+<span class="nb">source</span><span class="w"> </span>quick-setup.sh<span class="w"> </span>-i<span class="w"> </span>enp0s3
+</code></pre></div>
+<p>Those values belong to this VM. The skill instructs the agent to substitute actual values for another deployment. It preserves <code>source</code> rather than replacing the installer with <code>bash</code>, a pipeline, or a reconstructed set of installation stages.</p>
+<p>The waiting state matters because the agent cannot infer the completion of a command in another terminal. The user's reply resumes verification; it is not itself proof of a successful installation.</p>
+<p><strong>Learning benefit:</strong> the user gets one concrete installation action, an explanation of its system changes, and a clear way to return with errors.</p>
+<h3 id="3-verify_install-check-what-was-installed">3. VERIFY_INSTALL — Check What Was Installed</h3>
+<p>After the user returns, the agent checks expected build outputs, Webconsole files, tool versions, MongoDB usability, gtp5g for the running kernel, repository changes, and supported basic configuration relationships.</p>
+<p>The diagnostic vocabulary preserves uncertainty:</p>
+<table>
+<thead>
+<tr>
+<th>Result</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PASS</code></td>
+<td>The particular check has supporting evidence</td>
+</tr>
+<tr>
+<td><code>FAIL</code></td>
+<td>The check found a proven problem</td>
+</tr>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td>Available evidence does not resolve the check</td>
+</tr>
+<tr>
+<td><code>UNAVAILABLE</code></td>
+<td>A tool, permission, or timeout prevents observation; an unknown subtype</td>
+</tr>
+</tbody>
+</table>
+<p>Summary counts describe observations. Even a successful static check does not prove NF readiness or UE connectivity. The checker deliberately emits an unknown runtime observation because it does not perform those tests.</p>
+<p><strong>Learning benefit:</strong> the beginner learns to distinguish installed files from a running network and can locate a failed dependency before starting the simulator.</p>
+<h3 id="4-guide_e2e-teach-one-checkpoint-at-a-time">4. GUIDE_E2E — Teach One Checkpoint at a Time</h3>
+<p>This stage guides simulator build/configuration, network preparation, core startup, subscriber creation, gNB setup, and UE startup. Each instruction specifies the host, namespace, working directory, privilege, expected result, and whether the terminal must stay open.</p>
+<p>For a single VM, separate terminals are useful for long-running processes, but namespace entry provides network isolation. The skill makes that distinction explicit so a newcomer can understand where each command runs.</p>
+<pre class="mermaid"><code>flowchart TD
+    Build[Simulator built and core egress checked] --&gt; Net[Addresses and namespace topology verified]
+    Net --&gt; Core[Start core and inspect readiness evidence]
+    Core --&gt; Sub[Create matching test subscriber]
+    Sub --&gt; Gnb[Start gNB and confirm N2 setup]
+    Gnb --&gt; Ue[Start UE and inspect registration/session]
+    Ue --&gt; Tunnel[Observe actual tunnel and assigned IP]
+    Tunnel --&gt; Ping[Ping explicitly through the UE tunnel]</code></pre>
+<p><strong>Learning benefit:</strong> every checkpoint introduces a small part of the system and a recognizable success condition. Failures can be investigated before dependent steps add more confusing output.</p>
+<h3 id="5-waiting_for_test_result-collect-evidence-from-the-ue-path">5. WAITING_FOR_TEST_RESULT — Collect Evidence from the UE Path</h3>
+<p>The agent asks for registration/session logs, the actual UE tunnel and address, and ping statistics explicitly bound to that tunnel. It uses the observed interface name; a configured base name such as <code>ueTun</code> may become <code>ueTun0</code> at runtime.</p>
+<p>In a single-VM deployment, the final ping runs inside the UE namespace. An ordinary host ping only verifies the host's own egress and cannot substitute for this result.</p>
+<p><strong>Learning benefit:</strong> the user learns what an E2E claim needs: successful signaling and packets through the data path, with packet loss reported visibly.</p>
+<h3 id="6-troubleshoot-repair-the-failed-stage">6. TROUBLESHOOT — Repair the Failed Stage</h3>
+<p>Troubleshooting is available whenever a problem appears, including before installation verification. Its loop is evidence → hypothesis → check → minimal repair → recheck. Reinstallation is not the default response.</p>
+<pre class="mermaid"><code>flowchart LR
+    E[Observe the failure] --&gt; H[Form a specific hypothesis]
+    H --&gt; D[Check relevant evidence]
+    D --&gt; F[Apply the smallest justified repair]
+    F --&gt; R[Recheck the failed stage]
+    R --&gt;|Still failing| H
+    R --&gt;|Resolved| N[Resume the workflow]</code></pre>
+<p>For example, an unavailable <code>go</code> command may reflect the tool shell's PATH. A failed data-path check may involve N6 routing or forwarding even after registration succeeds. The skill keeps those possibilities separate and preserves existing deployment data while investigating.</p>
+<p><strong>Learning benefit:</strong> the beginner can understand why a repair is proposed and avoid restarting the entire deployment for a localized issue.</p>
+<h3 id="7-complete-partial-report-each-level-separately">7. COMPLETE / PARTIAL — Report Each Level Separately</h3>
+<p>The final assessment separates installation, core startup, and E2E results:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Evidence to seek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Installation</td>
+<td>Expected artifacts, appropriate tools, MongoDB usability, kernel module, and supported configuration checks</td>
+</tr>
+<tr>
+<td>Core startup</td>
+<td>Required NF processes and logs, NRF/SBI registration, applicable PFCP association, and AMF N2 readiness</td>
+</tr>
+<tr>
+<td>E2E</td>
+<td>UE registration, matching PDU session/address, actual tunnel, and replies explicitly through that tunnel</td>
+</tr>
+</tbody>
+</table>
+<p><code>COMPLETE</code> means the requested scope has sufficient evidence. <code>PARTIAL</code> means work or evidence remains. One PFCP association line proves that association; it does not establish every NF's health. The agent should report the scope of each observation rather than turning a single successful line into a universal verdict.</p>
+<p><strong>Learning benefit:</strong> the user leaves with a clear account of what worked, what was tested, and what still needs attention.</p>
+<h2 id="a-real-conversation-from-a-request-to-ue-connectivity">A Real Conversation: From a Request to UE Connectivity</h2>
+<p>This example uses Codex to demonstrate the workflow. The skill's instructions describe an AI-agent workflow that can also guide other coding assistants, such as Claude Code.</p>
+<h3 id="request-and-installation-handoff">Request and Installation Handoff</h3>
+<p>The walkthrough started with a simple request:</p>
+<blockquote>
+<p>Help me install free5GC on my Ubuntu VM. I want a single-VM namespace test.</p>
+</blockquote>
+<p>Codex read the deployment skill and entered preflight. The VM exposed x86_64 with AVX, ran Ubuntu 25.04 with kernel <code>6.14.0-37-generic</code>, and had roughly 7.4 GB memory and 39 GB available storage. The existing free5GC checkout was clean. Route evidence identified <code>enp0s3</code>, with address <code>10.0.2.15</code>, as Internet egress.</p>
+<p><img alt="Initial deployment request and skill selection" src="../1.jpg" /></p>
+<p>Figure 1: The user's requested topology establishes the deployment scope.</p>
+<p>The agent explained the installer effects, including dependencies, MongoDB, builds, forwarding, configuration changes, and stopping/disabling UFW, then handed over the full official command. The user ran it in the VM's Bash terminal.</p>
+<p><img alt="Official installation command and return checkpoint" src="../2.jpg" /></p>
+<p>Figure 2: Installation instructions include the actual path/interface and a clear return checkpoint.</p>
+<h3 id="verification-reveals-environment-specific-details">Verification Reveals Environment-Specific Details</h3>
+<p>After the user replied that installation had finished, Codex checked binaries, Webconsole files, MongoDB, and gtp5g. Initially its tool shell could not find Go. Running <code>/usr/local/go/bin/go version</code> showed Go 1.26.2, and adjusting the diagnostic PATH made the tool observable. A later restricted PATH also omitted administrative tool directories, which affected <code>iptables</code> and <code>modinfo</code> observations until corrected.</p>
+<p>The final installation checker summary was:</p>
+<div class="highlight"><pre><span></span><code>SUMMARY pass=39 fail=0 unknown=1 (observations only)
+</code></pre></div>
+<p>The remaining unknown concerned runtime tests. Separately, a MongoDB ping returned <code>1</code>. These checks supported proceeding with the E2E test while keeping core startup and UE connectivity unverified.</p>
+<p><img alt="Installation checks and detection of the namespace subnet overlap" src="../3.jpg" /></p>
+<p>Figure 3: Verification distinguishes a PATH issue from a missing installation and discovers an address overlap.</p>
+<h3 id="adapt-the-namespace-topology-to-the-vm">Adapt the Namespace Topology to the VM</h3>
+<p>The reviewed simulator recipe used <code>10.0.2.0/24</code> for its RAN–UE link. Our VM already used that subnet on <code>enp0s3</code>. Rather than copy the example unchanged, the agent prepared <code>10.0.3.0/24</code> for the RAN–UE link, updated the simulator YAML and namespace script consistently, and removed a redundant connected-route addition in that script.</p>
+<p>Core N2/N3 addresses changed to <code>10.0.1.1</code>; the external N6 interface remained <code>enp0s3</code>. Core configuration backups used the suffix <code>.before-namespace</code>. The agent prepared local files and built the simulator; the user performed privileged namespace setup in the terminal.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Default[Default network namespace]
+        Core[AMF N2 / UPF N3: 10.0.1.1]
+        DB[MongoDB and Webconsole]
+        Egress[N6 egress: enp0s3 / 10.0.2.15]
+    end
+    subgraph Ran[free-ran-ns]
+        Gnb[gNB: 10.0.1.2]
+        Link[RAN UE-facing address: 10.0.3.1]
+    end
+    subgraph Ue[free-ue-ns]
+        Sim[Simulator link: 10.0.3.2]
+        Tun[ueTun0: 10.60.0.1]
+    end
+    Core &lt;--&gt;|N2 / N3 over veth| Gnb
+    Gnb --- Link
+    Link &lt;--&gt;|Simulator control / data link| Sim
+    Sim --- Tun
+    Core --&gt;|UPF data-network egress| Egress
+    Egress --&gt; DN[External destinations]</code></pre>
+<p>The RAN–UE link address <code>10.0.3.2</code> and PDU-session address <code>10.60.0.1</code> serve different purposes. The former connects simulator components; the latter is the UE address used by the final tunnel-bound traffic test.</p>
+<p><img alt="Prepared addresses and user-run namespace setup instructions" src="../4.jpg" /></p>
+<p>Figure 4: Concrete addresses replace generic examples while preserving the external egress interface.</p>
+<p>The user ran <code>make ns-up</code> and returned namespace/interface observations. They showed <code>fnsHost</code> at <code>10.0.1.1</code>, RAN interfaces at <code>10.0.1.2</code> and <code>10.0.3.1</code>, and the UE-side interface at <code>10.0.3.2</code>.</p>
+<p><img alt="Namespace setup output and the next core startup checkpoint" src="../5.jpg" /></p>
+<p>Figure 5: Actual interface observations confirm the topology before core startup.</p>
+<h3 id="core-association-and-subscriber-preparation">Core Association and Subscriber Preparation</h3>
+<p>The user started the core outside the namespaces and returned an SMF log reporting an accepted PFCP association response from UPF <code>127.0.0.8</code>. Codex identified that as association evidence and explicitly said remaining core readiness evidence was still needed.</p>
+<p>Next, the user started Webconsole in the default network namespace and created a subscriber using public test-only values matching the simulator. The guide explained matching identity/authentication fields, PLMN, slice, and DNN, and asked the user to check for an existing SUPI before creating a record.</p>
+<p><img alt="PFCP association evidence and matching test subscriber instructions" src="../6.jpg" /></p>
+<p>Figure 6: The subscriber checkpoint connects Webconsole fields to simulator configuration. Authentication values shown here are public test data for an isolated test environment.</p>
+<h3 id="gnb-setup-and-ue-registration">gNB Setup and UE Registration</h3>
+<p>After subscriber creation, Codex instructed the user to enter <code>free-ran-ns</code> and launch the gNB. It specified which terminals had to stay running and requested the N2 setup result before launching the UE.</p>
+<p><img alt="Instructions to enter the RAN namespace and start the gNB" src="../7.jpg" /></p>
+<p>Figure 7: Namespace entry, command location, and terminal lifetime are explained together.</p>
+<p>The returned gNB logs showed connection to AMF <code>10.0.1.1:38412</code> and completed N2 setup. Its UE-facing control/data listeners used <code>10.0.3.1</code>. The UDP UPF connection log alone was not treated as a successful data-path test; the UE traffic check came later.</p>
+<p><img alt="gNB startup results followed by the UE launch checkpoint" src="../8.jpg" /></p>
+<p>Figure 8: N2 setup evidence allows the walkthrough to proceed to UE registration.</p>
+<p>Inside <code>free-ue-ns</code>, the user launched the UE. The logs reported registration completion, PDU session establishment for DNN <code>internet</code>, assigned address <code>10.60.0.1</code>, and tunnel device <code>ueTun0</code>.</p>
+<p><img alt="UE registration, session establishment, and actual tunnel name" src="../9.jpg" /></p>
+<p>Figure 9: The next test uses the observed tunnel name and assigned address.</p>
+<h3 id="final-traffic-evidence">Final Traffic Evidence</h3>
+<p>In another shell inside <code>free-ue-ns</code>, the user ran:</p>
+<div class="highlight"><pre><span></span><code>ip<span class="w"> </span>-4<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>dev<span class="w"> </span>ueTun0
+ping<span class="w"> </span>-I<span class="w"> </span>ueTun0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">1</span>.1.1.1
+ping<span class="w"> </span>-I<span class="w"> </span>ueTun0<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">8</span>.8.8.8
+</code></pre></div>
+<p>The interface had <code>10.60.0.1/32</code>, and both ping outputs explicitly showed traffic originating from that address through <code>ueTun0</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Packets sent / received</th>
+<th>Loss</th>
+<th>Average RTT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1.1.1.1</code></td>
+<td>5 / 5</td>
+<td>0%</td>
+<td>5.077 ms</td>
+</tr>
+<tr>
+<td><code>8.8.8.8</code></td>
+<td>5 / 5</td>
+<td>0%</td>
+<td>5.087 ms</td>
+</tr>
+</tbody>
+</table>
+<p>These are observations from five packets per destination in this connectivity test, not a performance benchmark. Together with the preceding registration/session evidence, they support the demonstrated UE connectivity result.</p>
+<p><img alt="Tunnel-bound ping results and the final assessment" src="../10.jpg" /></p>
+<p>Figure 10: The final checkpoint verifies traffic through the UE tunnel and reports packet loss.</p>
+<p>Cleanup guidance followed the same explicit approach: stop UE, gNB, core, and Webconsole; exit namespace shells; confirm no processes remain; then run <code>make ns-down</code> from the default namespace. Configuration and the test subscriber are retained for reuse.</p>
+<h2 id="what-this-design-gives-beginners">What This Design Gives Beginners</h2>
+<p>The skill lowers the amount of deployment knowledge a newcomer must assemble before making progress. Paths and interfaces come from their environment. Each terminal has a stated role. Logs have an explanation. Errors lead to a focused investigation. Completion depends on visible evidence.</p>
+<p>The deployment example also shows why this guidance must remain adaptive. A fixed subnet example would have overlapped the VM's network; a missing command observation could have prompted an unnecessary Go reinstall. Reading actual routes, checking the installed executable, and rechecking the affected observation kept the walkthrough moving.</p>
+<p>The package describes two-VM guidance as well, but this article demonstrates the single-VM topology only. New source revisions, Ubuntu/package combinations, and kernel/module combinations require renewed review and runtime validation. Future maintenance should preserve the seven-stage structure while updating its references and diagnostics with those changes.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We built free5gc-deploy around a beginner's concrete goal: deploy free5GC and demonstrate an E2E UE connectivity test. Its seven workflow stages organize the next action, the evidence needed to proceed, and the response to failure. Focused references provide deployment knowledge, and read-only scripts make observations repeatable.</p>
+<p>In the demonstrated conversation, that structure guided the user from an initial request through installation verification, namespace adaptation, subscriber preparation, gNB setup, UE registration, and successful tunnel-bound traffic. The same checkpoints also teach the user how the components fit together, making a first deployment easier to follow and a subsequent failure easier to diagnose.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/free5gc/agent-skills/tree/main/skills/free5gc-deploy">free5gc-deploy skill and supporting files</a></li>
+<li><a href="https://github.com/free5gc/agent-skills/blob/main/skills/free5gc-deploy/SKILL.md">Skill workflow definition</a></li>
+<li><a href="https://github.com/free5gc/agent-skills/blob/main/skills/free5gc-deploy/references/sources.md">Reviewed sources, revisions, and documentation differences</a></li>
+<li><a href="https://free5gc.org/guide/quick-setup/">Official free5GC quick setup</a></li>
+<li><a href="https://free-ran-ue.github.io/doc-user-guide/">free-ran-ue user guide</a></li>
+<li><a href="https://free-ran-ue.github.io/doc-user-guide/03-namespace-free-ran-ue/">Single-VM namespace guide</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>Hello! I'm Meng-Han Hsieh, and I've recently started exploring 5G technology and engaging with the free5GC community. I hope you find this blog post useful, and don't hesitate to reach out if you have recommendations for improvement.</p>
+<h3 id="connect-with-me">Connect with Me</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/d11nn">Meng-Han, Hsieh</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

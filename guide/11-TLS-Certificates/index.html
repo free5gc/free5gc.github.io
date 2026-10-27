@@ -1,0 +1,1060 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>TLS Certificates and Keys - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tls-certificates-and-keys" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TLS Certificates and Keys
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../forum/2026/" class="md-tabs__link">
+        
+  
+    
+  
+  free5GC Forum 2026
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../blog/" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://forum.free5gc.org" class="md-tabs__link">
+        
+  
+    
+  
+  Discussion Forum
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../forum/2026/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    free5GC Forum 2026
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://forum.free5gc.org" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discussion Forum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#which-files-are-used-for-what" class="md-nav__link">
+    Which files are used for what
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-generate-a-new-pki" class="md-nav__link">
+    1. Generate a new PKI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-use-the-new-files" class="md-nav__link">
+    2. Use the new files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-verify" class="md-nav__link">
+    3. Verify
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    Known limitations
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/guide/11-TLS-Certificates.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/guide/11-TLS-Certificates.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="tls-certificates-and-keys">TLS Certificates and Keys</h1>
+<div class="admonition danger">
+<p class="admonition-title">Do not use the bundled keys outside a lab</p>
+<p>The private keys under <code>cert/</code> are public. With the default <code>oauth: true</code>, anyone can sign OAuth2 access tokens that NFs accept with the bundled <code>nrf.key</code>, even over <code>http</code>. Generate your own keys before any non-lab use.</p>
+</div>
+<h2 id="which-files-are-used-for-what">Which files are used for what</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Used by</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>root.key</code>, <code>root.pem</code></td>
+<td>NRF</td>
+<td>Root CA; with OAuth2, NRF signs <code>nrf.pem</code> and NF certificates with it</td>
+</tr>
+<tr>
+<td><code>nrf.key</code></td>
+<td>NRF</td>
+<td>Signs OAuth2 access tokens</td>
+</tr>
+<tr>
+<td><code>nrf.pem</code></td>
+<td>NFs</td>
+<td>Verifies access tokens; with OAuth2, NRF rewrites it on each start</td>
+</tr>
+<tr>
+<td><code>&lt;nf&gt;.key</code>, <code>&lt;nf&gt;.pem</code></td>
+<td>each NF</td>
+<td>HTTPS server certificate (<code>scheme: https</code>)</td>
+</tr>
+<tr>
+<td><code>chf.key</code>, <code>chf.pem</code></td>
+<td>CHF</td>
+<td>Also Diameter TLS (ABMF / Rf)</td>
+</tr>
+<tr>
+<td><code>n3iwf.*</code>, <code>tngf.*</code></td>
+<td>N3IWF, TNGF</td>
+<td>N3IWF: IKEv2 towards the UE; the bundled n3iwf and tngf files are the same key</td>
+</tr>
+<tr>
+<td><code>af.pem</code></td>
+<td>NRF</td>
+<td>Webconsole public key; NRF creates it, no need to generate</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-generate-a-new-pki">1. Generate a new PKI</h2>
+<p>Use RSA keys without a passphrase; free5GC cannot load other key types or encrypted keys. Do not let NRF regenerate a missing <code>root.pem</code>: it creates a non-CA certificate that cannot sign NF certificates.</p>
+<p>You need <code>bash</code>, GNU <code>date</code> and OpenSSL 1.1.1 or later. Move the bundled files out of <code>cert/</code>, then run the blocks below in order inside the empty <code>cert/</code>, in the same terminal.</p>
+<p><strong>Settings.</strong> Use your own country and home network domain (<code>5gc.mnc&lt;MNC&gt;.mcc&lt;MCC&gt;.3gppnetwork.org</code>, three-digit MNC). For free5gc-compose, set <code>EXTRA_DOMAIN=free5gc.org</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">COUNTRY</span><span class="o">=</span>TW
+<span class="nv">DOMAIN</span><span class="o">=</span>5gc.mnc093.mcc208.3gppnetwork.org
+<span class="nv">EXTRA_DOMAIN</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="nv">DAYS_LEFT</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="k">$(</span>date<span class="w"> </span>-u<span class="w"> </span>-d<span class="w"> </span><span class="m">2030</span>-12-31T23:59:59Z<span class="w"> </span>+%s<span class="k">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">$(</span>date<span class="w"> </span>-u<span class="w"> </span>+%s<span class="k">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">86400</span><span class="w"> </span><span class="k">))</span>
+<span class="nv">DAYS</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="nv">DAYS_LEFT</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">365</span><span class="w"> </span>?<span class="w"> </span><span class="nv">DAYS_LEFT</span><span class="w"> </span>:<span class="w"> </span><span class="m">365</span><span class="w"> </span><span class="k">))</span>
+</code></pre></div>
+<p><strong>Root CA.</strong> Creates <code>root.key</code> and a self-signed <code>root.pem</code> valid until the end of 2030.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;<span class="w"> </span>root.cnf<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">[req]</span>
+<span class="s">distinguished_name = dn</span>
+<span class="s">x509_extensions = root_ca</span>
+<span class="s">[dn]</span>
+<span class="s">[root_ca]</span>
+<span class="s">basicConstraints = critical,CA:TRUE,pathlen:0</span>
+<span class="s">keyUsage = critical,keyCertSign,cRLSign</span>
+<span class="s">subjectKeyIdentifier = hash</span>
+<span class="s">EOF</span>
+<span class="o">(</span><span class="nb">umask</span><span class="w"> </span><span class="m">077</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>root.key<span class="w"> </span><span class="m">3072</span><span class="o">)</span>
+openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-new<span class="w"> </span>-config<span class="w"> </span>root.cnf<span class="w"> </span>-key<span class="w"> </span>root.key<span class="w"> </span>-sha256<span class="w"> </span>-days<span class="w"> </span><span class="nv">$DAYS_LEFT</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-subj<span class="w"> </span><span class="s2">&quot;/C=</span><span class="nv">$COUNTRY</span><span class="s2">/O=</span><span class="nv">$DOMAIN</span><span class="s2">/CN=free5GC Root CA&quot;</span><span class="w"> </span>-out<span class="w"> </span>root.pem
+</code></pre></div>
+<p><strong>NF certificate function.</strong> <code>nf_cert &lt;name&gt; &lt;FQDN&gt; [&lt;NF type&gt;]</code> creates <code>&lt;name&gt;.key</code> and a root-signed <code>&lt;name&gt;.pem</code>.</p>
+<div class="highlight"><pre><span></span><code>nf_cert<span class="o">()</span><span class="w"> </span><span class="o">(</span>
+<span class="w">  </span><span class="nb">set</span><span class="w"> </span>-eu
+<span class="w">  </span><span class="nb">umask</span><span class="w"> </span><span class="m">077</span>
+<span class="w">  </span><span class="nv">nf</span><span class="o">=</span><span class="nv">$1</span><span class="w"> </span><span class="nv">fqdn</span><span class="o">=</span><span class="nv">$2</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="si">${</span><span class="nv">3</span><span class="k">:-</span><span class="si">}</span>
+<span class="w">  </span><span class="nv">san</span><span class="o">=</span><span class="s2">&quot;DNS:</span><span class="nv">$fqdn</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$EXTRA_DOMAIN</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$nf</span><span class="s2">.</span><span class="nv">$EXTRA_DOMAIN</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$fqdn</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">san</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$san</span><span class="s2">,DNS:</span><span class="nv">$nf</span><span class="s2">.</span><span class="nv">$EXTRA_DOMAIN</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="w">  </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span><span class="nv">$nf</span>.key<span class="w"> </span><span class="m">2048</span>
+<span class="w">  </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-config<span class="w"> </span>root.cnf<span class="w"> </span>-key<span class="w"> </span><span class="nv">$nf</span>.key<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-subj<span class="w"> </span><span class="s2">&quot;/C=</span><span class="nv">$COUNTRY</span><span class="s2">/O=</span><span class="nv">$DOMAIN</span><span class="s2">/CN=</span><span class="nv">$fqdn</span><span class="s2">&quot;</span><span class="w"> </span>-out<span class="w"> </span><span class="nv">$nf</span>.csr
+<span class="w">  </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;keyUsage = critical,digitalSignature&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;extendedKeyUsage = serverAuth,clientAuth&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;subjectAltName = critical,</span><span class="nv">$san</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;subjectKeyIdentifier = hash&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;authorityKeyIdentifier = keyid:always&quot;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$type</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;1.3.6.1.5.5.7.1.34 = ASN1:SEQUENCE:nftypes&quot;</span>
+<span class="w">      </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[nftypes]&quot;</span>
+<span class="w">      </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;t1 = IA5STRING:</span><span class="nv">$type</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="w">  </span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$nf</span>.ext
+<span class="w">  </span>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span><span class="nv">$nf</span>.csr<span class="w"> </span>-CA<span class="w"> </span>root.pem<span class="w"> </span>-CAkey<span class="w"> </span>root.key<span class="w"> </span>-CAcreateserial<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-sha256<span class="w"> </span>-days<span class="w"> </span><span class="nv">$DAYS</span><span class="w"> </span>-extfile<span class="w"> </span><span class="nv">$nf</span>.ext<span class="w"> </span>-out<span class="w"> </span><span class="nv">$nf</span>.pem
+<span class="w">  </span>rm<span class="w"> </span><span class="nv">$nf</span>.csr<span class="w"> </span><span class="nv">$nf</span>.ext
+<span class="o">)</span>
+</code></pre></div>
+<p><strong>One certificate per NF.</strong> Adjust the FQDNs. AMF uses <code>&lt;AMF-id&gt;.amf.&lt;DOMAIN&gt;</code>; N3IWF and TNGF must match <code>fqdn</code> / <code>FQDN</code> in their configs.</p>
+<div class="highlight"><pre><span></span><code>nf_cert<span class="w"> </span>amf<span class="w">   </span>amf1.amf.<span class="nv">$DOMAIN</span><span class="w">   </span>AMF
+nf_cert<span class="w"> </span>ausf<span class="w">  </span>ausf.<span class="nv">$DOMAIN</span><span class="w">       </span>AUSF
+nf_cert<span class="w"> </span>bsf<span class="w">   </span>bsf.<span class="nv">$DOMAIN</span><span class="w">        </span>BSF
+nf_cert<span class="w"> </span>chf<span class="w">   </span>chf.<span class="nv">$DOMAIN</span><span class="w">        </span>CHF
+nf_cert<span class="w"> </span>nef<span class="w">   </span>nef.<span class="nv">$DOMAIN</span><span class="w">        </span>NEF
+nf_cert<span class="w"> </span>nrf<span class="w">   </span>nrf.<span class="nv">$DOMAIN</span><span class="w">        </span>NRF
+nf_cert<span class="w"> </span>nssf<span class="w">  </span>nssf.<span class="nv">$DOMAIN</span><span class="w">       </span>NSSF
+nf_cert<span class="w"> </span>pcf<span class="w">   </span>pcf.<span class="nv">$DOMAIN</span><span class="w">        </span>PCF
+nf_cert<span class="w"> </span>scp<span class="w">   </span>scp.<span class="nv">$DOMAIN</span><span class="w">        </span>SCP
+nf_cert<span class="w"> </span>smf<span class="w">   </span>smf.<span class="nv">$DOMAIN</span><span class="w">        </span>SMF
+nf_cert<span class="w"> </span>udm<span class="w">   </span>udm.<span class="nv">$DOMAIN</span><span class="w">        </span>UDM
+nf_cert<span class="w"> </span>udr<span class="w">   </span>udr.<span class="nv">$DOMAIN</span><span class="w">        </span>UDR
+nf_cert<span class="w"> </span>n3iwf<span class="w"> </span>n3iwf.free5gc.org<span class="w">  </span>N3IWF
+nf_cert<span class="w"> </span>tngf<span class="w">  </span>tngf.free5gc.org
+</code></pre></div>
+<p><strong>Clean up.</strong></p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-f<span class="w"> </span>root.cnf<span class="w"> </span>root.srl
+</code></pre></div>
+<details class="note">
+<summary>3GPP TS 33.310 (Rel-17) references</summary>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHA-256; RSA 3072 root expiring before 2031</td>
+<td>§6.1.1</td>
+</tr>
+<tr>
+<td>Root <code>CA:TRUE, pathlen:0</code>, <code>keyCertSign, cRLSign</code></td>
+<td>§6.1.4a</td>
+</tr>
+<tr>
+<td>NF: signed by the root, ≤ 1 year, <code>C=</code> / <code>O=&lt;home domain&gt;</code>, <code>keyUsage</code>, <code>extendedKeyUsage</code>, critical <code>subjectAltName</code> with the FQDN, <code>nfTypes</code> (RFC 9310)</td>
+<td>§6.1.3c.3</td>
+</tr>
+<tr>
+<td>FQDN formats (<code>nrf.&lt;DOMAIN&gt;</code>, AMF Name)</td>
+<td>TS 23.003 §28.3.2</td>
+</tr>
+<tr>
+<td>N3IWF certificate must match the selected N3IWF</td>
+<td>TS 33.501 §7.2.1</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="2-use-the-new-files">2. Use the new files</h2>
+<ul>
+<li>The default paths already match. If NFs run on other hosts, copy <code>nrf.pem</code> and their own <code>&lt;nf&gt;.key</code> / <code>&lt;nf&gt;.pem</code> there.</li>
+<li>Set <code>certificateAuthority</code> (<code>n3iwfcfg.yaml</code>) and <code>CertificateAuthority</code> (<code>tngfcfg.yaml</code>) to <code>cert/root.pem</code>.</li>
+<li>free5gc-compose: add <code>./cert:/free5gc/cert</code> to the <code>n3iwf</code> volumes; its image contains the bundled key.</li>
+<li>Restart free5GC.</li>
+<li><code>cert/</code> is tracked by git: <code>git checkout .</code>, <code>git stash</code> or <code>git reset --hard</code> restore the bundled keys.</li>
+</ul>
+<h2 id="3-verify">3. Verify</h2>
+<p>Run inside <code>cert/</code>. Bundled certificates are self-signed, so they fail here.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>root<span class="w"> </span>amf<span class="w"> </span>ausf<span class="w"> </span>bsf<span class="w"> </span>chf<span class="w"> </span>n3iwf<span class="w"> </span>nef<span class="w"> </span>nrf<span class="w"> </span>nssf<span class="w"> </span>pcf<span class="w"> </span>scp<span class="w"> </span>smf<span class="w"> </span>tngf<span class="w"> </span>udm<span class="w"> </span>udr<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>openssl<span class="w"> </span>verify<span class="w"> </span>-CAfile<span class="w"> </span>root.pem<span class="w"> </span><span class="nv">$f</span>.pem
+<span class="k">done</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;: OK$&#39;</span><span class="w">                       </span><span class="c1"># expect no output</span>
+openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>amf.pem<span class="w"> </span>-noout<span class="w"> </span>-enddate<span class="w"> </span>-ext<span class="w"> </span>keyUsage,extendedKeyUsage,subjectAltName
+</code></pre></div>
+<h2 id="known-limitations">Known limitations</h2>
+<ul>
+<li><code>scheme: https</code> with <code>oauth: true</code> does not work: NFs send no client certificate, so none can register.</li>
+<li>NF HTTPS clients do not verify server certificates, so your own PKI does not stop a man-in-the-middle on SBI. Protect the SBI network.</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
