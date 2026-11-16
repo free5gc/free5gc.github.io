@@ -1,6 +1,4 @@
-# Keynote III
-
-## **Title:** </br>L25GC+ Tutorial: An Open-Source Low-Latency 5G Core and Its Deployment
+# L25GC+ Tutorial: An Open-Source Low-Latency 5G Core and Its Deployment
 
 ## **Presenters:** </br>K. K. Ramakrishnan, Shixiong Qi, Jyh-Cheng Chen
 
