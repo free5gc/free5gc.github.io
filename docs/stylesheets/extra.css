@@ -114,3 +114,41 @@
         margin-top: 1rem;
     }
 }
+
+/* Speaker cards (forum keynote pages) */
+.md-typeset .speaker-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin: 1.5rem 0;
+}
+
+.md-typeset .speaker-photo {
+    flex: 0 0 160px;
+}
+
+.md-typeset .speaker-photo img {
+    display: block;
+    width: 160px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 0.2rem;
+    box-shadow: var(--md-shadow-z1);
+}
+
+.md-typeset .speaker-bio {
+    flex: 1;
+    min-width: 0;
+}
+
+.md-typeset .speaker-bio h3 {
+    margin-top: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .md-typeset .speaker-card {
+        flex-direction: column;
+        align-items: center;
+    }
+}
