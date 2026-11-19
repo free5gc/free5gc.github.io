@@ -1,0 +1,1311 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/icon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+    
+    
+      
+        <title>Getting Started with free5GC SBI Security: How Certificates, TLS, and OAuth2 Work Together - free5GC</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.79e020e9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a5377069.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started-with-free5gc-sbi-security-how-certificates-tls-and-oauth2-work-together" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="free5GC" class="md-header__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            free5GC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started with free5GC SBI Security: How Certificates, TLS, and OAuth2 Work Together
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../forum/2026/" class="md-tabs__link">
+        
+  
+    
+  
+  free5GC Forum 2026
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guide/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../doc/" class="md-tabs__link">
+        
+  
+    
+  
+  Documents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-tabs__link">
+        
+  
+    
+  
+  LFX Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  Blogs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../support/" class="md-tabs__link">
+        
+  
+    
+  
+  Supports
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://forum.free5gc.org" class="md-tabs__link">
+        
+  
+    
+  
+  Discussion Forum
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../publication/" class="md-tabs__link">
+          
+  
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="free5GC" class="md-nav__button md-logo" aria-label="free5GC" data-md-component="logo">
+      
+  <img src="../../../assets/icon.png" alt="logo">
+
+    </a>
+    free5GC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/free5gc/free5gc" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    free5GC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../forum/2026/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    free5GC Forum 2026
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../doc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://training.linuxfoundation.org/training/introduction-to-free5gc-lfs114/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFX Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/free5gc/free5GLab" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://forum.free5gc.org" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discussion Forum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    More
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relavent Publications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background-how-an-sbi-request-is-trusted" class="md-nav__link">
+    Background: How an SBI Request Is Trusted
+  </a>
+  
+    <nav class="md-nav" aria-label="Background: How an SBI Request Is Trusted">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#certificates-and-tls-who-am-i-talking-to" class="md-nav__link">
+    Certificates and TLS: Who Am I Talking To?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oauth2-and-jwt-what-is-this-request-allowed-to-do" class="md-nav__link">
+    OAuth2 and JWT: What Is This Request Allowed to Do?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-how-free5gc-uses-these-keys" class="md-nav__link">
+    Implementation: How free5GC Uses These Keys
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation: How free5GC Uses These Keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-producer-actually-verifies" class="md-nav__link">
+    What the Producer Actually Verifies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-a-published-private-key-affects-authorization" class="md-nav__link">
+    How a Published Private Key Affects Authorization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls-how-security-mechanisms-fail-during-integration" class="md-nav__link">
+    Common Pitfalls: How Security Mechanisms Fail During Integration
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Pitfalls: How Security Mechanisms Fail During Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encrypted-but-not-authenticated" class="md-nav__link">
+    Encrypted, but Not Authenticated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-signature-is-checked-but-the-expiry-is-never-read" class="md-nav__link">
+    The Signature Is Checked, but the Expiry Is Never Read
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-scope-is-right-but-the-audience-is-never-checked" class="md-nav__link">
+    The Scope Is Right, but the Audience Is Never Checked
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-server-requires-a-client-certificate-and-the-client-sends-none" class="md-nav__link">
+    The Server Requires a Client Certificate, and the Client Sends None
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-runs-but-failure-still-lets-the-request-through" class="md-nav__link">
+    Verification Runs, but Failure Still Lets the Request Through
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-considerations-replacing-keys-and-updating-trust" class="md-nav__link">
+    Deployment Considerations: Replacing Keys and Updating Trust
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself-confirming-the-behavior-in-your-own-environment" class="md-nav__link">
+    Try It Yourself: Confirming the Behavior in Your Own Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Try It Yourself: Confirming the Behavior in Your Own Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-inspect-certificate-contents-and-usage" class="md-nav__link">
+    1. Inspect Certificate Contents and Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-test-token-verification-conditions-separately" class="md-nav__link">
+    2. Test Token Verification Conditions Separately
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-confirm-the-actual-behavior-of-tls-clients-and-servers" class="md-nav__link">
+    3. Confirm the Actual Behavior of TLS Clients and Servers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-me" class="md-nav__link">
+    About Me
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/free5gc/free5gc.github.io/blob/main/docs/blog/20261022/20261022.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/free5gc/free5gc.github.io/raw/main/docs/blog/20261022/20261022.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="getting-started-with-free5gc-sbi-security-how-certificates-tls-and-oauth2-work-together">Getting Started with free5GC SBI Security: How Certificates, TLS, and OAuth2 Work Together</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Author: <a href="https://github.com/djhih">Jing-Jhih Du</a><br />
+Date: 2026/10/22</p>
+</div>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>In free5GC, Network Functions (NFs) such as the AMF and SMF call each other's services over the Service Based Interface (SBI). To protect these connections, most of us first think of two things: switch to HTTPS and turn on OAuth2. HTTPS protects the transport; OAuth2 restricts access to services.</p>
+<p>Whether they actually work depends on the whole verification chain: who holds the private keys, whether TLS verifies the peer, and whether the receiving service checks the token's conditions. Turning a feature on in a config file does not guarantee every link is in place. One missing link can still leave room for impersonation or unauthorized access.</p>
+<p>free5GC <a href="https://github.com/free5gc/free5gc/issues/1164">issue #1164</a>, about private keys published in the repository, is a good starting point. A deployment that keeps those keys shares its signing capability with anyone who has the repository. To see what replacing the keys fixes, and what it does not, we need to look at certificate issuance, TLS authentication, and token verification separately.</p>
+<p>This post follows a single SBI request through these mechanisms, walks through common integration pitfalls in the source code, and ends with checks you can run in your own test environment.</p>
+<p>The code examples are based on the versions used by free5GC v4.3.0; the token analysis uses openapi v1.3.0 and golang-jwt/jwt/v5 v5.2.2. For other versions, check against their implementation and configuration.</p>
+<h2 id="background-how-an-sbi-request-is-trusted">Background: How an SBI Request Is Trusted</h2>
+<p>Suppose the SMF calls a service on the AMF. The SMF is the consumer and the AMF is the producer. Besides NF registration and discovery, the NRF also issues OAuth2 access tokens.</p>
+<p>The diagram shows how the work is meant to be divided. The producer-side checks are design requirements; the version discussed here handles <code>exp</code> and <code>aud</code> differently, as later sections explain.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as SMF (consumer)
+    participant N as NRF
+    participant P as AMF (producer)
+    C-&gt;&gt;N: Request a token over an authenticated, protected connection
+    N-&gt;&gt;N: Check the requester's identity and requested permissions
+    N--&gt;&gt;C: Access token signed with the NRF private key
+    C-&gt;&gt;P: Send the API request and token over a protected connection
+    P-&gt;&gt;P: Should verify signature, expiry, audience, and scope
+    P-&gt;&gt;P: Check any other conditions the operation requires
+    P--&gt;&gt;C: Return the result</code></pre>
+<p><em>Figure 1: The intended authorization flow between an NF consumer, the NRF, and an NF producer. TLS authentication handles connection identity; token verification handles service authorization. Not every check shown is fully implemented in the version discussed here.</em></p>
+<h3 id="certificates-and-tls-who-am-i-talking-to">Certificates and TLS: Who Am I Talking To?</h3>
+<p>A certificate holds a public key, identity information, a validity period, and its intended usage, signed by its issuer. A TLS client verifies the chain against a trusted Certificate Authority (CA), then checks that the certificate's name matches the expected server. The trusted CAs must come from trusted configuration, not from whatever certificate the peer sends as <code>root.pem</code>.</p>
+<p>If the server also requires and verifies a client certificate, the connection uses mutual TLS (mTLS). Note that an NF's server certificate on disk is not automatically sent when the NF acts as a client; each direction is configured separately.</p>
+<p>Certificates can be shared; their private keys must stay secret. Anyone with a private key can produce valid signatures, and a verifier cannot tell from the signature alone whether the signer was authorized. Also, PEM is just an encoding: a <code>.pem</code> file may hold a certificate or a private key, so the extension does not tell you whether it is safe to share.</p>
+<h3 id="oauth2-and-jwt-what-is-this-request-allowed-to-do">OAuth2 and JWT: What Is This Request Allowed to Do?</h3>
+<p>OAuth2 handles authorization, and free5GC uses JWT as the token format. The NRF signs tokens with its private key; producers verify them with the matching public key. The signature protects integrity, not confidentiality.</p>
+<p>A bearer token can be used by whoever holds it, without proving possession of the NRF's key, so the token itself must not leak. Sent over plain HTTP, it can be picked up and reused by anyone who can observe the traffic. <a href="https://www.rfc-editor.org/rfc/rfc6750.html#section-1.2">RFC 6750 §1.2</a></p>
+<p>Beyond the signature, a producer also checks the token's conditions:</p>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Purpose</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exp</code></td>
+<td>Expiration time</td>
+<td>Whether the token has expired, and whether the claim is required</td>
+</tr>
+<tr>
+<td><code>nbf</code></td>
+<td>Not-before time</td>
+<td>If present, whether the token may be used yet</td>
+</tr>
+<tr>
+<td><code>aud</code></td>
+<td>Intended audience</td>
+<td>Whether this service is one of the intended recipients</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>Service permissions</td>
+<td>Whether it covers the service this request needs, e.g. <code>namf-comm</code></td>
+</tr>
+<tr>
+<td><code>iss</code></td>
+<td>Claimed issuer</td>
+<td>Handled according to the system's trust design</td>
+</tr>
+</tbody>
+</table>
+<p>The JWT specification defines how <code>aud</code> and <code>exp</code> are processed, but each application decides which claims are required and which values are allowed. "Optional" in the generic specification does not mean a system may skip these checks. <a href="https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.3">RFC 7519 §4.1.3–4.1.4</a></p>
+<h2 id="implementation-how-free5gc-uses-these-keys">Implementation: How free5GC Uses These Keys</h2>
+<p>To understand the impact of a published private key, we first need to know what each file is for and where the code loads it.</p>
+<p>In the version discussed here, with OAuth2 enabled, the NRF reads <code>root.key</code>, <code>root.pem</code>, and <code>nrf.key</code> from the configured paths. If an existing key parses, the NRF keeps using it; a restart does not replace it. <a href="https://github.com/free5gc/nrf/blob/4522e4a9d71493bfd6a6efdd25e48c1a023e1e6b/internal/context/context.go#L63-L111">NRF initialization code</a></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Usage in this version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>root.key</code>, <code>root.pem</code></td>
+<td>NRF issues certificates; with <code>https + oauth</code>, the NRF also uses this CA to verify client certificates</td>
+</tr>
+<tr>
+<td><code>nrf.key</code></td>
+<td>NRF signs access tokens; also used by the NRF's HTTPS server</td>
+</tr>
+<tr>
+<td><code>nrf.pem</code></td>
+<td>NFs take the token verification public key from it; also the NRF's HTTPS server certificate</td>
+</tr>
+<tr>
+<td><code>&lt;nf&gt;.key</code>, <code>&lt;nf&gt;.pem</code></td>
+<td>The corresponding NF's HTTPS server private key and certificate</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="https://github.com/free5gc/nrf/blob/4522e4a9d71493bfd6a6efdd25e48c1a023e1e6b/internal/sbi/server.go#L65-L92">NRF TLS configuration</a>, <a href="https://github.com/free5gc/nrf/blob/4522e4a9d71493bfd6a6efdd25e48c1a023e1e6b/internal/sbi/processor/access_token.go#L67-L81">token issuance</a>, and <a href="https://github.com/free5gc/openapi/blob/f2b816c20b76022ea26a6df471bb34a4179cc555/oauth/oauth.go#L57-L91">token verification</a>.</p>
+<p>One detail is easy to misread: this initialization re-issues <code>nrf.pem</code> every time, but its public key still comes from the loaded <code>nrf.key</code>. A new certificate or fingerprint does not mean a new private key.</p>
+<h3 id="what-the-producer-actually-verifies">What the Producer Actually Verifies</h3>
+<p>In this version, <code>VerifyOAuth</code> loads the public key and passes the token with an empty <code>Nrf_AccTok_AccessTokenClaims</code> to <code>jwt.ParseWithClaims</code>. The key callback requires RSA with <code>RS512</code>; the parser itself checks the signature through <code>token.Method.Verify(...)</code>. Any parsing or verification error makes <code>VerifyOAuth</code> reject the token. <a href="https://github.com/free5gc/openapi/blob/f2b816c20b76022ea26a6df471bb34a4179cc555/oauth/oauth.go#L57-L91">free5GC VerifyOAuth</a>, <a href="https://github.com/golang-jwt/jwt/blob/v5.2.2/parser.go">JWT parser</a></p>
+<p>What is actually verified only becomes clear when reading free5GC and the library together:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>What this version actually does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Algorithm and signature</td>
+<td>Restricted to <code>RS512</code>, verified with the loaded public key</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>Compared against the caller's <code>serviceName</code>; an empty <code>serviceName</code> means no scope restriction</td>
+</tr>
+<tr>
+<td><code>exp</code></td>
+<td>An expiry check runs, but the getter cannot see the payload's expiry and <code>exp</code> is not required, so the check has no effect</td>
+</tr>
+<tr>
+<td><code>aud</code></td>
+<td>No expected audience is configured, and the code does not compare recipients itself</td>
+</tr>
+<tr>
+<td><code>nbf</code></td>
+<td>If present, the library still checks that the token may be used yet</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>exp</code> and <code>aud</code> limitations come from the claims structure and validator settings, traced below. So an expired token may pass when everything else holds, while a bad signature, a missing required scope, or a future <code>nbf</code> is still rejected. <a href="https://github.com/golang-jwt/jwt/blob/v5.2.2/validator.go">JWT validator</a></p>
+<h3 id="how-a-published-private-key-affects-authorization">How a Published Private Key Affects Authorization</h3>
+<p>If a deployment keeps the published <code>nrf.key</code>, anyone else can sign tokens too. As long as the producer trusts the matching public key and the token meets the other conditions, a self-signed token may pass.</p>
+<p>No RSA has to be broken. The verifier accepts a signature that matches a trusted key; it is the assumption that only the NRF can use that key that no longer holds.</p>
+<p>A published <code>root.key</code> can be used to issue certificates, affecting every verifier that trusts that CA. This is a separate path: replacing only the root CA, without the token signing key, may leave token forgery possible.</p>
+<p>Exploiting this still requires reaching the service and passing its other checks. HTTP versus HTTPS does not change the signing key, so the risk also applies over HTTP. What a request can do once its token passes depends on each API's own authorization and business logic.</p>
+<h2 id="common-pitfalls-how-security-mechanisms-fail-during-integration">Common Pitfalls: How Security Mechanisms Fail During Integration</h2>
+<h3 id="encrypted-but-not-authenticated">Encrypted, but Not Authenticated</h3>
+<p>This version's <a href="https://github.com/free5gc/openapi/blob/f2b816c20b76022ea26a6df471bb34a4179cc555/client.go#L694-L724"><code>NewHttp2Client</code></a> sets:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">tls</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span><span class="nx">InsecureSkipVerify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+</code></pre></div>
+<p>This skips Go's default check of the server's certificate chain and host name, and the function adds no equivalent check. The client therefore cannot confirm whom it is talking to. <a href="https://pkg.go.dev/crypto/tls#Config">Go TLS documentation</a></p>
+<p>If a connection is intercepted or redirected, the client may still complete an encrypted handshake with the wrong server and send it the token and request. Replacing the CA does not fix this: the client never uses a CA to check the peer in the first place.</p>
+<p>This risk requires an attacker who can intercept or redirect connections. Check separately whether the client accepts untrusted certificates and whether traffic in the deployment can actually be intercepted; they depend on different conditions.</p>
+<h3 id="the-signature-is-checked-but-the-expiry-is-never-read">The Signature Is Checked, but the Expiry Is Never Read</h3>
+<p>JWT integration problems can hide in data structures. Simplified, the claims structure in this version looks like this:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Claims</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Exp</span><span class="w"> </span><span class="kt">int32</span><span class="w"> </span><span class="s">`json:&quot;exp,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">RegisteredClaims</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>jwt.RegisteredClaims</code> also has <code>ExpiresAt *NumericDate</code>, mapped to JSON <code>exp</code>. The two Go fields are independent; sharing a JSON key does not sync them. Go's JSON rules pick the shallower field, <code>Exp</code>. <a href="https://pkg.go.dev/encoding/json#Marshal">Go encoding/json documentation</a></p>
+<p><code>VerifyOAuth</code> decodes into an empty claims value each time, so the payload's <code>exp</code> lands in the outer <code>Exp</code> and the embedded <code>ExpiresAt</code> stays <code>nil</code>. The promoted <code>GetExpirationTime()</code> method, however, reads <code>ExpiresAt</code>:</p>
+<div class="highlight"><pre><span></span><code>JWT payload: {&quot;exp&quot;: 1}
+    ↓ JSON decoding
+outer Claims.Exp = 1
+embedded RegisteredClaims.ExpiresAt = nil
+    ↓ validator calls GetExpirationTime()
+gets nil, treated as &quot;no expiry provided&quot;
+    ↓ requireExp defaults to false
+expiry check passes without comparing the payload&#39;s exp to the current time
+</code></pre></div>
+<p><em>Figure 2: JSON decoding writes one field; the JWT library's validator reads another.</em></p>
+<p>You can follow this in the <a href="https://github.com/free5gc/openapi/blob/f2b816c20b76022ea26a6df471bb34a4179cc555/models/model_nrf_acc_tok_access_token_claims.go">free5GC claims structure</a>, <a href="https://github.com/golang-jwt/jwt/blob/v5.2.2/registered_claims.go">RegisteredClaims</a>, and the <a href="https://github.com/golang-jwt/jwt/blob/v5.2.2/validator.go">validator</a>. <code>verifyExpiresAt</code> does run, but on <code>nil</code> it only reports an error when <code>requireExp</code> is <code>true</code>, and <code>VerifyOAuth</code> passes no option to change that default.</p>
+<p><code>requireExp=false</code> means a missing expiry is allowed; if the getter returned the expiry, the library would still reject expired tokens. The real problem is that the payload's expiry never reaches the field the validator reads. This only applies to the empty-claims parsing path above; if other code sets <code>ExpiresAt</code> first, the conclusion does not hold.</p>
+<p>A fix must make decoding and the getter use the same data, then decide whether expiry is required. Adding <code>WithExpirationRequired()</code> alone is not enough: the getter would still return <code>nil</code>, so tokens with a valid expiry would be rejected too.</p>
+<p>Without a working expiry check, a leaked token may keep being accepted after it expires. The signature, scope, and other conditions still apply: once the verifier stops trusting the original signing key, old tokens fail signature verification.</p>
+<p>A consumer refreshing its token on expiry does not replace this check. The producer must reject expired tokens itself rather than assume every client follows the refresh flow.</p>
+<h3 id="the-scope-is-right-but-the-audience-is-never-checked">The Scope Is Right, but the Audience Is Never Checked</h3>
+<p><code>scope</code> says which services a token may be used for; <code>aud</code> says which recipients may accept it. A token with the right scope still has to be meant for this recipient.</p>
+<p>To tell whether the audience is checked, searching <code>VerifyOAuth</code> for <code>Aud</code> is not enough, because the library might check it. This version does neither: it compares no recipient itself and passes no <code>WithAudience(...)</code> to <code>ParseWithClaims</code>. The validator's <code>expectedAud</code> defaults to an empty string, which disables audience matching. <a href="https://github.com/golang-jwt/jwt/blob/v5.2.2/parser_option.go">JWT parser options</a>, <a href="https://github.com/golang-jwt/jwt/blob/v5.2.2/validator.go">JWT validator</a></p>
+<p>The outer <code>Aud</code> and the embedded <code>RegisteredClaims.Audience</code> are both mapped to JSON <code>aud</code>, so they are shadowed just like <code>exp</code>: the payload fills <code>Aud</code>, while <code>GetAudience()</code> reads <code>Audience</code>. Adding <code>WithAudience(...)</code> alone is therefore not a complete fix either. The getter must first see the real audience, then the comparison must match how the deployment identifies recipients.</p>
+<p>On this verification path, an audience mismatch causes no rejection, so a token may be usable beyond what its issuer intended. Whether a given request succeeds still depends on the signature, scope, connection conditions, and the API's own checks.</p>
+<h3 id="the-server-requires-a-client-certificate-and-the-client-sends-none">The Server Requires a Client Certificate, and the Client Sends None</h3>
+<p>mTLS needs both sides. In the NRF code discussed here, <code>https + oauth: true</code> enables <code>RequireAndVerifyClientCert</code>, so the client must present a certificate that passes verification. <a href="https://github.com/free5gc/nrf/blob/4522e4a9d71493bfd6a6efdd25e48c1a023e1e6b/internal/sbi/server.go#L65-L92">NRF mTLS configuration</a></p>
+<p>If an NF client loads or sends no suitable certificate, the TLS handshake may fail. The request never reaches an HTTP handler, so changing the token's scope or requesting a new token cannot help.</p>
+<p>The failure can ripple downstream:</p>
+<pre class="mermaid"><code>flowchart TD
+    A["NRF requires a client certificate"] --&gt; B["NF provides no suitable certificate"]
+    B --&gt; C["TLS handshake fails"]
+    C --&gt; D["NF registration or discovery is blocked"]
+    D --&gt; E["UE procedures that depend on these services may fail"]</code></pre>
+<p><em>Figure 3: How an mTLS configuration mismatch can propagate.</em></p>
+<p>When debugging, first tell "no certificate sent" apart from "certificate sent but rejected". For the first, check whether the client loads and sends one; for the second, check the trust root, chain, validity, and usage. A UE-side registration failure rarely pinpoints the cause; read it alongside the NF and NRF handshake and registration logs.</p>
+<h3 id="verification-runs-but-failure-still-lets-the-request-through">Verification Runs, but Failure Still Lets the Request Through</h3>
+<p>Also check what happens after a verification fails. If the caller only logs a warning and then continues with a sensitive operation, the behavior is called fail-open.</p>
+<p>For example, the NRF <a href="https://github.com/free5gc/nrf/blob/4522e4a9d71493bfd6a6efdd25e48c1a023e1e6b/internal/sbi/processor/access_token.go#L151-L181">certificate check branch</a> only logs a warning for certain <code>unknown authority</code> errors. When reading such code, check which errors really stop processing and what checks follow.</p>
+<p>Verifying an NF certificate stored on the server also does not prove that the current requester is that NF. The <code>nfInstanceId</code> in a request is only a claim; it still needs trustworthy authentication that binds the requester to it.</p>
+<h2 id="deployment-considerations-replacing-keys-and-updating-trust">Deployment Considerations: Replacing Keys and Updating Trust</h2>
+<p>Replacing keys involves both the issuing and the verifying side. Re-issuing certificates with the old private key keeps the leaked signing capability. Deleting the files from the repository cannot take back copies others already have.</p>
+<p>A complete update means new private keys, the matching public keys or CA on every verifier, and removal of the old trust. Replacing only the token signing key without updating the producers can make even legitimate requests fail signature verification.</p>
+<p>The CA certificate also needs the right attributes. When generating certificates, check basic constraints and key usage; a successful self-signature or a file named <code>root.pem</code> does not make a certificate able to issue others. In Go, the related fields include <code>IsCA</code>, <code>BasicConstraintsValid</code>, and <code>KeyUsage</code>. <a href="https://pkg.go.dev/crypto/x509#Certificate">Go X.509 documentation</a></p>
+<p>In containers, confirm which file the program actually reads. The host's <code>cert/</code>, the container's mount, and files built into the image may differ. After updating the host directory, check each NF's configured paths and mounts. For components that rewrite certificates at startup, check what they use after starting.</p>
+<p>Turning off OAuth or skipping certificate verification to restore connectivity also removes the protection. Instead, confirm transport protection, peer identity, and service authorization separately, so legitimate requests succeed and invalid ones are rejected at the right check.</p>
+<h2 id="try-it-yourself-confirming-the-behavior-in-your-own-environment">Try It Yourself: Confirming the Behavior in Your Own Environment</h2>
+<p>In an isolated test environment you manage, record the versions of free5GC and related packages, the SBI scheme, the OAuth settings, and each component's certificate paths. Start from a request that passes, then change one condition at a time so each result has a clear cause.</p>
+<p>The steps below describe methods and the expected secure behavior; actual output depends on your versions and settings.</p>
+<h3 id="1-inspect-certificate-contents-and-usage">1. Inspect Certificate Contents and Usage</h3>
+<p>Assuming your CA and AMF certificates are at the paths below, read them with OpenSSL. Replace the paths and DNS name with your own:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SBI_CA_CERT</span><span class="o">=</span>./cert/root.pem
+<span class="nv">SBI_SERVER_CERT</span><span class="o">=</span>./cert/amf.pem
+<span class="nv">SBI_SERVER_DNS</span><span class="o">=</span>amf.example.test
+
+openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SBI_CA_CERT</span><span class="s2">&quot;</span><span class="w"> </span>-noout<span class="w"> </span>-text
+openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SBI_SERVER_CERT</span><span class="s2">&quot;</span><span class="w"> </span>-noout<span class="w"> </span>-text
+</code></pre></div>
+<p>Check the CA's basic constraints and key usage, then the server certificate's validity, SAN names, and usage. If the CA issued the server certificate directly, verify it:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>verify<span class="w"> </span>-CAfile<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SBI_CA_CERT</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-purpose<span class="w"> </span>sslserver<span class="w"> </span>-verify_hostname<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SBI_SERVER_DNS</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;</span><span class="nv">$SBI_SERVER_CERT</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>With an intermediate CA, also pass the intermediate certificates, for example <code>-untrusted intermediates.pem</code>. Passing only means these files satisfy this OpenSSL check; it does not prove a running NF loaded them or applies the same policy. <a href="https://docs.openssl.org/3.0/man1/openssl-x509/">OpenSSL x509</a>, <a href="https://docs.openssl.org/3.0/man1/openssl-verify/">OpenSSL verify</a></p>
+<h3 id="2-test-token-verification-conditions-separately">2. Test Token Verification Conditions Separately</h3>
+<p>With dedicated test keys and a verifier you control, make a normal token pass, then compare:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Expected secure behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signature, expiry, audience, and scope all valid</td>
+<td>Token passes verification</td>
+</tr>
+<tr>
+<td>Signed with an untrusted key</td>
+<td>Signature rejected</td>
+</tr>
+<tr>
+<td>Everything else valid, only <code>exp</code> in the past</td>
+<td>Expired token rejected</td>
+</tr>
+<tr>
+<td><code>exp</code> omitted where the application requires it</td>
+<td>Token missing a required claim rejected</td>
+</tr>
+<tr>
+<td>Everything else valid, only <code>nbf</code> in the future</td>
+<td>Not-yet-valid token rejected</td>
+</tr>
+<tr>
+<td>Everything else valid, only <code>aud</code> excluding the recipient</td>
+<td>Token not meant for this recipient rejected</td>
+</tr>
+<tr>
+<td>Everything else valid, only a required scope removed</td>
+<td>Token with insufficient permissions rejected</td>
+</tr>
+<tr>
+<td>Key rotated and trust in the old public key removed</td>
+<td>Token signed with the old key rejected</td>
+</tr>
+</tbody>
+</table>
+<p>Re-sign each modified token with the trusted test key so you test the claim handling alone. If you only edit the encoded payload, the signature breaks and any rejection may come from signature verification instead.</p>
+<p>For <code>VerifyOAuth</code> in this version, compare these expectations with the limitations above: an expired token, or one with the wrong audience, may still pass when everything else holds. You can also inspect the decoded <code>Exp</code>, <code>ExpiresAt</code>, <code>Aud</code>, and <code>Audience</code>, and what <code>GetExpirationTime()</code> and <code>GetAudience()</code> return, to see which data the validator reads. Parsing the same expired token with the standard <code>jwt.RegisteredClaims</code>, using the same key, algorithm restriction, and time settings, gives a baseline for the expiry check.</p>
+<p>Passing token verification does not guarantee an HTTP 200; the request may still fail on its parameters or business state. Find which layer the request stopped at before drawing conclusions from the final status.</p>
+<h3 id="3-confirm-the-actual-behavior-of-tls-clients-and-servers">3. Confirm the Actual Behavior of TLS Clients and Servers</h3>
+<p>On a test service you control, connect first with a trusted certificate whose name matches, then with an untrusted issuer or a mismatched name, and check whether the client rejects them.</p>
+<p>For mTLS, compare connecting with and without a client certificate, and with one the server does or does not trust. Change one condition at a time and watch the handshake on both sides.</p>
+<p>Use the client code path the NF actually uses. Success with OpenSSL or another HTTP client does not show the NF behaves the same. Start with functions or a small test service, then confirm NF registration and service calls.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We started with three questions: who holds the private keys, whether TLS verifies the peer, and whether the receiving service checks the token's conditions. Each one maps to a pitfall in this post:</p>
+<ul>
+<li><strong>Who holds the private keys.</strong> With the published <code>nrf.key</code>, anyone can sign tokens the producer accepts. Replacing it, and updating every verifier, closes this path.</li>
+<li><strong>Whether TLS verifies the peer.</strong> With <code>InsecureSkipVerify</code>, an encrypted connection says nothing about who is on the other end. A new CA does not change that; the client has to use it.</li>
+<li><strong>Whether the producer checks the token's conditions.</strong> The signature and scope are checked, but <code>exp</code> and <code>aud</code> never reach the validator. A token signed with the right key can outlive its expiry or reach the wrong recipient.</li>
+</ul>
+<p>Replacing the published keys is the necessary first step, but it only answers the first question. The other two need changes in how clients and producers verify what they receive.</p>
+<p>The same habits apply beyond free5GC. When reviewing a security integration, follow each piece of data from where it is written to where it is checked, and when a check fails, confirm that processing actually stops. A setting that is turned on is only the start of the verification chain.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://free5gc.org/blog/20231115/free5GC_OAuth2_Procedure/">Introduction to free5GC OAuth2 Procedure</a>: An earlier post on this site about the OAuth2 flow between consumer, NRF, and producer; check the details against the version you use.</li>
+<li><a href="https://github.com/free5gc/free5gc/issues/1164">free5GC issue #1164</a>: The discussion of the published private keys.</li>
+<li><a href="https://github.com/free5gc/openapi/blob/f2b816c20b76022ea26a6df471bb34a4179cc555/oauth/oauth.go">free5GC openapi OAuth implementation</a>: The fixed version used for the code examples in this post.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6750.html">RFC 6750</a> and <a href="https://www.rfc-editor.org/rfc/rfc7519.html">RFC 7519</a>: Bearer token usage and JWT claim semantics.</li>
+<li><a href="https://pkg.go.dev/crypto/tls#Config">Go crypto/tls</a> and <a href="https://pkg.go.dev/crypto/x509#Certificate">crypto/x509</a>: TLS configuration and certificate fields.</li>
+<li><a href="https://docs.openssl.org/3.0/man1/openssl-x509/">OpenSSL x509</a> and <a href="https://docs.openssl.org/3.0/man1/openssl-verify/">verify</a>: Inspecting certificates and verifying chains.</li>
+</ul>
+<h2 id="about-me">About Me</h2>
+<p>Hi! I'm Jing-Jhih Du. I'm researching 5G networks and have recently joined the free5GC community. If you have questions about this post or would like to discuss SBI security, feel free to reach out.</p>
+<ul>
+<li>GitHub: <a href="https://github.com/djhih">djhih</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © free5GC a Series of LF Projects, LLC.
+For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/free5gc" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/free5gc/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=100086840296930" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

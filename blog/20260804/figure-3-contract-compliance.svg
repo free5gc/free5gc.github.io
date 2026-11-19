@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="GBR and MBR compliance summary">
+<style>
+text{font-family:Inter,Arial,sans-serif;fill:#182433}
+.title{font-size:28px;font-weight:700}
+.subtitle{font-size:16px;fill:#617184}
+.axis{font-size:14px;fill:#405060}
+.label{font-size:15px;font-weight:600}
+.value{font-size:14px;font-weight:700}
+.legend{font-size:14px}
+</style>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="60.0" y="50.0" class="title" text-anchor="start" >Contract compliance changes; payload utilization does not</text>
+<text x="60.0" y="78.0" class="subtitle" text-anchor="start" >Compliance uses ±5% tolerance; payload utilization accounts for the observed 1200/1286-byte encapsulation ratio</text>
+<line x1="100.0" y1="570.0" x2="1140.0" y2="570.0" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="575.0" class="axis" text-anchor="end" >0</text>
+<line x1="100.0" y1="474.5" x2="1140.0" y2="474.5" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="479.5" class="axis" text-anchor="end" >25</text>
+<line x1="100.0" y1="379.1" x2="1140.0" y2="379.1" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="384.1" class="axis" text-anchor="end" >50</text>
+<line x1="100.0" y1="283.6" x2="1140.0" y2="283.6" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="288.6" class="axis" text-anchor="end" >75</text>
+<line x1="100.0" y1="188.2" x2="1140.0" y2="188.2" stroke="#DCE3EA" stroke-width="1" opacity="1.0"/>
+<text x="86.0" y="193.2" class="axis" text-anchor="end" >100</text>
+<line x1="100.0" y1="150.0" x2="100.0" y2="570.0" stroke="#405060" stroke-width="1.5" opacity="1.0"/>
+<line x1="100.0" y1="570.0" x2="1140.0" y2="570.0" stroke="#405060" stroke-width="1.5" opacity="1.0"/>
+<text x="25.0" y="360.0" class="label" text-anchor="middle" transform="rotate(-90 25 360.0)">Runs passing / utilization (%)</text>
+<line x1="100.0" y1="188.2" x2="1140.0" y2="188.2" stroke="#405060" stroke-width="1.5" opacity="1.0" stroke-dasharray="5 4"/>
+<rect x="177.0" y="570.0" width="82.0" height="0.0" fill="#E07A38" opacity="1.0" rx="4.0"/>
+<text x="218.0" y="560.0" class="value" text-anchor="middle" >0.0%</text>
+<rect x="281.0" y="188.2" width="82.0" height="381.8" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="322.0" y="178.2" class="value" text-anchor="middle" >100.0%</text>
+<text x="270.0" y="604.0" class="label" text-anchor="middle" >Flow A GBR pass rate</text>
+<text x="270.0" y="628.0" class="axis" text-anchor="middle" >T ≥ 14.25 Mbit/s</text>
+<rect x="527.0" y="570.0" width="82.0" height="0.0" fill="#E07A38" opacity="1.0" rx="4.0"/>
+<text x="568.0" y="560.0" class="value" text-anchor="middle" >0.0%</text>
+<rect x="631.0" y="188.2" width="82.0" height="381.8" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="672.0" y="178.2" class="value" text-anchor="middle" >100.0%</text>
+<text x="620.0" y="604.0" class="label" text-anchor="middle" >Flow B MBR pass rate</text>
+<text x="620.0" y="628.0" class="axis" text-anchor="middle" >T ≤ 6.30 Mbit/s</text>
+<rect x="877.0" y="188.4" width="82.0" height="381.6" fill="#E07A38" opacity="1.0" rx="4.0"/>
+<text x="918.0" y="178.4" class="value" text-anchor="middle" >99.9%</text>
+<rect x="981.0" y="188.5" width="82.0" height="381.5" fill="#1976B9" opacity="1.0" rx="4.0"/>
+<text x="1022.0" y="178.5" class="value" text-anchor="middle" >99.9%</text>
+<text x="970.0" y="604.0" class="label" text-anchor="middle" >Payload-capacity utilization</text>
+<text x="970.0" y="628.0" class="axis" text-anchor="middle" >ceiling = 27.99 Mbit/s</text>
+<rect x="445.0" y="115.0" width="20.0" height="14.0" fill="#E07A38" opacity="1.0" rx="2.0"/>
+<text x="473.0" y="129.0" class="axis" text-anchor="start" >Static HTB</text>
+<rect x="590.0" y="115.0" width="20.0" height="14.0" fill="#1976B9" opacity="1.0" rx="2.0"/>
+<text x="618.0" y="129.0" class="axis" text-anchor="start" >GBR/MBR-aware HTB</text>
+<text x="620.0" y="670.0" class="subtitle" text-anchor="middle" >The same bottleneck is fully exercised in both groups; the difference is how it is allocated.</text>
+</svg>
