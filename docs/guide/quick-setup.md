@@ -11,8 +11,16 @@ This guide uses our `quick-setup.sh` script to automatically install dependencie
 Before you begin, please ensure your system meets the following requirements:
 
 - **CPU**: AMD or Intel CPU with **AVX** instruction set support (required for MongoDB).
-- **OS**: Ubuntu 20.04, 22.04, 24.04, or 25.04.
+- **OS**: Ubuntu 20.04, 22.04, 24.04, 25.04, or 26.04 with a compatible kernel.
 - **Tools**: The `git` command must be installed on your system.
+- **Kernel headers**: Install the headers matching the running kernel before building gtp5g; `/lib/modules/$(uname -r)/build` must exist.
+
+> [!Note]
+> **Ubuntu 26.04 validation:** The native setup was tested on Ubuntu **26.04.1** with kernel **6.18.64-061864-generic**, unmodified **gtp5g v0.10.3**, and **MongoDB 9.0.8**. NF startup, UE registration, PDU session establishment, and UE-to-DN ICMP/HTTPS traffic passed. N3IWF and TNGF received startup checks only.
+>
+> Select a compatible kernel before running the script. Unmodified gtp5g v0.10.3 fails to build on Ubuntu kernel **7.0.0-43-generic** because of a UDP tunnel API change; see [gtp5g issue #183](https://github.com/free5gc/gtp5g/issues/183). The validated 6.18.64 kernel is an Ubuntu mainline build rather than the default Ubuntu 26.04 kernel.
+
+The script installs **gtp5g v0.10.3**. It selects the **MongoDB 9.0** repository and its signing key on Ubuntu 26.04, and retains the **MongoDB 8.2** repository for the other Ubuntu versions listed above. Patch versions follow the selected repository; 9.0.8 is the version used in the Ubuntu 26.04 validation.
 
 > [!Warning]
 > **CPU AVX Support:** If your CPU does not support the AVX instruction set, the automated MongoDB installation will fail. In this case, please follow the [Manual Installation Guide](./3-install-free5gc.md) to install a compatible MongoDB version manually.
