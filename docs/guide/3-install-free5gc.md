@@ -9,12 +9,14 @@
 
 1\. Linux Kernel Version
 
-* In order to use the UPF element, you must use the `5.0.0-23-generic` or `5.4.x` version of the Linux kernel.  free5gc uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g), which has been tested and compiled against that kernel versions only. If you installed Ubuntu 20.04, the version should be like 5.4.x. To determine the version of the Linux kernel you are using:
+* The UPF uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g). Choose a kernel compatible with **gtp5g v0.10.3** and install its matching headers before building the module. `/lib/modules/$(uname -r)/build` must exist. Check the running kernel with:
 
 ```bash
 uname -r
-5.4.0-65-generic
 ```
+
+> [!Note]
+> Ubuntu **26.04.1**, kernel **6.18.64-061864-generic**, unmodified **gtp5g v0.10.3**, and **MongoDB 9.0.8** passed native NF startup and UE-to-DN validation. See [Quick Setup prerequisites](./quick-setup.md#prerequisites) for the tested scope and kernel limitations. Unmodified gtp5g v0.10.3 fails to build on Ubuntu kernel **7.0.0-43-generic** because of a UDP tunnel API change.
 
 You will not be able to run most of the tests in [Test](./4-test-free5gc.md) page unless you deploy a UPF.
 
@@ -62,21 +64,42 @@ sudo apt -y install wget git
 ```bash
 lscpu | grep avx
 ```
-* Install MongoDB Community Edition (check [this appendix section](./Appendix.md#appendix-g-install-mongodb-70x-on-ubuntu-server-220403) for more information)
-    1. Import the public key used by the package management system
+* Install MongoDB Community Edition. These commands follow the quick-setup repository selection: **MongoDB 9.0** on Ubuntu 26.04 and **MongoDB 8.2** on the other releases below. Ubuntu 26.04 support starts with MongoDB 9.0.4; the validated patch version is 9.0.8. Run the following steps in the same terminal so the selected variables remain available.
+    1. Select the Ubuntu repository and import its public key
         ```bash
+        case "$(lsb_release -rs)" in
+            20.04)
+                ubuntu_codename=focal
+                mongodb_version=8.2
+                mongodb_key_version=8.0
+                ;;
+            22.04)
+                ubuntu_codename=jammy
+                mongodb_version=8.2
+                mongodb_key_version=8.0
+                ;;
+            24.04|25.04)
+                ubuntu_codename=noble
+                mongodb_version=8.2
+                mongodb_key_version=8.0
+                ;;
+            26.04)
+                ubuntu_codename=resolute
+                mongodb_version=9.0
+                mongodb_key_version=9
+                ;;
+            *)
+                echo "Unsupported Ubuntu release" >&2
+                exit 1
+                ;;
+        esac
         sudo apt install -y gnupg curl
-        curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
-        sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
+        curl -fsSL "https://pgp.mongodb.com/server-${mongodb_key_version}.asc" | \
+            sudo gpg -o "/usr/share/keyrings/mongodb-server-${mongodb_key_version}.gpg" --dearmor
         ```
     2. Create a list file for MongoDB
         ```bash
-        # Ubuntu 24.04 (Noble)
-        echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.2.list
-        # Ubuntu 22.04 (Jammy)
-        echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.2.list
-        # Ubuntu 20.04 (Focal)
-        echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/8.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.2.list
+        echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-${mongodb_key_version}.gpg ] https://repo.mongodb.org/apt/ubuntu ${ubuntu_codename}/mongodb-org/${mongodb_version} multiverse" | sudo tee "/etc/apt/sources.list.d/mongodb-org-${mongodb_version}.list"
         ```
         - you can determine the release by running `cat /etc/lsb-release`
     3. Reload local package database & Install the MongoDB packages
@@ -133,24 +156,23 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
-    * To install the latest stable build (v4.2.3):
+    * To install the current `main` branch with the dependency versions in this guide:
 
         ```bash
         cd ~
-        git clone --recursive -b v4.2.3 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b main -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
         ```
 
-    * **(Alternatively)** to install the latest nightly build:
+    * After changing free5GC revisions, synchronize submodules to the commits recorded by that revision:
 
         ```bash
         cd ~/free5gc
-        git checkout main
-        git submodule sync
-        git submodule update --init --jobs `nproc`
-        git submodule foreach git checkout main
-        git submodule foreach git pull --jobs `nproc`
+        git submodule sync --recursive
+        git submodule update --init --recursive --jobs `nproc`
         ```
+
+    * For a tagged free5GC release, use the dependency versions documented for that release. The validation described above uses the current-main dependency set.
 
 2. Compile network function services in `free5gc`
     * To do so individually (e.g., AMF only):
@@ -169,7 +191,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
 ## C. Install User Plane Function (UPF)
 
-1. As noted above, the GTP kernel module used by the UPF requires that you use Linux kernel version `5.0.0-23-generic` or `5.4.x`.  To verify your version:
+1. Verify the compatible kernel and matching headers described in [Prerequisites](#a-prerequisites):
 
     ```bash
     uname -r
@@ -178,7 +200,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
     ```bash
-    git clone -b v0.9.14 https://github.com/free5gc/gtp5g.git
+    git clone -b v0.10.3 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make
     sudo make install
@@ -200,7 +222,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 1. Before building WebConsole, install nodejs first:
 
     ```bash
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - 
+    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
     sudo apt update
     sudo apt install -y nodejs
     sudo corepack enable # setup yarn automatically
