@@ -9,11 +9,11 @@
 
 1\. Linux Kernel Version
 
-* The UPF uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g). Version **v0.10.3** was tested with kernel `6.18.64-061864-generic` on Ubuntu 26.04. Install matching kernel headers. To determine the version of the Linux kernel you are using:
+* The UPF uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g). To determine the version of the Linux kernel you are using:
 
 ```bash
 uname -r
-6.18.64-061864-generic
+7.0.0-43-generic
 ```
 
 You will not be able to run most of the tests in [Test](./4-test-free5gc.md) page unless you deploy a UPF.
@@ -175,7 +175,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
 ## C. Install User Plane Function (UPF)
 
-1. As noted above, use a kernel compatible with gtp5g v0.10.3. To verify your version:
+1. Verify your Linux kernel version:
 
     ```bash
     uname -r
