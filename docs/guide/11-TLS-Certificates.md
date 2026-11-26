@@ -9,7 +9,7 @@
 | --- | --- | --- |
 | `root.key`, `root.pem` | NRF | Root CA; with OAuth2, NRF signs `nrf.pem` and NF certificates with it |
 | `nrf.key` | NRF | Signs OAuth2 access tokens |
-| `nrf.pem` | NFs | Verifies access tokens; with OAuth2, NRF rewrites it on each start |
+| `nrf.pem` | NFs | Verifies access tokens; with OAuth2, NRF replaces it if it has no `urn:uuid:` URI SAN |
 | `<nf>.key`, `<nf>.pem` | each NF | HTTPS server certificate (`scheme: https`) |
 | `chf.key`, `chf.pem` | CHF | Also Diameter TLS (ABMF / Rf) |
 | `n3iwf.*`, `tngf.*` | N3IWF, TNGF | N3IWF: IKEv2 towards the UE; the bundled n3iwf and tngf files are the same key |
@@ -49,16 +49,19 @@ openssl req -x509 -new -config root.cnf -key root.key -sha256 -days $DAYS_LEFT \
   -subj "/C=$COUNTRY/O=$DOMAIN/CN=free5GC Root CA" -out root.pem
 ```
 
-**NF certificate function.** `nf_cert <name> <FQDN> [<NF type>]` creates `<name>.key` and a root-signed `<name>.pem`.
+**NF certificate function.** `nf_cert <name> <FQDN> [<NF type>] [<IP>]` creates `<name>.key` and a root-signed `<name>.pem`. The IP is only needed for [certificate verification](#4-enable-certificate-verification).
 
 ```bash
 nf_cert() (
   set -eu
   umask 077
-  nf=$1 fqdn=$2 type=${3:-}
+  nf=$1 fqdn=$2 type=${3:-} ip=${4:-}
   san="DNS:$fqdn"
   if [ -n "$EXTRA_DOMAIN" ] && [ "$nf.$EXTRA_DOMAIN" != "$fqdn" ]; then
     san="$san,DNS:$nf.$EXTRA_DOMAIN"
+  fi
+  if [ -n "$ip" ]; then
+    san="$san,IP:$ip"
   fi
   openssl genrsa -out $nf.key 2048
   openssl req -new -config root.cnf -key $nf.key \
@@ -81,21 +84,21 @@ nf_cert() (
 )
 ```
 
-**One certificate per NF.** Adjust the FQDNs. AMF uses `<AMF-id>.amf.<DOMAIN>`; N3IWF and TNGF must match `fqdn` / `FQDN` in their configs.
+**One certificate per NF.** Adjust the FQDNs and IPs. AMF uses `<AMF-id>.amf.<DOMAIN>`; the IP is the NF's `registerIPv4` (the defaults in `config/` are shown); N3IWF and TNGF must match `fqdn` / `FQDN` in their configs.
 
 ```bash
-nf_cert amf   amf1.amf.$DOMAIN   AMF
-nf_cert ausf  ausf.$DOMAIN       AUSF
-nf_cert bsf   bsf.$DOMAIN        BSF
-nf_cert chf   chf.$DOMAIN        CHF
-nf_cert nef   nef.$DOMAIN        NEF
-nf_cert nrf   nrf.$DOMAIN        NRF
-nf_cert nssf  nssf.$DOMAIN       NSSF
-nf_cert pcf   pcf.$DOMAIN        PCF
-nf_cert scp   scp.$DOMAIN        SCP
-nf_cert smf   smf.$DOMAIN        SMF
-nf_cert udm   udm.$DOMAIN        UDM
-nf_cert udr   udr.$DOMAIN        UDR
+nf_cert amf   amf1.amf.$DOMAIN   AMF   127.0.0.18
+nf_cert ausf  ausf.$DOMAIN       AUSF  127.0.0.9
+nf_cert bsf   bsf.$DOMAIN        BSF   127.0.0.15
+nf_cert chf   chf.$DOMAIN        CHF   127.0.0.113
+nf_cert nef   nef.$DOMAIN        NEF   127.0.0.5
+nf_cert nrf   nrf.$DOMAIN        NRF   127.0.0.10
+nf_cert nssf  nssf.$DOMAIN       NSSF  127.0.0.31
+nf_cert pcf   pcf.$DOMAIN        PCF   127.0.0.7
+nf_cert scp   scp.$DOMAIN        SCP   127.0.0.6
+nf_cert smf   smf.$DOMAIN        SMF   127.0.0.2
+nf_cert udm   udm.$DOMAIN        UDM   127.0.0.3
+nf_cert udr   udr.$DOMAIN        UDR   127.0.0.4
 nf_cert n3iwf n3iwf.free5gc.org  N3IWF
 nf_cert tngf  tngf.free5gc.org
 ```
@@ -134,7 +137,35 @@ done | grep -v ': OK$'                       # expect no output
 openssl x509 -in amf.pem -noout -enddate -ext keyUsage,extendedKeyUsage,subjectAltName
 ```
 
+## 4. Enable certificate verification
+
+Needs free5GC built from `main` after v4.3.0. By default NFs accept any server certificate. With `verify: true`, an NF checks the certificate chain and host name of every NF it calls over HTTPS, and drops the connection if the check fails.
+
+1. In every NF config, set `scheme: https` and `verify: true`, and use `https://` in `nrfUri`. NRF reads `verify` under `sbi.cert`, the other NFs under `sbi.tls`:
+
+    ```yaml
+    sbi:
+      scheme: https
+      tls:            # nrfcfg.yaml: cert
+        verify: true
+        pem: cert/amf.pem
+        key: cert/amf.key
+    ```
+
+2. Each certificate must contain the host that other NFs connect to: the NF's `registerIPv4`, and for NRF the host in `nrfUri`. The IPs in the `nf_cert` lines cover the defaults in `config/`; with free5gc-compose, `EXTRA_DOMAIN` adds the host names.
+3. Add `root.pem` to the system trust store on every NF host, then restart free5GC. NFs trust the system CA list; there is no setting for a CA file. On Ubuntu:
+
+    ```bash
+    sudo cp cert/root.pem /usr/local/share/ca-certificates/free5gc-root.crt
+    sudo update-ca-certificates
+    ```
+
+    free5gc-compose: mount `./cert/root.pem` at `/etc/ssl/certs/free5gc-root.pem` in each NF service.
+
+Keep `oauth: false` with `https` (see below). NEF also applies `verify` to its PFD change notifications and AF callbacks.
+
 ## Known limitations
 
 - `scheme: https` with `oauth: true` does not work: NFs send no client certificate, so none can register.
-- NF HTTPS clients do not verify server certificates, so your own PKI does not stop a man-in-the-middle on SBI. Protect the SBI network.
+- `verify` is off by default, so your own PKI alone does not stop a man-in-the-middle on SBI. [Enable it](#4-enable-certificate-verification) or protect the SBI network.
+- With `verify: true`, NFs trust every CA in the system list, not only `root.pem`, and check only the host name, not the NF instance ID or NF type in the certificate.

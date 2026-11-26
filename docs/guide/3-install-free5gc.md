@@ -9,11 +9,11 @@
 
 1\. Linux Kernel Version
 
-* In order to use the UPF element, you must use the `5.0.0-23-generic` or `5.4.x` version of the Linux kernel.  free5gc uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g), which has been tested and compiled against that kernel versions only. If you installed Ubuntu 20.04, the version should be like 5.4.x. To determine the version of the Linux kernel you are using:
+* The UPF uses the [gtp5g kernel module](https://github.com/free5gc/gtp5g). To determine the version of the Linux kernel you are using:
 
 ```bash
 uname -r
-5.4.0-65-generic
+7.0.0-43-generic
 ```
 
 You will not be able to run most of the tests in [Test](./4-test-free5gc.md) page unless you deploy a UPF.
@@ -66,11 +66,17 @@ lscpu | grep avx
     1. Import the public key used by the package management system
         ```bash
         sudo apt install -y gnupg curl
+        # Ubuntu 26.04 (Resolute)
+        curl -fsSL https://pgp.mongodb.com/server-9.asc | \
+        sudo gpg -o /usr/share/keyrings/mongodb-server-9.gpg --dearmor
+        # Ubuntu 24.04, 22.04, 20.04
         curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
         sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
         ```
     2. Create a list file for MongoDB
         ```bash
+        # Ubuntu 26.04 (Resolute)
+        echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-9.gpg ] https://repo.mongodb.org/apt/ubuntu resolute/mongodb-org/9.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-9.0.list
         # Ubuntu 24.04 (Noble)
         echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.2.list
         # Ubuntu 22.04 (Jammy)
@@ -133,11 +139,11 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 ## B. Install Control Plane Elements
 
 1. Clone the free5GC repository
-    * To install the latest stable build (v4.2.3):
+    * To install the latest stable build (v4.3.0):
 
         ```bash
         cd ~
-        git clone --recursive -b v4.2.3 -j `nproc` https://github.com/free5gc/free5gc.git
+        git clone --recursive -b v4.3.0 -j `nproc` https://github.com/free5gc/free5gc.git
         cd free5gc
         ```
 
@@ -169,7 +175,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 
 ## C. Install User Plane Function (UPF)
 
-1. As noted above, the GTP kernel module used by the UPF requires that you use Linux kernel version `5.0.0-23-generic` or `5.4.x`.  To verify your version:
+1. Verify your Linux kernel version:
 
     ```bash
     uname -r
@@ -178,7 +184,7 @@ sudo ./free5gc/reload_host_config.sh enp0s3
 2. Retrieve the 5G GTP-U kernel module using `git` and build it
 
     ```bash
-    git clone -b v0.9.14 https://github.com/free5gc/gtp5g.git
+    git clone -b v0.10.3 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make
     sudo make install

@@ -11,7 +11,7 @@ This guide uses our `quick-setup.sh` script to automatically install dependencie
 Before you begin, please ensure your system meets the following requirements:
 
 - **CPU**: AMD or Intel CPU with **AVX** instruction set support (required for MongoDB).
-- **OS**: Ubuntu 20.04, 22.04, 24.04, or 25.04.
+- **OS**: Ubuntu 20.04, 22.04, 24.04, 25.04, or 26.04.
 - **Tools**: The `git` command must be installed on your system.
 
 > [!Warning]
